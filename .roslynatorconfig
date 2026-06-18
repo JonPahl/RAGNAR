@@ -1,0 +1,39 @@
+# Enforce XML doc comments on public members (SA1600, SA1601, SA1602, SA1604)
+roslynator_analyzer_options = 
+    xml_documentation_comments: true
+
+# Enforce readonly struct usage (RCS1090)
+roslynator_analyzer_options = 
+    use_readonly_struct: true
+
+# Enforce `in` modifier on readonly struct parameters (RCS1129)
+roslynator_analyzer_options = 
+    use_in_modifier_on_readonly_struct_parameter: true
+
+# Enforce `ConfigureAwait(false)` in async library code (RCS1030)
+roslynator_analyzer_options = 
+    configure_await_false: true
+
+# Enforce `IAsyncDisposable` over `IDisposable` for async resources (RCS1042)
+roslynator_analyzer_options = 
+    prefer_async_disposable: true
+
+# Enforce `ValueTask` over `Task` where appropriate (RCS1036)
+roslynator_analyzer_options = 
+    prefer_value_task: true
+
+# Enforce `static abstract interface members` usage (RCS1165)
+roslynator_analyzer_options = 
+    use_static_abstract_interface_members: true
+
+# Enforce `file-scoped namespace` (RCS1163)
+roslynator_analyzer_options = 
+    prefer_file_scoped_namespace: true
+
+# Enforce `target-typed new` (RCS1164)
+roslynator_analyzer_options = 
+    prefer_target_typed_new: true
+
+# Enforce `primary constructors` on records (RCS1167)
+roslynator_analyzer_options = 
+    prefer_primary_constructor: true

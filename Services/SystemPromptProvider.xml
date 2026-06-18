@@ -1,0 +1,12 @@
+<!-- XML Documentation for SystemPromptProvider -->
+<summary>
+Gets the system prompt for .NET 10 / C# 14 code generation.
+</summary>
+
+<param name="Content">The content of the system prompt.</param>
+
+<remarks>Targets Qwen-Coder-Next AI; enforces C# 14 features.</remarks>
+
+<example><![CDATA[var prompt = provider.Template;]]></example>
+
+<returns>The system prompt for .NET 10 / C# 14 code generation.</returns>
