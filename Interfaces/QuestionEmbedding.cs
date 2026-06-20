@@ -9,9 +9,9 @@ public class QuestionEmbedding(Serilog.ILogger logger, IOptions<ApplicationConfi
     private readonly IEmbeddingGenerator<string, Embedding<float>> generator = clientFactory.FindClient(OllamaType.Embedding).AsEmbeddingGenerator();
 
     /// <summary>
-    /// Retrieves top-k context from Qdrant using embedding query vector.
+    /// Retrieves top-k context from qdrantClient using embedding query vector.
     /// </summary>
-    /// <param name="VectorStoreName">Qdrant collection name.</param>
+    /// <param name="VectorStoreName">qdrantClient collection name.</param>
     /// <param name="QuestionEmbeddingVector">Embedding vector of user query.</param>
     /// <param name="ct">Cancellation token.</param>
     /// <param name="filter">Optional qdrant filter.</param>
@@ -63,9 +63,9 @@ public class QuestionEmbedding(Serilog.ILogger logger, IOptions<ApplicationConfi
     }
 
     /// <summary>
-    /// Aggregates Qdrant search payloads into a context string.
+    /// Aggregates qdrantClient search payloads into a context string.
     /// </summary>
-    /// <param name="searchResult">Qdrant search results.</param>
+    /// <param name="searchResult">qdrantClient search results.</param>
     /// <returns>Concatenated code context with [CONTEXT CODE] tags.</returns>
     /// <example><![CDATA[string ctx = await StreamContextAsync(results);]]></example>
     private static async Task<string> StreamContextAsync(IReadOnlyList<ScoredPoint> searchResult)

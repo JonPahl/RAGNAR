@@ -207,9 +207,9 @@ Contributions are welcome! Please:
 
 ## 📞 Support
 
-- 🐛 [Report bugs](https://github.com/JonPahl/ragnar/issues)
-- 💡 [Suggest features](https://github.com/JonPahl/ragnar/discussions)
-- 💬 Join our [Discussions](https://github.com/JonPahl/ragnar/discussions)
+- 🐛 [Report bugs](https://github.com/JonPahl/RAGNAR/issues)
+- 💡 [Suggest features](https://github.com/JonPahl/RAGNAR/discussions)
+- 💬 Join our [Discussions](https://github.com/JonPahl/RAGNAR/discussions)
 
 ---
 

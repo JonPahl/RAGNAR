@@ -1,9 +1,9 @@
 ## WORKSPACE EXECUTIVE SUMMARY (YAML)
-# Generated: 2026-06-18T15:41:47.3875374-05:00
+# Generated: 2026-06-20T14:45:58.8466107-05:00
 # Root: C:\Users\jp325\source\Ragnar\Ragnar
 Architecture:
   Type: Backend (C#/.NET)
-  Scale: 183 relevant source files
+  Scale: 256 relevant source files
   Components: 0
   Controllers: 0
   Models: 2
@@ -11,17 +11,20 @@ Architecture:
 ---
 - File: Ragnar.csproj
   Preview: "<Project Sdk='Microsoft.NET.Sdk'>  <PropertyGroup>   <OutputType>Exe</OutputType>   <TargetFramework>net10.0</TargetFramework>   <LangVersion>14.0</La..."
+- File: appsettings.development.json
+  Preview: "{  'exclude': [   '**/bin',   '**/bower_components',   '**/jspm_packages',   '**/node_modules',   '**/obj',   '**/platforms'  ] }"
 - File: appsettings.json
-  Preview: "{   'ApplicationOptions': {     'SourceDirectory': '%USERPROFILE%\\source\\Ragnar\\',     'VectorStoreName': 'programming_docs',     //'SourceDirector..."
+  Preview: "{   'ApplicationOptions': {     //'SourceDirectory': '%USERPROFILE%\\source\\Ragnar\\',     //'VectorStoreName': 'programming_docs',     //'SourceDire..."
 - File: docker-compose.yml
   Preview: "services:  qdrant:   image: qdrant/qdrant:latest   container_name: qdrant   ports:    - '6333:6333' # HTTP API    - '6334:6334' # gRPC API   volumes: ..."
 - File: globalUsing.cs
   Preview: " global using Ardalis.GuardClauses; global using Microsoft.Extensions.AI; global using Microsoft.Extensions.Configuration; global using Microsoft.Exte..."
 - File: KnowledgeBaseInitialization.cs
-  Symbols: [AskQuestionsAsync, EnsureCollectionExistsAsync, and, KnowledgeBaseInitialization, LoadQuestionsAsync]
   Preview: "using System.Collections.Immutable; using FileQuestionProvider; using Ragnar.Questions.Questions; namespace Ragnar; /// <summary> /// Initializes the ..."
+- File: LICENSE.txt
+  Preview: "MIT License Copyright (c) [year] [fullname] Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associat..."
 - File: PluginExtension.cs
-  Symbols: [PluginExtension, extension]
+  Symbols: [extension, PluginExtension]
   Preview: "namespace Ragnar; /// <summary> /// Extension methods for plugin-related operations. /// </summary> public static class PluginExtension {   extension(..."
 - File: Program.cs
   Preview: "using System.Text; using Serilog; Console.OutputEncoding = Encoding.UTF8; try {   IHostBuilder builder = RagPipelineHostBuilder     .CreateDefaultBuil..."
@@ -30,14 +33,14 @@ Architecture:
 - File: RagPipelineHostBuilder.cs
   Preview: "using System.Runtime.Loader; using Microsoft.Extensions.Http.Resilience; using Polly; using Ragnar.Questions.Interface; using Ragnar.Questions.Questio..."
 - File: RagPipelineRunner.cs
-  Symbols: [StartAsync, RagPipelineRunner]
+  Symbols: [RagPipelineRunner]
   Preview: "namespace Ragnar; ///<summary> /// Hosted service responsible for running the RAG pipeline. ///</summary> public sealed class RagPipelineRunner(   IOu..."
 - File: README.md
   Preview: "# 🐉 Ragnar: Smart, Recursive Code Reasoning — From Query to Solution [![.NET](https://img.shields.io/badge/.NET-10.0-blue?logo=dotnet)](https://dotne..."
 - File: Branding\ApplicationBanner.cs
   Preview: "namespace Ragnar.Branding; /// <summary> /// Setups up and displays Branding for Ragnar application. /// </summary> /// <param name='writer'>console o..."
 - File: Branding\AssemblyExtensions.cs
-  Symbols: [AssemblyExtensions, extension]
+  Symbols: [extension, AssemblyExtensions]
   Preview: " using System.Reflection; namespace Ragnar.Branding; /// <summary> /// Gets the informational version of an assembly. /// </summary> public static cla..."
 - File: Branding\AssemblyInfo.cs
   Symbols: [AssemblyInfo]
@@ -70,11 +73,11 @@ Architecture:
   Symbols: [IOllamaResponse]
   Preview: "namespace Ragnar.Interfaces; /// <summary> /// Call Ollama to generate a response to asked question. /// </summary> public interface IOllamaResponse {..."
 - File: Interfaces\QuestionEmbedding.cs
-  Symbols: [QuestionEmbedding]
+  Symbols: [GenerateEmbeddingAsync, QuestionEmbedding, StreamContextAsync, GetContext]
   Preview: "using System.Text; using Microsoft.SemanticKernel.Embeddings; namespace RAGNAR.Interfaces; public class QuestionEmbedding(Serilog.ILogger logger, IOpt..."
 - File: Models\EmbeddingData.cs
   Symbols: [EmbeddingData]
-  Preview: "namespace Ragnar.Models; /// <summary>List of Qdrant point embeddings. /// </summary> /// <example><![CDATA[new EmbeddingData(pointsList);]]></example..."
+  Preview: "namespace Ragnar.Models; /// <summary>List of qdrantClient point embeddings. /// </summary> /// <example><![CDATA[new EmbeddingData(pointsList);]]></e..."
 - File: Models\SaveDetails.cs
   Preview: "namespace Ragnar.Models; /// <summary> /// Save file object. /// </summary> /// <param name='Question'>Asked question.</param> /// <param name='Respon..."
 - File: Ollama\OllamaResponse.cs
@@ -102,8 +105,12 @@ Architecture:
   Preview: "namespace Ragnar.Services; /// <summary> /// Provides system prompts for .NET 10 / C# 14 code generation. /// </summary> public class SystemPromptProv..."
 - File: Services\SystemPromptProvider.xml
   Preview: "<!-- XML Documentation for SystemPromptProvider --> <summary> Gets the system prompt for .NET 10 / C# 14 code generation. </summary> <param name='Cont..."
+- File: Services\VectorStoreBuilder.cs
+  Symbols: [ExistsAsync, MakeIndexAsync, IvectorStoreBuilder, VectorStoreBuilder, BuildAsync, CreateAsync]
+  Preview: "namespace RAGNAR.Services; public interface IvectorStoreBuilder {   bool IsExisting { get; set; }   string VectorStoreName { get; set; }   ulong Dimen..."
 - File: Services\VectorStoreProvisioner.cs
-  Preview: "namespace Ragnar.Services; /// <summary>Initializes vector indexing service with dependencies.</summary> /// <param name='logger'>Serilog logger.</par..."
+  Symbols: [VectorStoreProvisioner, CreateCollectionIfNotExistsAsync]
+  Preview: "using RAGNAR.Services; namespace Ragnar.Services; /// <summary>Initializes vector indexing service with dependencies.</summary> /// <param name='logge..."
 - File: Utils\FileValidator.cs
   Symbols: [FileValidator]
   Preview: "namespace Ragnar.Utils; /// <summary> /// Implements file validation logic based on extension, name, and d filters. /// </summary> public class FileVa..."
@@ -129,6 +136,12 @@ Architecture:
   Preview: "{'schema':{'ElementType':'keyword','category':'keyword','Comment_Length':'integer'}}"
 - File: qdrant_storage\collections\programming_docs\shard_key_mapping.json
   Preview: "[]"
+- File: qdrant_storage\collections\Shepher_Obit\config.json
+  Preview: "{'params':{'vectors':{'size':768,'distance':'Cosine'},'shard_number':1,'replication_factor':1,'write_consistency_factor':1,'on_disk_payload':false},'h..."
+- File: qdrant_storage\collections\Shepher_Obit\payload_index.json
+  Preview: "{'schema':{'ElementType':'keyword','category':'keyword','Comment_Length':'integer'}}"
+- File: qdrant_storage\collections\Shepher_Obit\shard_key_mapping.json
+  Preview: "[]"
 - File: qdrant_storage\collections\Process_Monitor\0\applied_seq.json
   Preview: "{'op_num':769}"
 - File: qdrant_storage\collections\Process_Monitor\0\newest_clocks.json
@@ -142,6 +155,12 @@ Architecture:
 - File: qdrant_storage\collections\programming_docs\0\replica_state.json
   Preview: "{'is_local':true,'this_peer_id':6666351486307546,'peers':{'6666351486307546':'Active'}}"
 - File: qdrant_storage\collections\programming_docs\0\shard_config.json
+  Preview: "{'type':'ReplicaSet'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\newest_clocks.json
+  Preview: "{'clocks':[{'peer_id':6666351486307546,'clock_id':0,'current_tick':21,'token':17233198402147090821}]}"
+- File: qdrant_storage\collections\Shepher_Obit\0\replica_state.json
+  Preview: "{'is_local':true,'this_peer_id':6666351486307546,'peers':{'6666351486307546':'Active'}}"
+- File: qdrant_storage\collections\Shepher_Obit\0\shard_config.json
   Preview: "{'type':'ReplicaSet'}"
 - File: qdrant_storage\collections\Process_Monitor\0\segments\0af3df93-cc04-4173-ae01-da88a62c0f73\segment.json
   Preview: "{'initial_version':null,'version':778,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'p..."
@@ -174,6 +193,22 @@ Architecture:
 - File: qdrant_storage\collections\programming_docs\0\segments\ed14c0d5-772f-4818-b3a6-6f1a9eae87f8\segment.json
   Preview: "{'initial_version':null,'version':7,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pla..."
 - File: qdrant_storage\collections\programming_docs\0\segments\fdf65d22-d539-4f33-aede-15c971bb44c7\segment.json
+  Preview: "{'initial_version':null,'version':8,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pla..."
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\29d21f43-e117-4fd9-ad34-098de333fd9b\segment.json
+  Preview: "{'initial_version':null,'version':19,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\2a5ccc5f-9d70-469d-934b-60e15385ef73\segment.json
+  Preview: "{'initial_version':null,'version':11,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\658c0531-e5aa-484d-a89c-2cb99d9c9d91\segment.json
+  Preview: "{'initial_version':null,'version':23,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\6d14a9e3-825f-4dbb-b07b-2d01c70eae86\segment.json
+  Preview: "{'initial_version':null,'version':24,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\84acbf50-60ff-4518-ac20-b3da933d00f8\segment.json
+  Preview: "{'initial_version':null,'version':9,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pla..."
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\ae377d1b-94d0-4f72-ab00-9ebe693c1ddc\segment.json
+  Preview: "{'initial_version':null,'version':23,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\ba6b93c0-5ea7-4e43-b87e-a9e76ef2b8e4\segment.json
+  Preview: "{'initial_version':null,'version':10,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\c9028b56-10f6-41d6-948d-dd2b040f7803\segment.json
   Preview: "{'initial_version':null,'version':8,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pla..."
 - File: qdrant_storage\collections\Process_Monitor\0\segments\0af3df93-cc04-4173-ae01-da88a62c0f73\payload_index\config.json
   Preview: "{'indexed_fields':{'ElementType':'keyword','Comment_Length':'integer','category':'keyword'},'indexed_types':{'ElementType':[{'index_type':'keyword_ind..."
@@ -238,6 +273,38 @@ Architecture:
 - File: qdrant_storage\collections\programming_docs\0\segments\fdf65d22-d539-4f33-aede-15c971bb44c7\payload_index\config.json
   Preview: "{'indexed_fields':{'category':'keyword','Comment_Length':'integer','ElementType':'keyword'},'indexed_types':{'Comment_Length':[{'index_type':'int_map_..."
 - File: qdrant_storage\collections\programming_docs\0\segments\fdf65d22-d539-4f33-aede-15c971bb44c7\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\29d21f43-e117-4fd9-ad34-098de333fd9b\payload_index\config.json
+  Preview: "{'indexed_fields':{'ElementType':'keyword','Comment_Length':'integer','category':'keyword'},'indexed_types':{'Comment_Length':[{'index_type':'int_map_..."
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\29d21f43-e117-4fd9-ad34-098de333fd9b\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\2a5ccc5f-9d70-469d-934b-60e15385ef73\payload_index\config.json
+  Preview: "{'indexed_fields':{'category':'keyword','ElementType':'keyword','Comment_Length':'integer'},'indexed_types':{'Comment_Length':[{'index_type':'int_map_..."
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\2a5ccc5f-9d70-469d-934b-60e15385ef73\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\658c0531-e5aa-484d-a89c-2cb99d9c9d91\payload_index\config.json
+  Preview: "{'indexed_fields':{'ElementType':'keyword','category':'keyword','Comment_Length':'integer'},'indexed_types':{'Comment_Length':[{'index_type':'int_map_..."
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\658c0531-e5aa-484d-a89c-2cb99d9c9d91\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\6d14a9e3-825f-4dbb-b07b-2d01c70eae86\payload_index\config.json
+  Preview: "{'indexed_fields':{'category':'keyword','Comment_Length':'integer','ElementType':'keyword'},'indexed_types':{'ElementType':[{'index_type':'keyword_ind..."
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\6d14a9e3-825f-4dbb-b07b-2d01c70eae86\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\84acbf50-60ff-4518-ac20-b3da933d00f8\payload_index\config.json
+  Preview: "{'indexed_fields':{'ElementType':'keyword','Comment_Length':'integer','category':'keyword'},'indexed_types':{'category':[{'index_type':'keyword_index'..."
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\84acbf50-60ff-4518-ac20-b3da933d00f8\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\ae377d1b-94d0-4f72-ab00-9ebe693c1ddc\payload_index\config.json
+  Preview: "{'indexed_fields':{'ElementType':'keyword','Comment_Length':'integer','category':'keyword'},'indexed_types':{'category':[{'index_type':'keyword_index'..."
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\ae377d1b-94d0-4f72-ab00-9ebe693c1ddc\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\ba6b93c0-5ea7-4e43-b87e-a9e76ef2b8e4\payload_index\config.json
+  Preview: "{'indexed_fields':{'Comment_Length':'integer','category':'keyword','ElementType':'keyword'},'indexed_types':{'category':[{'index_type':'keyword_index'..."
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\ba6b93c0-5ea7-4e43-b87e-a9e76ef2b8e4\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\c9028b56-10f6-41d6-948d-dd2b040f7803\payload_index\config.json
+  Preview: "{'indexed_fields':{'category':'keyword','ElementType':'keyword','Comment_Length':'integer'},'indexed_types':{'category':[{'index_type':'keyword_index'..."
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\c9028b56-10f6-41d6-948d-dd2b040f7803\payload_storage\config.json
   Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
 - File: qdrant_storage\collections\Process_Monitor\0\segments\0af3df93-cc04-4173-ae01-da88a62c0f73\payload_index\ffa90d98j3j1790c4t161hth-comment_-map\config.json
   Preview: "{'page_size_bytes':2097152,'block_size_bytes':8,'region_size_blocks':8192,'compression':'None'}"
@@ -398,4 +465,84 @@ Architecture:
 - File: qdrant_storage\collections\programming_docs\0\segments\fdf65d22-d539-4f33-aede-15c971bb44c7\payload_index\u68dps1pohl18kfjg7bchhh2-elementt-map\config.json
   Preview: "{'page_size_bytes':4194304,'block_size_bytes':16,'region_size_blocks':8192,'compression':'None'}"
 - File: qdrant_storage\collections\programming_docs\0\segments\fdf65d22-d539-4f33-aede-15c971bb44c7\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\29d21f43-e117-4fd9-ad34-098de333fd9b\payload_index\ffa90d98j3j1790c4t161hth-comment_-map\config.json
+  Preview: "{'page_size_bytes':2097152,'block_size_bytes':8,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\29d21f43-e117-4fd9-ad34-098de333fd9b\payload_index\ffa90d98j3j1790c4t161hth-comment_-numeric\config.json
+  Preview: "{'page_size_bytes':2097152,'block_size_bytes':8,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\29d21f43-e117-4fd9-ad34-098de333fd9b\payload_index\tmpcqerkp6cqus7gms2kj47i-category-map\config.json
+  Preview: "{'page_size_bytes':4194304,'block_size_bytes':16,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\29d21f43-e117-4fd9-ad34-098de333fd9b\payload_index\u68dps1pohl18kfjg7bchhh2-elementt-map\config.json
+  Preview: "{'page_size_bytes':4194304,'block_size_bytes':16,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\29d21f43-e117-4fd9-ad34-098de333fd9b\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\2a5ccc5f-9d70-469d-934b-60e15385ef73\payload_index\ffa90d98j3j1790c4t161hth-comment_-map\config.json
+  Preview: "{'page_size_bytes':2097152,'block_size_bytes':8,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\2a5ccc5f-9d70-469d-934b-60e15385ef73\payload_index\ffa90d98j3j1790c4t161hth-comment_-numeric\config.json
+  Preview: "{'page_size_bytes':2097152,'block_size_bytes':8,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\2a5ccc5f-9d70-469d-934b-60e15385ef73\payload_index\tmpcqerkp6cqus7gms2kj47i-category-map\config.json
+  Preview: "{'page_size_bytes':4194304,'block_size_bytes':16,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\2a5ccc5f-9d70-469d-934b-60e15385ef73\payload_index\u68dps1pohl18kfjg7bchhh2-elementt-map\config.json
+  Preview: "{'page_size_bytes':4194304,'block_size_bytes':16,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\2a5ccc5f-9d70-469d-934b-60e15385ef73\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\658c0531-e5aa-484d-a89c-2cb99d9c9d91\payload_index\ffa90d98j3j1790c4t161hth-comment_-map\config.json
+  Preview: "{'page_size_bytes':2097152,'block_size_bytes':8,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\658c0531-e5aa-484d-a89c-2cb99d9c9d91\payload_index\ffa90d98j3j1790c4t161hth-comment_-numeric\config.json
+  Preview: "{'page_size_bytes':2097152,'block_size_bytes':8,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\658c0531-e5aa-484d-a89c-2cb99d9c9d91\payload_index\tmpcqerkp6cqus7gms2kj47i-category-map\config.json
+  Preview: "{'page_size_bytes':4194304,'block_size_bytes':16,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\658c0531-e5aa-484d-a89c-2cb99d9c9d91\payload_index\u68dps1pohl18kfjg7bchhh2-elementt-map\config.json
+  Preview: "{'page_size_bytes':4194304,'block_size_bytes':16,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\658c0531-e5aa-484d-a89c-2cb99d9c9d91\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\6d14a9e3-825f-4dbb-b07b-2d01c70eae86\payload_index\ffa90d98j3j1790c4t161hth-comment_-map\config.json
+  Preview: "{'page_size_bytes':2097152,'block_size_bytes':8,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\6d14a9e3-825f-4dbb-b07b-2d01c70eae86\payload_index\ffa90d98j3j1790c4t161hth-comment_-numeric\config.json
+  Preview: "{'page_size_bytes':2097152,'block_size_bytes':8,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\6d14a9e3-825f-4dbb-b07b-2d01c70eae86\payload_index\tmpcqerkp6cqus7gms2kj47i-category-map\config.json
+  Preview: "{'page_size_bytes':4194304,'block_size_bytes':16,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\6d14a9e3-825f-4dbb-b07b-2d01c70eae86\payload_index\u68dps1pohl18kfjg7bchhh2-elementt-map\config.json
+  Preview: "{'page_size_bytes':4194304,'block_size_bytes':16,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\6d14a9e3-825f-4dbb-b07b-2d01c70eae86\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\84acbf50-60ff-4518-ac20-b3da933d00f8\payload_index\ffa90d98j3j1790c4t161hth-comment_-map\config.json
+  Preview: "{'page_size_bytes':2097152,'block_size_bytes':8,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\84acbf50-60ff-4518-ac20-b3da933d00f8\payload_index\ffa90d98j3j1790c4t161hth-comment_-numeric\config.json
+  Preview: "{'page_size_bytes':2097152,'block_size_bytes':8,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\84acbf50-60ff-4518-ac20-b3da933d00f8\payload_index\tmpcqerkp6cqus7gms2kj47i-category-map\config.json
+  Preview: "{'page_size_bytes':4194304,'block_size_bytes':16,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\84acbf50-60ff-4518-ac20-b3da933d00f8\payload_index\u68dps1pohl18kfjg7bchhh2-elementt-map\config.json
+  Preview: "{'page_size_bytes':4194304,'block_size_bytes':16,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\84acbf50-60ff-4518-ac20-b3da933d00f8\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\ae377d1b-94d0-4f72-ab00-9ebe693c1ddc\payload_index\ffa90d98j3j1790c4t161hth-comment_-map\config.json
+  Preview: "{'page_size_bytes':2097152,'block_size_bytes':8,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\ae377d1b-94d0-4f72-ab00-9ebe693c1ddc\payload_index\ffa90d98j3j1790c4t161hth-comment_-numeric\config.json
+  Preview: "{'page_size_bytes':2097152,'block_size_bytes':8,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\ae377d1b-94d0-4f72-ab00-9ebe693c1ddc\payload_index\tmpcqerkp6cqus7gms2kj47i-category-map\config.json
+  Preview: "{'page_size_bytes':4194304,'block_size_bytes':16,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\ae377d1b-94d0-4f72-ab00-9ebe693c1ddc\payload_index\u68dps1pohl18kfjg7bchhh2-elementt-map\config.json
+  Preview: "{'page_size_bytes':4194304,'block_size_bytes':16,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\ae377d1b-94d0-4f72-ab00-9ebe693c1ddc\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\ba6b93c0-5ea7-4e43-b87e-a9e76ef2b8e4\payload_index\ffa90d98j3j1790c4t161hth-comment_-map\config.json
+  Preview: "{'page_size_bytes':2097152,'block_size_bytes':8,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\ba6b93c0-5ea7-4e43-b87e-a9e76ef2b8e4\payload_index\ffa90d98j3j1790c4t161hth-comment_-numeric\config.json
+  Preview: "{'page_size_bytes':2097152,'block_size_bytes':8,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\ba6b93c0-5ea7-4e43-b87e-a9e76ef2b8e4\payload_index\tmpcqerkp6cqus7gms2kj47i-category-map\config.json
+  Preview: "{'page_size_bytes':4194304,'block_size_bytes':16,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\ba6b93c0-5ea7-4e43-b87e-a9e76ef2b8e4\payload_index\u68dps1pohl18kfjg7bchhh2-elementt-map\config.json
+  Preview: "{'page_size_bytes':4194304,'block_size_bytes':16,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\ba6b93c0-5ea7-4e43-b87e-a9e76ef2b8e4\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\c9028b56-10f6-41d6-948d-dd2b040f7803\payload_index\ffa90d98j3j1790c4t161hth-comment_-map\config.json
+  Preview: "{'page_size_bytes':2097152,'block_size_bytes':8,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\c9028b56-10f6-41d6-948d-dd2b040f7803\payload_index\ffa90d98j3j1790c4t161hth-comment_-numeric\config.json
+  Preview: "{'page_size_bytes':2097152,'block_size_bytes':8,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\c9028b56-10f6-41d6-948d-dd2b040f7803\payload_index\tmpcqerkp6cqus7gms2kj47i-category-map\config.json
+  Preview: "{'page_size_bytes':4194304,'block_size_bytes':16,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\c9028b56-10f6-41d6-948d-dd2b040f7803\payload_index\u68dps1pohl18kfjg7bchhh2-elementt-map\config.json
+  Preview: "{'page_size_bytes':4194304,'block_size_bytes':16,'region_size_blocks':8192,'compression':'None'}"
+- File: qdrant_storage\collections\Shepher_Obit\0\segments\c9028b56-10f6-41d6-948d-dd2b040f7803\vector_storage\vectors\config.json
   Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
