@@ -1,0 +1,9 @@
+IsEnabled,Text,FileName,Category
+"1","Can you recommend design patterns to help simplify and reduce the total number of files?","DesignPattern","General"
+"1","Calculate how easy this code is to maintain? Can you generate updated examples for how to fix them?","Maintain","General"
+"1","Can you calculate the cyclomatic complexity of the code and suggest ways to reduce it?","Complexity","General"
+"1","Are their any other comments I should be made aware of?", "Other", "General"
+"0","Can you suggest how to rework program.cs file to be easier to read and maintain?", "Program", "General"
+"1","Analyze the following C# code base. Generate the appropriate Mermaid diagrams, a sequence diagram, an application flowchart(s), and class diagrams based on the provided source code. If their are additional diagrams please include those as well.", "Diagram", "General"
+"0","Can you suggest how to better organize based on features the code into namespaces and folders?", "Organization", "General"
+"1","Please suggest any design patterns that should be implemented this code base?","DesignPatterns","General"

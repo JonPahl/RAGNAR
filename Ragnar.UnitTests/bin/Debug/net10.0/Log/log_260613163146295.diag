@@ -1,0 +1,28 @@
+2026-06-13T16:31:46.3011839+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 1.9.1+cb5afc3bb9bb01ebd75b57f89e8358b914ee2a49
+2026-06-13T16:31:46.3088147+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-06-13T16:31:46.3094408+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-06-13T16:31:46.3094457+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 16:31:46.285
+2026-06-13T16:31:46.3095063+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 45512
+2026-06-13T16:31:46.3095323+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.9
+2026-06-13T16:31:46.3095478+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.9\System.Private.CoreLib.dll
+2026-06-13T16:31:46.3095669+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-06-13T16:31:46.3096219+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\RAGNAR.UnitTests.dll
+2026-06-13T16:31:46.3097323+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\Ragnar\TestResults --client-port 61904'
+2026-06-13T16:31:46.3104475+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-06-13T16:31:46.3237257+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-06-13T16:31:46.3334201+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-06-13T16:31:46.4950793+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '3.2.2' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-06-13T16:31:46.5015073+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v3.2.2+728c1dce01 (64-bit .NET 10.0.9)
+2026-06-13T16:31:46.5338724+00:00 xUnit.net INFORMATION   Discovering: RAGNAR.UnitTests
+2026-06-13T16:31:46.5791393+00:00 xUnit.net INFORMATION   Discovered:  RAGNAR.UnitTests
+2026-06-13T16:31:46.5948440+00:00 xUnit.net INFORMATION   Starting:    RAGNAR.UnitTests
+2026-06-13T16:31:47.6141246+00:00 xUnit.net ERROR     ConfigQuestionLoaderTests.LoadFromConfig_CopiesStateCorrectly [FAIL]
+2026-06-13T16:31:47.6144389+00:00 xUnit.net INFORMATION       System.NullReferenceException : Object reference not set to an instance of an object.
+2026-06-13T16:31:47.6147379+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-13T16:31:47.6153559+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar\Questions\ConfigQuestionLoader.cs(28,0): at Ragnar.Questions.ConfigQuestionLoader.LoadFromConfig(IEnumerable`1 configs)
+2026-06-13T16:31:47.6153788+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\VectorIndexingServiceTests.cs(112,0): at ConfigQuestionLoaderTests.LoadFromConfig_CopiesStateCorrectly()
+2026-06-13T16:31:47.6153854+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-13T16:31:47.6154392+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-06-13T16:31:47.6216508+00:00 xUnit.net INFORMATION   Finished:    RAGNAR.UnitTests (ID = '2e01ca3c7fe4ca00034ee27609d27a18ea6e4da3b1731c67cf132ec35e4c9b9d')
+2026-06-13T16:31:47.6246873+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-06-13T16:31:47.6282735+00:00 xUnit.net INFORMATION    RAGNAR.UnitTests  Total: 12, Errors: 0, Failed: 1, Skipped: 0, Not Run: 0, Time: 1.028s

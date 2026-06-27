@@ -1,0 +1,4 @@
+IsEnabled,Text,FileName,Category
+"1","Can you recommend design patterns to help simplify and reduce the total number of files?","DesignPattern","General"
+"1","Calculate how easy this code is to maintain? Can you generate updated examples for how to fix them?","Maintain","General"
+"0","Can you calculate the cyclomatic complexity of the code and suggest ways to reduce it?","Complexity","General"

@@ -1,0 +1,42 @@
+2026-06-11T04:07:49.4802188+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 1.9.1+cb5afc3bb9bb01ebd75b57f89e8358b914ee2a49
+2026-06-11T04:07:49.4912960+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-06-11T04:07:49.4922660+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-06-11T04:07:49.4922735+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 04:07:49.460
+2026-06-11T04:07:49.4923624+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 26280
+2026-06-11T04:07:49.4923947+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.9
+2026-06-11T04:07:49.4924114+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.9\System.Private.CoreLib.dll
+2026-06-11T04:07:49.4924223+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-06-11T04:07:49.4925002+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\RAGNAR.UnitTests.dll
+2026-06-11T04:07:49.4926589+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\Ragnar\TestResults --client-port 55839'
+2026-06-11T04:07:49.4934402+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-06-11T04:07:49.5162965+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-06-11T04:07:49.5283252+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-06-11T04:07:49.7787429+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '3.2.2' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-06-11T04:07:49.7859269+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v3.2.2+728c1dce01 (64-bit .NET 10.0.9)
+2026-06-11T04:07:49.8312061+00:00 xUnit.net INFORMATION   Discovering: RAGNAR.UnitTests
+2026-06-11T04:07:49.8997212+00:00 xUnit.net INFORMATION   Discovered:  RAGNAR.UnitTests
+2026-06-11T04:07:49.9223083+00:00 xUnit.net INFORMATION   Starting:    RAGNAR.UnitTests
+2026-06-11T04:07:50.1335852+00:00 xUnit.net ERROR     RAGNAR.UnitTests.PointTests.FromFilePathAndIndex_Throws_WhenIndexIsWhitespace [FAIL]
+2026-06-11T04:07:50.1344829+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: No exception was thrown
+2026-06-11T04:07:50.1345073+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentException)
+2026-06-11T04:07:50.1351436+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-11T04:07:50.1366073+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\PointTests.cs(22,0): at RAGNAR.UnitTests.PointTests.FromFilePathAndIndex_Throws_WhenIndexIsWhitespace()
+2026-06-11T04:07:50.1366297+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-11T04:07:50.1366355+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-06-11T04:07:50.1514934+00:00 xUnit.net ERROR     RAGNAR.UnitTests.PointTests.FromFilePathAndIndex_Throws_WhenIndexIsNull [FAIL]
+2026-06-11T04:07:50.1515655+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: Exception type was not an exact match
+2026-06-11T04:07:50.1515742+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentException)
+2026-06-11T04:07:50.1515954+00:00 xUnit.net INFORMATION       Actual:   typeof(System.ArgumentNullException)
+2026-06-11T04:07:50.1516019+00:00 xUnit.net INFORMATION       ---- System.ArgumentNullException : Value cannot be null. (Parameter 'index')
+2026-06-11T04:07:50.1516734+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-11T04:07:50.1517418+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\PointTests.cs(13,0): at RAGNAR.UnitTests.PointTests.FromFilePathAndIndex_Throws_WhenIndexIsNull()
+2026-06-11T04:07:50.1518112+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-11T04:07:50.1518306+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-06-11T04:07:50.1518370+00:00 xUnit.net INFORMATION         ----- Inner Stack Trace -----
+2026-06-11T04:07:50.1518611+00:00 xUnit.net INFORMATION            at Ardalis.GuardClauses.GuardClauseExtensions.Null[T](IGuardClause guardClause, T input, String parameterName, String message, Func`1 exceptionCreator)
+2026-06-11T04:07:50.1518890+00:00 xUnit.net INFORMATION            at Ardalis.GuardClauses.GuardClauseExtensions.NullOrEmpty(IGuardClause guardClause, String input, String parameterName, String message, Func`1 exceptionCreator)
+2026-06-11T04:07:50.1519169+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.Core\Utils\Point.cs(20,0): at Ragnar.Core.Utils.Point.FromFilePathAndIndex(String& path, String& index)
+2026-06-11T04:07:50.1519943+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\PointTests.cs(13,0): at RAGNAR.UnitTests.PointTests.<>c__DisplayClass0_0.<FromFilePathAndIndex_Throws_WhenIndexIsNull>b__0()
+2026-06-11T04:07:50.1637106+00:00 xUnit.net INFORMATION   Finished:    RAGNAR.UnitTests (ID = '2e01ca3c7fe4ca00034ee27609d27a18ea6e4da3b1731c67cf132ec35e4c9b9d')
+2026-06-11T04:07:50.1689997+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-06-11T04:07:50.1749218+00:00 xUnit.net INFORMATION    RAGNAR.UnitTests  Total: 2, Errors: 0, Failed: 2, Skipped: 0, Not Run: 0, Time: 0.246s

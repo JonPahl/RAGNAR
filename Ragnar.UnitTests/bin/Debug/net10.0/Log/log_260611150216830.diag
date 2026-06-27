@@ -1,0 +1,82 @@
+2026-06-11T15:02:16.8362895+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 1.9.1+cb5afc3bb9bb01ebd75b57f89e8358b914ee2a49
+2026-06-11T15:02:16.8438278+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-06-11T15:02:16.8444447+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-06-11T15:02:16.8444495+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 15:02:16.821
+2026-06-11T15:02:16.8445105+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 42188
+2026-06-11T15:02:16.8445353+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.9
+2026-06-11T15:02:16.8445604+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.9\System.Private.CoreLib.dll
+2026-06-11T15:02:16.8445687+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-06-11T15:02:16.8446209+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\RAGNAR.UnitTests.dll
+2026-06-11T15:02:16.8447322+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\Ragnar\TestResults --client-port 50724'
+2026-06-11T15:02:16.8453035+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-06-11T15:02:16.8587642+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-06-11T15:02:16.8679373+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-06-11T15:02:17.0225579+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '3.2.2' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-06-11T15:02:17.0288168+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v3.2.2+728c1dce01 (64-bit .NET 10.0.9)
+2026-06-11T15:02:17.0590858+00:00 xUnit.net INFORMATION   Discovering: RAGNAR.UnitTests
+2026-06-11T15:02:17.1020535+00:00 xUnit.net INFORMATION   Discovered:  RAGNAR.UnitTests
+2026-06-11T15:02:17.1186320+00:00 xUnit.net INFORMATION   Starting:    RAGNAR.UnitTests
+2026-06-11T15:02:17.2129256+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Question.QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(key: null) [FAIL]
+2026-06-11T15:02:17.2132726+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: No exception was thrown
+2026-06-11T15:02:17.2132831+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentException)
+2026-06-11T15:02:17.2136052+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-11T15:02:17.2141760+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Question\QuestionTests.cs(59,0): at RAGNAR.UnitTests.Question.QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(String key)
+2026-06-11T15:02:17.2141884+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-11T15:02:17.2141936+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+2026-06-11T15:02:17.2153300+00:00 xUnit.net ERROR     RAGNAR.UnitTests.SavePathExtensionTests.GetResponseDirectory_AppendsResponse_WithTrailingSlash [FAIL]
+2026-06-11T15:02:17.2153414+00:00 xUnit.net INFORMATION       Assert.Equal() Failure: Strings differ
+2026-06-11T15:02:17.2153427+00:00 xUnit.net INFORMATION                      ↓ (pos 4)
+2026-06-11T15:02:17.2153449+00:00 xUnit.net INFORMATION       Expected: "/src\\Response"
+2026-06-11T15:02:17.2153459+00:00 xUnit.net INFORMATION       Actual:   "/src/Response"
+2026-06-11T15:02:17.2153462+00:00 xUnit.net INFORMATION                      ↑ (pos 4)
+2026-06-11T15:02:17.2153605+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-11T15:02:17.2153801+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\SavePathExtensionTests.cs(17,0): at RAGNAR.UnitTests.SavePathExtensionTests.GetResponseDirectory_AppendsResponse_WithTrailingSlash()
+2026-06-11T15:02:17.2153859+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-11T15:02:17.2153885+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-06-11T15:02:17.2166732+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Question.QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(key: "") [FAIL]
+2026-06-11T15:02:17.2166799+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: No exception was thrown
+2026-06-11T15:02:17.2166823+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentException)
+2026-06-11T15:02:17.2166904+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-11T15:02:17.2167000+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Question\QuestionTests.cs(59,0): at RAGNAR.UnitTests.Question.QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(String key)
+2026-06-11T15:02:17.2167035+00:00 xUnit.net INFORMATION            at InvokeStub_QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(Object, Span`1)
+2026-06-11T15:02:17.2167074+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-06-11T15:02:17.2167671+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Question.QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(key: "   ") [FAIL]
+2026-06-11T15:02:17.2167715+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: No exception was thrown
+2026-06-11T15:02:17.2167726+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentException)
+2026-06-11T15:02:17.2167748+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-11T15:02:17.2167976+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Question\QuestionTests.cs(59,0): at RAGNAR.UnitTests.Question.QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(String key)
+2026-06-11T15:02:17.2168012+00:00 xUnit.net INFORMATION            at InvokeStub_QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(Object, Span`1)
+2026-06-11T15:02:17.2168074+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-06-11T15:02:17.2262536+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Question.AssemblyExtensionsTests.InformationalVersion_ReturnsAttribute_Value [FAIL]
+2026-06-11T15:02:17.2262697+00:00 xUnit.net INFORMATION       Assert.NotNull() Failure: Value is null
+2026-06-11T15:02:17.2262732+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-11T15:02:17.2262822+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Question\AssemblyExtensionsTests.cs(20,0): at RAGNAR.UnitTests.Question.AssemblyExtensionsTests.InformationalVersion_ReturnsAttribute_Value()
+2026-06-11T15:02:17.2262897+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-11T15:02:17.2262922+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-06-11T15:02:17.2502762+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Branding.BrandingDisplayTests.Display_WritesExpectedOutput [FAIL]
+2026-06-11T15:02:17.2502925+00:00 xUnit.net INFORMATION       Moq.MockException : 
+2026-06-11T15:02:17.2502982+00:00 xUnit.net INFORMATION       Expected invocation on the mock at least once, but was never performed: w => w.Write(It.IsAny<string>(), null)
+2026-06-11T15:02:17.2502987+00:00 xUnit.net INFORMATION       
+2026-06-11T15:02:17.2502991+00:00 xUnit.net INFORMATION       Performed invocations:
+2026-06-11T15:02:17.2502994+00:00 xUnit.net INFORMATION       
+2026-06-11T15:02:17.2502998+00:00 xUnit.net INFORMATION          Mock<IOutputWriter:1> (w):
+2026-06-11T15:02:17.2503002+00:00 xUnit.net INFORMATION       
+2026-06-11T15:02:17.2503005+00:00 xUnit.net INFORMATION             IOutputWriter.Write(Text)
+2026-06-11T15:02:17.2503037+00:00 xUnit.net INFORMATION             IOutputWriter.Write(Text)
+2026-06-11T15:02:17.2503040+00:00 xUnit.net INFORMATION             IOutputWriter.Write(Text)
+2026-06-11T15:02:17.2503044+00:00 xUnit.net INFORMATION             IOutputWriter.WriteLine()
+2026-06-11T15:02:17.2503047+00:00 xUnit.net INFORMATION             IOutputWriter.Write(Text)
+2026-06-11T15:02:17.2503050+00:00 xUnit.net INFORMATION             IOutputWriter.WriteLine()
+2026-06-11T15:02:17.2503052+00:00 xUnit.net INFORMATION             IOutputWriter.WriteRule()
+2026-06-11T15:02:17.2503055+00:00 xUnit.net INFORMATION             IOutputWriter.WriteLine()
+2026-06-11T15:02:17.2503058+00:00 xUnit.net INFORMATION       
+2026-06-11T15:02:17.2503084+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-11T15:02:17.2503185+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(332,0): at Moq.Mock.Verify(Mock mock, LambdaExpression expression, Times times, String failMessage)
+2026-06-11T15:02:17.2503209+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(727,0): at Moq.Mock`1.Verify(Expression`1 expression, Times times)
+2026-06-11T15:02:17.2503229+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(741,0): at Moq.Mock`1.Verify(Expression`1 expression, Func`1 times)
+2026-06-11T15:02:17.2503293+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Branding\BrandingDisplayTests.cs(21,0): at RAGNAR.UnitTests.Branding.BrandingDisplayTests.Display_WritesExpectedOutput()
+2026-06-11T15:02:17.2503340+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-11T15:02:17.2503375+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-06-11T15:02:17.2548462+00:00 xUnit.net INFORMATION   Finished:    RAGNAR.UnitTests (ID = '2e01ca3c7fe4ca00034ee27609d27a18ea6e4da3b1731c67cf132ec35e4c9b9d')
+2026-06-11T15:02:17.2576355+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-06-11T15:02:17.2608866+00:00 xUnit.net INFORMATION    RAGNAR.UnitTests  Total: 6, Errors: 0, Failed: 6, Skipped: 0, Not Run: 0, Time: 0.140s

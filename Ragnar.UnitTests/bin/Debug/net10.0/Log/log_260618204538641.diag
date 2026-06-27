@@ -1,0 +1,121 @@
+2026-06-18T20:45:38.6464049+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 1.9.1+cb5afc3bb9bb01ebd75b57f89e8358b914ee2a49
+2026-06-18T20:45:38.6537803+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-06-18T20:45:38.6543946+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-06-18T20:45:38.6544015+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 20:45:38.632
+2026-06-18T20:45:38.6544583+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 455128
+2026-06-18T20:45:38.6544912+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.9
+2026-06-18T20:45:38.6545052+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.9\System.Private.CoreLib.dll
+2026-06-18T20:45:38.6545124+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-06-18T20:45:38.6545702+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\RAGNAR.UnitTests.dll
+2026-06-18T20:45:38.6546776+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\Ragnar\TestResults --client-port 57881'
+2026-06-18T20:45:38.6552408+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-06-18T20:45:38.6680792+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-06-18T20:45:38.6777163+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-06-18T20:45:39.0007169+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '3.2.2' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-06-18T20:45:39.0083748+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v3.2.2+728c1dce01 (64-bit .NET 10.0.9)
+2026-06-18T20:45:39.0428402+00:00 xUnit.net INFORMATION   Discovering: RAGNAR.UnitTests
+2026-06-18T20:45:39.0983604+00:00 xUnit.net INFORMATION   Discovered:  RAGNAR.UnitTests
+2026-06-18T20:45:39.1162066+00:00 xUnit.net INFORMATION   Starting:    RAGNAR.UnitTests
+2026-06-18T20:45:39.8459110+00:00 xUnit.net ERROR     RAGNAR.UnitTests.StopwatchExtensionsTests.ElapsedTimeString_FormatsCorrectly(ticks: 60000, expected: "01:00") [FAIL]
+2026-06-18T20:45:39.8462673+00:00 xUnit.net INFORMATION       Assert.Equal() Failure: Strings differ
+2026-06-18T20:45:39.8462789+00:00 xUnit.net INFORMATION                   ↓ (pos 1)
+2026-06-18T20:45:39.8462805+00:00 xUnit.net INFORMATION       Expected: "01:00"
+2026-06-18T20:45:39.8462812+00:00 xUnit.net INFORMATION       Actual:   "00:00"
+2026-06-18T20:45:39.8462816+00:00 xUnit.net INFORMATION                   ↑ (pos 1)
+2026-06-18T20:45:39.8465909+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T20:45:39.8472105+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\StopwatchExtensionsTests.cs(23,0): at RAGNAR.UnitTests.StopwatchExtensionsTests.ElapsedTimeString_FormatsCorrectly(Int64 ticks, String expected)
+2026-06-18T20:45:39.8472264+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-18T20:45:39.8472323+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+2026-06-18T20:45:39.8479200+00:00 xUnit.net ERROR     RAGNAR.UnitTests.CodeDocumentExtensionsTests.Dictionary_ReturnsNonEmptyDictionary [FAIL]
+2026-06-18T20:45:39.8479364+00:00 xUnit.net INFORMATION       Assert.Equal() Failure: Values differ
+2026-06-18T20:45:39.8479386+00:00 xUnit.net INFORMATION       Expected: 8
+2026-06-18T20:45:39.8479391+00:00 xUnit.net INFORMATION       Actual:   7
+2026-06-18T20:45:39.8479610+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T20:45:39.8479754+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\CodeDocumentExtensionsTests.cs(26,0): at RAGNAR.UnitTests.CodeDocumentExtensionsTests.Dictionary_ReturnsNonEmptyDictionary()
+2026-06-18T20:45:39.8479796+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-18T20:45:39.8479843+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-06-18T20:45:39.8480296+00:00 xUnit.net ERROR     RAGNAR.UnitTests.SavePathExtensionTests.GetResponseDirectory_ReturnsExpected(baseDir: "/home/user", expected: "/home/user/Response") [FAIL]
+2026-06-18T20:45:39.8480334+00:00 xUnit.net INFORMATION       Assert.Equal() Failure: Strings differ
+2026-06-18T20:45:39.8480341+00:00 xUnit.net INFORMATION                            ↓ (pos 10)
+2026-06-18T20:45:39.8480345+00:00 xUnit.net INFORMATION       Expected: "/home/user/Response"
+2026-06-18T20:45:39.8480382+00:00 xUnit.net INFORMATION       Actual:   "/home/user\\Response"
+2026-06-18T20:45:39.8480387+00:00 xUnit.net INFORMATION                            ↑ (pos 10)
+2026-06-18T20:45:39.8480420+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T20:45:39.8480516+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\SavePathExtensionTests.cs(33,0): at RAGNAR.UnitTests.SavePathExtensionTests.GetResponseDirectory_ReturnsExpected(String baseDir, String expected)
+2026-06-18T20:45:39.8480551+00:00 xUnit.net INFORMATION            at InvokeStub_SavePathExtensionTests.GetResponseDirectory_ReturnsExpected(Object, Span`1)
+2026-06-18T20:45:39.8480620+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-06-18T20:45:39.8483642+00:00 xUnit.net ERROR     RAGNAR.UnitTests.FileSystemEntryExtensionsTests.HasAllowedExtension_False_ForDirectory [FAIL]
+2026-06-18T20:45:39.8483826+00:00 xUnit.net INFORMATION       System.NullReferenceException : Object reference not set to an instance of an object.
+2026-06-18T20:45:39.8483916+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T20:45:39.8483960+00:00 xUnit.net INFORMATION            at System.IO.Enumeration.FileSystemEntry.get_IsDirectory()
+2026-06-18T20:45:39.8484044+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar\Extensions\FileSystemEntryExtensions.cs(23,0): at Ragnar.Extensions.FileSystemEntryExtensions.HasAllowedExtension(FileSystemEntry entry, IReadOnlyCollection`1 allowedExtensions)
+2026-06-18T20:45:39.8484098+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\FileSystemEntryExtensionsTests.cs(33,0): at RAGNAR.UnitTests.FileSystemEntryExtensionsTests.HasAllowedExtension_False_ForDirectory()
+2026-06-18T20:45:39.8484126+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-18T20:45:39.8484153+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-06-18T20:45:39.8487484+00:00 xUnit.net ERROR     RAGNAR.UnitTests.FileSystemEntryExtensionsTests.HasAllowedExtension_ReturnsExpected(fileName: "file.PDF", allowed: [".pdf"], expected: True) [FAIL]
+2026-06-18T20:45:39.8487581+00:00 xUnit.net INFORMATION       System.NullReferenceException : Object reference not set to an instance of an object.
+2026-06-18T20:45:39.8487702+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T20:45:39.8487805+00:00 xUnit.net INFORMATION            at System.IO.Enumeration.FileSystemEntry.get_IsDirectory()
+2026-06-18T20:45:39.8487866+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar\Extensions\FileSystemEntryExtensions.cs(23,0): at Ragnar.Extensions.FileSystemEntryExtensions.HasAllowedExtension(FileSystemEntry entry, IReadOnlyCollection`1 allowedExtensions)
+2026-06-18T20:45:39.8487980+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\FileSystemEntryExtensionsTests.cs(18,0): at RAGNAR.UnitTests.FileSystemEntryExtensionsTests.HasAllowedExtension_ReturnsExpected(String fileName, String[] allowed, Boolean expected)
+2026-06-18T20:45:39.8488057+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-18T20:45:39.8488098+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+2026-06-18T20:45:39.8489055+00:00 xUnit.net ERROR     RAGNAR.UnitTests.FileSystemEntryExtensionsTests.HasAllowedExtension_ReturnsExpected(fileName: "file.pdf", allowed: [".pdf", ".docx"], expected: True) [FAIL]
+2026-06-18T20:45:39.8489102+00:00 xUnit.net INFORMATION       System.NullReferenceException : Object reference not set to an instance of an object.
+2026-06-18T20:45:39.8489168+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T20:45:39.8489200+00:00 xUnit.net INFORMATION            at System.IO.Enumeration.FileSystemEntry.get_IsDirectory()
+2026-06-18T20:45:39.8489248+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar\Extensions\FileSystemEntryExtensions.cs(23,0): at Ragnar.Extensions.FileSystemEntryExtensions.HasAllowedExtension(FileSystemEntry entry, IReadOnlyCollection`1 allowedExtensions)
+2026-06-18T20:45:39.8489321+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\FileSystemEntryExtensionsTests.cs(18,0): at RAGNAR.UnitTests.FileSystemEntryExtensionsTests.HasAllowedExtension_ReturnsExpected(String fileName, String[] allowed, Boolean expected)
+2026-06-18T20:45:39.8489352+00:00 xUnit.net INFORMATION            at InvokeStub_FileSystemEntryExtensionsTests.HasAllowedExtension_ReturnsExpected(Object, Span`1)
+2026-06-18T20:45:39.8489393+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-06-18T20:45:39.8490110+00:00 xUnit.net ERROR     RAGNAR.UnitTests.FileSystemEntryExtensionsTests.HasAllowedExtension_ReturnsExpected(fileName: "file.txt", allowed: [".pdf", ".docx"], expected: False) [FAIL]
+2026-06-18T20:45:39.8490180+00:00 xUnit.net INFORMATION       System.NullReferenceException : Object reference not set to an instance of an object.
+2026-06-18T20:45:39.8490294+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T20:45:39.8490348+00:00 xUnit.net INFORMATION            at System.IO.Enumeration.FileSystemEntry.get_IsDirectory()
+2026-06-18T20:45:39.8490408+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar\Extensions\FileSystemEntryExtensions.cs(23,0): at Ragnar.Extensions.FileSystemEntryExtensions.HasAllowedExtension(FileSystemEntry entry, IReadOnlyCollection`1 allowedExtensions)
+2026-06-18T20:45:39.8490450+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\FileSystemEntryExtensionsTests.cs(18,0): at RAGNAR.UnitTests.FileSystemEntryExtensionsTests.HasAllowedExtension_ReturnsExpected(String fileName, String[] allowed, Boolean expected)
+2026-06-18T20:45:39.8490590+00:00 xUnit.net INFORMATION            at InvokeStub_FileSystemEntryExtensionsTests.HasAllowedExtension_ReturnsExpected(Object, Span`1)
+2026-06-18T20:45:39.8490662+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-06-18T20:45:39.8635971+00:00 xUnit.net ERROR     RAGNAR.UnitTests.StopwatchExtensionsTests.ElapsedTimeString_FormatsCorrectly(ticks: 125000, expected: "02:05") [FAIL]
+2026-06-18T20:45:39.8636184+00:00 xUnit.net INFORMATION       Assert.Equal() Failure: Strings differ
+2026-06-18T20:45:39.8636205+00:00 xUnit.net INFORMATION                   ↓ (pos 1)
+2026-06-18T20:45:39.8636211+00:00 xUnit.net INFORMATION       Expected: "02:05"
+2026-06-18T20:45:39.8636216+00:00 xUnit.net INFORMATION       Actual:   "00:00"
+2026-06-18T20:45:39.8636221+00:00 xUnit.net INFORMATION                   ↑ (pos 1)
+2026-06-18T20:45:39.8636300+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T20:45:39.8636399+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\StopwatchExtensionsTests.cs(23,0): at RAGNAR.UnitTests.StopwatchExtensionsTests.ElapsedTimeString_FormatsCorrectly(Int64 ticks, String expected)
+2026-06-18T20:45:39.8636434+00:00 xUnit.net INFORMATION            at InvokeStub_StopwatchExtensionsTests.ElapsedTimeString_FormatsCorrectly(Object, Span`1)
+2026-06-18T20:45:39.8636507+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-06-18T20:45:39.9672657+00:00 xUnit.net ERROR     RAGNAR.UnitTests.ChunkBySyntaxTreeTests.ChunkSourceFile_ReturnsNull_ForInvalidSyntax [FAIL]
+2026-06-18T20:45:39.9672858+00:00 xUnit.net INFORMATION       Assert.Null() Failure: Value is not null
+2026-06-18T20:45:39.9672877+00:00 xUnit.net INFORMATION       Expected: null
+2026-06-18T20:45:39.9672883+00:00 xUnit.net INFORMATION       Actual:   []
+2026-06-18T20:45:39.9672910+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T20:45:39.9673027+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\ChunkBySyntaxTreeTests.cs(39,0): at RAGNAR.UnitTests.ChunkBySyntaxTreeTests.ChunkSourceFile_ReturnsNull_ForInvalidSyntax()
+2026-06-18T20:45:39.9673060+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-18T20:45:39.9673087+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-06-18T20:45:41.1257022+00:00 xUnit.net ERROR     RAGNAR.UnitTests.AssemblyExtensionsTests.InformationalVersion_ReturnsDefault_WhenMissing [FAIL]
+2026-06-18T20:45:41.1257242+00:00 xUnit.net INFORMATION       Assert.Equal() Failure: Strings differ
+2026-06-18T20:45:41.1257259+00:00 xUnit.net INFORMATION                   ↓ (pos 1)
+2026-06-18T20:45:41.1257266+00:00 xUnit.net INFORMATION       Expected: "1.0.0"
+2026-06-18T20:45:41.1257273+00:00 xUnit.net INFORMATION       Actual:   "10.0.9-servicing.26270.113+901ca941248413c79832d2f"···
+2026-06-18T20:45:41.1257280+00:00 xUnit.net INFORMATION                   ↑ (pos 1)
+2026-06-18T20:45:41.1257388+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T20:45:41.1257587+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\AssemblyExtensionsTests.cs(36,0): at RAGNAR.UnitTests.AssemblyExtensionsTests.InformationalVersion_ReturnsDefault_WhenMissing()
+2026-06-18T20:45:41.1257639+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-18T20:45:41.1257674+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-06-18T20:45:41.1354749+00:00 xUnit.net ERROR     RAGNAR.UnitTests.ApplicationBannerTests.RenderBranding_WritesExpectedContent [FAIL]
+2026-06-18T20:45:41.1354941+00:00 xUnit.net INFORMATION       System.ArgumentNullException : Value cannot be null. (Parameter 'element')
+2026-06-18T20:45:41.1355044+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T20:45:41.1355111+00:00 xUnit.net INFORMATION            at System.ArgumentNullException.Throw(String paramName)
+2026-06-18T20:45:41.1355169+00:00 xUnit.net INFORMATION            at System.Attribute.GetCustomAttributes(Assembly element, Type attributeType, Boolean inherit)
+2026-06-18T20:45:41.1355215+00:00 xUnit.net INFORMATION            at System.Attribute.GetCustomAttribute(Assembly element, Type attributeType, Boolean inherit)
+2026-06-18T20:45:41.1355325+00:00 xUnit.net INFORMATION            at System.Reflection.CustomAttributeExtensions.GetCustomAttribute[T](Assembly element)
+2026-06-18T20:45:41.1355412+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar\Branding\AssemblyExtensions.cs(21,0): at Ragnar.Branding.AssemblyExtensions.get_InformationalVersion(IAssemblyInfo asm)
+2026-06-18T20:45:41.1355460+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar\Branding\ApplicationBanner.cs(14,0): at Ragnar.Branding.ApplicationBanner..ctor(IOutputWriter writer, IAssemblyInfo assemblyInfo)
+2026-06-18T20:45:41.1355516+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\ApplicationBannerTests.cs(18,0): at RAGNAR.UnitTests.ApplicationBannerTests.RenderBranding_WritesExpectedContent()
+2026-06-18T20:45:41.1355604+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-18T20:45:41.1355646+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-06-18T20:45:41.2642605+00:00 xUnit.net INFORMATION   Finished:    RAGNAR.UnitTests (ID = '2e01ca3c7fe4ca00034ee27609d27a18ea6e4da3b1731c67cf132ec35e4c9b9d')
+2026-06-18T20:45:41.2675432+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-06-18T20:45:41.2711346+00:00 xUnit.net INFORMATION    RAGNAR.UnitTests  Total: 34, Errors: 0, Failed: 11, Skipped: 0, Not Run: 0, Time: 2.152s

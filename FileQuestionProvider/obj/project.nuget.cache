@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "o82D3eCgVq8=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\jp325\\source\\Ragnar\\FileQuestionProvider\\FileQuestionProvider.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\jp325\\.nuget\\packages\\csvhelper\\33.1.0\\csvhelper.33.1.0.nupkg.sha512"
+  ],
+  "logs": []
+}

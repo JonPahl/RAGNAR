@@ -1,0 +1,40 @@
+2026-06-10T03:13:29.8721196+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 1.9.1+cb5afc3bb9bb01ebd75b57f89e8358b914ee2a49
+2026-06-10T03:13:29.8909109+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-06-10T03:13:29.8921641+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-06-10T03:13:29.8921755+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 03:13:29.840
+2026-06-10T03:13:29.8922839+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 26972
+2026-06-10T03:13:29.8923463+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.8
+2026-06-10T03:13:29.8923753+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.8\System.Private.CoreLib.dll
+2026-06-10T03:13:29.8923932+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-06-10T03:13:29.8924973+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\RAGNAR.UnitTests.dll
+2026-06-10T03:13:29.8930050+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\Ragnar\TestResults --client-port 59915'
+2026-06-10T03:13:29.8945211+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-06-10T03:13:29.9166690+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-06-10T03:13:29.9290684+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-06-10T03:13:30.2005299+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '3.2.2' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-06-10T03:13:30.2096522+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v3.2.2+728c1dce01 (64-bit .NET 10.0.8)
+2026-06-10T03:13:30.2599891+00:00 xUnit.net INFORMATION   Discovering: RAGNAR.UnitTests
+2026-06-10T03:13:30.3109593+00:00 xUnit.net INFORMATION   Discovered:  RAGNAR.UnitTests
+2026-06-10T03:13:30.3316250+00:00 xUnit.net INFORMATION   Starting:    RAGNAR.UnitTests
+2026-06-10T03:13:30.4871665+00:00 xUnit.net ERROR     EmbeddingRepositoryTests.UpsertBatchAsync_GeneratesAndUpsertsEmbeddings [FAIL]
+2026-06-10T03:13:30.4875012+00:00 xUnit.net INFORMATION       System.NotSupportedException : Unsupported expression: o => o.AsEmbeddingGenerator()
+2026-06-10T03:13:30.4875190+00:00 xUnit.net INFORMATION       Extension methods (here: QuestionExtensions.AsEmbeddingGenerator) may not be used in setup / verification expressions.
+2026-06-10T03:13:30.4877922+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-10T03:13:30.4883710+00:00 xUnit.net INFORMATION         /_/src/Moq/Guard.cs(87,0): at Moq.Guard.IsOverridable(MethodInfo method, Expression expression)
+2026-06-10T03:13:30.4883909+00:00 xUnit.net INFORMATION         /_/src/Moq/MethodExpectation.cs(87,0): at Moq.MethodExpectation..ctor(LambdaExpression expression, MethodInfo method, IReadOnlyList`1 arguments, Boolean exactGenericTypeArguments, Boolean skipMatcherInitialization, Boolean allowNonOverridable)
+2026-06-10T03:13:30.4883959+00:00 xUnit.net INFORMATION         /_/src/Moq/ExpressionExtensions.cs(235,0): at Moq.ExpressionExtensions.<Split>g__Split|5_0(Expression e, Expression& r, MethodExpectation& p, Boolean assignment, Boolean allowNonOverridableLastProperty)
+2026-06-10T03:13:30.4883988+00:00 xUnit.net INFORMATION         /_/src/Moq/ExpressionExtensions.cs(149,0): at Moq.ExpressionExtensions.Split(LambdaExpression expression, Boolean allowNonOverridableLastProperty)
+2026-06-10T03:13:30.4884040+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(645,0): at Moq.Mock.SetupRecursive[TSetup](Mock mock, LambdaExpression expression, Func`4 setupLast, Boolean allowNonOverridableLastProperty)
+2026-06-10T03:13:30.4884063+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(500,0): at Moq.Mock.Setup(Mock mock, LambdaExpression expression, Condition condition)
+2026-06-10T03:13:30.4884084+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(452,0): at Moq.Mock`1.Setup[TResult](Expression`1 expression)
+2026-06-10T03:13:30.4884123+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\EmbeddingRepositoryTests.cs(30,0): at EmbeddingRepositoryTests.UpsertBatchAsync_GeneratesAndUpsertsEmbeddings()
+2026-06-10T03:13:30.4884163+00:00 xUnit.net INFORMATION         --- End of stack trace from previous location ---
+2026-06-10T03:13:30.5350538+00:00 xUnit.net ERROR     RagPipelineExecutorTests.RunAsync_GeneratesAndSavesResponse [FAIL]
+2026-06-10T03:13:30.5350744+00:00 xUnit.net INFORMATION       System.NullReferenceException : Object reference not set to an instance of an object.
+2026-06-10T03:13:30.5350832+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-10T03:13:30.5350943+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar\RagPipeline\RagPipelineExecutor.cs(42,0): at Ragnar.RagPipeline.RagPipelineExecutor.RunAsync(Question question, String contextText, CancellationToken ct)
+2026-06-10T03:13:30.5351025+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\RagPipelineExecutorTests.cs(32,0): at RagPipelineExecutorTests.RunAsync_GeneratesAndSavesResponse()
+2026-06-10T03:13:30.5351031+00:00 xUnit.net INFORMATION         --- End of stack trace from previous location ---
+2026-06-10T03:13:30.5513253+00:00 xUnit.net INFORMATION   Finished:    RAGNAR.UnitTests (ID = '2e01ca3c7fe4ca00034ee27609d27a18ea6e4da3b1731c67cf132ec35e4c9b9d')
+2026-06-10T03:13:30.5556670+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-06-10T03:13:30.5595384+00:00 xUnit.net INFORMATION    RAGNAR.UnitTests  Total: 15, Errors: 0, Failed: 2, Skipped: 0, Not Run: 0, Time: 0.222s

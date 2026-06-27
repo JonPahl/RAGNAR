@@ -1,9 +1,9 @@
 <Solution>
-  <Project Path="../FileQuestionProvider/FileQuestionProvider.csproj" Id="6949801f-830a-42ef-8f1b-44c923274d1d" />
-  <Project Path="../Ragnar.Core/Ragnar.Core.csproj" />
-  <Project Path="../Ragnar.Embedding/Ragnar.Embedding.csproj" Id="2d4b3203-23de-4663-bfa7-50df74c7b175" />
-  <Project Path="../Ragnar.Plugins/Ragnar.Plugins.shproj" Id="f32e6ba7-7bb4-485e-8ef2-a51bc1c35fd7" />
-  <Project Path="../Ragnar.Questions/Ragnar.Questions.csproj" Id="a6236b82-7ce3-4cda-b8a4-7f455b50ea55" />
-  <Project Path="../Ragnar.UnitTests/RAGNAR.UnitTests.csproj" DisplayName="Ragnar.UnitTests" />
-  <Project Path="RAGNAR.csproj" />
+  <Project Path="FileQuestionProvider/FileQuestionProvider.csproj" />
+  <Project Path="Ragnar.Core/Ragnar.Core.csproj" />
+  <Project Path="Ragnar.Embedding/Ragnar.Embedding.csproj" />
+  <Project Path="Ragnar.Plugins/Ragnar.Plugins.shproj" Id="f32e6ba7-7bb4-485e-8ef2-a51bc1c35fd7" />
+  <Project Path="Ragnar.Questions/Ragnar.Questions.csproj" />
+  <Project Path="Ragnar.UnitTests/Ragnar.UnitTests.csproj" />
+  <Project Path="Ragnar/Ragnar.csproj" />
 </Solution>

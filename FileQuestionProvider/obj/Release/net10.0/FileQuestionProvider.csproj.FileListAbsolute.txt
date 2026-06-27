@@ -1,0 +1,14 @@
+C:\Users\jp325\source\Ragnar\FileQuestionProvider\bin\Release\net10.0\General.csv
+C:\Users\jp325\source\Ragnar\FileQuestionProvider\bin\Release\net10.0\Refactor.csv
+C:\Users\jp325\source\Ragnar\FileQuestionProvider\bin\Release\net10.0\FileQuestionProvider.deps.json
+C:\Users\jp325\source\Ragnar\FileQuestionProvider\bin\Release\net10.0\FileQuestionProvider.dll
+C:\Users\jp325\source\Ragnar\FileQuestionProvider\bin\Release\net10.0\FileQuestionProvider.pdb
+C:\Users\jp325\source\Ragnar\FileQuestionProvider\obj\Release\net10.0\FileQuestionProvider.csproj.AssemblyReference.cache
+C:\Users\jp325\source\Ragnar\FileQuestionProvider\obj\Release\net10.0\FileQuestionProvider.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jp325\source\Ragnar\FileQuestionProvider\obj\Release\net10.0\FileQuestionProvider.AssemblyInfoInputs.cache
+C:\Users\jp325\source\Ragnar\FileQuestionProvider\obj\Release\net10.0\FileQuestionProvider.AssemblyInfo.cs
+C:\Users\jp325\source\Ragnar\FileQuestionProvider\obj\Release\net10.0\FileQuestionProvider.csproj.CoreCompileInputs.cache
+C:\Users\jp325\source\Ragnar\FileQuestionProvider\obj\Release\net10.0\FileQuestionProvider.dll
+C:\Users\jp325\source\Ragnar\FileQuestionProvider\obj\Release\net10.0\refint\FileQuestionProvider.dll
+C:\Users\jp325\source\Ragnar\FileQuestionProvider\obj\Release\net10.0\FileQuestionProvider.pdb
+C:\Users\jp325\source\Ragnar\FileQuestionProvider\obj\Release\net10.0\ref\FileQuestionProvider.dll

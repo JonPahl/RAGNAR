@@ -1,0 +1,63 @@
+2026-06-11T14:58:58.4328196+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 1.9.1+cb5afc3bb9bb01ebd75b57f89e8358b914ee2a49
+2026-06-11T14:58:58.4443871+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-06-11T14:58:58.4454684+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-06-11T14:58:58.4454785+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 14:58:58.408
+2026-06-11T14:58:58.4455781+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 33528
+2026-06-11T14:58:58.4456240+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.9
+2026-06-11T14:58:58.4457263+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.9\System.Private.CoreLib.dll
+2026-06-11T14:58:58.4457425+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-06-11T14:58:58.4458283+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\RAGNAR.UnitTests.dll
+2026-06-11T14:58:58.4459875+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\Ragnar\TestResults --client-port 57902'
+2026-06-11T14:58:58.4468540+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-06-11T14:58:58.4657838+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-06-11T14:58:58.4780881+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-06-11T14:58:58.7308980+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '3.2.2' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-06-11T14:58:58.7395678+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v3.2.2+728c1dce01 (64-bit .NET 10.0.9)
+2026-06-11T14:58:58.7876290+00:00 xUnit.net INFORMATION   Discovering: RAGNAR.UnitTests
+2026-06-11T14:58:58.8557480+00:00 xUnit.net INFORMATION   Discovered:  RAGNAR.UnitTests
+2026-06-11T14:58:58.8807677+00:00 xUnit.net INFORMATION   Starting:    RAGNAR.UnitTests
+2026-06-11T14:58:59.1612752+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Question.QuestionTests.IsActive_Throws_WhenTextIsInvalid(text: "   ") [FAIL]
+2026-06-11T14:58:59.1616488+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: No exception was thrown
+2026-06-11T14:58:59.1616691+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentException)
+2026-06-11T14:58:59.1619620+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-11T14:58:59.1628276+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Question\QuestionTests.cs(42,0): at RAGNAR.UnitTests.Question.QuestionTests.IsActive_Throws_WhenTextIsInvalid(String text)
+2026-06-11T14:58:59.1628455+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-11T14:58:59.1628517+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+2026-06-11T14:58:59.1673467+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Question.QuestionTests.IsActive_Throws_WhenTextIsInvalid(text: "") [FAIL]
+2026-06-11T14:58:59.1673643+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: No exception was thrown
+2026-06-11T14:58:59.1673661+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentException)
+2026-06-11T14:58:59.1673742+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-11T14:58:59.1673877+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Question\QuestionTests.cs(42,0): at RAGNAR.UnitTests.Question.QuestionTests.IsActive_Throws_WhenTextIsInvalid(String text)
+2026-06-11T14:58:59.1673945+00:00 xUnit.net INFORMATION            at InvokeStub_QuestionTests.IsActive_Throws_WhenTextIsInvalid(Object, Span`1)
+2026-06-11T14:58:59.1673993+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-06-11T14:58:59.1677843+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Question.QuestionTests.IsActive_Throws_WhenTextIsInvalid(text: null) [FAIL]
+2026-06-11T14:58:59.1677960+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: No exception was thrown
+2026-06-11T14:58:59.1677998+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentException)
+2026-06-11T14:58:59.1678060+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-11T14:58:59.1678152+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Question\QuestionTests.cs(42,0): at RAGNAR.UnitTests.Question.QuestionTests.IsActive_Throws_WhenTextIsInvalid(String text)
+2026-06-11T14:58:59.1678181+00:00 xUnit.net INFORMATION            at InvokeStub_QuestionTests.IsActive_Throws_WhenTextIsInvalid(Object, Span`1)
+2026-06-11T14:58:59.1678223+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-06-11T14:58:59.1708309+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Question.QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(key: null) [FAIL]
+2026-06-11T14:58:59.1708594+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: No exception was thrown
+2026-06-11T14:58:59.1708630+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentException)
+2026-06-11T14:58:59.1708704+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-11T14:58:59.1708951+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Question\QuestionTests.cs(52,0): at RAGNAR.UnitTests.Question.QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(String key)
+2026-06-11T14:58:59.1709066+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-11T14:58:59.1709154+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+2026-06-11T14:58:59.1712917+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Question.QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(key: "") [FAIL]
+2026-06-11T14:58:59.1713135+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: No exception was thrown
+2026-06-11T14:58:59.1713290+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentException)
+2026-06-11T14:58:59.1713415+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-11T14:58:59.1713601+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Question\QuestionTests.cs(52,0): at RAGNAR.UnitTests.Question.QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(String key)
+2026-06-11T14:58:59.1713674+00:00 xUnit.net INFORMATION            at InvokeStub_QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(Object, Span`1)
+2026-06-11T14:58:59.1713852+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-06-11T14:58:59.1715367+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Question.QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(key: "   ") [FAIL]
+2026-06-11T14:58:59.1715461+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: No exception was thrown
+2026-06-11T14:58:59.1715493+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentException)
+2026-06-11T14:58:59.1715611+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-11T14:58:59.1715832+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Question\QuestionTests.cs(52,0): at RAGNAR.UnitTests.Question.QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(String key)
+2026-06-11T14:58:59.1715909+00:00 xUnit.net INFORMATION            at InvokeStub_QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(Object, Span`1)
+2026-06-11T14:58:59.1716032+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-06-11T14:58:59.1864736+00:00 xUnit.net INFORMATION   Finished:    RAGNAR.UnitTests (ID = '2e01ca3c7fe4ca00034ee27609d27a18ea6e4da3b1731c67cf132ec35e4c9b9d')
+2026-06-11T14:58:59.1936439+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-06-11T14:58:59.2006957+00:00 xUnit.net INFORMATION    RAGNAR.UnitTests  Total: 6, Errors: 0, Failed: 6, Skipped: 0, Not Run: 0, Time: 0.308s

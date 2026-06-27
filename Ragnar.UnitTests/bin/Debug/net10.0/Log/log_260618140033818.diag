@@ -1,0 +1,146 @@
+2026-06-18T14:00:33.8230850+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 1.9.1+cb5afc3bb9bb01ebd75b57f89e8358b914ee2a49
+2026-06-18T14:00:33.8306875+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-06-18T14:00:33.8312940+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-06-18T14:00:33.8312987+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 14:00:33.808
+2026-06-18T14:00:33.8313667+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 404512
+2026-06-18T14:00:33.8313945+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.9
+2026-06-18T14:00:33.8314109+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.9\System.Private.CoreLib.dll
+2026-06-18T14:00:33.8314204+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-06-18T14:00:33.8314820+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\RAGNAR.UnitTests.dll
+2026-06-18T14:00:33.8316023+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\Ragnar\TestResults --client-port 60093'
+2026-06-18T14:00:33.8322236+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-06-18T14:00:33.8453572+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-06-18T14:00:33.8555519+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-06-18T14:00:34.0146261+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '3.2.2' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-06-18T14:00:34.0218779+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v3.2.2+728c1dce01 (64-bit .NET 10.0.9)
+2026-06-18T14:00:34.0571002+00:00 xUnit.net INFORMATION   Discovering: RAGNAR.UnitTests
+2026-06-18T14:00:34.1053355+00:00 xUnit.net INFORMATION   Discovered:  RAGNAR.UnitTests
+2026-06-18T14:00:34.1202691+00:00 xUnit.net INFORMATION   Starting:    RAGNAR.UnitTests
+2026-06-18T14:00:36.3358821+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Questions.FileSystemEntryExtensionsTests.HasAllowedExtension_ReturnsTrue_ForAllowedExtension [FAIL]
+2026-06-18T14:00:36.3362117+00:00 xUnit.net INFORMATION       System.NullReferenceException : Object reference not set to an instance of an object.
+2026-06-18T14:00:36.3364866+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T14:00:36.3370985+00:00 xUnit.net INFORMATION            at System.IO.Enumeration.FileSystemEntry.get_IsDirectory()
+2026-06-18T14:00:36.3371269+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar\Extensions\FileSystemEntryExtensions.cs(23,0): at Ragnar.Extensions.FileSystemEntryExtensions.HasAllowedExtension(FileSystemEntry entry, IReadOnlyCollection`1 allowedExtensions)
+2026-06-18T14:00:36.3371343+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Questions\FileSystemEntryExtensionsTests.cs(17,0): at RAGNAR.UnitTests.Questions.FileSystemEntryExtensionsTests.HasAllowedExtension_ReturnsTrue_ForAllowedExtension()
+2026-06-18T14:00:36.3371376+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-18T14:00:36.3371488+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-06-18T14:00:36.3377513+00:00 xUnit.net ERROR     RAGNAR.UnitTests.SavePathExtensionTests.GetResponseDirectory_AppendsResponse_WithTrailingSlash [FAIL]
+2026-06-18T14:00:36.3377723+00:00 xUnit.net INFORMATION       Assert.Equal() Failure: Strings differ
+2026-06-18T14:00:36.3377751+00:00 xUnit.net INFORMATION                      ↓ (pos 4)
+2026-06-18T14:00:36.3377757+00:00 xUnit.net INFORMATION       Expected: "/src\\Response"
+2026-06-18T14:00:36.3377761+00:00 xUnit.net INFORMATION       Actual:   "/src/Response"
+2026-06-18T14:00:36.3377771+00:00 xUnit.net INFORMATION                      ↑ (pos 4)
+2026-06-18T14:00:36.3377956+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T14:00:36.3378062+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\SavePathExtensionTests.cs(17,0): at RAGNAR.UnitTests.SavePathExtensionTests.GetResponseDirectory_AppendsResponse_WithTrailingSlash()
+2026-06-18T14:00:36.3378097+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-18T14:00:36.3378129+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-06-18T14:00:36.3390169+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Embedding.PointTests.FromFilePathAndIndex_Throws_WhenPathIsNull [FAIL]
+2026-06-18T14:00:36.3390358+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: Exception type was not an exact match
+2026-06-18T14:00:36.3390376+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentNullException)
+2026-06-18T14:00:36.3390382+00:00 xUnit.net INFORMATION       Actual:   typeof(System.ArgumentException)
+2026-06-18T14:00:36.3390387+00:00 xUnit.net INFORMATION       ---- System.ArgumentException : The path is empty. (Parameter 'path')
+2026-06-18T14:00:36.3390484+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T14:00:36.3390607+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Embedding\PointTests.cs(12,0): at RAGNAR.UnitTests.Embedding.PointTests.FromFilePathAndIndex_Throws_WhenPathIsNull()
+2026-06-18T14:00:36.3390648+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-18T14:00:36.3390682+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-06-18T14:00:36.3390698+00:00 xUnit.net INFORMATION         ----- Inner Stack Trace -----
+2026-06-18T14:00:36.3390714+00:00 xUnit.net INFORMATION            at System.IO.Path.GetFullPath(String path)
+2026-06-18T14:00:36.3390788+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.Core\Utils\Point.cs(20,0): at Ragnar.Core.Utils.Point.FromFilePathAndIndex(ReadOnlySpan`1& path, ReadOnlySpan`1& index)
+2026-06-18T14:00:36.3390896+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Embedding\PointTests.cs(12,0): at RAGNAR.UnitTests.Embedding.PointTests.<>c.<FromFilePathAndIndex_Throws_WhenPathIsNull>b__0_0()
+2026-06-18T14:00:36.3397915+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Embedding.PointTests.FromFilePathAndIndex_Throws_WhenIndexIsNull [FAIL]
+2026-06-18T14:00:36.3398000+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: Exception type was not an exact match
+2026-06-18T14:00:36.3398014+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentNullException)
+2026-06-18T14:00:36.3398020+00:00 xUnit.net INFORMATION       Actual:   typeof(System.ArgumentException)
+2026-06-18T14:00:36.3398026+00:00 xUnit.net INFORMATION       ---- System.ArgumentException : Index cannot be null or whitespace. (Parameter 'index')
+2026-06-18T14:00:36.3398345+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T14:00:36.3398550+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Embedding\PointTests.cs(43,0): at RAGNAR.UnitTests.Embedding.PointTests.FromFilePathAndIndex_Throws_WhenIndexIsNull()
+2026-06-18T14:00:36.3398583+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-18T14:00:36.3398612+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-06-18T14:00:36.3398665+00:00 xUnit.net INFORMATION         ----- Inner Stack Trace -----
+2026-06-18T14:00:36.3398702+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.Core\Utils\Point.cs(18,0): at Ragnar.Core.Utils.Point.FromFilePathAndIndex(ReadOnlySpan`1& path, ReadOnlySpan`1& index)
+2026-06-18T14:00:36.3398777+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Embedding\PointTests.cs(43,0): at RAGNAR.UnitTests.Embedding.PointTests.<>c__DisplayClass3_0.<FromFilePathAndIndex_Throws_WhenIndexIsNull>b__0()
+2026-06-18T14:00:36.5278364+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Questions.QuestionTests.IsActive_NullThrows_WhenTextIsInvalid(text: null) [FAIL]
+2026-06-18T14:00:36.5278769+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: No exception was thrown
+2026-06-18T14:00:36.5278798+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentNullException)
+2026-06-18T14:00:36.5279047+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T14:00:36.5279399+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Questions\QuestionTests.cs(49,0): at RAGNAR.UnitTests.Questions.QuestionTests.IsActive_NullThrows_WhenTextIsInvalid(String text)
+2026-06-18T14:00:36.5279569+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-18T14:00:36.5279896+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+2026-06-18T14:00:36.5307047+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Questions.QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(key: "") [FAIL]
+2026-06-18T14:00:36.5307467+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: No exception was thrown
+2026-06-18T14:00:36.5307617+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentException)
+2026-06-18T14:00:36.5307701+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T14:00:36.5307982+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Questions\QuestionTests.cs(58,0): at RAGNAR.UnitTests.Questions.QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(String key)
+2026-06-18T14:00:36.5308191+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-18T14:00:36.5308294+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+2026-06-18T14:00:36.5323119+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Questions.QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(key: "   ") [FAIL]
+2026-06-18T14:00:36.5323386+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: No exception was thrown
+2026-06-18T14:00:36.5323411+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentException)
+2026-06-18T14:00:36.5323473+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T14:00:36.5323570+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Questions\QuestionTests.cs(58,0): at RAGNAR.UnitTests.Questions.QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(String key)
+2026-06-18T14:00:36.5323600+00:00 xUnit.net INFORMATION            at InvokeStub_QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(Object, Span`1)
+2026-06-18T14:00:36.5323644+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-06-18T14:00:36.5331212+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Questions.QuestionTests.IsActive_Throws_WhenTextIsInvalid(text: "") [FAIL]
+2026-06-18T14:00:36.5331298+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: No exception was thrown
+2026-06-18T14:00:36.5331312+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentException)
+2026-06-18T14:00:36.5331420+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T14:00:36.5331497+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Questions\QuestionTests.cs(41,0): at RAGNAR.UnitTests.Questions.QuestionTests.IsActive_Throws_WhenTextIsInvalid(String text)
+2026-06-18T14:00:36.5331530+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-18T14:00:36.5331612+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+2026-06-18T14:00:36.5334873+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Questions.QuestionTests.IsActive_Throws_WhenTextIsInvalid(text: "   ") [FAIL]
+2026-06-18T14:00:36.5334978+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: No exception was thrown
+2026-06-18T14:00:36.5334992+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentException)
+2026-06-18T14:00:36.5335060+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T14:00:36.5335147+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Questions\QuestionTests.cs(41,0): at RAGNAR.UnitTests.Questions.QuestionTests.IsActive_Throws_WhenTextIsInvalid(String text)
+2026-06-18T14:00:36.5335177+00:00 xUnit.net INFORMATION            at InvokeStub_QuestionTests.IsActive_Throws_WhenTextIsInvalid(Object, Span`1)
+2026-06-18T14:00:36.5335219+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-06-18T14:00:36.5351089+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Questions.QuestionTests.IsDisabled_NullThrows_WhenKeyIsInvalid(key: null) [FAIL]
+2026-06-18T14:00:36.5351184+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: No exception was thrown
+2026-06-18T14:00:36.5351197+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentNullException)
+2026-06-18T14:00:36.5351247+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T14:00:36.5351382+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Questions\QuestionTests.cs(66,0): at RAGNAR.UnitTests.Questions.QuestionTests.IsDisabled_NullThrows_WhenKeyIsInvalid(String key)
+2026-06-18T14:00:36.5351414+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-18T14:00:36.5351450+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+2026-06-18T14:00:36.5890076+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Branding.BrandingDisplayTests.Display_WritesExpectedOutput [FAIL]
+2026-06-18T14:00:36.5890173+00:00 xUnit.net INFORMATION       System.ArgumentNullException : Value cannot be null. (Parameter 'element')
+2026-06-18T14:00:36.5890237+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T14:00:36.5890379+00:00 xUnit.net INFORMATION            at System.ArgumentNullException.Throw(String paramName)
+2026-06-18T14:00:36.5890422+00:00 xUnit.net INFORMATION            at System.Attribute.GetCustomAttributes(Assembly element, Type attributeType, Boolean inherit)
+2026-06-18T14:00:36.5890470+00:00 xUnit.net INFORMATION            at System.Attribute.GetCustomAttribute(Assembly element, Type attributeType, Boolean inherit)
+2026-06-18T14:00:36.5890517+00:00 xUnit.net INFORMATION            at System.Reflection.CustomAttributeExtensions.GetCustomAttribute[T](Assembly element)
+2026-06-18T14:00:36.5890592+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar\Branding\AssemblyExtensions.cs(21,0): at Ragnar.Branding.AssemblyExtensions.get_InformationalVersion(IAssemblyInfo asm)
+2026-06-18T14:00:36.5890663+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar\Branding\ApplicationBanner.cs(14,0): at Ragnar.Branding.ApplicationBanner..ctor(IOutputWriter writer, IAssemblyInfo assemblyInfo)
+2026-06-18T14:00:36.5890707+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Branding\BrandingDisplayTests.cs(15,0): at RAGNAR.UnitTests.Branding.BrandingDisplayTests.Display_WritesExpectedOutput()
+2026-06-18T14:00:36.5890735+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-18T14:00:36.5890764+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-06-18T14:00:36.5901708+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Embedding.AssemblyExtensionsTests.InformationalVersion_ReturnsNull_WhenMissing [FAIL]
+2026-06-18T14:00:36.5901807+00:00 xUnit.net INFORMATION       Assert.Null() Failure: Value is not null
+2026-06-18T14:00:36.5901821+00:00 xUnit.net INFORMATION       Expected: null
+2026-06-18T14:00:36.5901827+00:00 xUnit.net INFORMATION       Actual:   "10.0.9-servicing.26270.113+901ca941248413c79832d2f"···
+2026-06-18T14:00:36.5901852+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T14:00:36.5901972+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Embedding\AssemblyExtensionsTests.cs(30,0): at RAGNAR.UnitTests.Embedding.AssemblyExtensionsTests.InformationalVersion_ReturnsNull_WhenMissing()
+2026-06-18T14:00:36.5902007+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-18T14:00:36.5902042+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-06-18T14:00:36.5963638+00:00 xUnit.net ERROR     RAGNAR.UnitTests.ConfigQuestionLoaderTests.LoadFromConfig_CopiesStateCorrectly [FAIL]
+2026-06-18T14:00:36.5963763+00:00 xUnit.net INFORMATION       System.NullReferenceException : Object reference not set to an instance of an object.
+2026-06-18T14:00:36.5963878+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T14:00:36.5963979+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.Questions\Questions\ConfigurationBasedQuestionLoader.cs(30,0): at Ragnar.Questions.Questions.ConfigurationBasedQuestionLoader.LoadFromConfig(IEnumerable`1 configs)
+2026-06-18T14:00:36.5964044+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\ConfigQuestionLoaderTests.cs(57,0): at RAGNAR.UnitTests.ConfigQuestionLoaderTests.LoadFromConfig_CopiesStateCorrectly()
+2026-06-18T14:00:36.5964129+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-18T14:00:36.5964161+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-06-18T14:00:36.5964644+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Embedding.ConfigurationBasedQuestionLoaderTests.LoadFromConfig_CopiesStateCorrectly [FAIL]
+2026-06-18T14:00:36.5964676+00:00 xUnit.net INFORMATION       System.NullReferenceException : Object reference not set to an instance of an object.
+2026-06-18T14:00:36.5964701+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T14:00:36.5964786+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.Questions\Questions\ConfigurationBasedQuestionLoader.cs(30,0): at Ragnar.Questions.Questions.ConfigurationBasedQuestionLoader.LoadFromConfig(IEnumerable`1 configs)
+2026-06-18T14:00:36.5964835+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Embedding\ConfigurationBasedQuestionLoaderTests.cs(106,0): at RAGNAR.UnitTests.Embedding.ConfigurationBasedQuestionLoaderTests.LoadFromConfig_CopiesStateCorrectly()
+2026-06-18T14:00:36.5964865+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-18T14:00:36.5964895+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-06-18T14:00:36.6073215+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Embedding.ConfigurationBasedQuestionLoaderTests.LoadFromConfig_XML_Category_AddsFilter [FAIL]
+2026-06-18T14:00:36.6073353+00:00 xUnit.net INFORMATION       Assert.NotNull() Failure: Value is null
+2026-06-18T14:00:36.6073391+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-18T14:00:36.6073510+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Embedding\ConfigurationBasedQuestionLoaderTests.cs(58,0): at RAGNAR.UnitTests.Embedding.ConfigurationBasedQuestionLoaderTests.LoadFromConfig_XML_Category_AddsFilter()
+2026-06-18T14:00:36.6073550+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-18T14:00:36.6073579+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-06-18T14:01:36.2573815+00:00 xUnit.net INFORMATION   Finished:    RAGNAR.UnitTests (ID = '2e01ca3c7fe4ca00034ee27609d27a18ea6e4da3b1731c67cf132ec35e4c9b9d')
+2026-06-18T14:01:36.2604831+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-06-18T14:01:36.2640948+00:00 xUnit.net INFORMATION    RAGNAR.UnitTests  Total: 65, Errors: 0, Failed: 15, Skipped: 0, Not Run: 0, Time: 62.139s

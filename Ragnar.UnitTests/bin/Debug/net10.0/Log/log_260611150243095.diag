@@ -1,0 +1,36 @@
+2026-06-11T15:02:43.1043736+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 1.9.1+cb5afc3bb9bb01ebd75b57f89e8358b914ee2a49
+2026-06-11T15:02:43.1169787+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-06-11T15:02:43.1179756+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-06-11T15:02:43.1179866+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 15:02:43.077
+2026-06-11T15:02:43.1180756+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 20924
+2026-06-11T15:02:43.1181032+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.9
+2026-06-11T15:02:43.1181268+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.9\System.Private.CoreLib.dll
+2026-06-11T15:02:43.1181408+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-06-11T15:02:43.1182069+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\RAGNAR.UnitTests.dll
+2026-06-11T15:02:43.1183941+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\Ragnar\TestResults --client-port 54541'
+2026-06-11T15:02:43.1193035+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-06-11T15:02:43.1474128+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-06-11T15:02:43.1672284+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-06-11T15:02:43.4256691+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '3.2.2' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-06-11T15:02:43.4354719+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v3.2.2+728c1dce01 (64-bit .NET 10.0.9)
+2026-06-11T15:02:43.4957542+00:00 xUnit.net INFORMATION   Discovering: RAGNAR.UnitTests
+2026-06-11T15:02:43.5719667+00:00 xUnit.net INFORMATION   Discovered:  RAGNAR.UnitTests
+2026-06-11T15:02:43.6008462+00:00 xUnit.net INFORMATION   Starting:    RAGNAR.UnitTests
+2026-06-11T15:02:43.8324779+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Question.QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(key: null) [FAIL]
+2026-06-11T15:02:43.8330672+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: Exception type was not an exact match
+2026-06-11T15:02:43.8330855+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentException)
+2026-06-11T15:02:43.8330885+00:00 xUnit.net INFORMATION       Actual:   typeof(System.ArgumentNullException)
+2026-06-11T15:02:43.8330900+00:00 xUnit.net INFORMATION       ---- System.ArgumentNullException : Value cannot be null. (Parameter 'key')
+2026-06-11T15:02:43.8335404+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-11T15:02:43.8345487+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Question\QuestionTests.cs(59,0): at RAGNAR.UnitTests.Question.QuestionTests.IsDisabled_Throws_WhenKeyIsInvalid(String key)
+2026-06-11T15:02:43.8345763+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-11T15:02:43.8345879+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+2026-06-11T15:02:43.8345909+00:00 xUnit.net INFORMATION         ----- Inner Stack Trace -----
+2026-06-11T15:02:43.8345994+00:00 xUnit.net INFORMATION            at Ardalis.GuardClauses.GuardClauseExtensions.Null[T](IGuardClause guardClause, T input, String parameterName, String message, Func`1 exceptionCreator)
+2026-06-11T15:02:43.8346079+00:00 xUnit.net INFORMATION            at Ardalis.GuardClauses.GuardClauseExtensions.NullOrEmpty(IGuardClause guardClause, String input, String parameterName, String message, Func`1 exceptionCreator)
+2026-06-11T15:02:43.8346165+00:00 xUnit.net INFORMATION            at Ardalis.GuardClauses.GuardClauseExtensions.NullOrWhiteSpace(IGuardClause guardClause, String input, String parameterName, String message, Func`1 exceptionCreator)
+2026-06-11T15:02:43.8346271+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.Core\Model\Question.cs(46,0): at Ragnar.Core.Model.Question.IsDisabled(String text, String key, QuestionCategory category)
+2026-06-11T15:02:43.8346767+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Question\QuestionTests.cs(59,0): at RAGNAR.UnitTests.Question.QuestionTests.<>c__DisplayClass4_0.<IsDisabled_Throws_WhenKeyIsInvalid>b__0()
+2026-06-11T15:02:43.8502146+00:00 xUnit.net INFORMATION   Finished:    RAGNAR.UnitTests (ID = '2e01ca3c7fe4ca00034ee27609d27a18ea6e4da3b1731c67cf132ec35e4c9b9d')
+2026-06-11T15:02:43.8556697+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-06-11T15:02:43.8600900+00:00 xUnit.net INFORMATION    RAGNAR.UnitTests  Total: 3, Errors: 0, Failed: 1, Skipped: 0, Not Run: 0, Time: 0.256s

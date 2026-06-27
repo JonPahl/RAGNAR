@@ -1,0 +1,29 @@
+2026-06-11T15:41:16.9650019+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 1.9.1+cb5afc3bb9bb01ebd75b57f89e8358b914ee2a49
+2026-06-11T15:41:16.9735295+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-06-11T15:41:16.9742748+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-06-11T15:41:16.9742817+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 15:41:16.943
+2026-06-11T15:41:16.9743515+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 37188
+2026-06-11T15:41:16.9743880+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.9
+2026-06-11T15:41:16.9744052+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.9\System.Private.CoreLib.dll
+2026-06-11T15:41:16.9744158+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-06-11T15:41:16.9744771+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\RAGNAR.UnitTests.dll
+2026-06-11T15:41:16.9746027+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\Ragnar\TestResults --client-port 58124'
+2026-06-11T15:41:16.9753706+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-06-11T15:41:16.9958601+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-06-11T15:41:17.0115655+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-06-11T15:41:17.1764874+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '3.2.2' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-06-11T15:41:17.1828277+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v3.2.2+728c1dce01 (64-bit .NET 10.0.9)
+2026-06-11T15:41:17.2126937+00:00 xUnit.net INFORMATION   Discovering: RAGNAR.UnitTests
+2026-06-11T15:41:17.2557822+00:00 xUnit.net INFORMATION   Discovered:  RAGNAR.UnitTests
+2026-06-11T15:41:17.2721763+00:00 xUnit.net INFORMATION   Starting:    RAGNAR.UnitTests
+2026-06-11T15:41:17.5366373+00:00 xUnit.net ERROR     RAGNAR.UnitTests.Question.FileSystemEntryExtensionsTests.HasAllowedExtension_ReturnsTrue_ForAllowedExtension [FAIL]
+2026-06-11T15:41:17.5369360+00:00 xUnit.net INFORMATION       System.NullReferenceException : Object reference not set to an instance of an object.
+2026-06-11T15:41:17.5371906+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-06-11T15:41:17.5378104+00:00 xUnit.net INFORMATION            at System.IO.Enumeration.FileSystemEntry.get_IsDirectory()
+2026-06-11T15:41:17.5378331+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar\Extensions\FileSystemEntryExtensions.cs(25,0): at Ragnar.Extensions.FileSystemEntryExtensions.HasAllowedExtension(FileSystemEntry entry, IReadOnlyCollection`1& allowedExtensions)
+2026-06-11T15:41:17.5378438+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Question\FileSystemEntryExtensionsTests.cs(17,0): at RAGNAR.UnitTests.Question.FileSystemEntryExtensionsTests.HasAllowedExtension_ReturnsTrue_ForAllowedExtension()
+2026-06-11T15:41:17.5378466+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-06-11T15:41:17.5378492+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-06-11T15:41:17.5481057+00:00 xUnit.net INFORMATION   Finished:    RAGNAR.UnitTests (ID = '2e01ca3c7fe4ca00034ee27609d27a18ea6e4da3b1731c67cf132ec35e4c9b9d')
+2026-06-11T15:41:17.5508764+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-06-11T15:41:17.5540648+00:00 xUnit.net INFORMATION    RAGNAR.UnitTests  Total: 1, Errors: 0, Failed: 1, Skipped: 0, Not Run: 0, Time: 0.280s

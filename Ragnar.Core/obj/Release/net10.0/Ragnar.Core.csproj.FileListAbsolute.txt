@@ -1,0 +1,17 @@
+C:\Users\jp325\source\Ragnar\Ragnar.Core\bin\Release\net10.0\General.csv
+C:\Users\jp325\source\Ragnar\Ragnar.Core\bin\Release\net10.0\Refactor.csv
+C:\Users\jp325\source\Ragnar\Ragnar.Core\bin\Release\net10.0\Ragnar.Core.deps.json
+C:\Users\jp325\source\Ragnar\Ragnar.Core\bin\Release\net10.0\Ragnar.Core.dll
+C:\Users\jp325\source\Ragnar\Ragnar.Core\bin\Release\net10.0\Ragnar.Core.pdb
+C:\Users\jp325\source\Ragnar\Ragnar.Core\bin\Release\net10.0\FileQuestionProvider.dll
+C:\Users\jp325\source\Ragnar\Ragnar.Core\bin\Release\net10.0\FileQuestionProvider.pdb
+C:\Users\jp325\source\Ragnar\Ragnar.Core\obj\Release\net10.0\Ragnar.Core.csproj.AssemblyReference.cache
+C:\Users\jp325\source\Ragnar\Ragnar.Core\obj\Release\net10.0\Ragnar.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jp325\source\Ragnar\Ragnar.Core\obj\Release\net10.0\Ragnar.Core.AssemblyInfoInputs.cache
+C:\Users\jp325\source\Ragnar\Ragnar.Core\obj\Release\net10.0\Ragnar.Core.AssemblyInfo.cs
+C:\Users\jp325\source\Ragnar\Ragnar.Core\obj\Release\net10.0\Ragnar.Core.csproj.CoreCompileInputs.cache
+C:\Users\jp325\source\Ragnar\Ragnar.Core\obj\Release\net10.0\Ragnar.C.304B5CB3.Up2Date
+C:\Users\jp325\source\Ragnar\Ragnar.Core\obj\Release\net10.0\Ragnar.Core.dll
+C:\Users\jp325\source\Ragnar\Ragnar.Core\obj\Release\net10.0\refint\Ragnar.Core.dll
+C:\Users\jp325\source\Ragnar\Ragnar.Core\obj\Release\net10.0\Ragnar.Core.pdb
+C:\Users\jp325\source\Ragnar\Ragnar.Core\obj\Release\net10.0\ref\Ragnar.Core.dll

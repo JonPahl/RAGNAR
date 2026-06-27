@@ -1,0 +1,321 @@
+## WORKSPACE EXECUTIVE SUMMARY (YAML)
+# Generated: 2026-06-26T12:08:04.1894205-05:00
+# Root: C:\Users\jp325\source\Ragnar\Ragnar
+Architecture:
+  Type: Backend (C#/.NET)
+  Scale: 156 relevant source files
+  Components: 0
+  Controllers: 0
+  Models: 2
+  Services: 2
+---
+- File: Ragnar.csproj
+  Preview: "<Project Sdk='Microsoft.NET.Sdk'>  <PropertyGroup>   <OutputType>Exe</OutputType>   <TargetFramework>net10.0</TargetFramework>   <LangVersion>14.0</La..."
+- File: appsettings.development.json
+  Preview: "{  'exclude': [   '**/bin',   '**/bower_components',   '**/jspm_packages',   '**/node_modules',   '**/obj',   '**/platforms'  ] }"
+- File: appsettings.json
+  Preview: "{   'ApplicationOptions': {     //'SourceDirectory': '%USERPROFILE%\\source\\Ragnar\\',     //'VectorStoreName': 'programming_docs',     'SourceDirect..."
+- File: docker-compose.yml
+  Preview: "services:  qdrant:   image: qdrant/qdrant:latest   container_name: qdrant   ports:    - '6333:6333' # HTTP API    - '6334:6334' # gRPC API   volumes: ..."
+- File: globalUsing.cs
+  Preview: " global using Ardalis.GuardClauses; global using Microsoft.Extensions.AI; global using Microsoft.Extensions.Configuration; global using Microsoft.Exte..."
+- File: KnowledgeBaseInitialization.cs
+  Preview: "using System.Collections.Immutable; using FileQuestionProvider; using Ragnar.Questions.Questions; namespace Ragnar; /// <summary> /// Initializes the ..."
+- File: LICENSE.txt
+  Preview: "MIT License Copyright (c) [year] [fullname] Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associat..."
+- File: PluginExtension.cs
+  Preview: "namespace Ragnar; /// <summary> /// Extension methods for plugin-related operations. /// </summary> public static class PluginExtension {   extension(..."
+- File: Program.cs
+  Preview: "using System.Text; using Serilog; Console.OutputEncoding = Encoding.UTF8; try {   IHostBuilder builder = RagPipelineHostBuilder     .CreateDefaultBuil..."
+- File: Ragnar.slnx
+  Preview: "<Solution>  <Project Path='../FileQuestionProvider/FileQuestionProvider.csproj' Id='6949801f-830a-42ef-8f1b-44c923274d1d' />  <Project Path='../Ragnar..."
+- File: RagPipelineHostBuilder.cs
+  Preview: "using System.Runtime.Loader; using Microsoft.Extensions.Http.Resilience; using Polly; using Ragnar.Questions.Interface; using Ragnar.Questions.Questio..."
+- File: RagPipelineRunner.cs
+  Preview: "namespace Ragnar; ///<summary> /// Hosted service responsible for running the RAG pipeline. ///</summary> public sealed class RagPipelineRunner(   IOu..."
+- File: README.md
+  Preview: "# 🐉 Ragnar: Smart, Recursive Code Reasoning — From Query to Solution [![.NET](https://img.shields.io/badge/.NET-10.0-blue?logo=dotnet)](https://dotne..."
+- File: Branding\ApplicationBanner.cs
+  Preview: "namespace Ragnar.Branding; /// <summary> /// Setups up and displays Branding for Ragnar application. /// </summary> /// <param name='writer'>console o..."
+- File: Branding\AssemblyExtensions.cs
+  Preview: " using System.Reflection; namespace Ragnar.Branding; /// <summary> /// Gets the informational version of an assembly. /// </summary> public static cla..."
+- File: Branding\AssemblyInfo.cs
+  Preview: "using System.Reflection; namespace Ragnar.Branding; /// <summary> /// Provides assembly information. /// </summary> public class AssemblyInfo : IAssem..."
+- File: Branding\IApplicationBanner.cs
+  Preview: "namespace Ragnar.Branding; /// <summary> /// Displays branding information. /// </summary> public interface IApplicationBanner {   /// <summary>   ///..."
+- File: Branding\IAssemblyInfo.cs
+  Preview: " using System.Reflection; namespace Ragnar.Branding; /// <summary>Provides assembly information.</summary> public interface IAssemblyInfo {   /// <sum..."
+- File: Extensions\FileSystemEntryExtensions.cs
+  Preview: " using System.IO.Enumeration; namespace Ragnar.Extensions; /// <summary> Provides extension methods for <see cref='FileSystemEntry'/>.</summary> publi..."
+- File: Extensions\PathExtensions.cs
+  Preview: "namespace Ragnar.Extensions; /// <summary> /// extensions to handle if file path should be used or not. /// </summary> public static class PathExtensi..."
+- File: Extensions\SavePathExtension.cs
+  Preview: " using System.Text; namespace Ragnar.Extensions; /// <summary> /// Extenion methods for saving file. /// </summary> public static class SavePathExtens..."
+- File: Extensions\StopwatchExtensions.cs
+  Preview: " using System.Diagnostics; namespace Ragnar.Extensions; /// <summary> /// Format stopwatch time. /// </summary> public static class StopwatchExtension..."
+- File: Factory\DefaultQuestionFactory.cs
+  Preview: "using System.Runtime.CompilerServices; using Ragnar.Questions.Interface; namespace Ragnar.Factory; /// <summary> /// Default implementation of IQuesti..."
+- File: Factory\OllamaClientProvider.cs
+  Preview: "namespace Ragnar.Factory; /// <summary> /// Creates Ollama API clients based on type (Ollama or Embedding). /// </summary> public class OllamaClientPr..."
+- File: Interfaces\IOllamaResponse.cs
+  Preview: "namespace Ragnar.Interfaces; /// <summary> /// Call Ollama to generate a response to asked question. /// </summary> public interface IOllamaResponse {..."
+- File: Interfaces\QuestionEmbedding.cs
+  Preview: "using System.Text; using Microsoft.SemanticKernel.Embeddings; namespace RAGNAR.Interfaces; public class QuestionEmbedding(Serilog.ILogger logger, IOpt..."
+- File: Models\EmbeddingData.cs
+  Preview: "namespace Ragnar.Models; /// <summary>List of qdrantClient point embeddings. /// </summary> /// <example><![CDATA[new EmbeddingData(pointsList);]]></e..."
+- File: Models\SaveDetails.cs
+  Preview: "namespace Ragnar.Models; /// <summary> /// Save file object. /// </summary> /// <param name='Question'>Asked question.</param> /// <param name='Respon..."
+- File: Ollama\OllamaResponse.cs
+  Preview: "using System.Text; namespace Ragnar.Ollama; /// <summary> /// Configures and caches OllamaOptions clients per model. /// </summary> /// <example><![CD..."
+- File: Output\IResponseWriter.cs
+  Preview: "namespace Ragnar.Output; /// <summary> /// Writes out response from question to either disk or in future other location. /// </summary> public interfa..."
+- File: Output\ResponseWriter.cs
+  Preview: " using System.Text; namespace Ragnar.Output; /// <summary>Writes response content to a markdown file.</summary> public sealed class ResponseWriter(IOp..."
+- File: OutputResponse\ISummaryService.cs
+  Preview: "namespace RAGNAR.OutputResponse; /// <summary> /// Provides a service to summarize all responses. /// </summary> public interface ISummaryService {   ..."
+- File: OutputResponse\SummaryService.cs
+  Preview: "using System.Text; namespace Ragnar.OutputResponse; /// <summary> /// Summary each response into a single file. /// </summary> /// <param name='logger..."
+- File: Properties\launchSettings.json
+  Preview: "{   'profiles': {     'Ragnar': {       'commandName': 'Project'     },     'Container (Dockerfile)': {       'commandName': 'Docker'     }   } }"
+- File: qdrant_storage\raft_state.json
+  Preview: "{'state':{'hard_state':{'term':0,'vote':0,'commit':0},'conf_state':{'voters':[6666351486307546],'learners':[],'voters_outgoing':[],'learners_next':[],..."
+- File: RagPipeline\RagOrchestrator.cs
+  Preview: " using System.Diagnostics; namespace Ragnar.RagPipeline; /// <summary>Executes RAG pipeline: embeds question → retrieve → generate answer.</summary> /..."
+- File: Services\SystemPromptProvider.cs
+  Preview: "namespace Ragnar.Services; /// <summary> /// Provides system prompts for .NET 10 / C# 14 code generation. /// </summary> public class SystemPromptProv..."
+- File: Services\SystemPromptProvider.xml
+  Preview: "<!-- XML Documentation for SystemPromptProvider --> <summary> Gets the system prompt for .NET 10 / C# 14 code generation. </summary> <param name='Cont..."
+- File: Services\VectorStoreProvisioner.cs
+  Preview: "//using RAGNAR.Services; //namespace Ragnar.Services; ///// <summary>Initializes vector indexing service with dependencies.</summary> ///// <param nam..."
+- File: Utils\FileValidator.cs
+  Preview: "namespace Ragnar.Utils; /// <summary> /// Implements file validation logic based on extension, name, and d filters. /// </summary> public class FileVa..."
+- File: Utils\Styles.cs
+  Preview: "namespace Ragnar.Utils; /// <summary> /// Custom console style classes. /// </summary> public static class Styles {   /// <summary>   /// Gets green b..."
+- File: Utils\Utils.cs
+  Preview: "namespace Ragnar.Utils; /// <summary> /// Common Util classes. /// </summary> public static class Utils {   /// <summary>Expands environment vars and ..."
+- File: Category\Response\Standard_20260531_234732.md
+  Preview: "### [Refactor] With the provided code. Can you suggest all coding standards that should be applied? > **Date Generated**: 5/31/2026 11:47:32 PM > ## Q..."
+- File: qdrant_storage\aliases\data.json
+  Preview: "{}"
+- File: qdrant_storage\collections\programming_docs\config.json
+  Preview: "{'params':{'vectors':{'size':768,'distance':'Cosine'},'shard_number':1,'replication_factor':1,'write_consistency_factor':1,'on_disk_payload':false},'h..."
+- File: qdrant_storage\collections\programming_docs\shard_key_mapping.json
+  Preview: "[]"
+- File: qdrant_storage\collections\Shepherd_Api\config.json
+  Preview: "{'params':{'vectors':{'size':768,'distance':'Cosine'},'shard_number':1,'replication_factor':1,'write_consistency_factor':1,'on_disk_payload':false},'h..."
+- File: qdrant_storage\collections\Shepherd_Api\shard_key_mapping.json
+  Preview: "[]"
+- File: qdrant_storage\collections\Shepherd_Obit\config.json
+  Preview: "{'params':{'vectors':{'size':768,'distance':'Cosine'},'shard_number':1,'replication_factor':1,'write_consistency_factor':1,'on_disk_payload':false},'h..."
+- File: qdrant_storage\collections\Shepherd_Obit\shard_key_mapping.json
+  Preview: "[]"
+- File: qdrant_storage\collections\programming_docs\0\newest_clocks.json
+  Preview: "{'clocks':[{'peer_id':6666351486307546,'clock_id':0,'current_tick':9,'token':11860342740013380712}]}"
+- File: qdrant_storage\collections\programming_docs\0\replica_state.json
+  Preview: "{'is_local':true,'this_peer_id':6666351486307546,'peers':{'6666351486307546':'Active'}}"
+- File: qdrant_storage\collections\programming_docs\0\shard_config.json
+  Preview: "{'type':'ReplicaSet'}"
+- File: qdrant_storage\collections\Shepherd_Api\0\newest_clocks.json
+  Preview: "{'clocks':[{'peer_id':6666351486307546,'clock_id':0,'current_tick':8,'token':9073343582719424022}]}"
+- File: qdrant_storage\collections\Shepherd_Api\0\replica_state.json
+  Preview: "{'is_local':true,'this_peer_id':6666351486307546,'peers':{'6666351486307546':'Active'}}"
+- File: qdrant_storage\collections\Shepherd_Api\0\shard_config.json
+  Preview: "{'type':'ReplicaSet'}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\newest_clocks.json
+  Preview: "{'clocks':[{'peer_id':6666351486307546,'clock_id':0,'current_tick':54,'token':10733021473125584308}]}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\replica_state.json
+  Preview: "{'is_local':true,'this_peer_id':6666351486307546,'peers':{'6666351486307546':'Active'}}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\shard_config.json
+  Preview: "{'type':'ReplicaSet'}"
+- File: qdrant_storage\collections\programming_docs\0\segments\06a0c1a0-ec0f-4796-983e-dc0da8ecc081\segment.json
+  Preview: "{'initial_version':null,'version':4,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pla..."
+- File: qdrant_storage\collections\programming_docs\0\segments\06d86155-cd7a-418f-8140-ce88ac29d675\segment.json
+  Preview: "{'initial_version':null,'version':9,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pla..."
+- File: qdrant_storage\collections\programming_docs\0\segments\0f920fc5-9976-4f0e-8f11-465b149961fe\segment.json
+  Preview: "{'initial_version':null,'version':7,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pla..."
+- File: qdrant_storage\collections\programming_docs\0\segments\1884d6af-d857-4f53-804a-73f46de22677\segment.json
+  Preview: "{'initial_version':null,'version':1,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pla..."
+- File: qdrant_storage\collections\programming_docs\0\segments\386ebf17-5ac2-46fd-9625-7570979dcd06\segment.json
+  Preview: "{'initial_version':null,'version':5,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pla..."
+- File: qdrant_storage\collections\programming_docs\0\segments\7cd913f6-744b-4438-ba5e-8612db1eeb2b\segment.json
+  Preview: "{'initial_version':null,'version':2,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pla..."
+- File: qdrant_storage\collections\programming_docs\0\segments\a49acce7-5c94-4f07-bcd7-4ca8e43f17fd\segment.json
+  Preview: "{'initial_version':null,'version':6,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pla..."
+- File: qdrant_storage\collections\programming_docs\0\segments\a79f34e9-7fac-469d-92ab-79d9655ded41\segment.json
+  Preview: "{'initial_version':null,'version':3,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pla..."
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\0772bb55-1933-4919-8c5d-ad50e58faf8f\segment.json
+  Preview: "{'initial_version':null,'version':7,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pla..."
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\123d1998-e1f1-4452-ad4e-9806fbe85342\segment.json
+  Preview: "{'initial_version':null,'version':null,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'..."
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\7610c138-6fab-45e0-86e4-08627396a17c\segment.json
+  Preview: "{'initial_version':null,'version':null,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'..."
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\b1db5851-32a8-4f1d-8f38-03c0883538f8\segment.json
+  Preview: "{'initial_version':null,'version':null,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'..."
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\cf89c6a7-7576-4e21-8ead-bd688a987ad3\segment.json
+  Preview: "{'initial_version':null,'version':8,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pla..."
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\db245591-ccf3-47c6-a074-73674c392b64\segment.json
+  Preview: "{'initial_version':null,'version':8,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pla..."
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\e5425818-243c-4564-b891-476ef436ba9f\segment.json
+  Preview: "{'initial_version':null,'version':null,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'..."
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\ec52537a-696f-4dd7-b50a-7a15e30e7c40\segment.json
+  Preview: "{'initial_version':null,'version':7,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pla..."
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\2049fd7a-c1a1-40e1-9122-cc3a1dd29756\segment.json
+  Preview: "{'initial_version':null,'version':52,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\62b3a557-3931-4c65-bc9a-5920ca99bf36\segment.json
+  Preview: "{'initial_version':null,'version':52,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\955af1d6-333d-48dc-aa10-2157ee0ef797\segment.json
+  Preview: "{'initial_version':null,'version':54,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\9f7876df-3bcd-4f7e-b68a-e4e9abb16ec2\segment.json
+  Preview: "{'initial_version':null,'version':54,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\b6a34f3f-cdfc-41f4-b4a0-08d8c5f49dfa\segment.json
+  Preview: "{'initial_version':null,'version':54,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\e7e541e3-506f-41af-a42a-ef85c85f26a4\segment.json
+  Preview: "{'initial_version':null,'version':53,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\eb1d8958-7472-41e5-837c-661acba746b4\segment.json
+  Preview: "{'initial_version':null,'version':54,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\edc4d3b1-1ad9-4c4d-942c-85b76c418d3f\segment.json
+  Preview: "{'initial_version':null,'version':53,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: qdrant_storage\collections\programming_docs\0\segments\06a0c1a0-ec0f-4796-983e-dc0da8ecc081\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\programming_docs\0\segments\06a0c1a0-ec0f-4796-983e-dc0da8ecc081\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\programming_docs\0\segments\06d86155-cd7a-418f-8140-ce88ac29d675\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\programming_docs\0\segments\06d86155-cd7a-418f-8140-ce88ac29d675\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\programming_docs\0\segments\0f920fc5-9976-4f0e-8f11-465b149961fe\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\programming_docs\0\segments\0f920fc5-9976-4f0e-8f11-465b149961fe\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\programming_docs\0\segments\1884d6af-d857-4f53-804a-73f46de22677\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\programming_docs\0\segments\1884d6af-d857-4f53-804a-73f46de22677\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\programming_docs\0\segments\386ebf17-5ac2-46fd-9625-7570979dcd06\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\programming_docs\0\segments\386ebf17-5ac2-46fd-9625-7570979dcd06\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\programming_docs\0\segments\7cd913f6-744b-4438-ba5e-8612db1eeb2b\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\programming_docs\0\segments\7cd913f6-744b-4438-ba5e-8612db1eeb2b\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\programming_docs\0\segments\a49acce7-5c94-4f07-bcd7-4ca8e43f17fd\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\programming_docs\0\segments\a49acce7-5c94-4f07-bcd7-4ca8e43f17fd\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\programming_docs\0\segments\a79f34e9-7fac-469d-92ab-79d9655ded41\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\programming_docs\0\segments\a79f34e9-7fac-469d-92ab-79d9655ded41\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\0772bb55-1933-4919-8c5d-ad50e58faf8f\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\0772bb55-1933-4919-8c5d-ad50e58faf8f\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\123d1998-e1f1-4452-ad4e-9806fbe85342\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\123d1998-e1f1-4452-ad4e-9806fbe85342\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\7610c138-6fab-45e0-86e4-08627396a17c\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\7610c138-6fab-45e0-86e4-08627396a17c\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\b1db5851-32a8-4f1d-8f38-03c0883538f8\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\b1db5851-32a8-4f1d-8f38-03c0883538f8\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\cf89c6a7-7576-4e21-8ead-bd688a987ad3\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\cf89c6a7-7576-4e21-8ead-bd688a987ad3\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\db245591-ccf3-47c6-a074-73674c392b64\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\db245591-ccf3-47c6-a074-73674c392b64\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\e5425818-243c-4564-b891-476ef436ba9f\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\e5425818-243c-4564-b891-476ef436ba9f\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\ec52537a-696f-4dd7-b50a-7a15e30e7c40\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\ec52537a-696f-4dd7-b50a-7a15e30e7c40\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\2049fd7a-c1a1-40e1-9122-cc3a1dd29756\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\2049fd7a-c1a1-40e1-9122-cc3a1dd29756\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\62b3a557-3931-4c65-bc9a-5920ca99bf36\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\62b3a557-3931-4c65-bc9a-5920ca99bf36\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\955af1d6-333d-48dc-aa10-2157ee0ef797\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\955af1d6-333d-48dc-aa10-2157ee0ef797\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\9f7876df-3bcd-4f7e-b68a-e4e9abb16ec2\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\9f7876df-3bcd-4f7e-b68a-e4e9abb16ec2\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\b6a34f3f-cdfc-41f4-b4a0-08d8c5f49dfa\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\b6a34f3f-cdfc-41f4-b4a0-08d8c5f49dfa\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\e7e541e3-506f-41af-a42a-ef85c85f26a4\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\e7e541e3-506f-41af-a42a-ef85c85f26a4\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\eb1d8958-7472-41e5-837c-661acba746b4\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\eb1d8958-7472-41e5-837c-661acba746b4\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\edc4d3b1-1ad9-4c4d-942c-85b76c418d3f\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\edc4d3b1-1ad9-4c4d-942c-85b76c418d3f\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: qdrant_storage\collections\programming_docs\0\segments\06a0c1a0-ec0f-4796-983e-dc0da8ecc081\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\programming_docs\0\segments\06d86155-cd7a-418f-8140-ce88ac29d675\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\programming_docs\0\segments\0f920fc5-9976-4f0e-8f11-465b149961fe\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\programming_docs\0\segments\1884d6af-d857-4f53-804a-73f46de22677\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\programming_docs\0\segments\386ebf17-5ac2-46fd-9625-7570979dcd06\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\programming_docs\0\segments\7cd913f6-744b-4438-ba5e-8612db1eeb2b\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\programming_docs\0\segments\a49acce7-5c94-4f07-bcd7-4ca8e43f17fd\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\programming_docs\0\segments\a79f34e9-7fac-469d-92ab-79d9655ded41\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\0772bb55-1933-4919-8c5d-ad50e58faf8f\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\123d1998-e1f1-4452-ad4e-9806fbe85342\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\7610c138-6fab-45e0-86e4-08627396a17c\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\b1db5851-32a8-4f1d-8f38-03c0883538f8\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\cf89c6a7-7576-4e21-8ead-bd688a987ad3\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\db245591-ccf3-47c6-a074-73674c392b64\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\e5425818-243c-4564-b891-476ef436ba9f\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepherd_Api\0\segments\ec52537a-696f-4dd7-b50a-7a15e30e7c40\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\2049fd7a-c1a1-40e1-9122-cc3a1dd29756\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\62b3a557-3931-4c65-bc9a-5920ca99bf36\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\955af1d6-333d-48dc-aa10-2157ee0ef797\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\9f7876df-3bcd-4f7e-b68a-e4e9abb16ec2\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\b6a34f3f-cdfc-41f4-b4a0-08d8c5f49dfa\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\e7e541e3-506f-41af-a42a-ef85c85f26a4\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\eb1d8958-7472-41e5-837c-661acba746b4\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: qdrant_storage\collections\Shepherd_Obit\0\segments\edc4d3b1-1ad9-4c4d-942c-85b76c418d3f\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
