@@ -1,6 +1,3 @@
-﻿
-using System.Reflection;
-
 namespace Ragnar.Branding;
 
 /// <summary>Provides assembly information.</summary>

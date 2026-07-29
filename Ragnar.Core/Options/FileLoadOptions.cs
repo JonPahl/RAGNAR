@@ -1,7 +1,5 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-
 namespace Ragnar.Core.Options;
+
 /// <summary>Filters files by extension, name, and directory.</summary>
 /// <example><![CDATA[var opts = new FileLoadOptions { AllowedFileExtensions = [".cs", ".json"] };]]></example>
 public record FileLoadOptions

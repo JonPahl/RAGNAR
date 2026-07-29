@@ -12,5 +12,5 @@ public interface IResponseWriter
     /// <example><![CDATA[string path = await writer.WriteResponseAsync(details, ct);]]></example>
     Task<string> WriteResponseAsync(SaveDetails details, CancellationToken ct);
 
-    // TODO: Add in ability to receive value from ollama stream loop, and write to disk via file stream.
+    // TODO: Save streamed response object in realtime. Add in ability to receive value from ollama stream loop, and write to disk via file stream.
 }

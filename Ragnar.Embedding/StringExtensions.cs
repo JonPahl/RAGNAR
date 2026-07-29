@@ -1,21 +1,26 @@
-﻿using System.Text.RegularExpressions;
-
 namespace Ragnar.Embedding;
 
 public static class StringExtensions
 {
-    extension(string xmlComment)
+    extension(ReadOnlySpan<char> xmlComment)
     {
         /// <summary>Counts non-tag, non-comment characters in XML comment.</summary>
         /// <returns>Character count excluding XML tags and slashes.</returns>
         /// <example><![CDATA[int len = comment.CharacterCount();]]></example>
-        public int CharacterCount()
+        public int CharacterCount ()
         {
-            string noTags = Regex.Replace(xmlComment, "<.*?>", string.Empty);
+            var count = 0;
+            var inTag = false;
 
-            string cleanText = noTags.Replace("/", "").Trim();
+            foreach (var c in xmlComment)
+            {
+                if (c == '<') { inTag = true; continue; }
+                if (c == '>') { inTag = false; continue; }
+                if (inTag || c == '/') continue;
+                count++;
+            }
 
-            return cleanText.Length;
+            return count;
         }
     }
 }

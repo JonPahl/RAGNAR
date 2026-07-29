@@ -1,16 +1,10 @@
-﻿
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-
-using Ragnar.Core.Model;
-
 namespace Ragnar.Embedding.Chunker;
+
 /// <summary>
 /// Parses C# syntax trees into CodeDocument chunks for embedding.
 /// </summary>
 /// <example><![CDATA[var docs = new ChunkBySyntaxTree().ChunkSourceFile("Program.cs", code);]]></example>
-public class ChunkBySyntaxTree
+public static class ChunkBySyntaxTree
 {
     private const string _unknownElementName = "UNKNOWN";
 
@@ -21,8 +15,9 @@ public class ChunkBySyntaxTree
     /// <param name="codeText">Full source code text.</param>
     /// <remarks>Uses Roslyn syntax tree traversal to extract top-level classes.</remarks>
     /// <example><![CDATA[var docs = new ChunkBySyntaxTree().ChunkSourceFile("Program.cs", code);]]></example>
-    /// <returns>List of CodeDocuments or null on parse failure.</returns>
-    public IList<CodeDocument>? ChunkSourceFile(string filename, string codeText)
+    /// <returns>List of CodeDocuments or null on parse failure.
+    /// </returns>
+    public static IList<CodeDocument>? ChunkSourceFile (string filename, string codeText)
     {
         var response = new List<CodeDocument>();
 
@@ -39,7 +34,7 @@ public class ChunkBySyntaxTree
             //}
             if (node is ClassDeclarationSyntax classDeclaration)
             {
-                response.Add(LoadClass(filename, classDeclaration));
+                response.Add(ExtractClassDocument(filename, classDeclaration));
             }
         }
 
@@ -52,30 +47,36 @@ public class ChunkBySyntaxTree
     /// <param name="filename">Source file path.</param>
     /// <param name="classDefine">Class syntax node.</param>
     /// <returns>Initialized CodeDocument.</returns>
-    /// <example><![CDATA[var doc = chunker.LoadClass("Program.cs", node);]]></example>
-    private CodeDocument LoadClass(string filename, ClassDeclarationSyntax classDefine)
+    /// <example><![CDATA[var doc = chunker.ExtractClassDocument("Program.cs", node);]]></example>
+    private static CodeDocument ExtractClassDocument (string filename, ClassDeclarationSyntax classDefine)
     {
         var category = InferCategoryFromPath(filename);
         return CreateCodeDocument(filename, classDefine, classDefine.Kind().ToString(), classDefine?.Identifier.ValueText ?? _unknownElementName, classDefine?.GetLeadingTrivia(), category);
     }
 
 
-    private CodeDocument LoadMethod(string filename, MethodDeclarationSyntax method)
+    private static CodeDocument ExtractMethodDocument (string filename, MethodDeclarationSyntax method)
     {
         var category = InferCategoryFromPath(filename);
         return CreateCodeDocument(filename, method, method.Kind().ToString(), method?.Identifier.ValueText ?? _unknownElementName, method?.GetLeadingTrivia(), category);
     }
 
-    private string InferCategoryFromPath(string path)
-    => Path.GetFileNameWithoutExtension(path)
-        .ToLowerInvariant() switch
+    private static string InferCategoryFromPath (string path)
     {
-        var _ when path.Contains("test", StringComparison.OrdinalIgnoreCase) => "Testing",
-        var _ when path.Contains("plugin", StringComparison.OrdinalIgnoreCase) => "Plugin",
-        var _ when path.Contains("embedding", StringComparison.OrdinalIgnoreCase) => "Embedding",
-        var _ when path.Contains("core", StringComparison.OrdinalIgnoreCase) => "Core",
-        _ => "Refactor"
-    };
+        var fileName = Path
+            .GetFileNameWithoutExtension(path)
+            .ToLowerInvariant();
+
+        const RegexOptions options = default;
+        return fileName switch
+        {
+            var _ when Regex.IsMatch(fileName, "^test", options, TimeSpan.FromSeconds(5)) => "Testing",
+            var _ when Regex.IsMatch(fileName, "^plugin", options, TimeSpan.FromSeconds(5)) => "Plugin",
+            var _ when Regex.IsMatch(fileName, "^embedding", options, TimeSpan.FromSeconds(5)) => "Embedding",
+            var _ when Regex.IsMatch(fileName, "^core", options, TimeSpan.FromSeconds(5)) => "Core",
+            _ => "Other"
+        };
+    }
 
     /// <summary>
     /// Builds a CodeDocument from a syntax node with comments and code.
@@ -87,8 +88,9 @@ public class ChunkBySyntaxTree
     /// <param name="leadingTrivia">Leading trivia for comments.</param>
     /// <param name="category">Category inferred from path.</param>
     /// <returns>Initialized CodeDocument.</returns>
-    /// <example><![CDATA[var doc = chunker.CreateCodeDocument("Program.cs", node, "Class", "Program", trivia, "Core");]]></example>
-    private CodeDocument CreateCodeDocument(string fileName, SyntaxNode node, string elementType, string elementName, SyntaxTriviaList? leadingTrivia, string category)
+    /// <example><![CDATA[var doc = chunker.CreateCodeDocument("Program.cs", node, "Class", "Program", trivia, "Core");]]>
+    /// </example>
+    private static CodeDocument CreateCodeDocument (string fileName, SyntaxNode node, string elementType, string elementName, SyntaxTriviaList? leadingTrivia, string category)
     {
         var comments = LocateComments(leadingTrivia);
 
@@ -110,7 +112,7 @@ public class ChunkBySyntaxTree
     /// <param name="leadingTrivia">Leading trivia of syntax node.</param>
     /// <returns>List of trimmed comment strings.</returns>
     /// <example><![CDATA[var comments = chunker.LocateComments(node.GetLeadingTrivia());]]></example>
-    private static List<string> LocateComments(SyntaxTriviaList? leadingTrivia)
+    private static List<string> LocateComments (SyntaxTriviaList? leadingTrivia)
     {
         if (leadingTrivia == null)
             return [];

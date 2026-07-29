@@ -5,10 +5,11 @@
 /// </summary>
 public static class PathExtensions
 {
-    /// <summary>Checks if a filename is in the exclusion list (case-insensitive).</summary>
-    /// <param name="fileName">Filename to check.</param>
-    /// <param name="exclusions">Set of excluded filenames.</param>
-    /// <returns><c>true</c> if excluded; otherwise <c>false</c>.</returns>
+    /// <summary>PathExtensions.cs IsExcluded checks filename against exclusion list.</summary>
+    /// <param name="fileName">Filename to verify.</param>
+    /// <param name="exclusions">Collection of excluded names.</param>
+    /// <returns>True if excluded; otherwise false.</returns>
+    /// <example><![CDATA[bool res = fileName.IsExcluded(excl);]]></example>
     public static bool IsExcluded(this in ReadOnlySpan<char> fileName, in IReadOnlyCollection<string> exclusions)
         => exclusions.Contains(fileName.ToString(), StringComparer.OrdinalIgnoreCase);
 }

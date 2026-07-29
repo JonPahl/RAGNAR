@@ -1,13 +1,4 @@
-﻿using Moq;
-
-using Ragnar.Branding;
-using Ragnar.Core.ConsoleWriter;
-
-using Spectre.Console.Rendering;
-
-using System.Reflection;
-
-namespace RAGNAR.UnitTests.Branding;
+﻿namespace RAGNAR.UnitTests.Branding;
 
 public sealed class BrandingBannerTests
 {

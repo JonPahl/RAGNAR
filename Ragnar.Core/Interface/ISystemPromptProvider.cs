@@ -1,9 +1,8 @@
-﻿namespace Ragnar.Core.Interface;
+namespace Ragnar.Core.Interface;
 
 /// <summary>Provides system prompt text for the AI.</summary>
 public interface ISystemPromptProvider
 {
-
     string Content { get; set; }
 
     /// <summary>Gets the system prompt text for AI setup.</summary>

@@ -1,4 +1,5 @@
-﻿namespace Ragnar.Questions.Questions;
+namespace Ragnar.Questions.Questions;
+
 /// <summary>
 /// Delegate for creating a Question from parts.
 /// </summary>
@@ -7,4 +8,4 @@
 /// <param name="category">The category.</param>
 /// <param name="isActive">Whether the question is active.</param>
 /// <returns>A Question instance.</returns>
-public delegate Question QuestionFactoryDelegate(string text, string key, QuestionCategory category, bool isActive);
+public delegate Question QuestionFactoryDelegate (string text, string key, QuestionCategory category, bool isActive);

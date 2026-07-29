@@ -1,4 +1,5 @@
-﻿namespace Ragnar.Interfaces;
+namespace Ragnar.Interfaces;
+
 /// <summary>
 /// Call Ollama to generate a response to asked question.
 /// </summary>
@@ -9,5 +10,5 @@ public interface IOllamaResponse
     /// <param name="ct">Cancellation token.</param>
     /// <returns>Full generated text.</returns>
     /// <example><![CDATA[string answer = await provider.GenerateResponse(request, ct);]]></example>
-    Task<string> GenerateResponse(GenerateRequest request, CancellationToken ct);
+    Task<string> GenerateResponse (GenerateRequest request, CancellationToken ct);
 }

@@ -1,14 +1,10 @@
-﻿using Ragnar.Core.ConsoleWriter;
-using Ragnar.Core.Interface;
-using Ragnar.Core.Options;
-
 namespace Ragnar.Embedding.Pipeline;
 
-public class EmbeddingPipeline(
+public class EmbeddingPipeline (
     ILogger logger,
-    IEmbedTextPipeline uow,
+    ICodeEmbeddingPipeline uow,
     IOutputWriter writer,
-    IOptions<ApplicationConfiguration> configWrapper,
+    IOptions<AppConfiguration> configWrapper,
     IQdrantClient qdrantClient)
     : IEmbeddingPipeline
 {
@@ -16,7 +12,7 @@ public class EmbeddingPipeline(
     /// <param name="ct">Cancellation token.</param>
     /// <returns>Task.</returns>
     /// <example><![CDATA[await PopulateAsync(ct);]]></example>
-    public async ValueTask PopulateAsync(CancellationToken ct) => await uow.RunAsync(ct);
+    public async ValueTask PopulateAsync (CancellationToken ct) => await uow.RunAsync(ct);
 
     /// <summary>
     /// Ensures target vector collection exists; creates if not found.
@@ -24,24 +20,20 @@ public class EmbeddingPipeline(
     /// <param name="ct">Cancellation token.</param>
     /// <returns>ValueTask.</returns>
     /// <example><![CDATA[await EnsureCollectionExistsAsync(ct);]]></example>
-    public async ValueTask EnsureCollectionExistsAsync(CancellationToken ct)
+    public async ValueTask EnsureCollectionExistsAsync (CancellationToken ct)
     {
 
         // Serilog.ILogger logger, ulong dimension, string vectorStoreName, IQdrantClient qdrant
 
         var dimension = configWrapper.Value.EmbeddingOptions.Dimension;
-        var vectorStoreName = configWrapper.Value.ApplicationOptions.VectorStoreName;
+        var vectorStoreName = configWrapper.Value.RagOptions.VectorStoreName;
 
-        var builder = new Core.VectorStoreBuilder(logger, dimension, vectorStoreName, qdrantClient);
+        var builder = new VectorStoreInitialize(logger, dimension, vectorStoreName, qdrantClient);
 
         var collectionExists = await builder.BuildAsync(ct);
 
-        //var collectionExists = await qdrantClient.DoesCollectionExistAsync(ct);
-
-        if (!collectionExists)
+        if(!collectionExists)
         {
-            //    await qdrantClient.CreateCollectionIfNotExistsAsync(ct);
-
             writer.MarkupLine("[green] ☑ Collection Created [/]");
             logger.Information("Collection Created.");
         }

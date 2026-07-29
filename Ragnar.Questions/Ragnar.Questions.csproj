@@ -12,16 +12,26 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Roslynator.Analyzers" Version="4.15.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\FileQuestionProvider\FileQuestionProvider.csproj" />
     <ProjectReference Include="..\Ragnar.Core\Ragnar.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Plugins\General.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Plugins\Ragnar.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Plugins\Refactor.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Questions\Plugins\FileQuestionProvider.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

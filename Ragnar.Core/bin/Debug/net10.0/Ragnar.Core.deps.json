@@ -11,10 +11,10 @@
           "Ardalis.GuardClauses": "5.0.0",
           "FileQuestionProvider": "1.0.0",
           "HashDepot": "3.2.0",
-          "OllamaSharp": "5.4.25",
+          "OllamaSharp": "5.4.30",
           "Qdrant.Client": "1.18.1",
           "Serilog.AspNetCore": "10.0.0",
-          "Spectre.Console": "0.57.1"
+          "Spectre.Console": "0.57.2"
         },
         "runtime": {
           "Ragnar.Core.dll": {}
@@ -82,11 +82,23 @@
           }
         }
       },
-      "Microsoft.Extensions.AI.Abstractions/10.4.1": {
+      "Microsoft.Extensions.AI/10.8.0": {
+        "dependencies": {
+          "Microsoft.Extensions.AI.Abstractions": "10.8.0",
+          "System.Numerics.Tensors": "10.0.10"
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.Extensions.AI.dll": {
+            "assemblyVersion": "10.8.0.0",
+            "fileVersion": "10.800.26.36402"
+          }
+        }
+      },
+      "Microsoft.Extensions.AI.Abstractions/10.8.0": {
         "runtime": {
           "lib/net10.0/Microsoft.Extensions.AI.Abstractions.dll": {
-            "assemblyVersion": "10.4.0.0",
-            "fileVersion": "10.400.126.16803"
+            "assemblyVersion": "10.8.0.0",
+            "fileVersion": "10.800.26.36402"
           }
         }
       },
@@ -98,14 +110,15 @@
           }
         }
       },
-      "OllamaSharp/5.4.25": {
+      "OllamaSharp/5.4.30": {
         "dependencies": {
-          "Microsoft.Extensions.AI.Abstractions": "10.4.1"
+          "Microsoft.Extensions.AI": "10.8.0",
+          "Microsoft.Extensions.AI.Abstractions": "10.8.0"
         },
         "runtime": {
           "lib/net10.0/OllamaSharp.dll": {
-            "assemblyVersion": "5.4.25.0",
-            "fileVersion": "5.4.25.0"
+            "assemblyVersion": "5.4.30.0",
+            "fileVersion": "5.4.30.0"
           }
         }
       },
@@ -225,22 +238,30 @@
           }
         }
       },
-      "Spectre.Console/0.57.1": {
+      "Spectre.Console/0.57.2": {
         "dependencies": {
-          "Spectre.Console.Ansi": "0.57.1"
+          "Spectre.Console.Ansi": "0.57.2"
         },
         "runtime": {
           "lib/net10.0/Spectre.Console.dll": {
             "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.57.1.0"
+            "fileVersion": "0.57.2.0"
           }
         }
       },
-      "Spectre.Console.Ansi/0.57.1": {
+      "Spectre.Console.Ansi/0.57.2": {
         "runtime": {
           "lib/net10.0/Spectre.Console.Ansi.dll": {
             "assemblyVersion": "0.0.0.0",
-            "fileVersion": "0.57.1.0"
+            "fileVersion": "0.57.2.0"
+          }
+        }
+      },
+      "System.Numerics.Tensors/10.0.10": {
+        "runtime": {
+          "lib/net10.0/System.Numerics.Tensors.dll": {
+            "assemblyVersion": "10.0.0.10",
+            "fileVersion": "10.0.1026.32716"
           }
         }
       },
@@ -312,12 +333,19 @@
       "path": "hashdepot/3.2.0",
       "hashPath": "hashdepot.3.2.0.nupkg.sha512"
     },
-    "Microsoft.Extensions.AI.Abstractions/10.4.1": {
+    "Microsoft.Extensions.AI/10.8.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ZxhU/wg9BOc3ohibhLl18toPLWm96ysQoE+3OhCgrZ0TUPZd7bsUmGteeatz08yweyuPIEhtyUzEZTF+3bMWEQ==",
-      "path": "microsoft.extensions.ai.abstractions/10.4.1",
-      "hashPath": "microsoft.extensions.ai.abstractions.10.4.1.nupkg.sha512"
+      "sha512": "sha512-QfthL8e2X/Z6jRs4YyVS2+HTApJvhz725l35HYZ9cfwlEuQnpzY89NJoGNmpuNZn4LIvvQOQeZIbu3jggBXgUg==",
+      "path": "microsoft.extensions.ai/10.8.0",
+      "hashPath": "microsoft.extensions.ai.10.8.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.AI.Abstractions/10.8.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1tJZ5sAYrEq1YjNg8GrZSL1tVodsWRfrgybGsZo5DQsWQgLZ+dSR5uFowIS6vb/9zxGBPl7xpYq53QMjNObO9w==",
+      "path": "microsoft.extensions.ai.abstractions/10.8.0",
+      "hashPath": "microsoft.extensions.ai.abstractions.10.8.0.nupkg.sha512"
     },
     "Microsoft.Extensions.DependencyModel/10.0.0": {
       "type": "package",
@@ -326,12 +354,12 @@
       "path": "microsoft.extensions.dependencymodel/10.0.0",
       "hashPath": "microsoft.extensions.dependencymodel.10.0.0.nupkg.sha512"
     },
-    "OllamaSharp/5.4.25": {
+    "OllamaSharp/5.4.30": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-EqkPM1gbkE+RbHgKUMzp4lYjpFymWUIgJntx3u4uDXAfAIFUXJ0MGklNFCi/PdCaxNAPRpcf205yx+g6jLLhZg==",
-      "path": "ollamasharp/5.4.25",
-      "hashPath": "ollamasharp.5.4.25.nupkg.sha512"
+      "sha512": "sha512-r/dtO3cm/D+OCB1A3dPcA//YnC9Cak3SSSK1dxfvG9RbEKjMezf3l04Ag1j8tiDul/oGn9nb8+fIwlrg0KOkww==",
+      "path": "ollamasharp/5.4.30",
+      "hashPath": "ollamasharp.5.4.30.nupkg.sha512"
     },
     "Qdrant.Client/1.18.1": {
       "type": "package",
@@ -403,19 +431,26 @@
       "path": "serilog.sinks.file/7.0.0",
       "hashPath": "serilog.sinks.file.7.0.0.nupkg.sha512"
     },
-    "Spectre.Console/0.57.1": {
+    "Spectre.Console/0.57.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-h/B0CJLR5Ba8yq+iVjjZR9JXMS+8a1syHmHhyZ6w5m8rHDWLGOlaKAhzJanHJL62rZxynLeVOx+43MKvskJ1lA==",
-      "path": "spectre.console/0.57.1",
-      "hashPath": "spectre.console.0.57.1.nupkg.sha512"
+      "sha512": "sha512-wzsB+P9i6F9G+cFOJxRotCiQWNSzZVAMxi8YMiHlGXXU1JLMXGp7zSSqBMmROZS2bzpK5jk+Saa7Evp8HwqhKg==",
+      "path": "spectre.console/0.57.2",
+      "hashPath": "spectre.console.0.57.2.nupkg.sha512"
     },
-    "Spectre.Console.Ansi/0.57.1": {
+    "Spectre.Console.Ansi/0.57.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-IFlXdGXOGD4XCK5ybZsXgQo7PE0ZE/pt9YFFWo2cECTipS8DrViLFazx+K00/A+fY1PlHYt1Vqwrjfod4EEckw==",
-      "path": "spectre.console.ansi/0.57.1",
-      "hashPath": "spectre.console.ansi.0.57.1.nupkg.sha512"
+      "sha512": "sha512-Y1+u73shwP+JYHmrkdN6bSt2kaGBEAafhi2nrecczbXdFRey+k7J/WF9YPfcB0rqivv2S8fmif6FSBq9m/AFvw==",
+      "path": "spectre.console.ansi/0.57.2",
+      "hashPath": "spectre.console.ansi.0.57.2.nupkg.sha512"
+    },
+    "System.Numerics.Tensors/10.0.10": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-9Ildb4Y9maDztB0ZRGxsNShbpCQ2Tjv2dr4IjskBxpTGhH7aIz1+oC+Hl833ASs/htWwsH6myNe+sRpeyCzeMQ==",
+      "path": "system.numerics.tensors/10.0.10",
+      "hashPath": "system.numerics.tensors.10.0.10.nupkg.sha512"
     },
     "FileQuestionProvider/1.0.0": {
       "type": "project",

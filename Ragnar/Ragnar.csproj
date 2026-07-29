@@ -21,19 +21,18 @@
     <PackageReference Include="CsvHelper" Version="33.1.0" />
     <PackageReference Include="ElBruno.OllamaSharp.Extensions" Version="1.0.2" />
     <PackageReference Include="HashDepot" Version="3.2.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis" Version="5.3.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.3.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="10.7.0" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.9" />
-    <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="10.0.9" />
-    <PackageReference Include="Microsoft.SemanticKernel" Version="1.77.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis" Version="5.6.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.6.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Http.Resilience" Version="10.8.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="10.0.10" />
+    <PackageReference Include="Microsoft.SemanticKernel" Version="1.78.0" />
     <PackageReference Include="Microsoft.SemanticKernel.Connectors.Qdrant" Version="1.74.0-preview" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0" />
-    <PackageReference Include="OllamaSharp" Version="5.4.25" />
+    <PackageReference Include="OllamaSharp" Version="5.4.30" />
     <PackageReference Include="Polly" Version="8.7.0" />
-    <PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
     <PackageReference Include="Qdrant.Client" Version="1.18.1" />
     <PackageReference Include="Roslynator.Analyzers" Version="4.15.0">
       <PrivateAssets>all</PrivateAssets>
@@ -73,7 +72,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ragnar.Core\Ragnar.Core.csproj" />
     <ProjectReference Include="..\Ragnar.Embedding\Ragnar.Embedding.csproj" />
     <ProjectReference Include="..\Ragnar.Questions\Ragnar.Questions.csproj" />
   </ItemGroup>

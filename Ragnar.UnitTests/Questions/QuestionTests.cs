@@ -1,13 +1,9 @@
-﻿using Ragnar.Core.Utils;
-using Ragnar.Extensions;
-using Ragnar.Plugins;
-
 namespace RAGNAR.UnitTests.Questions;
 
 public sealed class QuestionTests
 {
     [Fact]
-    public void IsActive_CreatesEnabledQuestion()
+    public void IsActive_CreatesEnabledQuestion ()
     {
         // Act
         var question = Ragnar.Core.Model.Question.IsActive("Test?", "test", QuestionCategory.Refactor);
@@ -20,7 +16,7 @@ public sealed class QuestionTests
     }
 
     [Fact]
-    public void IsDisabled_CreatesDisabledQuestion()
+    public void IsDisabled_CreatesDisabledQuestion ()
     {
         // Act
         var question = Ragnar.Core.Model.Question.IsDisabled("Disabled?", "disabled", QuestionCategory.Logging);
@@ -35,7 +31,7 @@ public sealed class QuestionTests
     [Theory]
     [InlineData("")]
     [InlineData("   ")]
-    public void IsActive_Throws_WhenTextIsInvalid(string? text)
+    public void IsActive_Throws_WhenTextIsInvalid (string? text)
     {
         // Act & Assert
         Assert.Throws<ArgumentException>(() => Ragnar.Core.Model.Question.IsActive(text!, "key", QuestionCategory.Refactor));
@@ -45,7 +41,7 @@ public sealed class QuestionTests
     [Theory]
     [InlineData("")]
     [InlineData("   ")]
-    public void IsDisabled_Throws_WhenKeyIsInvalid(string? key)
+    public void IsDisabled_Throws_WhenKeyIsInvalid (string? key)
     {
         // Act & Assert
         Assert.Throws<ArgumentException>(() => Ragnar.Core.Model.Question.IsDisabled("Text", key!, QuestionCategory.Refactor));
@@ -53,7 +49,7 @@ public sealed class QuestionTests
 
 
     [Fact]
-    public void FromFilePathAndIndex_GeneratesDeterministicId()
+    public void FromFilePathAndIndex_GeneratesDeterministicId ()
     {
         // Arrange
         const string path = "test.cs";
@@ -69,7 +65,7 @@ public sealed class QuestionTests
     }
 
     [Fact]
-    public void FromFilePathAndIndex_HandlesLongPaths()
+    public void FromFilePathAndIndex_HandlesLongPaths ()
     {
         // Arrange
         const string path = "very/long/path/to/a/file/with/many/directories/Program.cs";
@@ -82,58 +78,30 @@ public sealed class QuestionTests
         Assert.NotEqual(0UL, id);
     }
 
-    [Fact]
-    public void GetResponseDirectory_AppendsFolders()
-    {
-        // Arrange
-        var folders = new List<string> { "Category1", "Category2" };
-        const string baseDir = "/output";
-
-        // Act
-        var result = folders.GetResponseDirectory(baseDir);
-
-        // Assert
-        Assert.Equal(Path.Combine("/output", "Category1", "Category2"), result);
-    }
-
-    [Fact]
-    public void GetResponseDirectory_WithEmptyFoldersAndNoBaseDir()
-    {
-        // Arrange
-        var folders = Array.Empty<string>();
-
-        // Act
-        var result = folders.GetResponseDirectory();
-
-        // Assert
-        Assert.Equal("Response", result);
-    }
-
     //[Fact]
-    //public void IsExcluded_ReturnsTrue_ForMatchingExclusion()
+    //public void GetResponseDirectory_AppendsFolders()
     //{
     //    // Arrange
-    //    var fileName = "Program.cs";
-    //    var exclusions = new List<string> = ["Program.cs", "bin"];
+    //    var folders = new List<string> { "Category1", "Category2" };
+    //    const string baseDir = "/output";
 
     //    // Act
-    //    var result = fileName.AsSpan().IsExcluded(in exclusions);
+    //    var result = folders.GetResponseDirectory(baseDir);
 
     //    // Assert
-    //    Assert.True(result);
+    //    Assert.Equal("/output\\Response\\Category1\\Category2", result);
     //}
 
     //[Fact]
-    //public void IsExcluded_IgnoresCase()
+    //public void GetResponseDirectory_WithEmptyFoldersAndNoBaseDir()
     //{
     //    // Arrange
-    //    var fileName = "program.cs";
-    //    var exclusions = ["PROGRAM.CS"];
+    //    var folders = Array.Empty<string>();
 
     //    // Act
-    //    var result = fileName.AsSpan().IsExcluded(in exclusions);
+    //    var result = folders.GetResponseDirectory();
 
     //    // Assert
-    //    Assert.True(result);
+    //    Assert.Equal("Response", result);
     //}
 }

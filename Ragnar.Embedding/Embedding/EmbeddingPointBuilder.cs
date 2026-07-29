@@ -1,12 +1,10 @@
-﻿using Ragnar.Core.Interface;
-
 namespace Ragnar.Embedding.Embedding;
 /// <inheritdoc/>
 public class EmbeddingPointBuilder
   : IGeneratorService
 {
     /// <inheritdoc/>
-    public async ValueTask<GeneratedEmbeddings<Embedding<float>>> GenerateEmbeddingsAsync(
+    public async ValueTask<GeneratedEmbeddings<Embedding<float>>> GenerateEmbeddingsAsync (
         ILogger logger,
         IEmbeddingGenerator<string, Embedding<float>> generator,
         string text,
@@ -20,20 +18,26 @@ public class EmbeddingPointBuilder
 
             return await generator.GenerateAsync([text], cancellationToken: timeoutCts.Token);
         }
-        catch (OperationCanceledException ex) when (ct.IsCancellationRequested)
+        catch(OperationCanceledException ex) when(ct.IsCancellationRequested)
         {
             logger.Warning(ex, "Vector generation canceled.");
             throw new OperationCanceledException("user cancelled", ex);
+            //todo: add in circuit breaker exception.
         }
-        catch (Exception ex) when (ex is TimeoutException or TaskCanceledException)
+        catch(Exception ex) when(ex is TimeoutException or TaskCanceledException)
         {
             logger.Fatal(ex, "Embedding generation timed out.");
             throw new InvalidOperationException("Embedding service unavailable.", ex);
         }
+        catch(Exception ex)
+        {
+            logger.Fatal(ex, "Embedding generation had an exception. ");
+            throw;
+        }
     }
 
     /// <inheritdoc/>
-    public List<PointStruct> BuildPointStruts(PointId pointId, float[] embedding, string chunk, string file)
+    public List<PointStruct> BuildPointStruts (PointId pointId, float[] embedding, string chunk, string file)
     {
         ArgumentNullException.ThrowIfNull(chunk);
         ArgumentNullException.ThrowIfNull(file);
@@ -46,7 +50,7 @@ public class EmbeddingPointBuilder
             Vectors = embedding,
             Payload =
             {
-                ["code_snippet"] = chunk,
+                ["Code"] = chunk,
                 ["file_name"] = file,
             },
         });

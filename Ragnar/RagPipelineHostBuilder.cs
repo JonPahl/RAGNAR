@@ -1,15 +1,5 @@
-﻿using System.Runtime.Loader;
-
-using Microsoft.Extensions.Http.Resilience;
-
-using Polly;
-
-using Ragnar.Questions.Interface;
-using Ragnar.Questions.Questions;
-
-using Serilog;
-
 namespace Ragnar;
+
 /// <summary>Centralized application builder with services, config, and logging.</summary>
 public static class RagPipelineHostBuilder
 {
@@ -17,7 +7,7 @@ public static class RagPipelineHostBuilder
     /// <param name="args">Command-line arguments.</param>
     /// <returns>Configured IHostBuilder.</returns>
     /// <example><![CDATA[Host = RagPipelineBuilder.CreateDefaultBuilder(args).Build();]]></example>
-    public static IHostBuilder CreateDefaultBuilder(string[] args)
+    public static IHostBuilder CreateDefaultBuilder (string[] args)
     {
         return Host.CreateDefaultBuilder(args)
           .ConfigureServices((context, services) =>
@@ -26,7 +16,7 @@ public static class RagPipelineHostBuilder
                             (text, key, category, isActive) => new Question(isActive, text, key, category));
 
               services.AddSingleton<IQuestionFactory, DefaultQuestionFactory>();
-              services.AddSingleton<ConfigurationBasedQuestionLoader>();
+              services.AddSingleton<ConfigToQuestionMapper>();
               services.AddSingleton<IQdrantClient, QdrantClient>(serviceProvider =>
                             {
                                 var options = serviceProvider.GetRequiredService<IOptions<EmbeddingOptions>>().Value;
@@ -34,9 +24,11 @@ public static class RagPipelineHostBuilder
                                 return new QdrantClient(options.Host, options.Port, https: false);
                             });
 
+              services.AddScoped<IVectorStore, QdrantVectorStore>();
+
               services.RegisterOptions(context);
               services.AddHttpClients()
-              .AddSingleton<IOllamaClientProvider, OllamaClientProvider>();
+              .AddSingleton<IOllamaClientFactory, OllamaClientProvider>();
               services.RegisterEmbeddingGenerator(context);
 
               services.RegisterQuestionPlugins();
@@ -51,18 +43,14 @@ public static class RagPipelineHostBuilder
               .AddScoped<IAssemblyInfo, AssemblyInfo>()
               .AddSingleton<IApplicationBanner, ApplicationBanner>()
               .AddSingleton<ISummaryService, SummaryService>()
-
               .AddSingleton<IOutputWriter, AnsiConsoleOutputWriter>()
-
-              .AddSingleton<IRagOrchestrator, RagOrchestrator>()
-              .AddScoped<IQuestionEmbedding, QuestionEmbedding>()
-              .AddSingleton<IOllamaClientProvider, OllamaClientProvider>()
+              .AddSingleton<ICodeAnalysisPipeline, CodeAnalysisPipeline>()
+              .AddScoped<ICustomEmbedding, QuestionEmbedding>()
+              .AddSingleton<IOllamaClientFactory, OllamaClientProvider>()
               .AddSingleton<IOllamaResponse, OllamaResponse>()
-              //.AddSingleton<IVectorService, VectorStoreProvisioner>()
               .AddSingleton<IQuestionCatalogLoader, DefaultQuestionCatalogLoader>();
 
               services.EmbeddingSetup();
-
               services.AddHostedService<RagPipelineRunner>();
           })
           .UseSerilog((ctx, configuration) =>
@@ -74,7 +62,8 @@ public static class RagPipelineHostBuilder
     /// <summary>
     /// Registers embedding generator.
     /// </summary>
-    private static IServiceCollection RegisterEmbeddingGenerator(this IServiceCollection services, HostBuilderContext context)
+    private static IServiceCollection RegisterEmbeddingGenerator (
+        this IServiceCollection services, HostBuilderContext context)
     {
         services.AddSingleton(sp =>
         {
@@ -87,7 +76,7 @@ public static class RagPipelineHostBuilder
             var httpClient = sp.GetRequiredService<IHttpClientFactory>();
 
             var ollamaHttpClient = httpClient
-            .CreateClient(nameof(OllamaType.Ollama));
+            .CreateClient(nameof(OllamaServiceType.Ollama));
 
             var host = ollamaOption?.Host ?? throw new ArgumentException("Ollama Host");
 
@@ -110,9 +99,9 @@ public static class RagPipelineHostBuilder
     /// <summary>
     /// Registers HTTP clients with resilience.
     /// </summary>
-    private static IServiceCollection AddHttpClients(this IServiceCollection services)
+    private static IServiceCollection AddHttpClients (this IServiceCollection services)
     {
-        services.AddHttpClient(nameof(OllamaType.Embedding), _ => { })
+        services.AddHttpClient(nameof(OllamaServiceType.Embedding), _ => { })
             .AddStandardResilienceHandler(opt =>
             {
                 opt.TotalRequestTimeout = new HttpTimeoutStrategyOptions()
@@ -128,7 +117,7 @@ public static class RagPipelineHostBuilder
                 };
             });
 
-        services.AddHttpClient(nameof(OllamaType.Ollama), _ => { })
+        services.AddHttpClient(nameof(OllamaServiceType.Ollama), _ => { })
             .AddStandardResilienceHandler(opt =>
             {
                 opt.TotalRequestTimeout = new HttpTimeoutStrategyOptions()
@@ -144,12 +133,12 @@ public static class RagPipelineHostBuilder
                     BackoffType = DelayBackoffType.Exponential,
                     OnRetry = (ctx) =>
                     {
-                        // Optional: jitter offset
                         var jitter = TimeSpan.FromMilliseconds(Random.Shared.Next(0, 500));
                         ctx.RetryDelay.Add(jitter);
                         return ValueTask.CompletedTask;
                     }
                 };
+
                 opt.CircuitBreaker = new HttpCircuitBreakerStrategyOptions
                 {
                     BreakDuration = TimeSpan.FromMinutes(1),
@@ -166,7 +155,7 @@ public static class RagPipelineHostBuilder
     /// </summary>
     /// <param name="services">service collection. </param>
     /// <returns>updated service collection.</returns>
-    private static IServiceCollection RegisterQuestionPlugins(this IServiceCollection services)
+    private static IServiceCollection RegisterQuestionPlugins (this IServiceCollection services)
     {
         var pluginDir = Path.Combine(AppContext.BaseDirectory, "Questions", "Plugins");
 
@@ -197,6 +186,8 @@ public static class RagPipelineHostBuilder
             {
                 AnsiConsole.WriteLine(ex.ToString());
                 AnsiConsole.WriteLine($"Failed to load plugin assembly: {dll}", dll);
+
+                //TODO: insert reference to serilog here and log above item.
             }
         }
 
@@ -207,15 +198,19 @@ public static class RagPipelineHostBuilder
     /// <param name="services">DI service collection.</param>
     /// <param name="context">Host <paramref name="context"/>.</param>
     /// <returns>Updated service collection.</returns>
-    private static IServiceCollection RegisterOptions(this IServiceCollection services, HostBuilderContext context)
+    private static IServiceCollection RegisterOptions (this IServiceCollection services, HostBuilderContext context)
     {
         // Register all services once
         services
-            .AddOptions<ApplicationOptions>()
+            .AddOptions<RagOptions>()
             .Bind(context.Configuration
-            .GetSection("ApplicationOptions"))
+            .GetSection("RagOptions"))
             .ValidateDataAnnotations()
-            .ValidateOnStart();
+            .ValidateOnStart()
+            .Validate(rag => !string.IsNullOrWhiteSpace(rag.SourceDirectory),
+              "RagOptions.SourceDirectory must not be empty")
+            .Validate(rag => Directory.Exists(rag.SourceDirectory.ExpandDirectory()),
+              "RagOptions.SourceDirectory does not exist");
 
         services
             .AddOptions<EmbeddingOptions>()
@@ -236,12 +231,16 @@ public static class RagPipelineHostBuilder
             .Bind(context.Configuration
             .GetSection("OllamaOptions"))
             .ValidateDataAnnotations()
-            .ValidateOnStart();
+            .ValidateOnStart()
+            .PostConfigure(opts =>
+            {
+                opts.Host = opts.Host.ValidateHost();
+                opts.Port = opts.Port.ValidatePort();
+            });
 
         services
-            .Configure<ApplicationConfiguration>(context.Configuration);
-        services
-          .PostConfigure<ApplicationConfiguration>(opts => opts.ApplicationOptions.SourceDirectory = opts.ApplicationOptions.SourceDirectory.ExpandDirectory());
+            .Configure<AppConfiguration>(context.Configuration)
+            .PostConfigure<AppConfiguration>(opts => opts.RagOptions.SourceDirectory = opts.RagOptions.SourceDirectory.ExpandDirectory());
 
         return services;
     }

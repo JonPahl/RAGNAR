@@ -1,0 +1,605 @@
+## WORKSPACE EXECUTIVE SUMMARY (YAML)
+# Generated: 2026-07-28T21:12:38.2114415-05:00
+# Root: C:\Users\jp325\source\Ragnar
+Architecture:
+  Type: Backend (C#/.NET)
+  Scale: 297 relevant source files
+  Components: 0
+  Controllers: 0
+  Models: 2
+  Services: 3
+---
+- File: FileQuestionProvider\FileQuestionProvider.csproj
+  Preview: "<Project Sdk='Microsoft.NET.Sdk'>  <PropertyGroup>   <OutputType>Library</OutputType>   <TargetFramework>net10.0</TargetFramework>   <ImplicitUsings>e..."
+- File: Ragnar\Ragnar.csproj
+  Preview: "<Project Sdk='Microsoft.NET.Sdk'>  <PropertyGroup>   <OutputType>Exe</OutputType>   <TargetFramework>net10.0</TargetFramework>   <LangVersion>14.0</La..."
+- File: Ragnar.Core\Ragnar.Core.csproj
+  Preview: "<Project Sdk='Microsoft.NET.Sdk'>  <PropertyGroup>   <TargetFramework>net10.0</TargetFramework>   <ImplicitUsings>enable</ImplicitUsings>   <Nullable>..."
+- File: Ragnar.Embedding\Ragnar.Embedding.csproj
+  Preview: "<Project Sdk='Microsoft.NET.Sdk'>  <PropertyGroup>   <TargetFramework>net10.0</TargetFramework>   <ImplicitUsings>enable</ImplicitUsings>   <Nullable>..."
+- File: Ragnar.IntegrationTests\Ragnar.IntegrationTests.csproj
+  Preview: "<Project Sdk='Microsoft.NET.Sdk'>  <PropertyGroup>   <TargetFramework>net10.0</TargetFramework>   <ImplicitUsings>enable</ImplicitUsings>   <Nullable>..."
+- File: Ragnar.Questions\Ragnar.Questions.csproj
+  Preview: "<Project Sdk='Microsoft.NET.Sdk'>  <PropertyGroup>   <TargetFramework>net10.0</TargetFramework>   <ImplicitUsings>enable</ImplicitUsings>   <Nullable>..."
+- File: Ragnar.UnitTests\Ragnar.UnitTests.csproj
+  Preview: "<Project Sdk='Microsoft.NET.Sdk'>  <PropertyGroup>   <TargetFramework>net10.0</TargetFramework>   <ImplicitUsings>enable</ImplicitUsings>   <Nullable>..."
+- File: docker-compose.yml
+  Preview: "services:  qdrant:   image: qdrant/qdrant:latest   container_name: qdrant   ports:    - '6333:6333' # HTTP API    - '6334:6334' # gRPC API   volumes: ..."
+- File: Ragnar.slnx
+  Preview: "<Solution>  <Folder Name='/Tests/'>   <Project Path='Ragnar.IntegrationTests/Ragnar.IntegrationTests.csproj' />   <Project Path='Ragnar.UnitTests/Ragn..."
+- File: README.md
+  Preview: "# 🐉 Ragnar: Smart, Recursive Code Reasoning — From Query to Solution [![.NET](https://img.shields.io/badge/.NET-10.0-blue?logo=dotnet)](https://dotne..."
+- File: FileQuestionProvider\CsvFileQuestionProvider.cs
+  Preview: "namespace FileQuestionProvider; public class CsvFileQuestionProvider   : IQuestionProvider {   public string ProviderName => 'CSV File';   private str..."
+- File: FileQuestionProvider\GlobalUsings.cs
+  Preview: "global using Ragnar.Plugins; global using System.Globalization; global using CsvHelper.Configuration; global using Ragnar.Questions; global using CsvH..."
+- File: FileQuestionProvider\QuestionMap.cs
+  Preview: "namespace FileQuestionProvider; /// <summary>QuestionMap.cs Configures CSV mapping for QuestionRecord fields.</summary> /// <example><![CDATA[var map ..."
+- File: FileQuestionProvider\QuestionRecord.cs
+  Preview: " namespace FileQuestionProvider; public sealed record QuestionRecord {   public required bool IsEnabled { get; set; }   public required string Text { ..."
+- File: Ragnar\appsettings.development.json
+  Preview: "{  'exclude': [   '**/bin',   '**/bower_components',   '**/jspm_packages',   '**/node_modules',   '**/obj',   '**/platforms'  ] }"
+- File: Ragnar\appsettings.json
+  Preview: "{  'RagOptions': {   //'SourceDirectory': '%USERPROFILE%\\source\\Ragnar\\',   //'VectorStoreName': 'programming_docs',   //'SourceDirectory': '%USERP..."
+- File: Ragnar\GlobalUsings.cs
+  Preview: "global using System.Collections.Immutable; global using System.Diagnostics; global using System.IO.Enumeration; global using System.Reflection; global..."
+- File: Ragnar\KnowledgeBaseInitialization.cs
+  Preview: "namespace Ragnar; /// <summary> /// Initializes the knowledge base. /// </summary> /// <param name='DefaultRagPipeline'> The default rag /// pipeline...."
+- File: Ragnar\LICENSE.txt
+  Preview: "MIT License Copyright (c) [year] [fullname] Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associat..."
+- File: Ragnar\PluginExtensions.cs
+  Preview: "namespace Ragnar; /// <summary> /// Extension methods for plugin-related operations. /// </summary> public static class PluginExtensions {   extension..."
+- File: Ragnar\Program.cs
+  Preview: "Console.InputEncoding = Encoding.UTF8; Console.OutputEncoding = Encoding.UTF8; try {   var builder = RagPipelineHostBuilder     .CreateDefaultBuilder(..."
+- File: Ragnar\RagPipelineHostBuilder.cs
+  Preview: "namespace Ragnar; /// <summary>Centralized application builder with services, config, and logging.</summary> public static class RagPipelineHostBuilde..."
+- File: Ragnar\RagPipelineRunner.cs
+  Preview: "namespace Ragnar; ///<summary> /// Hosted service responsible for running the RAG pipeline. ///</summary> public sealed class RagPipelineRunner (   IO..."
+- File: Ragnar.Core\BuildPayloadExtension.cs
+  Preview: "namespace Ragnar.Core; /// <summary> /// Convert Qdrant value to a common dictionary. /// </summary> public static class BuildPayloadExtension {   ext..."
+- File: Ragnar.Core\GlobalUsings.cs
+  Preview: "global using Ardalis.GuardClauses; global using Google.Protobuf.Collections; global using HashDepot; global using Microsoft.Extensions.AI; global usin..."
+- File: Ragnar.Core\QdrantVectorStore.cs
+  Preview: "namespace Ragnar.Core; public class QdrantVectorStore (IQdrantClient client)   : IVectorStore {   private readonly IQdrantClient _client = client;   p..."
+- File: Ragnar.Core\QuestionExtensions.cs
+  Preview: "namespace Ragnar.Core; /// <summary> /// Methods to load question to ask along with converting an Ollama class into an Embedding Generator. /// </summ..."
+- File: Ragnar.Core\VectorStoreInitialize.cs
+  Preview: "namespace Ragnar.Core; /// <summary>VectorStoreInitialize.cs Manages Qdrant collection creation and checks.</summary> /// <param name='Logger'>Logger ..."
+- File: Ragnar.Embedding\EmbeddingSetupExtension.cs
+  Preview: "namespace Ragnar.Embedding; public static class EmbeddingSetupExtension {   /// <summary>EmbeddingSetupExtension.cs EmbeddingSetup registers embedding..."
+- File: Ragnar.Embedding\GlobalUsings.cs
+  Preview: "global using Ardalis.GuardClauses; global using Microsoft.CodeAnalysis; global using Microsoft.CodeAnalysis.CSharp; global using Microsoft.CodeAnalysi..."
+- File: Ragnar.Embedding\StringExtensions.cs
+  Preview: "namespace Ragnar.Embedding; public static class StringExtensions {   extension(ReadOnlySpan<char> xmlComment)   {     /// <summary>Counts non-tag, non..."
+- File: Ragnar.IntegrationTests\ChunkBySyntaxTreeTests.cs
+  Preview: "namespace Ragnar.IntegrationTests; public class ChunkBySyntaxTreeTests {   [Fact]   public void ChunkSourceFile_Should_ExtractTopLevelClasses ()   {  ..."
+- File: Ragnar.IntegrationTests\CodeAnalysisPipelineTests.cs
+  Preview: "//namespace Ragnar.IntegrationTests; //public class CodeAnalysisPipelineTests //  : IntegrationSetup //{ //  [Fact] //  public async Task ExecuteAsync..."
+- File: Ragnar.IntegrationTests\CodeDocumentExtensionsTests.cs
+  Preview: "namespace Ragnar.IntegrationTests; public class CodeDocumentExtensionsTests {   [Fact]   public void ToDictionary_ReturnsAllFields ()   {     // Arran..."
+- File: Ragnar.IntegrationTests\GlobalUsings.cs
+  Preview: "global using System.ComponentModel.DataAnnotations; global using Microsoft.Extensions.Options; global using Moq; global using Qdrant.Client.Grpc; glob..."
+- File: Ragnar.IntegrationTests\IntegrationSetup.cs
+  Preview: "namespace Ragnar.IntegrationTests; /// <summary>Base class for integration test setup with pre - configured options.</summary> public abstract class I..."
+- File: Ragnar.IntegrationTests\LoadCustomFilesTests.cs
+  Preview: "namespace Ragnar.IntegrationTests; public class LoadCustomFilesTests : IDisposable {   private readonly string _tempDir;   public LoadCustomFilesTests..."
+- File: Ragnar.IntegrationTests\OllamaResponseTests.cs
+  Preview: "//namespace Ragnar.IntegrationTests; //public class OllamaResponseTests //{ //  [Fact] //  public async Task GenerateResponse_Should_StreamAndReturnFu..."
+- File: Ragnar.IntegrationTests\PathExtensions.cs
+  Preview: "namespace Ragnar.IntegrationTests; public static class PathExtensions {   extension(string? path)   {     public string ExpandDirectory ()     {      ..."
+- File: Ragnar.IntegrationTests\PathExtensionsTests.cs
+  Preview: "namespace Ragnar.IntegrationTests; public class PathExtensionsTests {   [Theory]   [InlineData('file.cs', new[] { 'FILE.CS' }, true)]   [InlineData('f..."
+- File: Ragnar.IntegrationTests\QuestionExtensionsTests.cs
+  Preview: "namespace Ragnar.IntegrationTests; public class QuestionExtensionsTests {   [Fact]   public void ActiveOnly_ReturnsOnlyEnabledQuestions ()   {     // ..."
+- File: Ragnar.IntegrationTests\QuestionFilterFactoryTests.cs
+  Preview: "namespace Ragnar.IntegrationTests; public class QuestionFilterFactoryTests {   [Theory]   [InlineData(QuestionCategory.XML, 0, typeof(Filter))]   [Inl..."
+- File: Ragnar.IntegrationTests\QuestionMapTests.cs
+  Preview: "namespace Ragnar.IntegrationTests; public class QuestionMapTests {   //[Fact]   //public void MapShouldParseCSVRowCorrectly ()   //{   //  // Arrange ..."
+- File: Ragnar.IntegrationTests\RagPipelineRunnerTests.cs
+  Preview: "//namespace Ragnar.IntegrationTests; //public class RagPipelineRunnerTests //{ //  [Fact] //  public async Task StartAsyncShouldRunFullPipeline () // ..."
+- File: Ragnar.IntegrationTests\ResponseWriterTests.cs
+  Preview: "namespace Ragnar.IntegrationTests; public class ResponseWriterTests : IDisposable {   private readonly string _tempDir;   public ResponseWriterTests (..."
+- File: Ragnar.IntegrationTests\UtilsTests.cs
+  Preview: "namespace Ragnar.IntegrationTests; public class UtilsTests {   //[Fact]   //public void ExpandDirectory_Throws_WhenDirectoryMissing ()   //{   //  // ..."
+- File: Ragnar.IntegrationTests\VectorStoreWriterTests.cs
+  Preview: " namespace Ragnar.IntegrationTests; public class VectorStoreWriterTests {   [Fact]   public async Task UpsertBatchAsync_EmptyInput_ReturnsEmptyResult ..."
+- File: Ragnar.Plugins\IQuestionProvider.cs
+  Preview: "namespace Ragnar.Plugins; /// <summary>Provides questions from an external source.</summary> public interface IQuestionProvider {   /// <summary>Gets ..."
+- File: Ragnar.Plugins\QuestionCategory.cs
+  Preview: "namespace Ragnar.Plugins; /// <summary>Represents categories for plugin questions.</summary> public enum QuestionCategory {   /// <summary>Relates to ..."
+- File: Ragnar.Plugins\QuestionConfiguration.cs
+  Preview: "namespace Ragnar.Questions; /// <summary> /// Immutable record representing the configuration for a question, including its active status, text, uniqu..."
+- File: Ragnar.Questions\GlobalUsings.cs
+  Preview: "global using System.Collections.Immutable; global using Ragnar.Questions.Interface; global using Ragnar.Plugins; global using Ragnar.Core.Model; globa..."
+- File: Ragnar.Questions\LoadQuestionCategories.cs
+  Preview: "namespace Ragnar.Questions; /// <summary> /// Build list of enum options to Hashset. /// </summary> public static class LoadQuestionCategories {   ///..."
+- File: Ragnar.UnitTests\AssemblyExtensionsTests.cs
+  Preview: "namespace RAGNAR.UnitTests; public sealed class AssemblyExtensionsTests {   [Fact]   public void InformationalVersion_ReturnsAttributeOrDefault ()   {..."
+- File: Ragnar.UnitTests\ChunkBySyntaxTreeTests.cs
+  Preview: " namespace RAGNAR.UnitTests; public sealed class ChunkBySyntaxTreeTests {   [Fact]   public void ChunkSourceFile_ShouldExtractClassMetadata ()   {    ..."
+- File: Ragnar.UnitTests\ConfigQuestionLoaderTests.cs
+  Preview: "//namespace RAGNAR.UnitTests; //public sealed class ConfigQuestionLoaderTests //{ //  //[Fact] //  //public void LoadFromConfig_CreatesQuestionsWithCo..."
+- File: Ragnar.UnitTests\GlobalUsings.cs
+  Preview: "global using System.Collections.Immutable; global using System.Diagnostics; global using System.Reflection; global using Microsoft.Extensions.Options;..."
+- File: Ragnar.UnitTests\ResponseWriterTests.cs
+  Preview: "namespace Ragnar.UnitTests; public class ResponseWriterTests {   private readonly Mock<IOptions<AppConfiguration>> _mockConfig;   private readonly Res..."
+- File: Ragnar.UnitTests\StylesTests.cs
+  Preview: "namespace Ragnar.UnitTests; public class StylesTests {   [Fact]   public void GreenBlink_HasCorrectProperties ()   {     var style = Styles.GreenBlink..."
+- File: Ragnar.UnitTests\UtilsTests.cs
+  Preview: "public class UtilsTests {   [Fact]   public void ExpandDirectory_Throws_WhenDirectoryMissing ()   {     // Arrange     var nonExistent = Path.Combine(..."
+- File: Ragnar\Branding\ApplicationBanner.cs
+  Preview: "namespace Ragnar.Branding; /// <summary> /// Setups up and displays Branding for Ragnar application. /// </summary> /// <param name='writer'>console o..."
+- File: Ragnar\Branding\AssemblyExtensions.cs
+  Preview: "namespace Ragnar.Branding; /// <summary> /// Gets the informational version of an assembly. /// </summary> public static class AssemblyExtensions {   ..."
+- File: Ragnar\Branding\AssemblyInfo.cs
+  Preview: "namespace Ragnar.Branding; /// <summary> /// Provides assembly information. /// </summary> public class AssemblyInfo : IAssemblyInfo {   /// <summary>..."
+- File: Ragnar\Branding\IApplicationBanner.cs
+  Preview: "namespace Ragnar.Branding; /// <summary> /// Displays branding information. /// </summary> public interface IApplicationBanner {   /// <summary>   ///..."
+- File: Ragnar\Branding\IAssemblyInfo.cs
+  Preview: "namespace Ragnar.Branding; /// <summary>Provides assembly information.</summary> public interface IAssemblyInfo {   /// <summary>Gets the current asse..."
+- File: Ragnar\Extensions\FileSystemEntryExtensions.cs
+  Preview: "namespace Ragnar.Extensions; /// <summary> Provides extension methods for <see cref='FileSystemEntry'/>.</summary> public static class FileSystemEntry..."
+- File: Ragnar\Extensions\PathExtensions.cs
+  Preview: "namespace Ragnar.Extensions; /// <summary> /// extensions to handle if file path should be used or not. /// </summary> public static class PathExtensi..."
+- File: Ragnar\Extensions\SavePathExtension.cs
+  Preview: "namespace Ragnar.Extensions; /// <summary> /// Extension methods for saving file. /// </summary> public static class SavePathExtension {   extension(R..."
+- File: Ragnar\Extensions\StopwatchExtensions.cs
+  Preview: "namespace Ragnar.Extensions; /// <summary> /// Format stopwatch time. /// </summary> public static class StopwatchExtensions {   /// <summary>   /// F..."
+- File: Ragnar\Factory\DefaultQuestionFactory.cs
+  Preview: "namespace Ragnar.Factory; /// <summary> /// Default implementation of IQuestionFactory. /// </summary> public class DefaultQuestionFactory : IQuestion..."
+- File: Ragnar\Factory\OllamaClientProvider.cs
+  Preview: "namespace Ragnar.Factory; /// <summary> /// Creates Ollama API clients based on type (Ollama or Embedding). /// </summary> public class OllamaClientPr..."
+- File: Ragnar\Interfaces\IOllamaResponse.cs
+  Preview: "namespace Ragnar.Interfaces; /// <summary> /// Call Ollama to generate a response to asked question. /// </summary> public interface IOllamaResponse {..."
+- File: Ragnar\Interfaces\QdrantFields.cs
+  Preview: "namespace Ragnar.Interfaces; public static class QdrantFields {   public const string FileName = 'file_name';   public const string ElementType = 'Ele..."
+- File: Ragnar\Interfaces\QuestionEmbedding.cs
+  Preview: "namespace Ragnar.Interfaces; /// <summary>QuestionEmbedding.cs Generates vectors and retrieves context from Qdrant.</summary> /// <param name='logger'..."
+- File: Ragnar\Models\EmbeddingData.cs
+  Preview: "namespace Ragnar.Models; /// <summary>List of qdrantClient point embeddings. /// </summary> /// <example><![CDATA[new EmbeddingData(pointsList);]]></e..."
+- File: Ragnar\Models\SaveDetails.cs
+  Preview: "namespace Ragnar.Models; /// <summary> /// Save file object. /// </summary> /// <param name='Question'>Asked question.</param> /// <param name='Respon..."
+- File: Ragnar\Ollama\OllamaResponse.cs
+  Preview: "namespace Ragnar.Ollama; /// <summary> /// Configures and caches OllamaOptions clients per model. /// </summary> /// <example><![CDATA[var provider = ..."
+- File: Ragnar\Output\IResponseWriter.cs
+  Preview: "namespace Ragnar.Output; /// <summary> /// Writes out response from question to either disk or in future other location. /// </summary> public interfa..."
+- File: Ragnar\Output\ResponseWriter.cs
+  Preview: "namespace Ragnar.Output; /// <summary>Writes response content to a markdown file.</summary> public sealed class ResponseWriter (IOptions<AppConfigurat..."
+- File: Ragnar\OutputResponse\ISummaryService.cs
+  Preview: "namespace RAGNAR.OutputResponse; /// <summary> /// Provides a service to summarize all responses. /// </summary> public interface ISummaryService {   ..."
+- File: Ragnar\OutputResponse\SummaryService.cs
+  Preview: "namespace Ragnar.OutputResponse; /// <summary> /// Summary each response into a single file. /// </summary> /// <param name='logger'>Seri.logger.</par..."
+- File: Ragnar\Properties\launchSettings.json
+  Preview: "{   'profiles': {     'Ragnar': {       'commandName': 'Project'     },     'Container (Dockerfile)': {       'commandName': 'Docker'     }   } }"
+- File: Ragnar\qdrant_storage\raft_state.json
+  Preview: "{'state':{'hard_state':{'term':0,'vote':0,'commit':0},'conf_state':{'voters':[6666351486307546],'learners':[],'voters_outgoing':[],'learners_next':[],..."
+- File: Ragnar\RagPipeline\CodeAnalysisPipeline.cs
+  Preview: "namespace Ragnar.RagPipeline; /// <summary>Executes RAG pipeline: embeds question → retrieve → generate answer.</summary> /// <param name='writer'>Cus..."
+- File: Ragnar\Services\SystemPromptProvider.cs
+  Preview: "namespace Ragnar.Services; /// <summary> /// Provides system prompts for .NET 10 / C# 14 code generation. /// </summary> public class SystemPromptProv..."
+- File: Ragnar\Utils\FileValidator.cs
+  Preview: "namespace Ragnar.Utils; /// <summary> /// Implements file validation logic based on extension, name, and d filters. /// </summary> public class FileVa..."
+- File: Ragnar\Utils\Styles.cs
+  Preview: "namespace Ragnar.Utils; /// <summary>Static class providing reusable console styling options. /// </summary> public static class Styles {   /// <summa..."
+- File: Ragnar\Utils\UtilityExtensions.cs
+  Preview: "namespace Ragnar.Utils; /// <summary> /// Common utility extensions. /// </summary> public static class UtilityExtensions {   /// <summary>Expands env..."
+- File: Ragnar.Core\ConsoleWriter\AnsiConsoleOutputWriter.cs
+  Preview: "namespace Ragnar.Core.ConsoleWriter; /// <summary> /// output writer to wrap specture console output. /// </summary> public class AnsiConsoleOutputWri..."
+- File: Ragnar.Core\ConsoleWriter\IOutputWriter.cs
+  Preview: "namespace Ragnar.Core.ConsoleWriter; public interface IOutputWriter {   /// <summary>   /// Writes formatted markup to console.   /// </summary>   ///..."
+- File: Ragnar.Core\Interface\ICodeAnalysisPipeline.cs
+  Preview: "namespace Ragnar.Core.Interface; public interface ICodeAnalysisPipeline {   /// <summary>Executes the RAG pipeline for a question.</summary>   /// <pa..."
+- File: Ragnar.Core\Interface\ICodeEmbeddingPipeline.cs
+  Preview: "namespace Ragnar.Core.Interface; public interface ICodeEmbeddingPipeline {   Task RunAsync(CancellationToken ct); } "
+- File: Ragnar.Core\Interface\ICustomEmbedding.cs
+  Preview: "namespace Ragnar.Core.Interface; /// <summary> /// Interface for question embedding functionality. /// </summary> public interface ICustomEmbedding { ..."
+- File: Ragnar.Core\Interface\IEmbeddingPipeline.cs
+  Preview: "namespace Ragnar.Core.Interface; public interface IEmbeddingPipeline {   ValueTask EnsureCollectionExistsAsync(CancellationToken ct);   ValueTask Popu..."
+- File: Ragnar.Core\Interface\IFileValidator.cs
+  Preview: "namespace Ragnar.Core.Interface; /// <summary> /// Validates files against load options (extension, name, directory). /// </summary> public interface ..."
+- File: Ragnar.Core\Interface\IGeneratorService.cs
+  Preview: "namespace Ragnar.Core.Interface; /// <summary> /// Interface for embedding generator service functionality. /// </summary> public interface IGenerator..."
+- File: Ragnar.Core\Interface\IKnowledgeBaseInitialize.cs
+  Preview: "namespace Ragnar.Core.Interface; /// <summary> /// Interface for private initializing the knowledge base. /// </summary> public interface IKnowledgeBa..."
+- File: Ragnar.Core\Interface\IOllamaClientFactory.cs
+  Preview: "namespace Ragnar.Core.Interface; /// <summary> /// Build Ollama Api client. /// </summary> public interface IOllamaClientFactory {   /// <summary>   /..."
+- File: Ragnar.Core\Interface\ISystemPromptProvider.cs
+  Preview: "namespace Ragnar.Core.Interface; /// <summary>Provides system prompt text for the AI.</summary> public interface ISystemPromptProvider {   string Cont..."
+- File: Ragnar.Core\Interface\IVectorStore.cs
+  Preview: "namespace Ragnar.Core.Interface; public interface IVectorStore {   Task<IReadOnlyList<IDictionary<string, Value>?>>     SearchAsync (     string colle..."
+- File: Ragnar.Core\Interface\IVectorStoreBuilder.cs
+  Preview: "namespace Ragnar.Core.Interface; public interface IVectorStoreBuilder {   /// <summary>   /// Checks if the vector store exists.   /// </summary>   //..."
+- File: Ragnar.Core\Model\CodeDocument.cs
+  Preview: "namespace Ragnar.Core.Model; /// <summary>Represents a code document with source, metadata, and comments.</summary> public sealed record CodeDocument ..."
+- File: Ragnar.Core\Model\CodeDocumentExtensions.cs
+  Preview: "namespace Ragnar.Core.Model;  /// <summary>Converts a CodeDocument to a dictionary of payload fields for Qdrant.</summary> public static class CodeDoc..."
+- File: Ragnar.Core\Model\OllamaServiceType.cs
+  Preview: "namespace Ragnar.Core.Model; /// <summary> /// Types of llm and related settings to use when creating an ollamaApiClient. /// </summary> public enum O..."
+- File: Ragnar.Core\Model\Payload.cs
+  Preview: "namespace Ragnar.Core.Model; public record Payload(   string FileName,   string ElementType,   string ElementName,   string Comment,   string Code,   ..."
+- File: Ragnar.Core\Model\QdrantPayloadTypes.cs
+  Preview: "namespace Ragnar.Core.Model; public enum QdrantPayloadTypes {   ALL,   SEARCH, } "
+- File: Ragnar.Core\Model\Question.cs
+  Preview: "namespace Ragnar.Core.Model; /// <summary> /// Question to ask AI service against stored text. /// </summary> /// <param name='IsEnabled'>Bool should ..."
+- File: Ragnar.Core\Options\AppConfiguration.cs
+  Preview: "namespace Ragnar.Core.Options; /// <summary>Configuration container for application components: options, embeddings, Ollama, and file loading.</summar..."
+- File: Ragnar.Core\Options\EmbeddingOptions.cs
+  Preview: "namespace Ragnar.Core.Options; /// <summary>Provides configuration options for embedding service connectivity and behavior. /// </summary> public reco..."
+- File: Ragnar.Core\Options\FileLoadOptions.cs
+  Preview: "namespace Ragnar.Core.Options; /// <summary>Filters files by extension, name, and directory.</summary> /// <example><![CDATA[var opts = new FileLoadOp..."
+- File: Ragnar.Core\Options\OllamaOptions.cs
+  Preview: "  namespace Ragnar.Core.Options; /// <summary> /// Ollama setup options. /// </summary> public record OllamaOptions {   /// <summary>   /// Gets ollam..."
+- File: Ragnar.Core\Options\RagOptions.cs
+  Preview: "namespace Ragnar.Core.Options; /// <summary> /// Application configuration options for processing source files and vector data. /// </summary> public ..."
+- File: Ragnar.Core\Utils\GeneratorExtensions.cs
+  Preview: "namespace Ragnar.Core.Utils; public static class GeneratorExtensions {   /// <summary>   /// Converts an Ollama API client object into an embedding ge..."
+- File: Ragnar.Core\Utils\Point.cs
+  Preview: "namespace Ragnar.Core.Utils; /// <summary> /// Provides deterministic ID generation for vector store points. /// </summary> public static class Point ..."
+- File: Ragnar.Embedding\Chunker\ChunkBySyntaxTree.cs
+  Preview: "namespace Ragnar.Embedding.Chunker; /// <summary> /// Parses C# syntax trees into CodeDocument chunks for embedding. /// </summary> /// <example><![CD..."
+- File: Ragnar.Embedding\Embedding\EmbeddingPointBuilder.cs
+  Preview: "namespace Ragnar.Embedding.Embedding; /// <inheritdoc/> public class EmbeddingPointBuilder  : IGeneratorService {   /// <inheritdoc/>   public async V..."
+- File: Ragnar.Embedding\Factory\FileParseFactory.cs
+  Preview: "namespace Ragnar.Embedding.Factory; /// <summary>Factory to parse files into code documents based on extension. </summary> /// <param name = 'configWr..."
+- File: Ragnar.Embedding\Factory\IFileParseFactory.cs
+  Preview: " namespace Ragnar.Embedding.Factory; public interface IFileParseFactory {   /// <summary>   /// Parses file using correct _parser based on extension. ..."
+- File: Ragnar.Embedding\Pipeline\EmbeddingPipeline.cs
+  Preview: "namespace Ragnar.Embedding.Pipeline; public class EmbeddingPipeline (   ILogger logger,   ICodeEmbeddingPipeline uow,   IOutputWriter writer,   IOptio..."
+- File: Ragnar.Embedding\UnitOfWork\BaseFileParser.cs
+  Preview: "namespace Ragnar.Embedding.UnitOfWork; /// <summary> /// Read and parse over file to be embedded. /// </summary> public abstract class BaseFileParser ..."
+- File: Ragnar.Embedding\UnitOfWork\CodeEmbeddingPipeline.cs
+  Preview: "namespace Ragnar.Embedding.UnitOfWork; /// <summary> /// Processes code files in a directory, parses them into CodeDocuments, and upserts embeddings. ..."
+- File: Ragnar.Embedding\UnitOfWork\FileParser.cs
+  Preview: "namespace Ragnar.Embedding.UnitOfWork; #pragma warning disable SKEXP0050 /// <summary> /// ParseAsync file processing. /// </summary> /// <param name=..."
+- File: Ragnar.Embedding\UnitOfWork\IFileParser.cs
+  Preview: " namespace Ragnar.Embedding.UnitOfWork;  /// <summary> /// Interface for file parsing functionality. /// </summary> public interface IFileParser {   /..."
+- File: Ragnar.Embedding\UnitOfWork\IVectorStoreWriter.cs
+  Preview: "namespace Ragnar.Embedding.UnitOfWork; /// <summary> /// Build text encoding to and insert/update to Qdrant database. /// </summary> public interface ..."
+- File: Ragnar.Embedding\UnitOfWork\LoadCustomFiles.cs
+  Preview: "namespace Ragnar.Embedding.UnitOfWork; /// <summary> /// Static class to call Custom system enumerable. /// </summary> public static class LoadCustomF..."
+- File: Ragnar.Embedding\UnitOfWork\ParseCSharpFile.cs
+  Preview: "namespace Ragnar.Embedding.UnitOfWork; /// <summary> /// Parses C# files using syntax tree chunker. /// </summary> /// <example><![CDATA[var parser = ..."
+- File: Ragnar.Embedding\UnitOfWork\VectorStoreWriter.cs
+  Preview: "namespace Ragnar.Embedding.UnitOfWork; /// <summary> /// Repository for upserting code embeddings into Qdrant vector store. /// </summary> /// <remark..."
+- File: Ragnar.Questions\Interface\IConfigurationLoader.cs
+  Preview: "namespace Ragnar.Questions.Interface; /// <summary> /// Gets questions from a configuration location. /// </summary> public interface IConfigurationLo..."
+- File: Ragnar.Questions\Interface\IQuestionCatalogLoader.cs
+  Preview: "namespace Ragnar.Questions.Interface; /// <summary> /// Provides a service to load questions from a catalog. /// </summary> public interface IQuestion..."
+- File: Ragnar.Questions\Interface\IQuestionFactory.cs
+  Preview: "namespace Ragnar.Questions.Interface; /// <summary> /// A factory for creating Question instances. /// </summary> public interface IQuestionFactory { ..."
+- File: Ragnar.Questions\Questions\ConfigToQuestionMapper.cs
+  Preview: "namespace Ragnar.Questions.Questions; /// <summary> /// Loads questions from raw configurations using a provided factory delegate. Transforms raw conf..."
+- File: Ragnar.Questions\Questions\DefaultQuestionCatalogLoader.cs
+  Preview: "namespace Ragnar.Questions.Questions; /// <summary> /// Loads active questions from configured categories, supporting both built-in and plugin-based s..."
+- File: Ragnar.Questions\Questions\FileConfigLoader.cs
+  Preview: "namespace Ragnar.Questions.Questions; /// <summary>Loads question configurations from embedded resources or files.</summary> public sealed class FileC..."
+- File: Ragnar.Questions\Questions\QuestionConfig.cs
+  Preview: "namespace Ragnar.Questions.Questions; /// <summary> /// Gets or sets the source of questions. /// </summary> /// <param name='Source'>The source of qu..."
+- File: Ragnar.Questions\Questions\QuestionExtensions.cs
+  Preview: "namespace Ragnar.Questions.Questions; public static class QuestionExtensions {   extension(List<Question> questions)   {     public List<Question> Get..."
+- File: Ragnar.Questions\Questions\QuestionFactoryDelegate.cs
+  Preview: "namespace Ragnar.Questions.Questions; /// <summary> /// Delegate for creating a Question from parts. /// </summary> /// <param name='text'>The questio..."
+- File: Ragnar.Questions\Questions\QuestionFilterFactory.cs
+  Preview: "namespace Ragnar.Questions.Questions; /// <summary>Factory to select appropriate filter strategy based on question category.</summary> public static c..."
+- File: Ragnar.UnitTests\Branding\BrandingBannerTests.cs
+  Preview: "namespace RAGNAR.UnitTests.Branding; public sealed class BrandingBannerTests {   [Fact]   public void Display_WritesExpectedOutput_WithVersion()   {  ..."
+- File: Ragnar.UnitTests\Embedding\AssemblyExtensionsTests.cs
+  Preview: "namespace RAGNAR.UnitTests.Embedding; public sealed class AssemblyExtensionsTests {   [Fact]   public void InformationalVersion_ReturnsAttribute_Value..."
+- File: Ragnar.UnitTests\Embedding\ConfigurationBasedQuestionLoaderTests.cs
+  Preview: "namespace RAGNAR.UnitTests.Embedding; public sealed class ConfigurationBasedQuestionLoaderTests {   [Fact]   public void LoadFromConfig_Throws_WhenCon..."
+- File: Ragnar.UnitTests\Embedding\DefaultQuestionFactoryTests.cs
+  Preview: "namespace RAGNAR.UnitTests.Embedding; public sealed class DefaultQuestionFactoryTests {   private readonly DefaultQuestionFactory _factory;   public D..."
+- File: Ragnar.UnitTests\Embedding\EmbeddingRepositoryTests.cs
+  Preview: "//using Microsoft.Extensions.AI; //using Microsoft.Extensions.Options; //using Moq; //using OllamaSharp; //using qdrantClient.Client; //using qdrantCl..."
+- File: Ragnar.UnitTests\Embedding\EnumBuilderTests.cs
+  Preview: "namespace RAGNAR.UnitTests.Embedding; public sealed class EnumBuilderTests {   [Fact]   public void All_ReturnsAllQuestionCategories()   {     // Act ..."
+- File: Ragnar.UnitTests\Embedding\FileValidatorTests.cs
+  Preview: "  namespace RAGNAR.UnitTests.Embedding; public sealed class FileValidatorTests {   [Fact]   public void IsValid_ReturnsTrue_ForValidFile()   {     var..."
+- File: Ragnar.UnitTests\Embedding\PointTests.cs
+  Preview: "namespace RAGNAR.UnitTests.Embedding; public sealed class PointTests {   [Fact]   public void FromFilePathAndIndex_Throws_WhenPathIsNull()   {     // ..."
+- File: Ragnar.UnitTests\Embedding\QuestionExtensionsTests.cs
+  Preview: "namespace RAGNAR.UnitTests.Embedding; public sealed class QuestionExtensionsTests {   [Fact]   public void InActiveOnly_ReturnsOnlyInactiveQuestions (..."
+- File: Ragnar.UnitTests\Extensions\CodeDocumentExtensionsTests.cs
+  Preview: "namespace Ragnar.UnitTests.Extensions; public class CodeDocumentExtensionsTests {   [Fact]   public void ToDictionary_IncludesAllFields ()   {     // ..."
+- File: Ragnar.UnitTests\Extensions\PathExtensionsTests.cs
+  Preview: "namespace Ragnar.UnitTests.Extensions; public class PathExtensionsTests {   [Theory]   [InlineData('file.cs', new[] { 'FILE.CS' }, true)]   [InlineDat..."
+- File: Ragnar.UnitTests\Extensions\QuestionExtensionsTests.cs
+  Preview: "namespace Ragnar.UnitTests.Extensions; public class QuestionExtensionsTests {   [Fact]   public void ActiveOnly_ReturnsOnlyEnabledQuestions ()   {    ..."
+- File: Ragnar.UnitTests\Extensions\QuestionExtensions_SetFilterTests.cs
+  Preview: "public class QuestionExtensions_SetFilterTests {   [Fact]   public void SetFilter_WithNullFilter_ReturnsOriginalQuestion ()   {     // Arrange     var..."
+- File: Ragnar.UnitTests\Extensions\QuestionExtensions_ValidateQuestionTests.cs
+  Preview: "namespace Ragnar.UnitTests.Extensions; public class QuestionExtensions_ValidateQuestionTests {   [Fact]   public void ValidateQuestion_ThrowsOnWhitesp..."
+- File: Ragnar.UnitTests\Extensions\QuestionFilterFactoryTests.cs
+  Preview: "//using Google.Protobuf.WellKnownTypes; //using Qdrant.Client.Grpc; //using Ragnar.Questions.Questions.Filters; //namespace RAGNAR.UnitTests; //public..."
+- File: Ragnar.UnitTests\Extensions\StringExtensionsTests.cs
+  Preview: "namespace Ragnar.UnitTests.Extensions; public sealed class StringExtensionsTests {   [Fact]   public void CharacterCount_ShouldExcludeXmlTagsAndSlashe..."
+- File: Ragnar.UnitTests\Ollama\OllamaClientFactoryTests.cs
+  Preview: "//using Microsoft.Extensions.Options; //using Ragnar.Core.Interface; //using Ragnar.Core.Options; //namespace RAGNAR.UnitTests; //public sealed class ..."
+- File: Ragnar.UnitTests\Ollama\OllamaSetupTests.cs
+  Preview: "//using System.Reflection; //using OllamaSharp; //using Ragnar.Core.Interface; //using Ragnar.Ollama; //namespace RAGNAR.UnitTests; //public sealed cl..."
+- File: Ragnar.UnitTests\Questions\AssemblyExtensionsTests.cs
+  Preview: "namespace RAGNAR.UnitTests.Questions; public sealed class AssemblyExtensionsTests {   [Fact]   public void InformationalVersion_ReturnsAttribute_Value..."
+- File: Ragnar.UnitTests\Questions\QuestionTests.cs
+  Preview: "namespace RAGNAR.UnitTests.Questions; public sealed class QuestionTests {   [Fact]   public void IsActive_CreatesEnabledQuestion ()   {     // Act    ..."
+- File: Ragnar.UnitTests\Questions\StylesTests.cs
+  Preview: "   namespace RAGNAR.UnitTests.Questions; public sealed class StylesTests {   [Fact]   public void GreenBlink_HasCorrectColorAndDecoration()   {     //..."
+- File: Ragnar.UnitTests\RAG\RAGOrchestratorTests.cs
+  Preview: "namespace Ragnar.UnitTests.RAG; public class RAGOrchestratorTests {   private readonly Mock<IOptions<AppConfiguration>> _mockConfig;   private readonl..."
+- File: Ragnar.UnitTests\RAG\RAGPipelineExecutorTests.cs
+  Preview: "//namespace Ragnar.UnitTests; //using Moq; //using OllamaSharp.Models; //using Ragnar.Factory; //using Ragnar.Interfaces; //using Ragnar.Models; //usi..."
+- File: Ragnar.UnitTests\RAG\RAGPipelineRunnerTests.cs
+  Preview: "namespace Ragnar.UnitTests.RAG; public class RagPipelineRunnerTests {   private readonly Mock<IOutputWriter> _mockWriter;   private readonly Mock<IEmb..."
+- File: Ragnar.UnitTests\Util\LoadEnumTests.cs
+  Preview: "namespace RAGNAR.UnitTests.Util; public sealed class LoadEnumTests {   [Fact]   public void All_ReturnsAllQuestionCategories ()   {     // Act     var..."
+- File: Ragnar.UnitTests\Util\StopwatchExtensionsTests.cs
+  Preview: "namespace RAGNAR.UnitTests.Util; public sealed class StopwatchExtensionsTests {   [Fact]   public void ElapsedTimeString_FormatsAsMinutesAndSeconds ()..."
+- File: Ragnar.UnitTests\Util\UtilsTests.cs
+  Preview: " namespace Ragnar.UnitTests.Util; public sealed class UtilsTests {   //[Theory]   //[InlineData('%TEMP%', typeof(Environment).AssemblyQualifiedName)] ..."
+- File: Response\Diagram\Diagram_20260726_011041.md
+  Preview: "### <span style='color:darkblue;'>[Diagram]</span> Analyze the following C# code base. Generate the appropriate Mermaid diagrams, a sequence diagram, ..."
+- File: Response\Diagram\QdrantDiagram_20260726_013458.md
+  Preview: "### <span style='color:darkblue;'>[Diagram]</span> Analyze the C# code base. Generate the appropriate Mermaid diagrams for the Qdrant database. > **Da..."
+- File: Response\Editor\RoslynUpdate_20260726_022845.md
+  Preview: "### <span style='color:darkblue;'>[Editor]</span> Are there any Roslyn analyzers or IDE features (e.g., IDE0051, SA1200) that are not being enforced b..."
+- File: Response\General\Additional_20260726_012641.md
+  Preview: "### <span style='color:darkblue;'>[General]</span> Are there any other questions I should ask in this code base? Please generate a **PR-ready refactor..."
+- File: Response\General\Complexity_20260726_024017.md
+  Preview: "### <span style='color:darkblue;'>[General]</span> Can you calculate the cyclomatic complexity of the code and suggest ways to reduce it? > **Date Gen..."
+- File: Response\General\DesignPatterns_20260726_020155.md
+  Preview: "### <span style='color:darkblue;'>[General]</span> Please suggest any design patterns that should be implemented this code base? > **Date Generated**:..."
+- File: Response\General\DesignPatternTotal_20260726_022057.md
+  Preview: "### <span style='color:darkblue;'>[General]</span> Can you recommend design patterns to help simplify and reduce the total number of files? > **Date G..."
+- File: Response\General\ImageLogo_20260726_021651.md
+  Preview: "### <span style='color:darkblue;'>[General]</span> Can you generate 5 prompts for creating a small logo image optimized for Easy Diffusion, Theme of a..."
+- File: Response\General\Image_20260726_031654.md
+  Preview: "### <span style='color:darkblue;'>[General]</span> Can you generate a prompt for creating an image that best describes this code base with a Norse the..."
+- File: Response\General\Maintain_20260726_015313.md
+  Preview: "### <span style='color:darkblue;'>[General]</span> Calculate how easy this code is to maintain? Can you generate updated examples for how to fix them?..."
+- File: Response\General\Organization_20260726_025834.md
+  Preview: "### <span style='color:darkblue;'>[General]</span> Can you suggest how to better organize based on features the code into namespaces and folders? > **..."
+- File: Response\General\Other_20260726_011657.md
+  Preview: "### <span style='color:darkblue;'>[General]</span> Are there any other comments I should be made aware of? > **Date Generated**: 7/26/2026 1:16:57 AM ..."
+- File: Response\General\Program_20260726_014833.md
+  Preview: "### <span style='color:darkblue;'>[General]</span> Can you suggest how to rework program.cs file to be easier to read and maintain? > **Date Generated..."
+- File: Response\General\Readme_20260726_030123.md
+  Preview: "### <span style='color:darkblue;'>[General]</span> Can you create a Readme.md file designed to be used with GitHub? > **Date Generated**: 7/26/2026 3:..."
+- File: Response\Other\Debit_20260726_015739.md
+  Preview: "### <span style='color:darkblue;'>[Other]</span> What technical debt should I be made aware of this C# application. > **Date Generated**: 7/26/2026 1:..."
+- File: Response\Other\other_qu_20260726_030714.md
+  Preview: "### <span style='color:darkblue;'>[Other]</span> Are there any other questions I should ask? > **Date Generated**: 7/26/2026 3:07:14 AM > ## Question:..."
+- File: Response\Performance\EvectorSearch_20260726_012945.md
+  Preview: "### <span style='color:darkblue;'>[Performance]</span> Is the Qdrant search using optimal vector dimensionality and filtering (e.g., by category paylo..."
+- File: Response\Performance\HostPath_20260726_010508.md
+  Preview: "### <span style='color:darkblue;'>[Performance]</span> Are there any hot paths that could be optimized with Span<T>, Memory<T>, or parallelization? > ..."
+- File: Response\Performance\Performance_20260726_021521.md
+  Preview: "### <span style='color:darkblue;'>[Performance]</span> Can you identify any performance issues in the code and suggest how to fix them? > **Date Gener..."
+- File: Response\Performance\Performance_Question_20260726_011408.md
+  Preview: "### <span style='color:darkblue;'>[Performance]</span> What are the best practices for optimizing performance in c#? > **Date Generated**: 7/26/2026 1..."
+- File: Response\Plugin\ConfigLoader_20260726_032328.md
+  Preview: "### <span style='color:darkblue;'>[Plugin]</span> Can the FileConfigLoader be extended to load questions from embedded resources or a remote config (e..."
+- File: Response\Plugin\RegisterPlugin_20260726_025158.md
+  Preview: "### <span style='color:darkblue;'>[Plugin]</span> How can I register a custom plugin (e.g., IQuestionProvider) that injects domain-specific questions ..."
+- File: Response\Refactor\Additional_20260726_023518.md
+  Preview: "### <span style='color:darkblue;'>[Refactor]</span> Are there any other comments or suggestions for this code base? Please generate a **PR-ready refac..."
+- File: Response\Refactor\Code_smell_20260726_030507.md
+  Preview: "### <span style='color:darkblue;'>[Refactor]</span> Can you identify any code smells in the project and suggest how to fix them? > **Date Generated**:..."
+- File: Response\Refactor\FluentValidation_20260726_031956.md
+  Preview: "### <span style='color:darkblue;'>[Refactor]</span> Can you suggest FluentValidation Attributes I should use. > **Date Generated**: 7/26/2026 3:19:56 ..."
+- File: Response\Refactor\Future_20260726_022517.md
+  Preview: "### <span style='color:darkblue;'>[Refactor]</span> How can we better utilize qdrant collection to ask questions against a single file? Are there othe..."
+- File: Response\Refactor\Question_Rework_20260726_011850.md
+  Preview: "### <span style='color:darkblue;'>[Refactor]</span> How can I simplify finding the correct question to ask based on question name? > **Date Generated*..."
+- File: Response\Refactor\Refactored_20260726_031445.md
+  Preview: "### <span style='color:darkblue;'>[Refactor]</span> Please provide a complete refactored version to help reduce the overall complexity and use SOLID a..."
+- File: Response\Refactor\Rename_20260726_025501.md
+  Preview: "### <span style='color:darkblue;'>[Refactor]</span> Please recommend improved class, method, and variable names to make this application easier to und..."
+- File: Response\Refactor\ROI_20260726_030959.md
+  Preview: "### <span style='color:darkblue;'>[Refactor]</span> What are the top 3 most critical technical debt items in this codebase, ranked by impact and remed..."
+- File: Response\Refactor\TODO_20260726_013859.md
+  Preview: "### <span style='color:darkblue;'>[Refactor]</span> Can you provide a sample on how to implement all mentioned TODOs if enough details are present? > ..."
+- File: Response\Security\Security_20260726_013226.md
+  Preview: "### <span style='color:darkblue;'>[Security]</span> Can you identify any security vulnerabilities in the code and suggest how to fix them? > **Date Ge..."
+- File: Response\Summary\Diagram_Plan_2026_07_26_125236.md
+  Preview: "# RAG Response Summary [RESPONSE_FILE]  No content provided in the input beyond the instruction and placeholder tags. No actual Q&A responses are incl..."
+- File: Response\Summary\Diagram_Summary_2026_07_26_124909.md
+  Preview: "# RAG Response Summary No factual information or Q&A responses were provided in the input—only instructions and a placeholder header. Therefore, no su..."
+- File: Response\Summary\Editor_Plan_2026_07_26_125318.md
+  Preview: "# RAG Response Summary No content provided in [RESPONSE_FILE] tags to summarize. Please supply the actual Q&A responses or relevant text for analysis...."
+- File: Response\Summary\Editor_Summary_2026_07_26_125313.md
+  Preview: "# RAG Response Summary [RESPONSE_FILE]  No content provided in the input beyond the instructions and metadata. No actual Q&A responses are included in..."
+- File: Response\Summary\General_Plan_2026_07_26_125403.md
+  Preview: "# RAG Response Summary [RESPONSE_FILE]  No content provided in the input. The user’s message contains only instructions and a placeholder for response..."
+- File: Response\Summary\General_Summary_2026_07_26_125348.md
+  Preview: "# RAG Response Summary [RESPONSE_FILE]  No content provided in the input. The user’s request includes only instructions and a placeholder for response..."
+- File: Response\Summary\Other_Plan_2026_07_26_125712.md
+  Preview: "# RAG Response Summary [RESPONSE_FILE]  No content provided in the input beyond the instructions and tags. No actual Q&A responses are included. There..."
+- File: Response\Summary\Other_Summary_2026_07_26_125702.md
+  Preview: "# RAG Response Summary [RESPONSE_FILE]  The Q&A responses center on C# best practices, common pitfalls, and modern development patterns. Key themes in..."
+- File: Response\Summary\Performance_Plan_2026_07_26_125741.md
+  Preview: "# RAG Response Summary No responses were provided in the input—only instructions and a summary header were included. Without actual [RESPONSE_FILE] co..."
+- File: Response\Summary\Performance_Summary_2026_07_26_125732.md
+  Preview: "# RAG Response Summary [RESPONSE_FILE]  No content provided in the input beyond the instruction and metadata. No actual Q&A responses are included—onl..."
+- File: Response\Summary\Plugin_Plan_2026_07_26_125809.md
+  Preview: "# RAG Response Summary [RESPONSE_FILE]  No content provided in the input. The user request includes only instructions and a placeholder for responses,..."
+- File: Response\Summary\Plugin_Summary_2026_07_26_125751.md
+  Preview: "# RAG Response Summary [RESPONSE_FILE]  No content provided in the input beyond instructions and tags. No actual Q&A responses are included after the ..."
+- File: Response\Summary\Refactor_Plan_2026_07_26_130023.md
+  Preview: "# RAG Response Summary [RESPONSE_FILE]  No content provided in the input beyond the user’s request and instructions. No actual Q&A responses (i.e., no..."
+- File: Response\Summary\Refactor_Summary_2026_07_26_130011.md
+  Preview: "# RAG Response Summary [RESPONSE_FILE]  The Q&A responses cover a range of C#-related topics, including asynchronous programming, memory management, d..."
+- File: Response\Summary\Security_Plan_2026_07_26_130237.md
+  Preview: "# RAG Response Summary [RESPONSE_FILE]  No content provided in the input. The user’s message contains only instructions and a placeholder for response..."
+- File: Response\Summary\Security_Summary_2026_07_26_130222.md
+  Preview: "# RAG Response Summary [RESPONSE_FILE]  The Q&A responses cover a range of C#-related topics, emphasizing best practices, common pitfalls, and modern ..."
+- File: Response\Summary\Testing_Plan_2026_07_26_130415.md
+  Preview: "# RAG Response Summary No content provided in [RESPONSE_FILE] blocks to summarize. Please supply the actual Q&A responses containing code-related insi..."
+- File: Response\Summary\Testing_Summary_2026_07_26_130411.md
+  Preview: "# RAG Response Summary [RESPONSE_FILE]  The Q&A responses center on common C# development challenges and best practices, with emphasis on performance,..."
+- File: Response\Summary\XML_Plan_2026_07_26_130434.md
+  Preview: "# RAG Response Summary No content provided in [RESPONSE_FILE] tags to summarize. Please supply the actual Q&A responses containing the code-related in..."
+- File: Response\Summary\XML_Summary_2026_07_26_130430.md
+  Preview: "# RAG Response Summary [RESPONSE_FILE]  No content provided in the input. The user’s message contains only instructions and a placeholder for response..."
+- File: Response\Testing\IntegrationTest_20260726_021011.md
+  Preview: "### <span style='color:darkblue;'>[Testing]</span> Please create or modify existing integration tests using xunit and moq for all public methods where..."
+- File: Response\Testing\UnitTest_20260726_024913.md
+  Preview: "### <span style='color:darkblue;'>[Testing]</span> Please create or modify existing unit tests using xunit and moq for all public methods where applic..."
+- File: Response\XML\XML_20260726_024208.md
+  Preview: "### <span style='color:darkblue;'>[XML]</span> Generate concise XML comments (Summary, Param, Remarks, Exceptions, and Example wrapped in <![CDATA[ ]]..."
+- File: Response\XML\XML_2_20260726_014532.md
+  Preview: "### <span style='color:darkblue;'>[XML]</span> Can you provide a list of all classes and methods missing XML documentation comments (i.e., Summary, Pa..."
+- File: Ragnar\qdrant_storage\aliases\data.json
+  Preview: "{}"
+- File: Ragnar.Questions\Questions\Filters\IQuestionFilterStrategy.cs
+  Preview: "namespace Ragnar.Questions.Questions.Filters; public interface IQuestionFilterStrategy {   Filter CreateFilter (QuestionCategory category); } "
+- File: Ragnar.Questions\Questions\Filters\XmlCommentFilterStrategy.cs
+  Preview: "namespace Ragnar.Questions.Questions.Filters; public class XmlCommentFilterStrategy   : IQuestionFilterStrategy {   public Filter CreateFilter (Questi..."
+- File: Ragnar.Questions\Questions\Filters\XmlCommentLengthFilterStrategy.cs
+  Preview: "namespace Ragnar.Questions.Questions.Filters; public class XmlCommentLengthFilterStrategy   : IQuestionFilterStrategy {   public Filter CreateFilter (..."
+- File: Ragnar\qdrant_storage\collections\programming_docs\config.json
+  Preview: "{'params':{'vectors':{'size':768,'distance':'Cosine'},'shard_number':1,'replication_factor':1,'write_consistency_factor':1,'on_disk_payload':false},'h..."
+- File: Ragnar\qdrant_storage\collections\programming_docs\shard_key_mapping.json
+  Preview: "[]"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\config.json
+  Preview: "{'params':{'vectors':{'size':768,'distance':'Cosine'},'shard_number':1,'replication_factor':1,'write_consistency_factor':1,'on_disk_payload':false},'h..."
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\shard_key_mapping.json
+  Preview: "[]"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\newest_clocks.json
+  Preview: "{'clocks':[{'peer_id':6666351486307546,'clock_id':0,'current_tick':24,'token':7150415189323166932}]}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\replica_state.json
+  Preview: "{'is_local':true,'this_peer_id':6666351486307546,'peers':{'6666351486307546':'Active'}}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\shard_config.json
+  Preview: "{'type':'ReplicaSet'}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\newest_clocks.json
+  Preview: "{'clocks':[{'peer_id':6666351486307546,'clock_id':0,'current_tick':20,'token':5851365432533767341}]}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\replica_state.json
+  Preview: "{'is_local':true,'this_peer_id':6666351486307546,'peers':{'6666351486307546':'Active'}}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\shard_config.json
+  Preview: "{'type':'ReplicaSet'}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\1ef5ec8a-406c-4d96-a5d4-de4f192d7f32\segment.json
+  Preview: "{'initial_version':null,'version':22,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\42bb292b-fe65-44e8-8a21-bd82fd00d7ca\segment.json
+  Preview: "{'initial_version':null,'version':23,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\6e462f6a-ec76-4bf0-8b12-3b55d6c818e3\segment.json
+  Preview: "{'initial_version':null,'version':23,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\6f7c9c15-e12e-4e81-acb2-1deddd5c6335\segment.json
+  Preview: "{'initial_version':null,'version':22,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\7680372d-989e-42aa-8d2f-af75b33b34d0\segment.json
+  Preview: "{'initial_version':null,'version':24,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\8966a1cf-235a-4739-a13e-9cf640f1f690\segment.json
+  Preview: "{'initial_version':null,'version':23,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\bb0225d9-6db8-4260-bc8a-7a7962c60e2d\segment.json
+  Preview: "{'initial_version':null,'version':23,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\d28c673b-d1e1-4a17-8a3a-263e8ca7cdbe\segment.json
+  Preview: "{'initial_version':null,'version':23,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\2162a3de-d916-4a41-8421-6133fbe49f50\segment.json
+  Preview: "{'initial_version':null,'version':20,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\500cb736-f1df-45a8-891c-410f3f5b81e7\segment.json
+  Preview: "{'initial_version':null,'version':20,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\50d9a89d-2478-468f-a6d0-5e284a347ddf\segment.json
+  Preview: "{'initial_version':null,'version':19,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\6221056c-c02e-49ac-89de-dda73d8748cc\segment.json
+  Preview: "{'initial_version':null,'version':19,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\8b2fc166-2dfd-406c-8cff-f86e9b64e731\segment.json
+  Preview: "{'initial_version':null,'version':17,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\a21c3c1e-8a5f-4941-b8b1-e9c05d6a3dd9\segment.json
+  Preview: "{'initial_version':null,'version':19,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\a2973f58-dc57-4939-85f0-3db1b4db0e94\segment.json
+  Preview: "{'initial_version':null,'version':19,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\d855af93-78a7-42eb-ba02-29ab4a6044aa\segment.json
+  Preview: "{'initial_version':null,'version':20,'config':{'vector_data':{'':{'size':768,'distance':'Cosine','storage_type':'InRamChunkedMmap','index':{'type':'pl..."
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\1ef5ec8a-406c-4d96-a5d4-de4f192d7f32\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\1ef5ec8a-406c-4d96-a5d4-de4f192d7f32\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\42bb292b-fe65-44e8-8a21-bd82fd00d7ca\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\42bb292b-fe65-44e8-8a21-bd82fd00d7ca\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\6e462f6a-ec76-4bf0-8b12-3b55d6c818e3\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\6e462f6a-ec76-4bf0-8b12-3b55d6c818e3\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\6f7c9c15-e12e-4e81-acb2-1deddd5c6335\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\6f7c9c15-e12e-4e81-acb2-1deddd5c6335\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\7680372d-989e-42aa-8d2f-af75b33b34d0\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\7680372d-989e-42aa-8d2f-af75b33b34d0\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\8966a1cf-235a-4739-a13e-9cf640f1f690\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\8966a1cf-235a-4739-a13e-9cf640f1f690\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\bb0225d9-6db8-4260-bc8a-7a7962c60e2d\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\bb0225d9-6db8-4260-bc8a-7a7962c60e2d\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\d28c673b-d1e1-4a17-8a3a-263e8ca7cdbe\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\d28c673b-d1e1-4a17-8a3a-263e8ca7cdbe\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\2162a3de-d916-4a41-8421-6133fbe49f50\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\2162a3de-d916-4a41-8421-6133fbe49f50\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\500cb736-f1df-45a8-891c-410f3f5b81e7\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\500cb736-f1df-45a8-891c-410f3f5b81e7\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\50d9a89d-2478-468f-a6d0-5e284a347ddf\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\50d9a89d-2478-468f-a6d0-5e284a347ddf\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\6221056c-c02e-49ac-89de-dda73d8748cc\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\6221056c-c02e-49ac-89de-dda73d8748cc\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\8b2fc166-2dfd-406c-8cff-f86e9b64e731\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\8b2fc166-2dfd-406c-8cff-f86e9b64e731\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\a21c3c1e-8a5f-4941-b8b1-e9c05d6a3dd9\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\a21c3c1e-8a5f-4941-b8b1-e9c05d6a3dd9\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\a2973f58-dc57-4939-85f0-3db1b4db0e94\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\a2973f58-dc57-4939-85f0-3db1b4db0e94\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\d855af93-78a7-42eb-ba02-29ab4a6044aa\payload_index\config.json
+  Preview: "{'indexed_fields':{}}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\d855af93-78a7-42eb-ba02-29ab4a6044aa\payload_storage\config.json
+  Preview: "{'page_size_bytes':33554432,'block_size_bytes':128,'region_size_blocks':8192,'compression':'LZ4'}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\1ef5ec8a-406c-4d96-a5d4-de4f192d7f32\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\42bb292b-fe65-44e8-8a21-bd82fd00d7ca\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\6e462f6a-ec76-4bf0-8b12-3b55d6c818e3\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\6f7c9c15-e12e-4e81-acb2-1deddd5c6335\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\7680372d-989e-42aa-8d2f-af75b33b34d0\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\8966a1cf-235a-4739-a13e-9cf640f1f690\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\bb0225d9-6db8-4260-bc8a-7a7962c60e2d\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: Ragnar\qdrant_storage\collections\programming_docs\0\segments\d28c673b-d1e1-4a17-8a3a-263e8ca7cdbe\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\2162a3de-d916-4a41-8421-6133fbe49f50\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\500cb736-f1df-45a8-891c-410f3f5b81e7\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\50d9a89d-2478-468f-a6d0-5e284a347ddf\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\6221056c-c02e-49ac-89de-dda73d8748cc\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\8b2fc166-2dfd-406c-8cff-f86e9b64e731\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\a21c3c1e-8a5f-4941-b8b1-e9c05d6a3dd9\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\a2973f58-dc57-4939-85f0-3db1b4db0e94\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"
+- File: Ragnar\qdrant_storage\collections\Shepherd_Obit\0\segments\d855af93-78a7-42eb-ba02-29ab4a6044aa\vector_storage\vectors\config.json
+  Preview: "{'chunk_size_bytes':33552384,'chunk_size_vectors':10922,'dim':768,'populate':true}"

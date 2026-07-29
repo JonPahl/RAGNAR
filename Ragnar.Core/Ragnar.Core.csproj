@@ -9,13 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\Ragnar\VectorStoreBuilder.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Ardalis.GuardClauses" Version="5.0.0" />
     <PackageReference Include="HashDepot" Version="3.2.0" />
-    <PackageReference Include="OllamaSharp" Version="5.4.25" />
+    <PackageReference Include="OllamaSharp" Version="5.4.30" />
     <PackageReference Include="Qdrant.Client" Version="1.18.1" />
     <PackageReference Include="Roslynator.Analyzers" Version="4.15.0">
       <PrivateAssets>all</PrivateAssets>
@@ -30,7 +26,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
-    <PackageReference Include="Spectre.Console" Version="0.57.1" />
+    <PackageReference Include="Spectre.Console" Version="0.57.2" />
   </ItemGroup>
 
   <ItemGroup>

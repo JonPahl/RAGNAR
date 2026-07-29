@@ -1,22 +1,17 @@
-﻿using Microsoft.Extensions.AI;
-
-using Qdrant.Client.Grpc;
-
-namespace Ragnar.Core.Interface;
+﻿namespace Ragnar.Core.Interface;
 
 /// <summary>
 /// Interface for embedding generator service functionality.
 /// </summary>
 public interface IGeneratorService
 {
-    /// <summary>
-    /// Builds point structs based on the provided point ID, embedding, chunk, and file.
-    /// </summary>
-    /// <param name="pointId">The point ID.</param>
-    /// <param name="embedding">The embedding.</param>
-    /// <param name="chunk">The chunk.</param>
-    /// <param name="file">The file.</param>
-    /// <returns>A list of point structs.</returns>
+    /// <summary>EmbeddingPointBuilder.cs BuildPointStruts creates Qdrant point structures.</summary>
+    /// <param name="pointId">Unique identifier for the vector point.</param>
+    /// <param name="embedding">Float array of embedding values.</param>
+    /// <param name="chunk">Source text chunk for payload.</param>
+    /// <param name="file">Associated filename for payload.</param>
+    /// <returns>List of constructed PointStruct objects.</returns>
+    /// <example><![CDATA[var pts = builder.BuildPointStruts(id, vec, txt, file);]]></example>
     abstract List<PointStruct> BuildPointStruts(PointId pointId, float[] embedding, string chunk, string file);
 
     /// <summary>

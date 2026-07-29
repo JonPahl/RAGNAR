@@ -1,6 +1,4 @@
-﻿using Ragnar.Core.Utils;
-
-namespace RAGNAR.UnitTests.Embedding;
+﻿namespace RAGNAR.UnitTests.Embedding;
 
 public sealed class PointTests
 {

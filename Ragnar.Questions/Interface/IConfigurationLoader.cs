@@ -1,4 +1,4 @@
-﻿namespace Ragnar.Questions.Interface;
+namespace Ragnar.Questions.Interface;
 
 /// <summary>
 /// Gets questions from a configuration location.
@@ -15,5 +15,5 @@ public interface IConfigurationLoader
     /// </example>
     /// <returns>Collection of QuestionConfiguration objects.
     /// </returns>
-    IEnumerable<QuestionConfiguration> LoadQuestions();
+    IEnumerable<QuestionConfiguration> LoadQuestions ();
 }

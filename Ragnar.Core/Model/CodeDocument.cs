@@ -1,8 +1,4 @@
-﻿using Qdrant.Client.Grpc;
-
-using Ragnar.Core.Utils;
-
-namespace Ragnar.Core.Model;
+﻿namespace Ragnar.Core.Model;
 
 /// <summary>Represents a code document with source, metadata, and comments.</summary>
 public sealed record CodeDocument
@@ -27,7 +23,7 @@ public sealed record CodeDocument
     public PointId AsPoint()
     {
         return string.IsNullOrWhiteSpace(ElementName)
-            ? (PointId)Point.FromFilePathAndIndex(FileName, "None")
-            : (PointId)Point.FromFilePathAndIndex(FileName, ElementName);
+            ? Point.FromFilePathAndIndex(FileName, "None")
+            : Point.FromFilePathAndIndex(FileName, ElementName);
     }
 }

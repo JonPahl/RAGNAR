@@ -1,9 +1,3 @@
-﻿using System.Collections.Immutable;
-
-using FileQuestionProvider;
-
-using Ragnar.Questions.Questions;
-
 namespace Ragnar;
 
 /// <summary>
@@ -21,36 +15,33 @@ namespace Ragnar;
 /// <param name="configQuestionLoader"> Config question loader.</param>
 /// <return>A task representing the initialization operation.
 /// </return>
-public sealed class KnowledgeBaseInitialization(
-    IRagOrchestrator DefaultRagPipeline,
-    IOptions<ApplicationConfiguration> options,
+public sealed class KnowledgeBaseInitialization (
+    ICodeAnalysisPipeline DefaultRagPipeline,
+    IOptions<AppConfiguration> options,
     IOutputWriter writer,
-    IEmbedTextPipeline EmbeddingPipeline,
-    IQuestionEmbedding questionEmbedding,
+    ICodeEmbeddingPipeline EmbeddingPipeline,
+    ICustomEmbedding questionEmbedding,
     Serilog.ILogger logger,
     IQdrantClient qdrantClient,
-    ConfigurationBasedQuestionLoader configQuestionLoader)
+    ConfigToQuestionMapper configQuestionLoader)
     : IKnowledgeBaseInitialize
 {
-    private readonly string collectionName = options.Value.ApplicationOptions.VectorStoreName;
+    private readonly string _collectionName = options.Value.RagOptions.VectorStoreName;
 
-    private readonly DefaultQuestionCatalogLoader questionLoader = new(logger, writer);
+    private readonly DefaultQuestionCatalogLoader _questionLoader = new(logger, writer);
 
     /// <inheritdoc/>
-    public async ValueTask EnsureCollectionExistsAsync(CancellationToken ct)
+    public async ValueTask EnsureCollectionExistsAsync (CancellationToken ct)
     {
 
         var dimension = options.Value.EmbeddingOptions.Dimension;
 
-        var vectorBuilder = new Core.VectorStoreBuilder(logger, dimension, collectionName, qdrantClient);
+        var vectorBuilder = new Core.VectorStoreInitialize(logger, dimension, _collectionName, qdrantClient);
 
         var exists = await vectorBuilder.BuildAsync(ct).ConfigureAwait(false);
 
-
-        //var exists = await vectorService.DoesCollectionExistAsync(ct);
-        if (!exists)
+        if(!exists)
         {
-            // await vectorService.CreateCollectionIfNotExistsAsync(ct);
             writer.MarkupLine("[green] ☑ Collection Created [/]");
         }
 
@@ -63,20 +54,20 @@ public sealed class KnowledgeBaseInitialization(
     /// <param name="ct">Cancellation token.</param>
     ///<returns>A task representing the population operation.</returns>
     ///<example><![CDATA[await PopulateAsync(ct);]]></example>
-    public async Task PopulateAsync(CancellationToken ct) => await EmbeddingPipeline.RunAsync(ct);
+    public async Task PopulateAsync (CancellationToken ct) => await EmbeddingPipeline.RunAsync(ct);
 
     /// <summary>
     /// Asks questions asynchronously.
     /// </summary>
     /// <param name="ct">The cancellation token.</param>
-    public async Task AskQuestionsAsync(CancellationToken ct)
+    public async Task AskQuestionsAsync (CancellationToken ct)
     {
         var questions = await LoadQuestionsAsync(ct);
 
         var processedCount = 0;
         var total = questions.Count;
 
-        foreach (Question question in questions)
+        foreach(var question in questions)
         {
             writer.WriteRule();
             writer.WriteLine();
@@ -86,27 +77,28 @@ public sealed class KnowledgeBaseInitialization(
 
             var questionVector = await questionEmbedding.GenerateEmbeddingAsync(question.Text, ct);
 
-            var contextText = await questionEmbedding.GetContext(collectionName, questionVector, ct);
+            var contextText = await questionEmbedding.GetContext(_collectionName, questionVector, ct);
 
             logger.Information("Processing question [{QuestionId}] from user [{UserId}] with {ContextLength} chars", question.Text, Environment.UserName, contextText.Length);
 
-            await DefaultRagPipeline.RunAsync(question, contextText, ct);
+            await DefaultRagPipeline.ExecuteAsync(question, contextText, ct);
             processedCount++;
 
             writer.MarkupLine($"{processedCount} of {total}", Styles.Cyan);
         }
     }
 
-    private async Task<ImmutableHashSet<Question>> LoadQuestionsAsync(CancellationToken ct)
+    private async Task<ImmutableHashSet<Question>> LoadQuestionsAsync (CancellationToken ct)
     {
 
         //todo: Build interface and move this method to ragnar.questions project. Please rework to use the builder pattern when helping to load Questions from multiple sources.
 
         var questions = new HashSet<Question>();
 
-        var categories = questionLoader.ParseCategoriesOrDefault(options.Value.ApplicationOptions.CategoriesToProcess);
+        var categories = _questionLoader
+            .ParseCategoriesOrDefault(options.Value.RagOptions.CategoriesToProcess);
 
-        foreach (var question in questionLoader.LoadQuestions(true, categories))
+        foreach(var question in _questionLoader.LoadQuestions(true, categories))
         {
             questions.Add(question);
         }
@@ -115,7 +107,7 @@ public sealed class KnowledgeBaseInitialization(
         var configs = new List<QuestionConfiguration>();
         configs.AddRange(fcl.LoadQuestions());
 
-        foreach (var item in configQuestionLoader.LoadFromConfig(configs))
+        foreach(var item in configQuestionLoader.LoadFromConfig(configs))
         {
             questions.Add(item);
         }
@@ -125,9 +117,9 @@ public sealed class KnowledgeBaseInitialization(
 
         //TODO: Rework to make changing path easier.
         var pluginDir = Path.Combine(AppContext.BaseDirectory, "Plugins");
-        if (Directory.Exists(pluginDir))
+        if(Directory.Exists(pluginDir))
         {
-            foreach (var csvFile in Directory.EnumerateFiles(pluginDir, "*.csv", SearchOption.AllDirectories))
+            foreach(var csvFile in Directory.EnumerateFiles(pluginDir, "*.csv", SearchOption.AllDirectories))
             {
                 provider.SetFileName(csvFile);
                 var csvConfigs = await provider.LoadQuestionAsync(ct);
@@ -135,7 +127,7 @@ public sealed class KnowledgeBaseInitialization(
             }
         }
 
-        foreach (var question in config.Select(c => new Question(c.IsActive, c.Text, c.FileName, c.Category)))
+        foreach(var question in config.Select(c => new Question(c.IsActive, c.Text, c.FileName, c.Category)))
         {
             questions.Add(question);
         }

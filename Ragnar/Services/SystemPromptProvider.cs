@@ -1,4 +1,4 @@
-﻿namespace Ragnar.Services;
+namespace Ragnar.Services;
 
 /// <summary>
 /// Provides system prompts for .NET 10 / C# 14 code generation.
@@ -25,7 +25,6 @@ public class SystemPromptProvider : ISystemPromptProvider
 
 internal class SummarizePromptProvider : ISystemPromptProvider
 {
-
     public string Template => $"""
             Based on the following code-related Q&A responses, produce a concise, high-level summary of key insights, patterns, recommendations and priorities. Keep it under 1000 words.
             Responses (marked with [RESPONSE_FILE] tags): {Content}
@@ -37,6 +36,3 @@ internal class SummarizePromptProvider : ISystemPromptProvider
 
     public string Content { get; set; } = string.Empty;
 }
-
-
-

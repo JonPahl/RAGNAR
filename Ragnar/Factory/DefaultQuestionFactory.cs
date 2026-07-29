@@ -1,50 +1,43 @@
-﻿using System.Runtime.CompilerServices;
-
-using Ragnar.Questions.Interface;
-
 namespace Ragnar.Factory;
+
 /// <summary>
 /// Default implementation of IQuestionFactory.
 /// </summary>
-public class DefaultQuestionFactory
-    : IQuestionFactory
+public class DefaultQuestionFactory : IQuestionFactory
 {
-    /// <summary>Creates an active question.</summary>
-    /// <param name="text">Text of question.</param>
-    /// <param name="key">Save file name.</param>
-    /// <param name="category">Question Category.</param>
-    /// <returns>Newly created ACTIVE question.</returns>
-    /// <example>
-    /// <![CDATA[var q = factory.CreateActive("Is this correct?", "correct", QuestionCategory.Refactor);]]>
-    /// </example>
-    public Question CreateActive(string text, string key, QuestionCategory category)
+    /// <summary>Creates an active (enabled) question.</summary>
+    /// <param name="text">Question text.</param>
+    /// <param name="key">Save filename.</param>
+    /// <param name="category">Category enum.</param>
+    /// <returns>New active Question.</returns>
+    /// <example><![CDATA[var q = factory.CreateActive("Is this right?", "q1", Category.Refactor);]]></example>
+    public Question CreateActive (string text, string key, QuestionCategory category)
         => new(true, Validate(text), Validate(key), category);
 
-    /// <summary>Creates an inactive question.</summary>
-    /// <param name="text">Text of question.</param>
-    /// <param name="key">Save file name.</param>
-    /// <param name="category">Question Category.</param>
-    /// <remarks>Allow to turn a question off if not needed for current execution.</remarks>
-    /// <returns>Newly created INACTIVE question that will not be asked.</returns>
-    /// <example><![CDATA[var q = factory.CreateInactive("Future?", "future", QuestionCategory.XML);]]></example>
-    public Question CreateInactive(string text, string key, QuestionCategory category)
+    /// <summary>Creates an inactive (disabled) question.</summary>
+    /// <param name="text">Question text.</param>
+    /// <param name="key">Save filename.</param>
+    /// <param name="category">Category enum.</param>
+    /// <returns>New inactive Question.</returns>
+    /// <example><![CDATA[var q = factory.CreateInactive("Future?", "q2", Category.XML);]]></example>
+    public Question CreateInactive (string text, string key, QuestionCategory category)
         => new(false, Validate(text), Validate(key), category);
 
-    private static string Validate(string value, [CallerArgumentExpression(nameof(value))] string? paramName = null)
+    /// <summary>Validates and trims question text/key.</summary>
+    /// <param name="value">Input string.</param>
+    /// <param name="paramName">Caller param name.</param>
+    /// <returns>Trimmed non-empty string.</returns>
+    /// <example><![CDATA[var s = Validate("  test  ");]]></example>
+    private static string Validate (string value, [CallerArgumentExpression(nameof(value))] string? paramName = null)
     {
-        try
-        {
-            Guard.Against.NullOrWhiteSpace(value, paramName);
+        Guard.Against.NullOrWhiteSpace(value, paramName);
 
-            var trimmed = value.AsSpan().Trim();
+        var trimmed = value.AsSpan().Trim();
 
-            return trimmed.Length == 0
-                ? throw new ArgumentException("Value cannot be whitespace-only.", paramName)
-                : trimmed.ToString();
-        }
-        catch (ArgumentNullException ex)
+        if (trimmed.Length == 0)
         {
-            throw new ArgumentException(ex.Message, ex);
+            throw new ArgumentException("Value cannot be whitespace-only.", paramName);
         }
+        return trimmed.ToString();
     }
 }

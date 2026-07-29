@@ -1,4 +1,4 @@
-﻿//using Microsoft.Extensions.AI;
+//using Microsoft.Extensions.AI;
 //using Microsoft.Extensions.Options;
 //using Moq;
 //using OllamaSharp;
@@ -25,10 +25,10 @@
 //            .ThrowsAsync(new HttpRequestException("Network error"));
 //        var ollamaMock = new Mock<IOllamaApiClient>();
 //        ollamaMock.Setup(o => o.AsEmbeddingGenerator()).Returns(Mock.Of<IEmbeddingGenerator<string, Embedding<float>>>());
-//        var factoryMock = new Mock<IOllamaClientProvider>();
-//        factoryMock.Setup(f => f.FindClient(OllamaType.Embedding)).Returns(ollamaMock.Object);
-//        var appOpts = new ApplicationOptions { VectorStoreName = "test", SourceDirectory = "" };
-//        var optsMock = new Mock<IOptions<ApplicationOptions>>();
+//        var factoryMock = new Mock<IOllamaClientFactory>();
+//        factoryMock.Setup(f => f.FindClient(OllamaServiceType.Embedding)).Returns(ollamaMock.Object);
+//        var appOpts = new RagOptions { VectorStoreName = "test", SourceDirectory = "" };
+//        var optsMock = new Mock<IOptions<RagOptions>>();
 //        optsMock.Setup(o => o.Value).Returns(appOpts);
 //        var repo = new EmbeddingRepository(factoryMock.Object, qdrantMock.Object, optsMock.Object);
 
@@ -55,10 +55,10 @@
 //            .ReturnsAsync(new GeneratedEmbeddings<Embedding<float>>([new(1, [0.1f])]));
 //        var ollamaMock = new Mock<IOllamaApiClient>();
 //        ollamaMock.Setup(o => o.AsEmbeddingGenerator()).Returns(generatorMock.Object);
-//        var factoryMock = new Mock<IOllamaClientProvider>();
-//        factoryMock.Setup(f => f.FindClient(OllamaType.Embedding)).Returns(ollamaMock.Object);
-//        var appOpts = new ApplicationOptions { VectorStoreName = "test", SourceDirectory = "" };
-//        var optsMock = new Mock<IOptions<ApplicationOptions>>();
+//        var factoryMock = new Mock<IOllamaClientFactory>();
+//        factoryMock.Setup(f => f.FindClient(OllamaServiceType.Embedding)).Returns(ollamaMock.Object);
+//        var appOpts = new RagOptions { VectorStoreName = "test", SourceDirectory = "" };
+//        var optsMock = new Mock<IOptions<RagOptions>>();
 //        optsMock.Setup(o => o.Value).Returns(appOpts);
 //        var repo = new EmbeddingRepository(factoryMock.Object, qdrantMock.Object, optsMock.Object);
 

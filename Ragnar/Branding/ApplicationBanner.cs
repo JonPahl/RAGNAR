@@ -1,4 +1,4 @@
-﻿namespace Ragnar.Branding;
+namespace Ragnar.Branding;
 
 /// <summary>
 /// Setups up and displays Branding for Ragnar application.
@@ -11,7 +11,7 @@ public sealed class ApplicationBanner(IOutputWriter writer, IAssemblyInfo assemb
     /// <summary>
     /// Gets current assembly version.
     /// </summary>
-    private readonly string versionNumber = assemblyInfo.InformationalVersion ?? "1.0.0";
+    private readonly string _versionNumber = assemblyInfo.InformationalVersion ?? "1.0.0";
 
     /// <summary>
     /// RenderBranding branding banner onto the console UI.
@@ -24,7 +24,7 @@ public sealed class ApplicationBanner(IOutputWriter writer, IAssemblyInfo assemb
         var appName = new Text(title, Styles.Blue) { Justification = Justify.Left };
         var tagLine2 = new Text(tagLine, Styles.BoldSteelBlue) { Justification = Justify.Center };
 
-        var versionText = $"Version {versionNumber}";
+        var versionText = $"Version {_versionNumber}";
         var version = new Text(versionText, new Style(Color.Grey)) { Justification = Justify.Center };
 
         writer.Write(appName);

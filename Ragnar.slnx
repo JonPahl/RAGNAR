@@ -1,9 +1,12 @@
 <Solution>
+  <Folder Name="/Tests/">
+    <Project Path="Ragnar.IntegrationTests/Ragnar.IntegrationTests.csproj" />
+    <Project Path="Ragnar.UnitTests/Ragnar.UnitTests.csproj" />
+  </Folder>
   <Project Path="FileQuestionProvider/FileQuestionProvider.csproj" />
   <Project Path="Ragnar.Core/Ragnar.Core.csproj" />
   <Project Path="Ragnar.Embedding/Ragnar.Embedding.csproj" />
-  <Project Path="Ragnar.Plugins/Ragnar.Plugins.shproj" Id="f32e6ba7-7bb4-485e-8ef2-a51bc1c35fd7" />
+  <Project Path="Ragnar.Plugins/Ragnar.Plugins.shproj" />
   <Project Path="Ragnar.Questions/Ragnar.Questions.csproj" />
-  <Project Path="Ragnar.UnitTests/Ragnar.UnitTests.csproj" />
   <Project Path="Ragnar/Ragnar.csproj" />
 </Solution>

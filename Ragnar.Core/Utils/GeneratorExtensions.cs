@@ -1,8 +1,4 @@
-﻿using Microsoft.Extensions.AI;
-
-using OllamaSharp;
-
-namespace Ragnar.Core.Utils;
+﻿namespace Ragnar.Core.Utils;
 
 public static class GeneratorExtensions
 {

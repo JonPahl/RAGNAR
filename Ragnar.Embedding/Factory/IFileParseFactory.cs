@@ -1,4 +1,4 @@
-﻿using Ragnar.Core.Model;
+﻿
 
 namespace Ragnar.Embedding.Factory;
 

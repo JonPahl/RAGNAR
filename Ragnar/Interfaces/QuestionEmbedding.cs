@@ -1,12 +1,19 @@
-﻿using System.Text;
+namespace Ragnar.Interfaces;
 
-using Microsoft.SemanticKernel.Embeddings;
-
-namespace RAGNAR.Interfaces;
-
-public class QuestionEmbedding(Serilog.ILogger logger, IOptions<ApplicationConfiguration> configWrapper, IGeneratorService embeddingService, IQdrantClient qdrantClient, IOllamaClientProvider clientFactory) : IQuestionEmbedding
+/// <summary>QuestionEmbedding.cs Generates vectors and retrieves context from Qdrant. </summary>
+/// <param name="logger">Logger for diagnostic output.</param>
+/// <param name="configWrapper">Application configuration options.</param>
+/// <param name="embeddingService">Service for embedding generation.</param>
+/// <param name="clientFactory">Factory for Ollama client retrieval.</param>
+public class QuestionEmbedding (
+    ILogger logger,
+    IOptions<AppConfiguration> configWrapper,
+    IGeneratorService embeddingService,
+    IOllamaClientFactory clientFactory,
+    IVectorStore vectorStore)
+    : ICustomEmbedding
 {
-    private readonly IEmbeddingGenerator<string, Embedding<float>> generator = clientFactory.FindClient(OllamaType.Embedding).AsEmbeddingGenerator();
+    private readonly IEmbeddingGenerator<string, Embedding<float>> _generator = clientFactory.FindClient(OllamaServiceType.Embedding).AsEmbeddingGenerator();
 
     /// <summary>
     /// Retrieves top-k context from qdrantClient using embedding query vector.
@@ -17,33 +24,44 @@ public class QuestionEmbedding(Serilog.ILogger logger, IOptions<ApplicationConfi
     /// <param name="filter">Optional qdrant filter.</param>
     /// <returns>Aggregated context strings.</returns>
     /// <example><![CDATA[string ctx = await GetContext("docs", qVec, ct);]]></example>
-    public async Task<string> GetContext(
+    public async Task<string> GetContext (
         string VectorStoreName,
         ReadOnlyMemory<float> QuestionEmbeddingVector,
         CancellationToken ct, Filter? filter = null)
     {
         var expectedDim = configWrapper.Value.EmbeddingOptions.Dimension;
-        if (Convert.ToUInt64(QuestionEmbeddingVector.Length) != expectedDim)
+        if(Convert.ToUInt64(QuestionEmbeddingVector.Length) != expectedDim)
         {
             throw new ArgumentException($"Query vector dimension {QuestionEmbeddingVector.Length} ≠ expected {expectedDim}", nameof(QuestionEmbeddingVector));
         }
 
-        /* TODO: Can I make a filter object be an expression tree? Example of expression. var emptyOrNullFilter = new Filter { Should = {
-        new Condition {
-        Field = new FieldCondition {
-        Key = "Comment",Match = new Match { Text = "" }}},
-        new Condition { IsEmpty = new IsEmptyCondition {Key = "Comment"}}}}; */
-
         // TODO: Make filter configurable and able to be added to exiting Question object.
 
-        var searchResult = await qdrantClient.SearchAsync(
-            collectionName: VectorStoreName,
-            vector: QuestionEmbeddingVector,
-            // filter: filter,
-            limit: 100,
-            cancellationToken: ct);
+        var searchResults = await vectorStore.SearchAsync(VectorStoreName, QuestionEmbeddingVector, 200, ct);
 
-        return await StreamContextAsync([.. searchResult]);
+        var payloads = searchResults.Build(QdrantPayloadTypes.SEARCH);
+
+        return await StreamContextAsync([.. payloads]);
+    }
+
+    /// <summary>
+    /// Load All stored records from the provided VectorStore.
+    /// </summary>
+    /// <param name="VectorStoreName">Vector store name.</param>
+    /// <param name="ct">Cancellation Token.</param>
+    /// <param name="filter">Optional qdrant filter.</param>
+    /// <returns></returns>
+    public async Task<string> GetContext (
+    string VectorStoreName,
+    CancellationToken ct, Filter? filter = null)
+    {
+        var scrollResults = await vectorStore.ScrollAllAsync(VectorStoreName, ct);
+
+        var payloads = scrollResults.Build(QdrantPayloadTypes.ALL);
+
+        Guard.Against.NullOrEmpty(payloads);
+
+        return await StreamContextAsync(payloads);
     }
 
     /// <summary>
@@ -53,11 +71,11 @@ public class QuestionEmbedding(Serilog.ILogger logger, IOptions<ApplicationConfi
     /// <param name="ct">Cancellation token.</param>
     /// <returns>Embedding vector as ReadOnlyMemory&lt;float&gt;.</returns>
     /// <example><![CDATA[var vec = await GenerateEmbeddingAsync(ollama, "Query?", ct);]]></example>
-    public async Task<ReadOnlyMemory<float>> GenerateEmbeddingAsync(
+    public async Task<ReadOnlyMemory<float>> GenerateEmbeddingAsync (
         string userQuestion,
         CancellationToken ct)
     {
-        var qv = await embeddingService.GenerateEmbeddingsAsync(logger, generator, userQuestion, ct);
+        var qv = await embeddingService.GenerateEmbeddingsAsync(logger, _generator, userQuestion, ct);
 
         return qv[0].Vector;
     }
@@ -65,34 +83,31 @@ public class QuestionEmbedding(Serilog.ILogger logger, IOptions<ApplicationConfi
     /// <summary>
     /// Aggregates qdrantClient search payloads into a context string.
     /// </summary>
-    /// <param name="searchResult">qdrantClient search results.</param>
+    /// <param name="payloads">qdrantClient search results.</param>
     /// <returns>Concatenated code context with [CONTEXT CODE] tags.</returns>
     /// <example><![CDATA[string ctx = await StreamContextAsync(results);]]></example>
-    private static async Task<string> StreamContextAsync(IReadOnlyList<ScoredPoint> searchResult)
+    private static async Task<string> StreamContextAsync (
+    IEnumerable<IDictionary<string, Value>> payloads)
     {
         var sb = new StringBuilder();
 
         sb.AppendLine("[CONTEXT CODE]");
 
-        const string FILE_NAME = "file_name";
-        const string ELEMENT_NAME = nameof(CodeDocument.ElementName);
-        const string COMMENT = nameof(CodeDocument.Comment);
-        const string CODE = nameof(CodeDocument.Code);
-        const string ELEMENT_TYPE = nameof(CodeDocument.ElementType);
-
-        foreach (var match in searchResult.Select(p => p.Payload))
+        foreach(var payload in payloads)
         {
-            var fileName = match.TryGetValue(FILE_NAME, out var fn) ? fn.StringValue ?? string.Empty : string.Empty;
+            var fileName = payload.TryGetValue(QdrantFields.FileName, out var filename) ? filename.StringValue ?? string.Empty : string.Empty;
 
-            var elementName = match.TryGetValue(ELEMENT_NAME, out var en) ? en.StringValue ?? string.Empty : string.Empty;
+            var elementName = payload.TryGetValue(QdrantFields.ElementName, out var en) ?
+                en.StringValue ?? string.Empty : string.Empty;
 
-            var comment = match.TryGetValue(COMMENT, out var cmt) ? cmt.StringValue ?? string.Empty : string.Empty;
+            var comment = payload.TryGetValue(QdrantFields.Comment, out var cmt) ? cmt.StringValue ?? string.Empty : string.Empty;
 
-            var code = match.TryGetValue(CODE, out var cd) ? cd.StringValue ?? string.Empty : string.Empty;
+            var code = payload.TryGetValue(QdrantFields.Code, out var cd) ? cd.StringValue ?? string.Empty : string.Empty;
 
-            var elementType = match.TryGetValue(ELEMENT_TYPE, out var et) ? et.StringValue ?? string.Empty : string.Empty;
+            var type = payload.TryGetValue(QdrantFields.ElementType, out var et) ? et.StringValue ?? string.Empty : string.Empty;
 
-            sb.AppendLine($"File Name: {fileName} Type: {elementType} Element Name: {elementName} Description: {comment} Code: {code}");
+            sb.AppendLine($"File: {fileName} | Type: {type} | Name: {elementName} | Desc: {comment}");
+            sb.AppendLine($"Code: {code}");
         }
 
         sb.AppendLine("[/CONTEXT CODE]");

@@ -1,12 +1,9 @@
-﻿using System.Text;
-
-using Serilog;
-
+Console.InputEncoding = Encoding.UTF8;
 Console.OutputEncoding = Encoding.UTF8;
 
 try
 {
-    IHostBuilder builder = RagPipelineHostBuilder
+    var builder = RagPipelineHostBuilder
         .CreateDefaultBuilder(args);
 
     using var host = builder.Build();
@@ -17,7 +14,7 @@ try
 }
 catch (Exception ex)
 {
-    Log.Fatal("Application terminated unexpectedly");
+    Log.Fatal(ex, "Application terminated unexpectedly");
     AnsiConsole.WriteException(ex);
 }
 finally

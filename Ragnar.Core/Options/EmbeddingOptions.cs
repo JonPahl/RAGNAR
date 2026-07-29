@@ -1,7 +1,5 @@
-﻿
-using System.ComponentModel.DataAnnotations;
-
 namespace Ragnar.Core.Options;
+
 /// <summary>Provides configuration options for embedding service connectivity and behavior.
 /// </summary>
 public record EmbeddingOptions
@@ -15,6 +13,7 @@ public record EmbeddingOptions
     /// <summary>Gets the embedding service port number (default: 6334).</summary>
     /// <example><![CDATA[options.Port = 8080;]]></example>
     [Required]
+    [Range(1, 65000)]
     public required int Port { get; init; } = 6334;
 
     /// <summary>Gets the name of the embedding model to use (default: "nomic-embed-text").</summary>

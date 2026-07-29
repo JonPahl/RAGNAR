@@ -1,38 +1,42 @@
-﻿using System.Text;
-
 namespace Ragnar.Ollama;
+
 /// <summary>
 /// Configures and caches OllamaOptions clients per model.
 /// </summary>
 /// <example><![CDATA[var provider = new OllamaResponse(opts);]]></example>
 public class OllamaResponse : IOllamaResponse
 {
-    private readonly OllamaApiClient ollamaClient;
+    private readonly OllamaApiClient _ollamaClient;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="OllamaResponse"/> class.
     /// Template Ollama api call.
     /// </summary>
     /// <param name="ClientFactory">Ollama setup factory.</param>
-    public OllamaResponse(IOllamaClientProvider ClientFactory)
+    public OllamaResponse (
+        IOllamaClientFactory ClientFactory,
+        IOptions<AppConfiguration> config)
     {
-        var client = ClientFactory.FindClient(OllamaType.Ollama);
+        var client = ClientFactory.FindClient(OllamaServiceType.Ollama);
 
         var httpClient = new HttpClient()
         {
             BaseAddress = client.Uri,
-            Timeout = TimeSpan.FromMinutes(20),
+            Timeout = config.Value.OllamaOptions.Timeout,
         };
-        ollamaClient = new OllamaApiClient(httpClient)
-        { SelectedModel = client.SelectedModel, };
+
+        _ollamaClient = new OllamaApiClient(httpClient)
+        {
+            SelectedModel = client.SelectedModel,
+        };
     }
 
-    /// <summary>Streams and collects full LLM response into a string.</summary>
-    /// <param name="request">Generation request with prompt/options.</param>
+    /// <summary>Streams and returns full LLM response.</summary>
+    /// <param name="request">Generation request.</param>
     /// <param name="ct">Cancellation token.</param>
     /// <returns>Full generated text.</returns>
     /// <example><![CDATA[string answer = await provider.GenerateResponse(request, ct);]]></example>
-    public async Task<string> GenerateResponse(
+    public async Task<string> GenerateResponse (
         GenerateRequest request,
         CancellationToken ct)
     {
@@ -44,7 +48,7 @@ public class OllamaResponse : IOllamaResponse
 
         var sb = new StringBuilder();
 
-        var panelText = new Markup(string.Empty, Styles.Yellow).LeftJustified();
+        var panelText = new Markup(" Waiting for response... ", Styles.Yellow).LeftJustified();
 
         var headerText = " Generating... ";
 
@@ -54,7 +58,7 @@ public class OllamaResponse : IOllamaResponse
             .RoundedBorder()
             .BorderStyle(Styles.GreenBlink)
             .Expand()
-            .Padding(1, 1, 1, 1);
+            .Padding(5, 1, 1, 5);
 
         try
         {
@@ -63,29 +67,43 @@ public class OllamaResponse : IOllamaResponse
                 ctx.UpdateTarget(panel);
                 ctx.Refresh();
 
-                await foreach (var stream in ollamaClient.GenerateAsync(request, ct))
+                try
                 {
-                    if (stream is null)
-                        throw new InvalidOperationException("Stream returned null response.");
+                    await foreach(var stream in _ollamaClient.GenerateAsync(request, ct))
+                    {
+                        if(stream is null)
+                            throw new InvalidOperationException("Stream returned null response.");
 
-                    sb.Append(stream.Response.AsSpan());
+                        if(stream?.Response is not { } response) continue;
 
-                    panel.BorderStyle = null;
+                        sb.Append(response.AsSpan());
 
-                    panelText = new Markup(sb.ToString().EscapeMarkup(), Styles.Yellow);
+                        panel.BorderStyle = null;
 
-                    headerText = " Streaming Response ";
+                        panelText = new Markup(sb.ToString().EscapeMarkup(), Styles.Yellow);
 
-                    ctx.UpdateTarget(panelText);
-                    ctx.Refresh();
+                        headerText =
+                        " Streaming Response ";
+
+                        panel.Header(headerText);
+
+                        ctx.UpdateTarget(panelText);
+
+                        ctx.Refresh();
+                    }
+                }
+                catch(Exception ex)
+                {
+                    AnsiConsole.WriteException(ex);
                 }
             });
+
             return sb.ToString();
         }
-        catch (Exception ex)
+        catch(Exception ex)
         {
             AnsiConsole.WriteException(ex);
-            return ex.Message;
+            throw;
         }
         finally
         {

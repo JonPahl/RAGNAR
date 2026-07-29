@@ -1,23 +1,21 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-using Ragnar.Core.Interface;
-using Ragnar.Embedding.Embedding;
-using Ragnar.Embedding.Factory;
-using Ragnar.Embedding.Pipeline;
-using Ragnar.Embedding.UnitOfWork;
-
 namespace Ragnar.Embedding;
 
 public static class EmbeddingSetupExtension
 {
+    /// <summary>EmbeddingSetupExtension.cs EmbeddingSetup registers embedding services.</summary>
+    /// <returns>The updated service collection.</returns>
     extension(IServiceCollection services)
     {
-        public IServiceCollection EmbeddingSetup()
+        /// <summary>EmbeddingSetupExtension.cs EmbeddingSetup registers embedding services.
+        /// </summary>
+        /// <returns>The updated service collection.</returns>
+        /// <example><![CDATA[services.EmbeddingSetup();]]></example>
+        public IServiceCollection EmbeddingSetup ()
         {
             services.AddSingleton<IGeneratorService, EmbeddingPointBuilder>()
                 .AddScoped<IEmbeddingPipeline, EmbeddingPipeline>()
-                .AddScoped<IVectorStoreRepository, VectorStoreRepository>()
-                .AddScoped<IEmbedTextPipeline, EmbedTextPipeline>()
+                .AddScoped<IVectorStoreWriter, VectorStoreWriter>()
+                .AddScoped<ICodeEmbeddingPipeline, CodeEmbeddingPipeline>()
                 .AddScoped<IFileParseFactory, FileParseFactory>();
             return services;
         }

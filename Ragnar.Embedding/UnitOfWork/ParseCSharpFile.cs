@@ -1,6 +1,3 @@
-﻿
-using Ragnar.Core.Model;
-
 namespace Ragnar.Embedding.UnitOfWork;
 
 /// <summary>
@@ -8,14 +5,12 @@ namespace Ragnar.Embedding.UnitOfWork;
 /// </summary>
 /// <example><![CDATA[var parser = new ParseCSharpFile();]]>
 /// </example>
-internal class ParseCSharpFile : AFileParser
+public class ParseCSharpFile : BaseFileParser
 {
-    public override async ValueTask<CodeDocument[]> ParseFileAsync(string filePath, CancellationToken ct)
+    public override async ValueTask<CodeDocument[]> ParseFileAsync (string filePath, CancellationToken ct)
     {
-        var fileConent = await ReadFileAsync(filePath, ct);
-
-        var codeChunker = new ChunkBySyntaxTree();
-        var response = codeChunker.ChunkSourceFile(filePath, fileConent);
+        var fileContent = await ReadFileAsync(filePath, ct);
+        var response = ChunkBySyntaxTree.ChunkSourceFile(filePath, fileContent);
 
         return response is null ? [] : [.. response];
     }

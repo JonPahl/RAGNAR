@@ -1,7 +1,3 @@
-﻿using Moq;
-
-using Ragnar.Branding;
-
 namespace RAGNAR.UnitTests.Embedding;
 
 public sealed class AssemblyExtensionsTests

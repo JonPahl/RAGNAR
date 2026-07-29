@@ -1,11 +1,33 @@
-﻿using Ragnar.Utils;
 
-using Spectre.Console;
+
+
+
 
 namespace RAGNAR.UnitTests.Questions;
 
 public sealed class StylesTests
 {
+
+    [Fact]
+    public void GreenBlink_HasCorrectColorAndDecoration()
+    {
+        // Act
+        var style = Styles.GreenBlink;
+
+        // Assert
+        Assert.Equal(Color.Green, style.Foreground);
+        Assert.Equal(Decoration.SlowBlink, style.Decoration);
+    }
+
+    [Theory]
+    //[InlineData("file.txt", Array.Empty<string>(), false)]
+    [InlineData("", new[] { "file.txt" }, false)]
+    public void IsExcluded_EdgeCases(string fileName, string[] exclusions, bool expected)
+    {
+        var result = fileName.AsSpan().IsExcluded(exclusions);
+        Assert.Equal(expected, result);
+    }
+
     [Fact]
     public void GreenBlink_HasCorrectStyle()
     {
@@ -14,7 +36,7 @@ public sealed class StylesTests
 
         // Assert
         Assert.Equal(Color.Green, style.Foreground);
-        // Assert.Contains(Decoration.SlowBlink, style.Decoration);
+        Assert.Equal(Decoration.SlowBlink, style.Decoration);
     }
 
     [Fact]
@@ -35,7 +57,6 @@ public sealed class StylesTests
 
         // Assert
         Assert.Equal(Color.Blue, style.Foreground);
-        //Assert.Contains(Decoration.Bold, style.Decoration);
-        //Assert.Contains(Decoration.Italic, style.Decoration);
+        Assert.Equal(Decoration.Bold | Decoration.Italic, style.Decoration);
     }
 }

@@ -1,13 +1,9 @@
-﻿using Moq;
-
-using Ragnar.Branding;
-
 namespace RAGNAR.UnitTests;
 
 public sealed class AssemblyExtensionsTests
 {
     [Fact]
-    public void InformationalVersion_ReturnsAttributeOrDefault()
+    public void InformationalVersion_ReturnsAttributeOrDefault ()
     {
         // Arrange
         var asmMock = new Mock<IAssemblyInfo>();

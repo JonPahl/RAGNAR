@@ -1,12 +1,5 @@
-﻿
-using Ardalis.GuardClauses;
-
-using Ragnar.Core.Interface;
-using Ragnar.Core.Options;
-
-using System.Runtime.CompilerServices;
-
 namespace Ragnar.Embedding.UnitOfWork;
+
 /// <summary>
 /// Static class to call Custom system enumerable.
 /// </summary>
@@ -25,7 +18,7 @@ public static class LoadCustomFiles
     /// <exception cref="DirectoryNotFoundException">Thrown when provided directory path is not found.
     /// </exception>
     /// <exception cref="ArgumentException">Thrown when no file options are provided. </exception>
-    public static IAsyncEnumerable<string> GetFilesAsync(
+    public static IAsyncEnumerable<string> GetFilesAsync (
         string directory,
         FileLoadOptions filter,
         EnumerationOptions options,
@@ -43,7 +36,7 @@ public static class LoadCustomFiles
 
         return GetValuesAsync(ct);
 
-        async IAsyncEnumerable<string> GetValuesAsync([EnumeratorCancellation] CancellationToken token = default)
+        async IAsyncEnumerable<string> GetValuesAsync ([EnumeratorCancellation] CancellationToken token = default)
         {
             foreach (var path in Directory.EnumerateFiles(directory, "*", options))
             {

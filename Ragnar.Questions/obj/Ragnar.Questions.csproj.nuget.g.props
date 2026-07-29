@@ -13,4 +13,7 @@
     <SourceRoot Include="C:\Users\jp325\.nuget\packages\" />
     <SourceRoot Include="C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages\" />
   </ItemGroup>
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgRoslynator_Analyzers Condition=" '$(PkgRoslynator_Analyzers)' == '' ">C:\Users\jp325\.nuget\packages\roslynator.analyzers\4.15.0</PkgRoslynator_Analyzers>
+  </PropertyGroup>
 </Project>

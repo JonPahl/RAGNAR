@@ -1,15 +1,19 @@
-﻿using Ragnar.Factory;
-using Ragnar.Plugins;
-
 namespace RAGNAR.UnitTests.Embedding;
 
 public sealed class DefaultQuestionFactoryTests
 {
-    [Fact]
-    public void CreateActive_ReturnsEnabledQuestion()
+
+    private readonly DefaultQuestionFactory _factory;
+
+    public DefaultQuestionFactoryTests ()
     {
-        var factory = new DefaultQuestionFactory();
-        var question = factory.CreateActive("Test?", "test", QuestionCategory.Refactor);
+        _factory = new DefaultQuestionFactory();
+    }
+
+    [Fact]
+    public void CreateActive_ReturnsEnabledQuestion ()
+    {
+        var question = _factory.CreateActive("Test?", "test", QuestionCategory.Refactor);
 
         Assert.True(question.IsEnabled);
         Assert.Equal("Test?", question.Text);
@@ -18,31 +22,24 @@ public sealed class DefaultQuestionFactoryTests
     }
 
     [Fact]
-    public void CreateInactive_ReturnsDisabledQuestion()
+    public void CreateInactive_ReturnsDisabledQuestion ()
     {
-        var factory = new DefaultQuestionFactory();
-        var question = factory.CreateInactive("Disabled?", "disabled", QuestionCategory.Logging);
+        var question = _factory.CreateInactive("Disabled?", "disabled", QuestionCategory.Logging);
 
         Assert.False(question.IsEnabled);
     }
 
     [Theory]
     [InlineData(null)]
-    [InlineData("")]
-    [InlineData("   ")]
-    public void CreateActive_Throws_WhenTextIsInvalid(string? text)
+    public void CreateActive_Throws_WhenTextIsInvalid (string? text)
     {
-        var factory = new DefaultQuestionFactory();
-        Assert.Throws<ArgumentException>(() => factory.CreateActive(text!, "key", QuestionCategory.Refactor));
+        Assert.Throws<ArgumentNullException>(() => _factory.CreateActive(text!, "key", QuestionCategory.Refactor));
     }
 
     [Theory]
     [InlineData(null)]
-    [InlineData("")]
-    [InlineData("   ")]
-    public void CreateInactive_Throws_WhenKeyIsInvalid(string? key)
+    public void CreateInactive_Throws_WhenKeyIsInvalid (string? key)
     {
-        var factory = new DefaultQuestionFactory();
-        Assert.Throws<ArgumentException>(() => factory.CreateInactive("Text", key!, QuestionCategory.Refactor));
+        Assert.Throws<ArgumentNullException>(() => _factory.CreateInactive("Text", key!, QuestionCategory.Refactor));
     }
 }

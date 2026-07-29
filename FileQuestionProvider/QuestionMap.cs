@@ -1,15 +1,14 @@
-﻿using CsvHelper.Configuration;
-
-using Ragnar.Plugins;
-
 namespace FileQuestionProvider;
 
+/// <summary>QuestionMap.cs Configures CSV mapping for QuestionRecord fields.</summary>
+/// <example><![CDATA[var map = new QuestionMap();]]></example>
 public sealed class QuestionMap
     : ClassMap<QuestionRecord>
 {
-    public QuestionMap()
+    public QuestionMap ()
     {
-        Map(m => m.IsEnabled).Name("IsEnabled")
+        Map(m => m.IsEnabled)
+            .Name("IsEnabled")
             .TypeConverterOption.BooleanValues(true, true, "1")
             .TypeConverterOption.BooleanValues(false, true, "0");
 
