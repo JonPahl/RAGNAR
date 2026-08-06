@@ -4,6 +4,7 @@ namespace Ragnar.Core.Options;
 /// <example><![CDATA[var opts = new FileLoadOptions { AllowedFileExtensions = [".cs", ".json"] };]]></example>
 public record FileLoadOptions
 {
+
     /// <summary>Gets filters files by extension, name, and directory.</summary>
     /// <example>
     /// <![CDATA[var opts = new FileLoadOptions { AllowedFileExtensions = [".cs", ".json"] };]]> </example>

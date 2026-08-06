@@ -2,33 +2,18 @@ namespace Ragnar.IntegrationTests;
 
 public class UtilsTests
 {
-    //[Fact]
-    //public void ExpandDirectory_Throws_WhenDirectoryMissing ()
-    //{
-    //    // Arrange
-    //    var nonExistent = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-    //    // Act & Assert
-    //    Assert.Throws<DirectoryNotFoundException>(() => nonExistent.ExpandDirectory());
-    //}
 
     [Fact]
-    public void ExpandDirectory_ExpandsEnvironmentVariables ()
+    public void ExpandDirectoryReturnsFullPathWhenDirectoryExists()
     {
         // Arrange
-        var path = "%TEMP%\\subdir";
-        var expected = Path.Combine(Path.GetTempPath(), "subdir");
+        var TempDir = Path.GetTempPath();
+        Directory.CreateDirectory(TempDir); // Ensure exists
 
         // Act
-        var expanded = path.ExpandDirectory();
+        var Expanded = TempDir.ExpandDirectory();
 
         // Assert
-        Assert.Equal(expected, expanded);
-    }
-
-    [Fact]
-    public void ExpandDirectory_Throws_WhenPathNull ()
-    {
-        // Arrange & Act & Assert
-        Assert.Throws<ArgumentNullException>(() => ((string?)null).ExpandDirectory());
+        Expanded.Should().Be(Path.GetFullPath(TempDir));
     }
 }

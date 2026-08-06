@@ -6,17 +6,17 @@ namespace Ragnar.Utils;
 public class FileValidator : IFileValidator
 {
     /// <summary>Checks if file matches allowed extensions and filters.</summary>
-    /// <param name="file">File to validate.</param>
-    /// <param name="filter">Load options with filters.</param>
+    /// <param name="File">File to validate.</param>
+    /// <param name="Filter">Load options with filters.</param>
     /// <returns>true if valid; otherwise false.</returns>
     /// <example><![CDATA[bool ok = validator.IsValid(file, opts);]]></example>
-    public bool IsValid (FileInfo file, in FileLoadOptions filter)
+    public bool IsValid(FileInfo File, in FileLoadOptions Filter)
     {
-        var directoryName = file.DirectoryName;
+        var DirectoryName = File.DirectoryName;
 
-        return filter.AllowedFileExtensions.Any(d => d.Contains(file.Extension, StringComparison.OrdinalIgnoreCase)) &&
-        !filter.ExcludedFiles.Contains(file.Name) &&
-        !filter.ExcludedDirectories
-        .Any(d => directoryName.Contains(d, StringComparison.OrdinalIgnoreCase));
+        return Filter.AllowedFileExtensions.Any(D => D.Contains(File.Extension, StringComparison.OrdinalIgnoreCase)) &&
+        !Filter.ExcludedFiles.Contains(File.Name) &&
+        !Filter.ExcludedDirectories
+        .Any(D => DirectoryName.Contains(D, StringComparison.OrdinalIgnoreCase));
     }
 }

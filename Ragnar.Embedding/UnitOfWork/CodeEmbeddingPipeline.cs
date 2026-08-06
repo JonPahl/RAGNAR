@@ -1,129 +1,131 @@
 namespace Ragnar.Embedding.UnitOfWork;
 
-/// <summary>
-/// Processes code files in a directory, parses them into CodeDocuments, and upserts embeddings.
-/// </summary>
-public class CodeEmbeddingPipeline (
-    IOptions<AppConfiguration> options,
+/// <summary>Discovers, parses, and embeds code files into vector store.</summary>
+public class CodeEmbeddingPipeline(
+    IOptions<AppConfiguration> Options,
     IFileValidator FileValidator,
-    IVectorStoreWriter emeddingRepository,
-    ILogger logger,
-    IFileParseFactory parseFactory)
+    IVectorStoreWriter EmbeddingRepository,
+    ILogger Logger,
+    IFileParserSelector ParseFactory)
     : ICodeEmbeddingPipeline
 {
-    private const int _bATCHSIZE = 10;
+    private const int BATCHSIZE = 10;
 
-    private readonly RagOptions _appOption = options.Value.RagOptions;
+    private readonly RagOptions AppOption = Options.Value.RagOptions;
 
-    private readonly ConcurrentBag<CodeDocument> _codeDocuments = [];
+    private readonly ConcurrentBag<CodeDocument> CodeDocuments = [];
 
-    private IReadOnlyCollection<string> _files = [];
+    private IReadOnlyCollection<string> Files = [];
 
     /// <summary>
     /// Starts the file discovery and embedding pipeline.
     /// </summary>
-    /// <param name="ct">Cancellation token.</param>
+    /// <param name="Ct">Cancellation token.</param>
     /// <example><![CDATA[
     /// var uow = new CodeEmbeddingPipeline(...);
     /// await uow.RunAsync(CancellationToken.None);
     /// ]]></example>
     /// <returns>Completed task.</returns>
-    public async Task RunAsync (CancellationToken ct)
+    public async Task RunAsync(CancellationToken Ct)
     {
-        if (!Directory.Exists(_appOption.SourceDirectory))
+        if(!Directory.Exists(AppOption.SourceDirectory))
         {
-            logger.Warning("following not found: {Dir}", _appOption.SourceDirectory);
+            Logger.Warning("following not found: {Dir}", AppOption.SourceDirectory);
             return;
         }
 
-        _files = await LocateFilesAsync(ct);
-        await LoopOverDirectoryAsync(ct);
-        await AddCodingFile(ct);
+        Files = await LocateFilesAsync(Ct);
+        await LoopOverDirectoryAsync(Ct);
+        await AddCodingFile(Ct);
     }
 
-    /// <summary>Upserts all code documents into vector store sequentially.</summary>
-    /// <param name="ct">Cancellation token. </param>
-    private async Task AddCodingFile (CancellationToken ct)
+    /// <summary>Upserts code documents into vector store with progress tracking.</summary>
+    /// <param name="Ct">Cancellation token. </param>
+    /// <example><![CDATA[await AddCodingFile(ct);]]>
+    /// </example>
+    private async Task AddCodingFile(CancellationToken Ct)
     {
-        await AnsiConsole.Progress().StartAsync(async ctx =>
+        await AnsiConsole.Progress().StartAsync(async Ctx =>
         {
-            var task = ctx.AddTask("Code Processed", maxValue: _codeDocuments.Count);
+            var Task = Ctx.AddTask("Code Processed", maxValue: CodeDocuments.Count);
 
-            foreach (var item in _codeDocuments.Chunk(10))
+            foreach(var Item in CodeDocuments.Chunk(10))
             {
-                var response = await emeddingRepository.UpsertBatchAsync(item, ct);
+                var Response = await EmbeddingRepository.UpsertBatchAsync(Item, Ct);
 
-                logger.Information("added {Count} of embedding item, Status: {S}", 10, response.Status);
-                task.Increment(1);
-                ctx.Refresh();
+                Logger.Information("added {Count} of embedding item, Status: {S}", 10, Response.Status);
+                Task.Increment(1);
+                Ctx.Refresh();
             }
         });
     }
 
-    /// <summary>Upserts code documents with progress tracking using AnsiConsole.
-    /// </summary>
-    /// <param name="ct">Cancellation token.</param>
+    /// <summary>Processes files in batches, parses them, and embeds results.</summary>
+    /// <param name="Ct">Cancellation token.</param>
+    /// <example><![CDATA[await LoopOverDirectoryAsync(ct);]]></example>
     /// <returns>return task.</returns>
-    private async Task LoopOverDirectoryAsync (CancellationToken ct)
+    private async Task LoopOverDirectoryAsync(CancellationToken Ct)
     {
-        if (_files.Count == 0) return;
+        if(Files.Count == 0) return;
 
-        var pendingDocs = new ConcurrentBag<CodeDocument>();
+        var PendingDocs = new ConcurrentBag<CodeDocument>();
         await AnsiConsole.Progress().AutoClear(true)
-            .StartAsync(async ctx =>
+            .StartAsync(async Ctx =>
         {
-            var task = ctx.AddTask("Processing files", maxValue: _files.Count);
-            foreach (var batch in _files.Chunk(_bATCHSIZE))
+            var Task = Ctx.AddTask("Processing files", maxValue: Files.Count);
+            foreach(var Batch in Files.Chunk(BATCHSIZE))
             {
-                await Task.WhenAll(batch.Select(async filePath =>
+                await System.Threading.Tasks.Task.WhenAll(Batch.Select(async FilePath =>
                 {
-                    var elements = await parseFactory.ParseAsync(filePath, ct);
+                    var Elements = await ParseFactory.ParseAsync(FilePath, Ct);
 
-                    foreach (var element in elements)
+                    foreach(var Element in Elements)
                     {
-                        pendingDocs.Add(element);
+                        PendingDocs.Add(Element);
                     }
                 }));
 
-                task.Increment(batch.Length);
-                ctx.Refresh();
+                Task.Increment(Batch.Length);
+                Ctx.Refresh();
             }
         });
-        await EmbeddingFiles(pendingDocs, ct);
+        await EmbeddingFiles(PendingDocs, Ct);
     }
 
-    private async Task EmbeddingFiles (ConcurrentBag<CodeDocument> tempDocs, CancellationToken ct)
+    private async Task EmbeddingFiles(ConcurrentBag<CodeDocument> TempDocs, CancellationToken Ct)
     {
-        var chunks = tempDocs.Chunk(10);
-        await AnsiConsole.Progress().StartAsync(async ctx =>
+        var Chunks = TempDocs.Chunk(10);
+        await AnsiConsole.Progress().StartAsync(async Ctx =>
         {
-            var embedTask = ctx.AddTask("Embedding documents", maxValue: chunks.Count());
-            foreach (var batch in chunks)
+            var EmbeddingTask = Ctx.AddTask("Embedding documents", maxValue: Chunks.Count());
+            foreach(var Chunk in Chunks)
             {
-                await emeddingRepository.UpsertBatchAsync(batch, ct);
-                embedTask.Increment(1);
-                ctx.Refresh();
+                await EmbeddingRepository.UpsertBatchAsync(Chunk, Ct);
+                EmbeddingTask.Increment(1);
+                Ctx.Refresh();
             }
         });
     }
 
-    private async Task<IReadOnlyCollection<string>> LocateFilesAsync (CancellationToken ct)
+    /// <summary>Recursively finds all valid code files in source directory.</summary>
+    /// <example><![CDATA[var files = await LocateFilesAsync(ct);]]></example>
+    private async Task<IReadOnlyCollection<string>> LocateFilesAsync(CancellationToken Ct)
     {
-        var enumOptions = new EnumerationOptions
+        var EnumOptions = new EnumerationOptions
         {
             RecurseSubdirectories = true,
             IgnoreInaccessible = true,
             MatchCasing = MatchCasing.CaseInsensitive,
         };
 
-        var items = new List<string>();
+        var Items = new List<string>();
 
-        await foreach (var file in
-            LoadCustomFiles.GetFilesAsync(_appOption.SourceDirectory, options.Value.FileLoadOptions, enumOptions, FileValidator, ct))
+        await foreach(var File in
+            LoadCustomFiles.GetFilesAsync(AppOption.SourceDirectory, Options.Value.FileLoadOptions, EnumOptions, FileValidator, Ct))
         {
-            items.Add(file);
+            Items.Add(File);
         }
 
-        return items;
+        return Items;
     }
 }

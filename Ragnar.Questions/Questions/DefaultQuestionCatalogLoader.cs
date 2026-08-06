@@ -3,79 +3,79 @@ namespace Ragnar.Questions.Questions;
 /// <summary>
 /// Loads active questions from configured categories, supporting both built-in and plugin-based sources.
 /// </summary>
-/// <param name="logger">Serilog logger for diagnostics.</param>
-/// <param name="writer">Output writer for user feedback.</param>
+/// <param name="Logger">Serilog logger for diagnostics.</param>
+/// <param name="Writer">Output writer for user feedback.</param>
 /// <example>
 /// <code>
 /// var loader = new DefaultQuestionCatalogLoader(logger, writer);
 /// var questions = loader.LoadQuestions(true, categories);
 /// </code>
 /// </example>
-public class DefaultQuestionCatalogLoader (Serilog.ILogger logger, IOutputWriter writer) : IQuestionCatalogLoader
+public class DefaultQuestionCatalogLoader(Serilog.ILogger Logger, IOutputWriter Writer) : IQuestionCatalogLoader
 {
     /// <summary>Loads active/inactive questions filtered by category.</summary>
-    /// <param name="isActive">Filter active questions.</param>
-    /// <param name="categories">Optional categories to include.</param>
+    /// <param name="IsActive">Filter active questions.</param>
+    /// <param name="Categories">Optional categories to include.</param>
     /// <returns>Filtered question collection.</returns>
     /// <example><![CDATA[var questions = loader.LoadQuestions(true, categories);]]></example>
-    public IReadOnlyCollection<Question> LoadQuestions (
-        bool isActive,
-        ImmutableHashSet<QuestionCategory>? categories)
+    public IReadOnlyCollection<Question> LoadQuestions(
+        bool IsActive,
+        ImmutableHashSet<QuestionCategory>? Categories)
     {
-        var questions = GetDefaultQuestions();
+        var Questions = GetDefaultQuestions();
 
-        return isActive switch
+        return IsActive switch
         {
-            true when categories is null => questions.ActiveOnly,
-            true => [.. questions.WithCategory(categories).OrderBy(q => q.Category)],
-            false => questions.InActiveOnly
+            true when Categories is null => Questions.ActiveOnly(),
+            true => [.. Questions.MatchesCategories(Categories).OrderBy(Q => Q.Category)],
+            false => Questions.InActiveOnly()
         };
     }
 
     /// <summary>Converts appsetting array to list of QuestionCategory.</summary>
-    /// <param name="categoryFilter">Possible categories.</param>
+    /// <param name="CategoryFilter">Possible categories.</param>
     /// <returns>List of found enum categories.</returns>
     /// <example><![CDATA[var categories = loader.ParseCategoriesOrDefault(["Refactor", "XML"]);]]></example>
-    public ImmutableHashSet<QuestionCategory>? ParseCategoriesOrDefault (string[]? categoryFilter)
+    public ImmutableHashSet<QuestionCategory>? ParseCategoriesOrDefault(string[]? CategoryFilter)
     {
-        HashSet<QuestionCategory> categories = [];
+        HashSet<QuestionCategory> Categories = [];
 
-        if(categoryFilter is null or [])
+        if(CategoryFilter is null or [])
         {
             return LoadQuestionCategories.All();
         }
 
-        foreach(var category in categoryFilter)
+        foreach(var Category in CategoryFilter)
         {
-            if(Enum.TryParse(category, ignoreCase: true, out QuestionCategory categoryCategory))
+            if(Enum.TryParse(Category, ignoreCase: true, out QuestionCategory CategoryCategory))
             {
-                categories.Add(categoryCategory);
+                Categories.Add(CategoryCategory);
             }
             else
             {
-                logger.Error("Could not parse: {Category}. Please check name", category);
-                writer.MarkupLine($"[red]⚠ Could not parse: {category}. Please check name.[/]");
+                Logger.Error("Could not parse: {Category}. Please check name", Category);
+                Writer.MarkupLine($"[red]⚠ Could not parse: {Category}. Please check name.[/]");
             }
         }
 
-        if(categories.Count == 0)
+        if(Categories.Count == 0)
         {
-            writer.MarkupLine("[yellow]⚠ No valid categories specified; defaulting to all.[/]");
+            Writer.MarkupLine("[yellow]⚠ No valid categories specified; defaulting to all.[/]");
             return LoadQuestionCategories.All();
         }
 
-        logger.Information("📊 Processing categories: ({Cat})", string.Join(", ", categories));
+        Logger.Information("📊 Processing categories: ({Cat})", string.Join(", ", Categories));
 
-        return categories.Count == 0
+        return Categories.Count == 0
         ? LoadQuestionCategories.All()
-        : [.. categories];
+        : [.. Categories];
     }
 
     /// <summary>
     /// Returns a default list of questions.
     /// </summary>
     /// <returns>Immutable list of questions.</returns>
-    public ImmutableList<Question> GetDefaultQuestions ()
+    public ImmutableList<Question> GetDefaultQuestions()
     {
         return
         [

@@ -15,5 +15,5 @@ public interface IConfigurationLoader
     /// </example>
     /// <returns>Collection of QuestionConfiguration objects.
     /// </returns>
-    IEnumerable<QuestionConfiguration> LoadQuestions ();
+    IEnumerable<QuestionConfiguration> LoadQuestions();
 }

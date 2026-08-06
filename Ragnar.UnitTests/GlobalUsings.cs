@@ -9,7 +9,10 @@ global using Moq;
 global using OllamaSharp;
 global using OllamaSharp.Models;
 
+global using Qdrant.Client.Grpc;
+
 global using Ragnar.Branding;
+global using Ragnar.Core;
 global using Ragnar.Core.ConsoleWriter;
 global using Ragnar.Core.Interface;
 global using Ragnar.Core.Model;
@@ -20,7 +23,6 @@ global using Ragnar.Embedding.Chunker;
 global using Ragnar.Extensions;
 global using Ragnar.Factory;
 global using Ragnar.Interfaces;
-global using Ragnar.Output;
 global using Ragnar.Plugins;
 global using Ragnar.Questions;
 global using Ragnar.Questions.Questions;
@@ -28,11 +30,11 @@ global using Ragnar.Utils;
 
 global using RAGNAR.OutputResponse;
 
-global using Spectre.Console.Rendering;
-global using AssemblyExtensions = Ragnar.Branding.AssemblyExtensions;
 global using Spectre.Console;
-global using Qdrant.Client.Grpc;
-global using Ragnar.Core;
-global using Ragnar.Embedding.Factory;
-global using Ragnar.Embedding.UnitOfWork;
-global using Qdrant.Client;
+global using Spectre.Console.Rendering;
+
+global using AssemblyExtensions = Ragnar.Branding.AssemblyExtensions;
+
+global using FluentAssertions;
+global using Ragnar.Core.Validation;
+global using Ragnar.Questions.Questions.Filters;

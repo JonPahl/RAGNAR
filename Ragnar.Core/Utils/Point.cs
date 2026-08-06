@@ -9,7 +9,7 @@ public static class Point
     /// <param name="index">chunk int index.</param>
     /// <returns>Unique PointId.</returns>
     /// <example><![CDATA[PointId id = Utils.CreateStringPointId("file.cs", 5);]]></example>
-    public static ulong FromFilePathAndIndex (in ReadOnlySpan<char> filePath, in ReadOnlySpan<char> index)
+    public static ulong FromFilePathAndIndex(in ReadOnlySpan<char> filePath, in ReadOnlySpan<char> index)
     {
         Guard.Against.NullOrWhiteSpace(filePath.ToString());
         Guard.Against.NullOrWhiteSpace(index.ToString());

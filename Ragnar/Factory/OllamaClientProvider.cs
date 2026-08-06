@@ -3,100 +3,64 @@ namespace Ragnar.Factory;
 /// <summary>
 /// Creates Ollama API clients based on type (Ollama or Embedding).
 /// </summary>
-public class OllamaClientProvider (
-    IHttpClientFactory httpClientFactory,
-    IOptions<OllamaOptions> ollamaOptions,
-    IOptions<EmbeddingOptions> embeddingOptions)
+public class OllamaClientProvider(
+    IHttpClientFactory HttpClientFactory,
+    IOptions<OllamaOptions> OllamaOptions,
+    IOptions<EmbeddingOptions> EmbeddingOptions)
     : IOllamaClientFactory
 {
     /// <summary>Gets Ollama client for specified type.</summary>
-    /// <param name="type">Ollama or Embedding.</param>
+    /// <param name="Type">Ollama or Embedding.</param>
     /// <returns>Configured OllamaApiClient.</returns>
     /// <example><![CDATA[var client = factory.FindClient(OllamaServiceType.Ollama);]]></example>
-    public OllamaApiClient FindClient (OllamaServiceType type)
+    public OllamaApiClient FindClient(OllamaServiceType Type)
     {
-        return type switch
+        return Type switch
         {
             OllamaServiceType.Ollama => BuildOllamaClient(),
             OllamaServiceType.Embedding => GetBuildEmbeddingClient(),
-            _ => throw new ArgumentOutOfRangeException(nameof(type), type, "Unsupported OllamaServiceType"),
+            _ => throw new ArgumentOutOfRangeException(nameof(Type), Type, "Unsupported OllamaServiceType"),
         };
     }
 
     /// <summary>Creates LLM client using configured model.</summary>
     /// <returns>OllamaApiClient for generation.</returns>
     /// <example><![CDATA[var client = factory.BuildOllamaClient();]]></example>
-    private OllamaApiClient BuildOllamaClient () => new(GetClient(OllamaServiceType.Ollama))
+    private OllamaApiClient BuildOllamaClient() => new(GetClient(OllamaServiceType.Ollama))
     {
-        SelectedModel = ollamaOptions.Value.CodeModel,
+        SelectedModel = OllamaOptions.Value.CodeModel,
     };
 
     /// <summary>Creates HttpClient for Ollama endpoint.</summary>
-    /// <param name="ollama">Client type.</param>
+    /// <param name="Ollama">Client type.</param>
     /// <returns>Configured HttpClient.</returns>
     /// <example><![CDATA[var client = factory.GetClient(OllamaServiceType.Ollama);]]></example>
-    private HttpClient GetClient (OllamaServiceType ollama)
+    private HttpClient GetClient(OllamaServiceType Ollama)
     {
-        var host = ollamaOptions.Value.Host.ValidateHost();
-        var port = ollamaOptions.Value.Port.ValidatePort();
+        if(!Enum.IsDefined(Ollama))
+            throw new System.ComponentModel.InvalidEnumArgumentException(nameof(Ollama), (int)Ollama, typeof(OllamaServiceType));
 
-        var httpClient = httpClientFactory.CreateClient(nameof(OllamaServiceType.Ollama));
+        var Host = OllamaOptions.Value.Host.ValidateHost();
+        var Port = OllamaOptions.Value.Port.ValidatePort();
 
-        httpClient.BaseAddress = new Uri($"{host}:{port}");
+        var HttpClient = HttpClientFactory.CreateClient(nameof(OllamaServiceType.Ollama));
 
-        httpClient.Timeout = ollama switch
+        HttpClient.BaseAddress = new Uri($"{Host}:{Port}");
+
+        HttpClient.Timeout = Ollama switch
         {
-            OllamaServiceType.Ollama => ollamaOptions.Value.Timeout,
-            OllamaServiceType.Embedding => embeddingOptions.Value.Timeout,
-            _ => embeddingOptions.Value.Timeout,
+            OllamaServiceType.Ollama => OllamaOptions.Value.Timeout,
+            OllamaServiceType.Embedding => EmbeddingOptions.Value.Timeout,
+            _ => EmbeddingOptions.Value.Timeout,
         };
-        return httpClient;
+        return HttpClient;
     }
 
     /// <summary>Creates embedding client using configured model.</summary>
     /// <returns>OllamaApiClient for embeddings.</returns>
     /// <example><![CDATA[var client = factory.GetBuildEmbeddingClient();]]></example>
-    private OllamaApiClient GetBuildEmbeddingClient () => new(GetClient(OllamaServiceType.Embedding))
+    private OllamaApiClient GetBuildEmbeddingClient() => new(GetClient(OllamaServiceType.Embedding))
     {
-        SelectedModel = embeddingOptions.Value.EmbeddingModel,
+        SelectedModel = EmbeddingOptions.Value.EmbeddingModel,
     };
-}
-
-
-
-public static class ClientExtensions
-{
-    /// <summary>Validates and normalizes host URI.
-    /// </summary>
-    /// <param name="host">Host string.</param>
-    /// <returns>Validated host URI.</returns>
-    /// <example><![CDATA[var host = factory.ValidateHost("localhost");]]></example>
-    public static string ValidateHost (this string host)
-    {
-        Guard.Against.NullOrEmpty(host);
-
-        if (!host.StartsWith("http", StringComparison.InvariantCultureIgnoreCase))
-        {
-            host = $"http://{host}";
-        }
-
-        if (!Uri.TryCreate(host, UriKind.RelativeOrAbsolute, out var validUri))
-            throw new ArgumentException("Cannot create uri from provided host");
-
-        return validUri.OriginalString;
-    }
-
-    /// <summary>Validates port is in TCP range 1–65535.</summary>
-    /// <param name="port">Port number.</param>
-    /// <returns>Valid port.</returns>
-    /// <example><![CDATA[var port = factory.ValidatePort(8080);]]></example>
-    public static int ValidatePort (this int port)
-    {
-        if (port is < 1 or > 65535)
-        {
-            throw new ArgumentOutOfRangeException(nameof(port), "Port must be between 1 and 65535.");
-        }
-
-        return port;
-    }
 }

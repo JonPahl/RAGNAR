@@ -26,7 +26,7 @@ public class RagPipelineRunnerTests
     }
 
     [Fact]
-    public async Task StartAsync_ExecutesPipelineStepsInOrder()
+    public async Task StartAsyncExecutesPipelineStepsInOrder()
     {
         // Arrange
         var ct = CancellationToken.None;

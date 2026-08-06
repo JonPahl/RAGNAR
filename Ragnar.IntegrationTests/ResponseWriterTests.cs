@@ -2,23 +2,23 @@ namespace Ragnar.IntegrationTests;
 
 public class ResponseWriterTests : IDisposable
 {
-    private readonly string _tempDir;
+    private readonly string TempDir;
 
-    public ResponseWriterTests ()
+    public ResponseWriterTests()
     {
-        _tempDir = Path.Combine(Path.GetTempPath(), $"response_test_{Guid.NewGuid()}");
-        Directory.CreateDirectory(_tempDir);
+        TempDir = Path.Combine(Path.GetTempPath(), $"response_test_{Guid.NewGuid()}");
+        Directory.CreateDirectory(TempDir);
     }
 
     [Fact]
-    public async Task WriteResponseAsync_Should_CreateMarkdownFile ()
+    public async Task WriteResponseAsyncShouldCreateMarkdownFile()
     {
         // Arrange
-        var config = Options.Create(new AppConfiguration
+        var Config = Options.Create(new AppConfiguration
         {
             RagOptions = new()
             {
-                SourceDirectory = _tempDir,
+                SourceDirectory = TempDir,
                 VectorStoreName = "",
                 SaveDirectory = ""
             },
@@ -43,29 +43,29 @@ public class ResponseWriterTests : IDisposable
             }
         });
 
-        var writer = new ResponseWriter(config);
+        var Writer = new ResponseWriter(Config);
 
-        var question = new Question(true, "How do I...?", "Program.cs", QuestionCategory.Refactor);
-        var details = new SaveDetails(question, "Here is the answer.", "00:05");
+        var Question = new Question(true, "How do I...?", "Program.cs", QuestionCategory.Refactor);
+        var Details = new SaveDetails(Question, "Here is the answer.", "00:05");
 
         // Act
-        var path = await writer.WriteResponseAsync(details, CancellationToken.None);
+        var Path = await Writer.WriteResponseAsync(Details, CancellationToken.None);
 
         // Assert
-        Assert.StartsWith(_tempDir, path);
-        Assert.EndsWith(".md", path);
-        Assert.True(File.Exists(path));
+        Assert.StartsWith(TempDir, Path);
+        Assert.EndsWith(".md", Path);
+        Assert.True(File.Exists(Path));
 
-        var content = await File.ReadAllTextAsync(path);
-        Assert.Contains("## Question:", content);
-        Assert.Contains("How do I...?", content);
-        Assert.Contains("## Response:", content);
-        Assert.Contains("Here is the answer.", content);
+        var Content = await File.ReadAllTextAsync(Path);
+        Assert.Contains("## Question:", Content);
+        Assert.Contains("How do I...?", Content);
+        Assert.Contains("## Response:", Content);
+        Assert.Contains("Here is the answer.", Content);
     }
 
-    public void Dispose ()
+    public void Dispose()
     {
-        Directory.Delete(_tempDir, recursive: true);
+        Directory.Delete(TempDir, recursive: true);
         GC.SuppressFinalize(this);
     }
 }

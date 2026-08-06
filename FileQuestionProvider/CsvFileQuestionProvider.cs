@@ -1,50 +1,53 @@
 namespace FileQuestionProvider;
 
+
+
 public class CsvFileQuestionProvider
     : IQuestionProvider
 {
     public string ProviderName => "CSV File";
-    private string _fileName = string.Empty;
+    private string FileName = string.Empty;
 
-    public void SetFileName (string fileName)
+
+    public void SetFileName(string FileName)
     {
-        _fileName = fileName;
+        this.FileName = FileName;
     }
 
     /// <summary>Loads all active and config questions for processing.</summary>
-    /// <param name="ct">Cancellation Token.</param>
-    public async Task<IEnumerable<QuestionConfiguration>> LoadQuestionAsync (CancellationToken ct) => await ReadCsvFile();
+    /// <param name="Ct">Cancellation Token.</param>
+    public async Task<IEnumerable<QuestionConfiguration>> LoadQuestionAsync(CancellationToken Ct) => await ReadCsvFile();
 
 
     /// <summary>Loads questions from CSV file asynchronously.</summary>
-    private async Task<IEnumerable<QuestionConfiguration>> ReadCsvFile ()
+    private async Task<IEnumerable<QuestionConfiguration>> ReadCsvFile()
     {
-        var questions = new List<QuestionConfiguration>();
+        var Questions = new List<QuestionConfiguration>();
 
-        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+        var Config = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
             HasHeaderRecord = true,
             TrimOptions = TrimOptions.Trim,
         };
 
-        using (var reader = new StreamReader(_fileName))
-        using (var csv = new CsvReader(reader, config))
+        using(var Reader = new StreamReader(FileName))
+        using(var Csv = new CsvReader(Reader, Config))
         {
-            csv.Context.RegisterClassMap<QuestionMap>();
+            Csv.Context.RegisterClassMap<QuestionMap>();
 
-            foreach (var record in csv.GetRecords<QuestionRecord>())
+            foreach(var Record in Csv.GetRecords<QuestionRecord>())
             {
-                var question = new QuestionConfiguration
+                var Question = new QuestionConfiguration
                 (
-                    IsActive: record.IsEnabled,
-                    Text: record.Text,
-                    FileName: record.FileName,
-                    Category: record.Category
+                    IsActive: Record.IsEnabled,
+                    Text: Record.Text,
+                    FileName: Record.FileName,
+                    Category: Record.Category
                 );
-                questions.Add(question);
+                Questions.Add(Question);
             }
         }
 
-        return questions;
+        return Questions;
     }
 }

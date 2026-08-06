@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "VftHkzApcFs=",
+  "dgSpecHash": "MNXFwNJ3RcM=",
   "success": true,
   "projectFilePath": "C:\\Users\\jp325\\source\\Ragnar\\Ragnar.UnitTests\\Ragnar.UnitTests.csproj",
   "expectedPackageFiles": [
@@ -11,6 +11,9 @@
     "C:\\Users\\jp325\\.nuget\\packages\\coverlet.collector\\10.0.1\\coverlet.collector.10.0.1.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\csvhelper\\33.1.0\\csvhelper.33.1.0.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\elbruno.ollamasharp.extensions\\1.0.2\\elbruno.ollamasharp.extensions.1.0.2.nupkg.sha512",
+    "C:\\Users\\jp325\\.nuget\\packages\\fluentassertions\\8.10.0\\fluentassertions.8.10.0.nupkg.sha512",
+    "C:\\Users\\jp325\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",
+    "C:\\Users\\jp325\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\12.1.1\\fluentvalidation.dependencyinjectionextensions.12.1.1.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\google.protobuf\\3.31.0\\google.protobuf.3.31.0.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\grpc.core.api\\2.71.0\\grpc.core.api.2.71.0.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\grpc.net.client\\2.71.0\\grpc.net.client.2.71.0.nupkg.sha512",

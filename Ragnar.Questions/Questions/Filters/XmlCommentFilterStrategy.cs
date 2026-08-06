@@ -1,29 +1,9 @@
 namespace Ragnar.Questions.Questions.Filters;
 
-public class XmlCommentFilterStrategy
-    : IQuestionFilterStrategy
+public sealed class XmlCommentFilterStrategy
+    : IFilterStrategy
 {
-    public Filter CreateFilter (QuestionCategory category) => new()
-    {
-        Should = {
-            new Condition
-            {
-                Field = new FieldCondition
-                {
-                    Key = "Comment",
-                    Match = new Match
-                    {
-                        Text = string.Empty
-                    }
-                }
-            },
-            new Condition
-            {
-                IsEmpty = new IsEmptyCondition
-                {
-                    Key = "Comment"
-                }
-            }
-        }
-    };
+    public QuestionCategory SupportedCategory => QuestionCategory.XML;
+
+    public Filter CreateFilter(QuestionCategory Category, int Size) => XmlEmptyCommentFilter.Filter(Category);
 }

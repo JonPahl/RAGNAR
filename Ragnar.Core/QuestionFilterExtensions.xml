@@ -1,0 +1,27 @@
+<!-- XML Doc tags for C# -->
+<summary>
+This class contains extension methods for filtering questions.
+</summary>
+
+public static class QuestionFilterExtensions
+{
+    
+    public IReadOnlyList<Question> ActiveOnly => [.. Questions.Where(Q => Q.IsEnabled)];
+
+    public IReadOnlyList<Question> InActiveOnly => [.. Questions.Where(Q => !Q.IsEnabled)];
+
+    public IReadOnlyList<Question> MatchesCategories(ImmutableHashSet<QuestionCategory>? Categories)
+    {
+        ArgumentNullException.ThrowIfNull(Categories);
+        return Categories.Count == 0 ? [.. Questions] : [.. Questions.Where(Q => Categories.Contains(Q.Category))];
+    }
+    
+    public Question WithFilter(Filter? filter) => filter is not null
+                ? new(Question.IsEnabled, Question.Text, Question.Filename, Question.Category, filter)
+                : Question;
+
+        public Question ToActiveOrDisabledQuestion() => Question.IsEnabled
+                ? Question.IsActive(Question.Text, Question.Filename, Question.Category)
+                : Question.IsDisabled(Question.Text, Question.Filename, Question.Category);
+    }
+}

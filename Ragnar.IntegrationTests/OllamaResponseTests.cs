@@ -1,64 +1,59 @@
-//namespace Ragnar.IntegrationTests;
+namespace Ragnar.IntegrationTests;
 
-//public class OllamaResponseTests
-//{
-//    [Fact]
-//    public async Task GenerateResponse_Should_StreamAndReturnFullResponse ()
-//    {
-//        // Arrange
-//        var httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:11434") };
-//        var ollamaClient = new OllamaApiClient(httpClient) { SelectedModel = "qwen2.5-coder:14b" };
+public class OllamaResponseTests
+{
 
-//        var mockFactory = new Mock<IOllamaClientFactory>();
-//        mockFactory.Setup(f => f.FindClient(OllamaServiceType.Ollama)).Returns(ollamaClient);
+    private readonly AppConfiguration AppConfiguration;
 
-//        var responseProvider = new OllamaResponse(mockFactory.Object);
+    public OllamaResponseTests()
+    {
+        AppConfiguration = new AppConfiguration
+        {
+            RagOptions = new RagOptions { IncludeOriginalPrompt = false, SaveDirectory = "", SourceDirectory = "", VectorStoreName = "" },
+            EmbeddingOptions = new EmbeddingOptions
+            {
+                Dimension = 1536,
+                EmbeddingModel = "",
+                Host = "",
+                Port = 0,
+                Timeout = TimeSpan.FromSeconds(30)
+            },
+            FileLoadOptions = new FileLoadOptions(),
+            OllamaOptions = new OllamaOptions
+            {
+                Host = "localhost",
+                Port = 11434,
+                CodeModel = "",
+                Timeout = TimeSpan.FromSeconds(30)
+            },
+        };
+    }
 
-//        // Mock streaming response
-//        var mockStream = new List<GenerateResponse>
-//        {
-//            new() { Response = "Hello" },
-//            new() { Response = " world" },
-//            new() { Response = "!" }
-//        }.ToAsyncEnumerable();
+    [Fact]
+    public async Task GenerateResponse_Should_Return_Empty_On_Null_Response()
+    {
+        // Arrange
+        var mockFactory = new Mock<IOllamaClientFactory>();
+        var mockConfig = Options.Create(AppConfiguration);
 
-//        var mockClient = new Mock<OllamaApiClient>(MockBehavior.Strict, httpClient);
-//        mockClient.Setup(c => c.GenerateAsync(It.IsAny<GenerateRequest>(), It.IsAny<CancellationToken>()))
-//            .Returns(mockStream.ToAsyncEnumerable());
+        var httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:11434") };
+        var client = new OllamaClient(httpClient);
+        mockFactory.Setup(f => f.FindClient(OllamaServiceType.Ollama)).Returns(client);
 
-//        // Replace internal client (not ideal, but necessary for testability)
-//        var field = typeof(OllamaResponse).GetField("_ollamaClient", BindingFlags.NonPublic | BindingFlags.Instance);
-//        field?.SetValue(responseProvider, mockClient.Object);
+        var responseProvider = new OllamaResponse(mockFactory.Object, mockConfig);
 
-//        var request = new GenerateRequest { Model = "qwen2.5-coder:14b", Prompt = "Hello" };
+        // Mock GenerateAsync to return null stream
+        var mockClient = new Mock<OllamaApiClient>(httpClient);
+        mockClient.Setup(c => c.GenerateAsync(It.IsAny<GenerateRequest>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(AsyncEnumerable.Empty<GenerateResponseStream>());
 
-//        // Act
-//        var result = await responseProvider.GenerateResponse(request, CancellationToken.None);
+        // Replace internal client (not ideal, but for demo)
+        typeof(OllamaResponse).GetField("OllamaClient", BindingFlags.NonPublic | BindingFlags.Instance)
+                              .SetValue(responseProvider, mockClient.Object);
 
-//        // Assert
-//        Assert.Equal("Hello world!", result);
-//        mockClient.Verify(c => c.GenerateAsync(It.IsAny<GenerateRequest>(), It.IsAny<CancellationToken>()), Times.Once);
-//    }
+        // Act & Assert
+        await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            responseProvider.GenerateResponse(new GenerateRequest(), CancellationToken.None));
+    }
+}
 
-//    [Fact]
-//    public async Task GenerateResponse_Should_LogException_OnNullStream ()
-//    {
-//        // Arrange
-//        var mockFactory = new Mock<IOllamaClientFactory>();
-//        var ollamaClient = new OllamaApiClient(new HttpClient());
-//        mockFactory.Setup(f => f.FindClient(OllamaServiceType.Ollama)).Returns(ollamaClient);
-
-//        var responseProvider = new OllamaResponse(mockFactory.Object);
-
-//        var mockClient = new Mock<OllamaApiClient>(MockBehavior.Strict, new HttpClient());
-//        mockClient.Setup(c => c.GenerateAsync(It.IsAny<GenerateRequest>(), It.IsAny<CancellationToken>()))
-//            .ReturnsAsync((IAsyncEnumerable<GenerateResponse>)null!);
-
-//        typeof(OllamaResponse).GetField("_ollamaClient", BindingFlags.NonPublic | BindingFlags.Instance)
-//            ?.SetValue(responseProvider, mockClient.Object);
-
-//        // Act & Assert
-//        await Assert.ThrowsAsync<InvalidOperationException>(() =>
-//            responseProvider.GenerateResponse(new GenerateRequest(), CancellationToken.None));
-//    }
-//}

@@ -6,41 +6,41 @@ namespace Ragnar.Extensions;
 public static class SavePathExtension
 {
 
-    extension(RagOptions options)
+    extension(RagOptions Options)
     {
         /// <summary>Gets full path to response directory.</summary>
         /// <returns>Response subdirectory path.</returns>
         /// <example><![CDATA[string path = dir.GetResponseDirectory();]]></example>
-        public string GetResponseDirectory () => Path.Combine(options.SourceDirectory.ExpandDirectory(), options.SaveDirectory);
+        public string GetResponseDirectory() => Path.Combine(Options.SourceDirectory.ExpandDirectory(), Options.SaveDirectory);
 
 
         /// <summary>Aggregates path segments into response directory path.</summary>
-        /// <param name="folders">Path segments.</param>
-        /// <param name="baseDir">Optional root directory.</param>
+        /// <param name="Folders">Path segments.</param>
+        /// <param name="BaseDir">Optional root directory.</param>
         /// <returns>Combined path.</returns>
         /// <example><![CDATA[string path = folders.GetResponseDirectory("/base");]]></example>
-        public string GetResponseDirectory (IList<string> folders, string baseDir = "")
+        public string GetResponseDirectory(IList<string> Folders, string BaseDir = "")
         {
-            var root = string.IsNullOrEmpty(baseDir)
-                ? options.SaveDirectory
-                : Path.Combine(baseDir, options.SaveDirectory);
+            var Root = string.IsNullOrEmpty(BaseDir)
+                ? Options.SaveDirectory
+                : Path.Combine(BaseDir, Options.SaveDirectory);
 
-            return folders.Count == 0 ? root : folders.Aggregate(root, Path.Combine);
+            return Folders.Count == 0 ? Root : Folders.Aggregate(Root, Path.Combine);
         }
     }
 
     /// <summary>Wraps a prompt string in markdown fence markers for display.</summary>
-    /// <param name="finalPrompt">The prompt to format.</param>
+    /// <param name="FinalPrompt">The prompt to format.</param>
     /// <returns>Prompt wrapped in `***[Original Prompt]...***`.</returns>
     /// <example><![CDATA[string formatted = prompt.ShowPrompt();]]></example>
-    public static string ShowPrompt (this string finalPrompt)
+    public static string ShowPrompt(this string FinalPrompt)
     {
-        var sp = new StringBuilder("\n\n")
+        var Sp = new StringBuilder("\n\n")
             .AppendLine("***")
             .AppendLine("[Original Prompt]")
-            .AppendLine(finalPrompt)
+            .AppendLine(FinalPrompt)
             .AppendLine("***");
 
-        return finalPrompt + " " + sp;
+        return FinalPrompt + " " + Sp;
     }
 }

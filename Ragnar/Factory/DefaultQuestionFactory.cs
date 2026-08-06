@@ -11,7 +11,7 @@ public class DefaultQuestionFactory : IQuestionFactory
     /// <param name="category">Category enum.</param>
     /// <returns>New active Question.</returns>
     /// <example><![CDATA[var q = factory.CreateActive("Is this right?", "q1", Category.Refactor);]]></example>
-    public Question CreateActive (string text, string key, QuestionCategory category)
+    public Question CreateActive(string text, string key, QuestionCategory category)
         => new(true, Validate(text), Validate(key), category);
 
     /// <summary>Creates an inactive (disabled) question.</summary>
@@ -20,7 +20,7 @@ public class DefaultQuestionFactory : IQuestionFactory
     /// <param name="category">Category enum.</param>
     /// <returns>New inactive Question.</returns>
     /// <example><![CDATA[var q = factory.CreateInactive("Future?", "q2", Category.XML);]]></example>
-    public Question CreateInactive (string text, string key, QuestionCategory category)
+    public Question CreateInactive(string text, string key, QuestionCategory category)
         => new(false, Validate(text), Validate(key), category);
 
     /// <summary>Validates and trims question text/key.</summary>
@@ -28,13 +28,13 @@ public class DefaultQuestionFactory : IQuestionFactory
     /// <param name="paramName">Caller param name.</param>
     /// <returns>Trimmed non-empty string.</returns>
     /// <example><![CDATA[var s = Validate("  test  ");]]></example>
-    private static string Validate (string value, [CallerArgumentExpression(nameof(value))] string? paramName = null)
+    private static string Validate(string value, [CallerArgumentExpression(nameof(value))] string? paramName = null)
     {
         Guard.Against.NullOrWhiteSpace(value, paramName);
 
         var trimmed = value.AsSpan().Trim();
 
-        if (trimmed.Length == 0)
+        if(trimmed.Length == 0)
         {
             throw new ArgumentException("Value cannot be whitespace-only.", paramName);
         }

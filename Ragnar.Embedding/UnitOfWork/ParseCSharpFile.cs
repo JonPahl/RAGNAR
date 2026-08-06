@@ -7,11 +7,11 @@ namespace Ragnar.Embedding.UnitOfWork;
 /// </example>
 public class ParseCSharpFile : BaseFileParser
 {
-    public override async ValueTask<CodeDocument[]> ParseFileAsync (string filePath, CancellationToken ct)
+    public override async ValueTask<CodeDocument[]> ParseFileAsync(string FilePath, CancellationToken Ct)
     {
-        var fileContent = await ReadFileAsync(filePath, ct);
-        var response = ChunkBySyntaxTree.ChunkSourceFile(filePath, fileContent);
+        var FileContent = await ReadFileAsync(FilePath, Ct);
+        var Response = ChunkBySyntaxTree.ChunkSourceFile(FilePath, FileContent);
 
-        return response is null ? [] : [.. response];
+        return Response is null ? [] : [.. Response];
     }
 }

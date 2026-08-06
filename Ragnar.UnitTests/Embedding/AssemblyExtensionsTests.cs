@@ -3,15 +3,15 @@ namespace RAGNAR.UnitTests.Embedding;
 public sealed class AssemblyExtensionsTests
 {
     [Fact]
-    public void InformationalVersion_ReturnsAttribute_Value()
+    public void InformationalVersionReturnsAttributeValue()
     {
-        var asmMock = new Mock<IAssemblyInfo>();
-        var assembly = typeof(AssemblyExtensionsTests).Assembly;
-        asmMock.Setup(a => a.Assembly).Returns(assembly);
+        var AsmMock = new Mock<IAssemblyInfo>();
+        var Assembly = typeof(AssemblyExtensionsTests).Assembly;
+        AsmMock.Setup(A => A.Assembly).Returns(Assembly);
 
-        var version = AssemblyExtensions.get_InformationalVersion(asmMock.Object);
+        var Version = AssemblyExtensions.get_InformationalVersion(AsmMock.Object);
 
-        Assert.NotNull(version);
-        Assert.NotEmpty(version!);
+        Assert.NotNull(Version);
+        Assert.NotEmpty(Version!);
     }
 }

@@ -1,12 +1,11 @@
-
-
-
 namespace Ragnar.Core.Options;
+
 /// <summary>
 /// Ollama setup options.
 /// </summary>
 public record OllamaOptions
 {
+
     /// <summary>
     /// Gets ollama Uri Host.
     /// </summary>

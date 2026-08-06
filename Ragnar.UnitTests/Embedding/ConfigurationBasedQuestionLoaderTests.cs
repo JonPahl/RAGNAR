@@ -4,7 +4,7 @@ public sealed class ConfigurationBasedQuestionLoaderTests
 {
 
     [Fact]
-    public void LoadFromConfig_Throws_WhenConfigsNull ()
+    public void LoadFromConfigThrowsWhenConfigsNull()
     {
         // Arrange
         var factory = Mock.Of<QuestionFactoryDelegate>();
@@ -15,7 +15,7 @@ public sealed class ConfigurationBasedQuestionLoaderTests
     }
 
     [Fact]
-    public void LoadFromConfig_WithEmptyConfigs_ReturnsEmptyList ()
+    public void LoadFromConfigWithEmptyConfigsReturnsEmptyList()
     {
         // Arrange
         var factory = Mock.Of<QuestionFactoryDelegate>();
@@ -30,7 +30,7 @@ public sealed class ConfigurationBasedQuestionLoaderTests
     }
 
     [Fact]
-    public void LoadFromConfig_NonXml_Category_DoesNotAddFilter ()
+    public void LoadFromConfigNonXmlCategoryDoesNotAddFilter()
     {
         // Arrange
         var factoryMock = new Mock<QuestionFactoryDelegate>();
@@ -49,7 +49,7 @@ public sealed class ConfigurationBasedQuestionLoaderTests
     }
 
     [Fact]
-    public void LoadFromConfig_CallsFactoryForAllConfigs ()
+    public void LoadFromConfigCallsFactoryForAllConfigs()
     {
         // Arrange
         var factoryMock = new Mock<QuestionFactoryDelegate>(MockBehavior.Strict);

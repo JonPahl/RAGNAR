@@ -5,46 +5,45 @@ namespace Ragnar.Core;
 /// </summary>
 public static class BuildPayloadExtension
 {
-    extension(object items)
+    extension(object Items)
     {
-        public IReadOnlyList<IDictionary<string, Value>>? Build (QdrantPayloadTypes payload)
+        public IReadOnlyList<IDictionary<string, Value>>? ToCollection(QdrantPayloadTypes Payload)
         {
-            if (payload == QdrantPayloadTypes.ALL && items is (IReadOnlyList<ScoredPoint>))
+            if(Payload == QdrantPayloadTypes.ALL && Items is (IReadOnlyList<ScoredPoint>))
             {
-                return BuildAllPayload((IReadOnlyList<ScoredPoint>)items).AsReadOnly();
+                return BuildAllPayload((IReadOnlyList<ScoredPoint>)Items).AsReadOnly();
             }
-            if (payload == QdrantPayloadTypes.SEARCH && items is (RepeatedField<RetrievedPoint>))
+            if(Payload == QdrantPayloadTypes.SEARCH)
             {
-                return BuildSearchPayload((RepeatedField<RetrievedPoint>)items).AsReadOnly();
+                return BuildSearchPayload((RepeatedField<ScoredPoint>)Items).AsReadOnly();
             }
 
-            var a = items.GetType().Name;
-            return (ReadOnlyCollection<IDictionary<string, Value>>)items;
+            return (ReadOnlyCollection<IDictionary<string, Value>>)Items;
         }
     }
 
-    private static IList<IDictionary<string, Value>> BuildSearchPayload
-        (RepeatedField<RetrievedPoint> items)
+    private static List<IDictionary<string, Value>> BuildSearchPayload
+        (RepeatedField<ScoredPoint> Items)
     {
-        var payloads = new List<IDictionary<string, Value>>();
+        var Payloads = new List<IDictionary<string, Value>>();
 
-        foreach (var item in items)
+        foreach(var Item in Items)
         {
-            payloads.Add(item.Payload);
+            Payloads.Add(Item.Payload);
         }
 
-        return payloads;
+        return Payloads;
     }
 
-    private static IList<IDictionary<string, Value>> BuildAllPayload (IReadOnlyList<ScoredPoint> searchResults)
+    private static List<IDictionary<string, Value>> BuildAllPayload(IReadOnlyList<ScoredPoint> SearchResults)
     {
-        var payload = new List<IDictionary<string, Value>>();
+        var Payload = new List<IDictionary<string, Value>>();
 
-        foreach (var item in searchResults)
+        foreach(var Item in SearchResults)
         {
-            payload.Add(item.Payload);
+            Payload.Add(Item.Payload);
         }
 
-        return payload;
+        return Payload;
     }
 }

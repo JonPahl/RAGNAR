@@ -15,7 +15,7 @@ public static class FileSystemEntryExtensions
     /// bool isAllowed = entry.HasAllowedExtension([".pdf", ".docx"]);
     /// ]]>
     /// </example>
-    public static bool HasAllowedExtension (
+    public static bool HasAllowedExtension(
         this FileSystemEntry entry,
         IReadOnlyCollection<string> allowedExtensions)
         => !entry.IsDirectory && allowedExtensions.Contains(Path.GetExtension(entry.FileName.ToString()), StringComparer.OrdinalIgnoreCase);

@@ -2,29 +2,29 @@ namespace Ragnar.IntegrationTests;
 
 public class LoadCustomFilesTests : IDisposable
 {
-    private readonly string _tempDir;
+    private readonly string TempDir;
 
-    public LoadCustomFilesTests ()
+    public LoadCustomFilesTests()
     {
-        _tempDir = Path.Combine(Path.GetTempPath(), $"test_{Guid.NewGuid()}");
-        Directory.CreateDirectory(_tempDir);
+        TempDir = Path.Combine(Path.GetTempPath(), $"test_{Guid.NewGuid()}");
+        Directory.CreateDirectory(TempDir);
     }
 
     [Fact]
-    public async Task GetFilesAsync_Should_FilterByExtension ()
+    public async Task GetFilesAsyncShouldFilterByExtension()
     {
         // Arrange
-        await File.WriteAllTextAsync(Path.Combine(_tempDir, "valid.cs"), "// code");
-        await File.WriteAllTextAsync(Path.Combine(_tempDir, "ignore.txt"), "not code");
-        var filter = new FileLoadOptions { AllowedFileExtensions = [".cs"] };
-        var validator = new FileValidator();
+        await File.WriteAllTextAsync(Path.Combine(TempDir, "valid.cs"), "// code");
+        await File.WriteAllTextAsync(Path.Combine(TempDir, "ignore.txt"), "not code");
+        var Filter = new FileLoadOptions { AllowedFileExtensions = [".cs"] };
+        var Validator = new FileValidator();
 
         // Act
-        var files = await LoadCustomFiles.GetFilesAsync(_tempDir, filter, new EnumerationOptions(), validator, CancellationToken.None).ToListAsync();
+        var Files = await LoadCustomFiles.GetFilesAsync(TempDir, Filter, new EnumerationOptions(), Validator, CancellationToken.None).ToListAsync();
 
         // Assert
-        Assert.Single(files);
-        Assert.Contains("valid.cs", files[0]);
+        Assert.Single(Files);
+        Assert.Contains("valid.cs", Files[0]);
     }
 
     //[Fact]
@@ -44,9 +44,9 @@ public class LoadCustomFilesTests : IDisposable
     //    Assert.Contains("Program.cs", files[0]);
     //}
 
-    public void Dispose ()
+    public void Dispose()
     {
-        Directory.Delete(_tempDir, recursive: true);
+        Directory.Delete(TempDir, recursive: true);
         GC.SuppressFinalize(this);
     }
 }

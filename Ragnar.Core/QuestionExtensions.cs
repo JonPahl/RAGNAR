@@ -5,67 +5,48 @@ namespace Ragnar.Core;
 /// </summary>
 public static class QuestionExtensions
 {
-    extension(IReadOnlyList<Question> questions)
+    extension(ImmutableHashSet<Question> Questions)
     {
         /// <summary>Gets only enabled questions.</summary>
         /// <value>A read-only list of active questions.</value>
-        public IReadOnlyList<Question> ActiveOnly => [.. questions.Where(q => q.IsEnabled)];
+        /// <example><![CDATA[var active = questions.ActiveOnly;]]></example>
+        public IReadOnlyList<Question> ActiveOnly => [.. Questions.Where(Q => Q.IsEnabled)];
 
         /// <summary>Gets only disabled questions.</summary>
         /// <value>A read-only list of inactive questions.</value>
-        public IReadOnlyList<Question> InActiveOnly => [.. questions.Where(q => !q.IsEnabled)];
+        /// <example><![CDATA[var inactive = questions.InActiveOnly;]]></example>
+        public IReadOnlyList<Question> InActiveOnly => [.. Questions.Where(Q => !Q.IsEnabled)];
 
         /// <summary>Filters questions by specified categories.</summary>
-        /// <param name="categories">Categories to include; null returns all.</param>
-        /// <returns>Questions matching any category in <paramref name="categories"/>.</returns>
+        /// <param name="Categories">Categories to include; null returns all.</param>
+        /// <returns>Questions matching any category.</returns>
         /// <exception cref="ArgumentNullException">Thrown when categories is null.</exception>
-        /// <example><![CDATA[var filtered = questions.WithCategory(categories);]]></example>
-        public IReadOnlyList<Question> WithCategory (ImmutableHashSet<QuestionCategory> categories)
+        /// <example><![CDATA[var filtered = questions.MatchesCategories(categories);]]></example>
+        public IReadOnlyList<Question> MatchesCategories([NotNullWhen(true)] ImmutableHashSet<QuestionCategory>? Categories)
         {
-            ArgumentNullException.ThrowIfNull(categories);
+            ArgumentNullException.ThrowIfNull(Categories);
 
-            return categories is null or { Count: 0 }
-            ? [.. questions]
-            : [.. questions.Where(q => categories.Contains(q.Category))];
+            return Categories.Count == 0 ? [.. Questions] : [.. Questions.Where(Q => Categories.Contains(Q.Category))];
         }
     }
 
-    extension(Question question)
-    {
-        /// <summary>Assigns a filter to a question.</summary>
-        /// <param name="filter">The filter instance or null.</param>
-        /// <returns>The modified question object.</returns>
-        /// <example><![CDATA[var q = question.SetFilter(new XmlCommentLengthFilterStrategy().CreateFilter(category));]]>
-        /// </example>
-        public Question SetFilter (Filter? filter)
-        {
-            if (filter is not null)
-            {
-                return new(question.IsEnabled, question.Text, question.Filename, question.Category, filter);
-            }
+    /// <summary>Assigns a filter to the question, returning a new question if filter is non-null.</summary>
+    /// <param name="Question"></param>
+    /// <param name="Filter">Optional filter to apply; null returns original question.</param>
+    /// <returns>A new question with the filter applied, or the original if filter is null.</returns>
+    /// <example><![CDATA[var q = question.WithFilter(new Filter());]]></example>
+    public static Question WithFilter(this Question Question, Filter? Filter)
+        => Filter != null
+            ? new(Question.IsEnabled, Question.Text, Question.Filename, Question.Category, Filter)
+            : Question;
 
-            return question;
-        }
-
-        /// <summary>Validates all string properties of a question for null/whitespace.</summary>
-        /// <returns>The validated question object.</returns>
-        /// <exception cref="ArgumentNullException">Thrown if any property is null.</exception>
-        /// <exception cref="ArgumentException">Thrown if any string property is whitespace.</exception>
-        /// <example><![CDATA[var q = question.ValidateQuestion();]]></example>
-        public Question ValidateQuestion ()
-        {
-            foreach (var prop in question.GetType().GetProperties())
-            {
-                Guard.Against.Null(prop);
-                var value = prop.GetValue(question);
-                if (value is string)
-                {
-                    Guard.Against.Null(value.ToString());
-                    Guard.Against.WhiteSpace(value.ToString(), prop.Name);
-                }
-            }
-
-            return question;
-        }
-    }
+    /// <summary>
+    /// Converts a question to either an active or disabled state.
+    /// </summary>
+    /// <param name="Question">The original question.</param>
+    /// <returns>A new question in the active or disabled state, depending on whether it was originally enabled.</returns>
+    public static Question ToActiveOrDisabledQuestion(this Question Question)
+        => Question.IsEnabled
+            ? Question.IsActive(Question.Text, Question.Filename, Question.Category)
+            : Question.IsDisabled(Question.Text, Question.Filename, Question.Category);
 }

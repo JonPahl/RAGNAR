@@ -4,20 +4,19 @@ public static class EmbeddingSetupExtension
 {
     /// <summary>EmbeddingSetupExtension.cs EmbeddingSetup registers embedding services.</summary>
     /// <returns>The updated service collection.</returns>
-    extension(IServiceCollection services)
+    extension(IServiceCollection Services)
     {
-        /// <summary>EmbeddingSetupExtension.cs EmbeddingSetup registers embedding services.
-        /// </summary>
-        /// <returns>The updated service collection.</returns>
+        /// <summary>Registers embedding services in DI container.</summary>
+        /// <returns>Updated service collection.</returns>
         /// <example><![CDATA[services.EmbeddingSetup();]]></example>
-        public IServiceCollection EmbeddingSetup ()
+        public IServiceCollection EmbeddingSetup()
         {
-            services.AddSingleton<IGeneratorService, EmbeddingPointBuilder>()
+            Services.AddSingleton<IGeneratorService, EmbeddingPointBuilder>()
                 .AddScoped<IEmbeddingPipeline, EmbeddingPipeline>()
-                .AddScoped<IVectorStoreWriter, VectorStoreWriter>()
+                .AddScoped<IVectorStoreWriter, CodeDocumentParserFactory>()
                 .AddScoped<ICodeEmbeddingPipeline, CodeEmbeddingPipeline>()
-                .AddScoped<IFileParseFactory, FileParseFactory>();
-            return services;
+                .AddScoped<IFileParserSelector, FileParserSelector>();
+            return Services;
         }
     }
 }

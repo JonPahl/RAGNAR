@@ -1,24 +1,40 @@
 namespace Ragnar.Core;
 
-public class QdrantVectorStore (IQdrantClient client)
+/// <summary>
+/// A vector store implementation using Qdrant.
+/// </summary>
+public class QdrantVectorStore(IQdrantClient Client)
     : IVectorStore
 {
-
-    private readonly IQdrantClient _client = client;
-
     public object MapToSearchResult { get; set; }
 
-    public async Task<IReadOnlyList<IDictionary<string, Value>?>> ScrollAllAsync (string collectionName, CancellationToken ct)
+    /// <summary>
+    /// Retrieves all documents from the specified collection.
+    /// </summary>
+    /// <param name="CollectionName">The name of the collection to retrieve.</param>
+    /// <param name="Ct">A cancellation token for asynchronous operations.</param>
+    /// <returns>A list of dictionaries containing search results.</returns>
+    public async Task<IReadOnlyList<IDictionary<string, Value>?>?> ScrollAllAsync(string CollectionName, CancellationToken Ct)
     {
-        var scrollResult = await _client.ScrollAsync(collectionName, cancellationToken: ct);
+        var ScrollResult = await Client.ScrollAsync(CollectionName, cancellationToken: Ct);
 
-        return scrollResult.Result.Build(QdrantPayloadTypes.ALL);
+        return ScrollResult == null
+            ? throw new InvalidOperationException("Scroll result is null.")
+            : ScrollResult.Result.ToCollection(QdrantPayloadTypes.ALL);
     }
 
-    public async Task<IReadOnlyList<IDictionary<string, Value>>?> SearchAsync (string collectionName, ReadOnlyMemory<float> queryVector, int limit, CancellationToken ct)
+    /// <summary>
+    /// Performs a search on the specified collection using the provided query vector.
+    /// </summary>
+    /// <param name="CollectionName">The name of the collection to search.</param>
+    /// <param name="QueryVector">A memory buffer containing the query vector data.</param>
+    /// <param name="Limit">The maximum number of results to return.</param>
+    /// <param name="Ct">A cancellation token for asynchronous operations.</param>
+    /// <returns>A list of dictionaries containing search results.</returns>
+    public async Task<IReadOnlyList<IDictionary<string, Value>?>?> SearchAsync(string CollectionName, ReadOnlyMemory<float> QueryVector, ulong Limit, CancellationToken Ct)
     {
-        var scrollResult = await _client.ScrollAsync(collectionName, cancellationToken: ct);
+        var SearchResult = await Client.SearchAsync(CollectionName, QueryVector, limit: Limit, cancellationToken: Ct);
 
-        return scrollResult.Result.Build(QdrantPayloadTypes.SEARCH);
+        return SearchResult.ToCollection(QdrantPayloadTypes.SEARCH);
     }
 }

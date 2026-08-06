@@ -18,7 +18,7 @@ public static class LoadCustomFiles
     /// <exception cref="DirectoryNotFoundException">Thrown when provided directory path is not found.
     /// </exception>
     /// <exception cref="ArgumentException">Thrown when no file options are provided. </exception>
-    public static IAsyncEnumerable<string> GetFilesAsync (
+    public static IAsyncEnumerable<string> GetFilesAsync(
         string directory,
         FileLoadOptions filter,
         EnumerationOptions options,
@@ -29,19 +29,19 @@ public static class LoadCustomFiles
         ArgumentNullException.ThrowIfNull(directory);
         Guard.Against.NullOrEmpty(directory);
 
-        if (!Directory.Exists(directory))
+        if(!Directory.Exists(directory))
         {
             throw new DirectoryNotFoundException($"Directory not found: {directory}");
         }
 
         return GetValuesAsync(ct);
 
-        async IAsyncEnumerable<string> GetValuesAsync ([EnumeratorCancellation] CancellationToken token = default)
+        async IAsyncEnumerable<string> GetValuesAsync([EnumeratorCancellation] CancellationToken token = default)
         {
-            foreach (var path in Directory.EnumerateFiles(directory, "*", options))
+            foreach(var path in Directory.EnumerateFiles(directory, "*", options))
             {
                 token.ThrowIfCancellationRequested();
-                if (fileValidator.IsValid(new FileInfo(path), filter))
+                if(fileValidator.IsValid(new FileInfo(path), filter))
                 {
                     yield return path;
                 }

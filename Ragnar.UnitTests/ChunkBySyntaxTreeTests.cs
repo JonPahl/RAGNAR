@@ -1,13 +1,12 @@
-
 namespace RAGNAR.UnitTests;
 
 public sealed class ChunkBySyntaxTreeTests
 {
     [Fact]
-    public void ChunkSourceFile_ShouldExtractClassMetadata ()
+    public void ChunkSourceFileShouldExtractClassMetadata()
     {
         // Arrange
-        const string code = @"
+        const string Code = @"
                 /// <summary>
                 /// A test class.
                 /// </summary>
@@ -17,33 +16,33 @@ public sealed class ChunkBySyntaxTreeTests
                 }";
 
         // Act
-        var docs = ChunkBySyntaxTree.ChunkSourceFile("TestClass.cs", code);
+        var Docs = ChunkBySyntaxTree.ChunkSourceFile("TestClass.cs", Code);
 
         // Assert
-        Assert.NotNull(docs);
-        Assert.Single(docs);
-        Assert.Equal("TestClass", docs[0].ElementName);
-        Assert.Equal("ClassDeclaration", docs[0].ElementType);
-        Assert.Contains("A test class.", docs[0].Comment);
-        Assert.Contains("public class TestClass", docs[0].Code);
+        Assert.NotNull(Docs);
+        Assert.Single(Docs);
+        Assert.Equal("TestClass", Docs[0].ElementName);
+        Assert.Equal("ClassDeclaration", Docs[0].ElementType);
+        Assert.Contains("A test class.", Docs[0].Comment);
+        Assert.Contains("public class TestClass", Docs[0].Code);
     }
 
     [Fact]
-    public void ChunkSourceFile_ShouldReturnNull_WhenInvalidSyntax ()
+    public void ChunkSourceFileShouldReturnNullWhenInvalidSyntax()
     {
-        const string invalidCode = "public class {"; // Missing closing brace & syntax error
+        const string InvalidCode = "public class {"; // Missing closing brace & syntax error
 
-        var docs = ChunkBySyntaxTree.ChunkSourceFile("Bad.cs", invalidCode);
+        var Docs = ChunkBySyntaxTree.ChunkSourceFile("Bad.cs", InvalidCode);
 
-        Assert.NotNull(docs);
+        Assert.NotNull(Docs);
     }
 
 
     [Fact]
-    public void ChunkSourceFile_ParsesValidCSharp ()
+    public void ChunkSourceFileParsesValidCSharp()
     {
         // Arrange
-        const string code = """
+        const string Code = """
             namespace Test
             {
                 public class Program { }
@@ -51,25 +50,25 @@ public sealed class ChunkBySyntaxTreeTests
             """;
 
         // Act
-        var docs = ChunkBySyntaxTree.ChunkSourceFile("Program.cs", code);
+        var Docs = ChunkBySyntaxTree.ChunkSourceFile("Program.cs", Code);
 
         // Assert
-        Assert.NotNull(docs);
-        Assert.Single(docs);
-        Assert.Equal("Program", docs[0].ElementName);
+        Assert.NotNull(Docs);
+        Assert.Single(Docs);
+        Assert.Equal("Program", Docs[0].ElementName);
     }
 
     [Fact]
-    public void ChunkSourceFile_ReturnsNull_ForInvalidSyntax ()
+    public void ChunkSourceFileReturnsNullForInvalidSyntax()
     {
         // Arrange
-        const string code = "invalid {";
+        const string Code = "invalid {";
 
         // Act
-        var docs = ChunkBySyntaxTree.ChunkSourceFile("Program.cs", code);
+        var Docs = ChunkBySyntaxTree.ChunkSourceFile("Program.cs", Code);
 
         // Assert
-        Assert.NotNull(docs);
-        Assert.Empty(docs);
+        Assert.NotNull(Docs);
+        Assert.Empty(Docs);
     }
 }

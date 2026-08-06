@@ -1,0 +1,29 @@
+<!--
+  <summary>
+    Interface for filter strategies.
+  </summary>
+
+  <typeparam name="TCategory">The category type.</typeparam>
+
+  <returns>A new instance of the filter strategy.</returns>
+
+  <example>
+    <code>
+      var filter = new MyFilterStrategy();
+    </code>
+  </example>
+-->\n<doc id="Ragnar.Questions.Questions.Filters.IFilterStrategy" language="csharp">
+  <summary>
+    Interface for filter strategies.
+  </summary>
+
+  <typeparam name="TCategory">The category type.</typeparam>
+
+  <returns>A new instance of the filter strategy.</returns>
+
+  <example>
+    <code>
+      var filter = new MyFilterStrategy();
+    </code>
+  </example>
+</doc>

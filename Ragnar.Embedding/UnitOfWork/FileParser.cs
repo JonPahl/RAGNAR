@@ -4,64 +4,65 @@ namespace Ragnar.Embedding.UnitOfWork;
 /// <summary>
 /// ParseAsync file processing.
 /// </summary>
-/// <param name="configWrapper">Wrapped configuration objects.</param>
-public sealed class FileParser (IOptions<AppConfiguration> configWrapper)
-    : BaseFileParser
+/// <param name="ConfigWrapper">Wrapped configuration objects.</param>
+public sealed class FileParser(IOptions<AppConfiguration> ConfigWrapper) : BaseFileParser
 {
-    private EmbeddingOptions EmbeddingOption => configWrapper.Value.EmbeddingOptions;
+    private EmbeddingOptions EmbeddingOption => ConfigWrapper.Value.EmbeddingOptions;
 
     /// <summary>
     /// Parses a file asynchronously and returns an array of parsed objects.
     /// </summary>
-    /// <param name="filePath">The path to the file to parse.</param>
-    /// <param name="ct">A cancellation token that can be used to cancel this operation.</param>
+    /// <param name="FilePath">The path to the file to parse.</param>
+    /// <param name="Ct">A cancellation token that can be used to cancel this operation.</param>
     /// <returns>A task representing the asynchronous operation. The result is an array of parsed objects of type T.</returns>
-    public override async ValueTask<CodeDocument[]> ParseFileAsync (string filePath, CancellationToken ct)
-    {
-        var fileContent = await ReadFileAsync(filePath, ct);
+    //public override async ValueTask<CodeDocument[]> ParseFileAsync (string FilePath, CancellationToken Ct)
 
-        var response = SplitMarkdown(filePath, fileContent.AsMemory(),
+    public override async ValueTask<CodeDocument[]> ParseFileAsync(string FilePath, CancellationToken Ct)
+    {
+        var FileContent = await ReadFileAsync(FilePath, Ct);
+
+        var Response = SplitMarkdown(FilePath, FileContent.AsMemory(),
             Convert.ToInt32(EmbeddingOption.Dimension), 50);
 
-        return [.. response];
+        return [.. Response];
     }
 
-    private static IList<CodeDocument> SplitMarkdown (
-        string filePath,
-        in ReadOnlyMemory<char> content,
-        int maxTokens,
-        int overlap)
+    private static IList<CodeDocument> SplitMarkdown(
+        string FilePath,
+        in ReadOnlyMemory<char> Content,
+        int MaxTokens,
+        int Overlap)
     {
-        var lines = TextChunker.SplitMarkdownParagraphs(
-            lines: LineSplit(content),
-            maxTokensPerParagraph: maxTokens,
-            overlapTokens: overlap);
+        var Lines = TextChunker.SplitMarkdownParagraphs(
+            lines: LineSplit(Content),
+            maxTokensPerParagraph: MaxTokens,
+            overlapTokens: Overlap);
 
-        return [.. lines.Select((chunk) =>
+        return [.. Lines.Select((Chunk) =>
         {
             return new CodeDocument
-            {
-                FileName = filePath,
-                Comment = string.Empty,
-                Comment_Length = 0,
-                ElementType = "Summary",
-                ElementName = string.Empty,
-                Code = chunk,
-            };
+            (
+                FileName: FilePath,
+                Comment: string.Empty,
+                CommentLength: 0,
+                ElementType: "Summary",
+                ElementName: string.Empty,
+                Code: Chunk
+            );
         })];
     }
 
     /// <summary>Splits a character memory into lines by newline.</summary>
-    /// <param name="content">Character memory to split.</param>
+    /// <param name="Content">Character memory to split.</param>
     /// <returns>List of line strings.</returns>
-    private static List<string> LineSplit (in ReadOnlyMemory<char> content)
+    private static List<string> LineSplit(in ReadOnlyMemory<char> Content)
     {
-        var lines = new List<string>();
-        foreach (var line in content.Span.Split("\n"))
+        var Lines = new List<string>();
+        foreach(var Line in Content.Span.Split("\n"))
         {
-            lines.Add(line.ToString());
+            Lines.Add(Line.ToString());
         }
 
-        return lines;
+        return Lines;
     }
 }

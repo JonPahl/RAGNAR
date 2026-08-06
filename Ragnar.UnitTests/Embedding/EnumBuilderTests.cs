@@ -1,14 +1,14 @@
-﻿namespace RAGNAR.UnitTests.Embedding;
+namespace RAGNAR.UnitTests.Embedding;
 
 public sealed class EnumBuilderTests
 {
     [Fact]
-    public void All_ReturnsAllQuestionCategories()
+    public void AllReturnsAllQuestionCategories()
     {
         // Act
         var all = LoadQuestionCategories.All();
 
         // Assert
-        Assert.Equal(Enum.GetNames<QuestionCategory>().Length, all.Count);
+        Assert.Equal(System.Enum.GetNames<QuestionCategory>().Length, all.Count);
     }
 }

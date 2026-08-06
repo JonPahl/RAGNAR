@@ -5,13 +5,13 @@ public sealed class DefaultQuestionFactoryTests
 
     private readonly DefaultQuestionFactory _factory;
 
-    public DefaultQuestionFactoryTests ()
+    public DefaultQuestionFactoryTests()
     {
         _factory = new DefaultQuestionFactory();
     }
 
     [Fact]
-    public void CreateActive_ReturnsEnabledQuestion ()
+    public void CreateActiveReturnsEnabledQuestion()
     {
         var question = _factory.CreateActive("Test?", "test", QuestionCategory.Refactor);
 
@@ -22,7 +22,7 @@ public sealed class DefaultQuestionFactoryTests
     }
 
     [Fact]
-    public void CreateInactive_ReturnsDisabledQuestion ()
+    public void CreateInactiveReturnsDisabledQuestion()
     {
         var question = _factory.CreateInactive("Disabled?", "disabled", QuestionCategory.Logging);
 
@@ -31,14 +31,14 @@ public sealed class DefaultQuestionFactoryTests
 
     [Theory]
     [InlineData(null)]
-    public void CreateActive_Throws_WhenTextIsInvalid (string? text)
+    public void CreateActiveThrowsWhenTextIsInvalid(string? text)
     {
         Assert.Throws<ArgumentNullException>(() => _factory.CreateActive(text!, "key", QuestionCategory.Refactor));
     }
 
     [Theory]
     [InlineData(null)]
-    public void CreateInactive_Throws_WhenKeyIsInvalid (string? key)
+    public void CreateInactiveThrowsWhenKeyIsInvalid(string? key)
     {
         Assert.Throws<ArgumentNullException>(() => _factory.CreateInactive("Text", key!, QuestionCategory.Refactor));
     }

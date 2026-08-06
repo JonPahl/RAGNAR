@@ -3,16 +3,16 @@ namespace Ragnar.UnitTests.Extensions;
 public sealed class StringExtensionsTests
 {
     [Fact]
-    public void CharacterCount_ShouldExcludeXmlTagsAndSlashes ()
+    public void CharacterCountShouldExcludeXmlTagsAndSlashes()
     {
         // Arrange
-        const string input = "<summary>Test /// comment</summary>";
+        const string Input = "<summary>Test /// comment</summary>";
 
         // Act
-        var count = input.AsSpan().CharacterCount();
+        var Count = Input.AsSpan().CharacterCount();
 
         // Assert
-        Assert.Equal(13, count);
+        Assert.Equal(13, Count);
     }
 
     [Theory]
@@ -20,12 +20,12 @@ public sealed class StringExtensionsTests
     [InlineData("Hello <!-- comment -->", 6)]
     [InlineData("<summary>Summary text</summary>", 12)]
     [InlineData("", 0)]
-    public void CharacterCount_ExcludesTagsAndSlashes (string xml, int expected)
+    public void CharacterCountExcludesTagsAndSlashes(string Xml, int Expected)
     {
         // Act
-        var count = xml.CharacterCount();
+        var Count = Xml.CharacterCount();
 
         // Assert
-        Assert.Equal(expected, count);
+        Assert.Equal(Expected, Count);
     }
 }

@@ -3,14 +3,14 @@ namespace RAGNAR.UnitTests.Util;
 public sealed class LoadEnumTests
 {
     [Fact]
-    public void All_ReturnsAllQuestionCategories ()
+    public void AllReturnsAllQuestionCategories()
     {
         // Act
-        var all = LoadQuestionCategories.All();
+        var All = LoadQuestionCategories.All();
 
         // Assert
-        Assert.Equal(Enum.GetNames<QuestionCategory>().Length, all.Count);
-        Assert.Contains(QuestionCategory.Refactor, all);
-        Assert.Contains(QuestionCategory.Security, all);
+        Assert.Equal(System.Enum.GetNames<QuestionCategory>().Length, All.Count);
+        Assert.Contains(QuestionCategory.Refactor, All);
+        Assert.Contains(QuestionCategory.Security, All);
     }
 }

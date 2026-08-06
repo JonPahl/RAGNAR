@@ -3,35 +3,68 @@ root = true
 [*]
 charset = utf-8
 end_of_line = crlf
-insert_final_newline = true
-trim_trailing_whitespace = true
 indent_size = 4
 indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
 
-
+csharp_style_prefer_readonly_struct = true:suggestion
 csharp_style_prefer_switch_expression = true:suggestion
 
-csharp_prefer_simple_default_expression = true
-dotnet_style_prefer_simplified_boolean_expressions = true:suggestion
+dotnet_diagnostic.CS1591.severity = warning
+# (private members unused)
+dotnet_diagnostic.IDE0051.severity = warning
+#  (readonly private fields/properties unused)
+dotnet_diagnostic.IDE0052.severity = warning
+# (remove unused parameter)
+dotnet_diagnostic.IDE0060.severity = warning
+#  (convert switch statement to expression)
+dotnet_diagnostic.IDE0066.severity = warning
+# (simplify conditional expression)
+dotnet_diagnostic.IDE0075.severity = warning
+#  (new T() → new())
+dotnet_diagnostic.IDE0090.severity = warning
+# (simplify naming)
+dotnet_diagnostic.IDE0120.severity = warning
+# Enforce formatting consistency
+dotnet_diagnostic.IDE0055.severity = warning
+
+#readonly modifier
+dotnet_diagnostic.IDE0044.severity = warning
+
+#simplify using
+dotnet_diagnostic.IDE0063.severity = warning
+
+# range operator
+dotnet_diagnostic.IDE0057.severity = suggestion
+
+# (use concrete types where possible)
+dotnet_diagnostic.CA1859.severity = warning
+# (logging message template mismatch)
+dotnet_diagnostic.CA2254.severity = warning
+
+csharp_prefer_simple_default_expression = true:suggestion
 csharp_prefer_static_local_function = true:suggestion
 csharp_style_prefer_pattern_matching = true:suggestion
+dotnet_style_prefer_simplified_boolean_expressions = true:suggestion
 
 csharp_new_line_before_open_brace = all
+csharp_prefer_braces = when_multiline:suggestion
+csharp_prefer_simple_using_statement = true
 csharp_space_after_cast = false
-csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = true
 csharp_space_after_comma = true
 csharp_space_after_dot = false
 csharp_space_after_keywords_in_control_flow_statements = false
+csharp_space_after_semicolon_in_for_statement = true
 csharp_space_around_binary_operators = before_and_after
 csharp_space_before_colon_in_inheritance_clause = true
 csharp_space_between_empty_square_brackets = false
 csharp_space_between_method_call_empty_parameter_list_parentheses = false
-csharp_space_between_method_declaration_name_and_open_parenthesis = true
 csharp_space_between_method_declaration_empty_parameter_list_parentheses = false
+csharp_space_between_method_declaration_name_and_open_parenthesis = false
 csharp_space_between_method_declaration_parameter_list_parentheses = false
-csharp_space_after_semicolon_in_for_statement = true
-csharp_prefer_braces = when_multiline:suggestion
-csharp_prefer_simple_using_statement = true
+
+csharp_style_allow_blank_line_after_colon_in_constructor_initializer_experimental = true
 csharp_style_namespace_declarations = file_scoped:error
 dotnet_sort_system_directives_first = true
 
@@ -40,67 +73,57 @@ dotnet_sort_system_directives_first = true
 # Roslynator respects these standard keys, ensuring zero conflicts
 # ==========================================
 # Define naming styles first
-#dotnet_naming_style.pascal_case.capitalization = pascal_case
-#dotnet_naming_style.camel_case_with_underscore_prefix.capitalization = camel_case
-#dotnet_naming_style.camel_case.capitalization = camel_case
+
+dotnet_naming_style.camel_case.capitalization = camel_case
+dotnet_naming_style.camel_case_with_underscore_prefix.capitalization = camel_case
+dotnet_naming_style.camel_case_with_underscore_prefix.required_prefix = "_"
+
+dotnet_naming_style.pascal_case_style.capitalization = pascal_case
 
 # Apply styles to symbols
-dotnet_naming_rule.interface_should_be_pascal_case.severity = warning
-dotnet_naming_rule.interface_should_be_pascal_case.symbols = interface
-dotnet_naming_rule.interface_should_be_pascal_case.style = pascal_case
 
-dotnet_naming_rule.class_should_be_pascal_case.severity = warning
+dotnet_naming_rule.interface_should_be_pascal_case.severity = warning
+dotnet_naming_rule.interface_should_be_pascal_case.style = pascal_case_style
+dotnet_naming_rule.interface_should_be_pascal_case.symbols = interface
+
+dotnet_naming_rule.pascal_case_style.severity = warning
+dotnet_naming_rule.class_should_be_pascal_case.style = pascal_case_style
 dotnet_naming_rule.class_should_be_pascal_case.symbols = class
-dotnet_naming_rule.class_should_be_pascal_case.style = pascal_case
 
 dotnet_naming_rule.struct_should_be_pascal_case.severity = warning
+dotnet_naming_rule.struct_should_be_pascal_case.style = pascal_case_style
 dotnet_naming_rule.struct_should_be_pascal_case.symbols = struct
-dotnet_naming_rule.struct_should_be_pascal_case.style = pascal_case
-
-dotnet_naming_rule.enum_should_be_pascal_case.severity = warning
-dotnet_naming_rule.enum_should_be_pascal_case.symbols = enum
-dotnet_naming_rule.enum_should_be_pascal_case.style = pascal_case
 
 dotnet_naming_rule.public_member_should_be_pascal_case.severity = warning
 dotnet_naming_rule.public_member_should_be_pascal_case.symbols = public_member
 
-
 dotnet_naming_rule.private_field_should_be_camel_case.severity = warning
-dotnet_naming_rule.private_field_should_be_camel_case.symbols = private_field
 dotnet_naming_rule.private_field_should_be_camel_case.style = camel_case_with_underscore_prefix
+dotnet_naming_rule.private_field_should_be_camel_case.symbols = private_field
 
 dotnet_naming_rule.parameter_should_be_camel_case.severity = warning
-dotnet_naming_rule.parameter_should_be_camel_case.symbols = parameter
 dotnet_naming_rule.parameter_should_be_camel_case.style = camel_case
-
-# Symbol definitions for reuse
-dotnet_symbol_kinds.interface = interface
-dotnet_symbol_kinds.class = class
-dotnet_symbol_kinds.struct = struct
-dotnet_symbol_kinds.enum = enum
-dotnet_symbol_kinds.public_member = method:public, property:public, field:public, event:public
-dotnet_symbol_kinds.private_field = field:private
+dotnet_naming_rule.parameter_should_be_camel_case.symbols = parameter
 
 # ==========================================
 # C# LANGUAGE & NULLABLE SETTINGS
 # ==========================================
+dotnet_style_qualification_for_event = false:suggestion
+dotnet_style_qualification_for_property = false:suggestion
+
+csharp_style_var_elsewhere = true:warning
 csharp_style_var_for_built_in_types = true:error
 csharp_style_var_when_type_is_apparent = true:error
-csharp_style_var_elsewhere = true:warning
-csharp_style_qualification_for_fields = false_if_underscore
-csharp_style_qualification_for_properties = false_if_underscore
 dotnet_code_quality_unused_parameters = all:suggestion
 dotnet_style_null_propagation = true:suggestion
-dotnet_naming_rule.cancellation_token_parameter = suggestion
-dotnet_naming_rule.cancellation_token_parameter_should_be_camel_case.symbols = cancellation_token_param
+
 dotnet_naming_rule.cancellation_token_parameter_should_be_camel_case.style = camel_case_with_underscore_prefix
-dotnet_symbol_kinds.cancellation_token_param = parameter:CancellationToken
+dotnet_naming_rule.cancellation_token_parameter_should_be_camel_case.symbols = cancellation_token_param
 
-
-dotnet_diagnostic.SA1600.severity = warning
-dotnet_diagnostic.SA1200.severity = warning
-dotnet_diagnostic.IDE0033.severity = warning
 dotnet_diagnostic.IDE0032.severity = warning
+dotnet_diagnostic.IDE0033.severity = warning
+dotnet_diagnostic.SA1200.severity = warning
+dotnet_diagnostic.SA1600.severity = warning
 
 ###############################################################################
 # JSON & Configuration Files

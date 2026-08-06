@@ -1,137 +1,130 @@
 namespace Ragnar;
 
-/// <summary>
-/// Initializes the knowledge base.
-/// </summary>
-/// <param name="DefaultRagPipeline"> The default rag
-/// pipeline.</param>
-/// <param name ="options"> Application options.</param>
-/// <param name="writer"> Output writer.</param>
-/// <param name="EmbeddingPipeline"> Embedding pipeline.
-/// </param>
-/// <param name="questionEmbedding"> Question embedding.</param>
-/// <param name="logger"> Logger.</param>
-/// <param name="qdrantClient">Qdrant client.</param>
-/// <param name="configQuestionLoader"> Config question loader.</param>
+/// <summary>Initializes and populates vector knowledge base.</summary>
+/// <param name="DefaultRagPipeline">RAG execution pipeline.</param>
+/// <param name="Options">App configuration.</param>
+/// <param name="Writer">Output writer.</param>
+/// <param name="EmbeddingPipeline">Embedding runner.</param>
+/// <param name="QuestionEmbedding">Question vectorizer.</param>
+/// <param name="Logger">Serilog logger.</param>
+/// <param name="QdrantClient">Qdrant client.</param>
+/// <param name="ConfigQuestionLoader">Config-to-question mapper.</param>
 /// <return>A task representing the initialization operation.
 /// </return>
-public sealed class KnowledgeBaseInitialization (
+public sealed class KnowledgeBaseInitialization(
     ICodeAnalysisPipeline DefaultRagPipeline,
-    IOptions<AppConfiguration> options,
-    IOutputWriter writer,
+    IOptions<AppConfiguration> Options,
+    IOutputWriter Writer,
     ICodeEmbeddingPipeline EmbeddingPipeline,
-    ICustomEmbedding questionEmbedding,
-    Serilog.ILogger logger,
-    IQdrantClient qdrantClient,
-    ConfigToQuestionMapper configQuestionLoader)
+    ICustomEmbedding QuestionEmbedding,
+    Serilog.ILogger Logger,
+    IQdrantClient QdrantClient,
+    ConfigToQuestionMapper ConfigQuestionLoader)
     : IKnowledgeBaseInitialize
 {
-    private readonly string _collectionName = options.Value.RagOptions.VectorStoreName;
+    private readonly string CollectionName = Options.Value.RagOptions.VectorStoreName;
 
-    private readonly DefaultQuestionCatalogLoader _questionLoader = new(logger, writer);
+    private readonly DefaultQuestionCatalogLoader QuestionLoader = new(Logger, Writer);
 
     /// <inheritdoc/>
-    public async ValueTask EnsureCollectionExistsAsync (CancellationToken ct)
+    public async ValueTask EnsureCollectionExistsAsync(CancellationToken Ct)
     {
+        var Dimension = Options.Value.EmbeddingOptions.Dimension;
 
-        var dimension = options.Value.EmbeddingOptions.Dimension;
+        var VectorBuilder = new VectorStoreInitialize(Logger, Dimension, CollectionName, QdrantClient);
 
-        var vectorBuilder = new Core.VectorStoreInitialize(logger, dimension, _collectionName, qdrantClient);
+        var Exists = await VectorBuilder.BuildAsync(Ct).ConfigureAwait(false);
 
-        var exists = await vectorBuilder.BuildAsync(ct).ConfigureAwait(false);
-
-        if(!exists)
+        if(!Exists)
         {
-            writer.MarkupLine("[green] ☑ Collection Created [/]");
+            Writer.MarkupLine("[green] ☑ Collection Created [/]");
         }
 
-        writer.MarkupLine("[green] ☑ Collection Exists [/]");
+        Writer.MarkupLine("[green] ☑ Collection Exists [/]");
     }
 
     /// <summary>
     /// Populates the knowledge base asynchronously.
     /// </summary>
-    /// <param name="ct">Cancellation token.</param>
+    /// <param name="Ct">Cancellation token.</param>
     ///<returns>A task representing the population operation.</returns>
     ///<example><![CDATA[await PopulateAsync(ct);]]></example>
-    public async Task PopulateAsync (CancellationToken ct) => await EmbeddingPipeline.RunAsync(ct);
+    public async Task PopulateAsync(CancellationToken Ct) => await EmbeddingPipeline.RunAsync(Ct);
 
     /// <summary>
     /// Asks questions asynchronously.
     /// </summary>
-    /// <param name="ct">The cancellation token.</param>
-    public async Task AskQuestionsAsync (CancellationToken ct)
+    /// <param name="Ct">The cancellation token.</param>
+    public async Task AskQuestionsAsync(CancellationToken Ct)
     {
-        var questions = await LoadQuestionsAsync(ct);
+        var Questions = await LoadQuestionsAsync(Ct);
 
-        var processedCount = 0;
-        var total = questions.Count;
+        var ProcessedCount = 0;
 
-        foreach(var question in questions)
+        foreach(var Question in Questions)
         {
-            writer.WriteRule();
-            writer.WriteLine();
-            writer.MarkupLine($"[blue]Question: {Environment.NewLine}{Markup.Escape(question.Text)} [/]");
-            writer.WriteLine();
-            writer.Write(new Rule());
+            Writer.WriteRule();
+            Writer.WriteLine();
+            Writer.MarkupLine($"[blue]Question: {Environment.NewLine}{Markup.Escape(Question.Text)} [/]");
+            Writer.WriteLine();
+            Writer.Write(new Rule());
 
-            var questionVector = await questionEmbedding.GenerateEmbeddingAsync(question.Text, ct);
+            var QuestionVector = await QuestionEmbedding.GenerateEmbeddingAsync(Question.Text, Ct);
 
-            var contextText = await questionEmbedding.GetContext(_collectionName, questionVector, ct);
+            var ContextText = await QuestionEmbedding.GetContext(CollectionName, QuestionVector, Ct);
 
-            logger.Information("Processing question [{QuestionId}] from user [{UserId}] with {ContextLength} chars", question.Text, Environment.UserName, contextText.Length);
+            Logger.Information("Processing question [{QuestionId}] from user [{UserId}] with {ContextLength} chars", Question.Text, Environment.UserName, ContextText.Length.ToString("N0"));
 
-            await DefaultRagPipeline.ExecuteAsync(question, contextText, ct);
-            processedCount++;
+            await DefaultRagPipeline.ExecuteAsync(Question, ContextText, Ct);
+            ProcessedCount++;
 
-            writer.MarkupLine($"{processedCount} of {total}", Styles.Cyan);
+            Writer.MarkupLine($"{ProcessedCount} of {Questions.Count}", Styles.Cyan);
         }
     }
 
-    private async Task<ImmutableHashSet<Question>> LoadQuestionsAsync (CancellationToken ct)
+    private async Task<IReadOnlyList<Question>> LoadQuestionsAsync(CancellationToken Ct)
     {
+        //todo: ToCollection interface and move this method to ragnar.questions project. Please rework to use the builder pattern when helping to load Questions from multiple sources.
 
-        //todo: Build interface and move this method to ragnar.questions project. Please rework to use the builder pattern when helping to load Questions from multiple sources.
+        var Questions = new HashSet<Question>();
 
-        var questions = new HashSet<Question>();
+        var Categories = QuestionLoader
+            .ParseCategoriesOrDefault(Options.Value.RagOptions.CategoriesToProcess);
 
-        var categories = _questionLoader
-            .ParseCategoriesOrDefault(options.Value.RagOptions.CategoriesToProcess);
-
-        foreach(var question in _questionLoader.LoadQuestions(true, categories))
+        foreach(var Question in QuestionLoader.LoadQuestions(true, Categories))
         {
-            questions.Add(question);
+            Questions.Add(Question);
         }
 
-        var fcl = new FileConfigLoader();
-        var configs = new List<QuestionConfiguration>();
-        configs.AddRange(fcl.LoadQuestions());
+        var Fcl = new FileConfigLoader();
+        var Configs = new List<QuestionConfiguration>();
+        Configs.AddRange(Fcl.LoadQuestions());
 
-        foreach(var item in configQuestionLoader.LoadFromConfig(configs))
+        foreach(var Item in ConfigQuestionLoader.LoadFromConfig(Configs))
         {
-            questions.Add(item);
+            Questions.Add(Item);
         }
 
-        var config = new List<QuestionConfiguration>();
-        var provider = new CsvFileQuestionProvider();
+        var Config = new List<QuestionConfiguration>();
+        var Provider = new CsvFileQuestionProvider();
 
         //TODO: Rework to make changing path easier.
-        var pluginDir = Path.Combine(AppContext.BaseDirectory, "Plugins");
-        if(Directory.Exists(pluginDir))
+        var PluginDir = Path.Combine(AppContext.BaseDirectory, "Plugins");
+        if(Directory.Exists(PluginDir))
         {
-            foreach(var csvFile in Directory.EnumerateFiles(pluginDir, "*.csv", SearchOption.AllDirectories))
+            foreach(var CsvFile in Directory.EnumerateFiles(PluginDir, "*.csv", SearchOption.AllDirectories))
             {
-                provider.SetFileName(csvFile);
-                var csvConfigs = await provider.LoadQuestionAsync(ct);
-                questions.UnionWith(csvConfigs.Select(c => new Question(c.IsActive, c.Text, c.FileName, c.Category)));
+                Provider.SetFileName(CsvFile);
+                var CsvConfigs = await Provider.LoadQuestionAsync(Ct);
+                Questions.UnionWith(CsvConfigs.Select(C => new Question(C.IsActive, C.Text, C.FileName, C.Category)));
             }
         }
 
-        foreach(var question in config.Select(c => new Question(c.IsActive, c.Text, c.FileName, c.Category)))
+        foreach(var Question in Config.Select(C => new Question(C.IsActive, C.Text, C.FileName, C.Category)))
         {
-            questions.Add(question);
+            Questions.Add(Question);
         }
 
-        return [.. questions.ToList().ActiveOnly];
+        return [.. Questions.ToList().ActiveOnly()];
     }
 }

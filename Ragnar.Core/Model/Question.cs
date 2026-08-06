@@ -7,7 +7,7 @@ namespace Ragnar.Core.Model;
 /// <param name="Text">Question text.</param>
 /// <param name="Filename">Save filename.</param>
 /// <param name="Category">QuestionCategory to group questions together. </param>
-public sealed record class Question (
+public sealed record class Question(
     bool IsEnabled,
     string Text,
     string Filename,
@@ -19,25 +19,27 @@ public sealed record class Question (
     /// </summary>
     public string MarkdownHeader => $"### <span style=\"color:darkblue;\">[{Category}]</span> {Text}";
 
-    /// <summary>Creates an active question.</summary>
-    /// <param name="text">The question text.</param>
-    /// <param name="key">The key identifier.</param>
-    /// <param name="category">The category.</param>
-    /// <returns>A new active question instance.</returns>
-    public static Question IsActive (string text, string key, QuestionCategory category)
+    /// <summary>Filters and returns only enabled questions.</summary>
+    /// <param name="Text">The question text.</param>
+    /// <param name="Key">The key identifier.</param>
+    /// <param name="Category">The category.</param>
+    /// <example><![CDATA[var active = questions.GetActive();]]></example>
+    /// <returns>A new list containing only enabled questions.
+    /// </returns>
+    public static Question IsActive(string Text, string Key, QuestionCategory Category)
     {
-        Question question = new(true, text, key, category);
-        return question.ValidateQuestion();
+        Question Question = new(true, Text, Key, Category);
+        return Question.ValidateQuestion();
     }
 
     /// <summary>Creates an active question.</summary>
-    /// <param name="text">The question text.</param>
-    /// <param name="key">The key identifier.</param>
-    /// <param name="category">The category.</param>
+    /// <param name="Text">The question text.</param>
+    /// <param name="Key">The key identifier.</param>
+    /// <param name="Category">The category.</param>
     /// <returns>A new Inactive question instance.</returns>
-    public static Question IsDisabled (string text, string key, QuestionCategory category)
+    public static Question IsDisabled(string Text, string Key, QuestionCategory Category)
     {
-        Question question = new(false, text, key, category);
-        return question.ValidateQuestion();
+        Question Question = new(false, Text, Key, Category);
+        return Question.ValidateQuestion();
     }
 }

@@ -1,4 +1,4 @@
-﻿
+
 
 namespace Ragnar.Embedding.UnitOfWork;
 
@@ -11,16 +11,16 @@ public interface IFileParser
     /// <summary>
     /// Parses a file asynchronously.
     /// </summary>
-    /// <param name="filePath">The path to the file.</param>
-    /// <param name="ct">A cancellation token that can be used to cancel this operation.</param>
+    /// <param name="FilePath">The path to the file.</param>
+    /// <param name="Ct">A cancellation token that can be used to cancel this operation.</param>
     /// <returns>A task representing the asynchronous operation. The result is an array of parsed objects.</returns>
-    ValueTask<CodeDocument[]> ParseFileAsync(string filePath, CancellationToken ct);
+    ValueTask<CodeDocument[]> ParseFileAsync(string FilePath, CancellationToken Ct);
 
     /// <summary>
     /// Reads a file asynchronously.
     /// </summary>
-    /// <param name="filePath">The path to the file.</param>
-    /// <param name="ct">A cancellation token that can be used to cancel this operation.</param>
+    /// <param name="FilePath">The path to the file.</param>
+    /// <param name="Ct">A cancellation token that can be used to cancel this operation.</param>
     /// <returns>A task representing the asynchronous operation. The result is a string containing the read content.</returns>
-    ValueTask<string> ReadFileAsync(string filePath, CancellationToken ct);
+    ValueTask<string> ReadFileAsync(string FilePath, CancellationToken Ct);
 }

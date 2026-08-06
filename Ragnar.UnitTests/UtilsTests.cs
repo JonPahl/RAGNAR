@@ -1,13 +1,43 @@
+namespace Ragnar.UnitTests;
+
 public class UtilsTests
 {
+
     [Fact]
-    public void ExpandDirectory_Throws_WhenDirectoryMissing ()
+    public void ExpandDirectoryReturnsFullPathWhenDirectoryExists()
     {
         // Arrange
-        var nonExistent = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+        var TempDir = Path.GetTempPath();
+        Directory.CreateDirectory(TempDir); // Ensure exists
+
+        // Act
+        var Expanded = TempDir.ExpandDirectory();
+
+        // Assert
+        Expanded.Should().Be(Path.GetFullPath(TempDir));
+    }
+
+    [Fact]
+    public void ExpandDirectoryThrowsWhenDirectoryMissing()
+    {
+        // Arrange
+        var NonExistent = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
 
         // Act & Assert
-        var ex = Assert.Throws<DirectoryNotFoundException>(() => nonExistent.ExpandDirectory());
-        Assert.Contains(nonExistent, ex.Message);
+        Assert.Throws<DirectoryNotFoundException>(() => NonExistent.ExpandDirectory());
+    }
+
+    [Fact]
+    public void ExpandDirectoryExpandsEnvironmentVariables()
+    {
+        // Arrange
+        var Path = "%TEMP%\\";
+
+        // Act
+        var Expanded = Path.ExpandDirectory();
+
+        // Assert
+        Assert.NotNull(Expanded);
+        Assert.Contains(System.IO.Path.GetTempPath(), Expanded);
     }
 }

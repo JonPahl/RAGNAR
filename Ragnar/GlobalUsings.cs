@@ -5,19 +5,26 @@ global using System.Reflection;
 global using System.Runtime.CompilerServices;
 global using System.Runtime.Loader;
 global using System.Text;
+
 global using Ardalis.GuardClauses;
+
 global using FileQuestionProvider;
+
 global using Microsoft.Extensions.AI;
 global using Microsoft.Extensions.Configuration;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Hosting;
 global using Microsoft.Extensions.Http.Resilience;
 global using Microsoft.Extensions.Options;
+
 global using OllamaSharp;
 global using OllamaSharp.Models;
+
 global using Polly;
+
 global using Qdrant.Client;
 global using Qdrant.Client.Grpc;
+
 global using Ragnar;
 global using Ragnar.Branding;
 global using Ragnar.Core;
@@ -41,6 +48,10 @@ global using Ragnar.Questions.Questions;
 global using Ragnar.RagPipeline;
 global using Ragnar.Services;
 global using Ragnar.Utils;
+
 global using RAGNAR.OutputResponse;
+
 global using Serilog;
+
 global using Spectre.Console;
+global using FluentValidation;

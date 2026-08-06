@@ -6,17 +6,17 @@ namespace Ragnar.Utils;
 public static class UtilityExtensions
 {
     /// <summary>Expands environment vars and validates existence of directory path.</summary>
-    /// <param name="path">Config-based folder path (may contain env vars).</param>
+    /// <param name="Path">Config-based folder path (may contain env vars).</param>
     /// <returns>Fully expanded absolute path.</returns>
     /// <example><![CDATA[string dir = "MyData"; dir = dir.ExpandDirectory();]]></example>
-    public static string ExpandDirectory (this string path)
+    public static string ExpandDirectory(this string Path)
     {
-        var expanded = Environment.ExpandEnvironmentVariables(path);
-        var fullPath = Path.GetFullPath(expanded);
+        var Expanded = Environment.ExpandEnvironmentVariables(Path);
+        var FullPath = System.IO.Path.GetFullPath(Expanded);
 
-        if (!Directory.Exists(fullPath))
-            throw new DirectoryNotFoundException($"Directory not found: '{fullPath}'");
+        if(!Directory.Exists(FullPath))
+            throw new DirectoryNotFoundException($"Directory not found: '{FullPath}'");
 
-        return fullPath;
+        return FullPath;
     }
 }

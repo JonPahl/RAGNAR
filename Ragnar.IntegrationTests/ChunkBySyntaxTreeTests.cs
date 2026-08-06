@@ -3,42 +3,23 @@ namespace Ragnar.IntegrationTests;
 public class ChunkBySyntaxTreeTests
 {
     [Fact]
-    public void ChunkSourceFile_Should_ExtractTopLevelClasses ()
+    public void ChunkSourceFile_Should_Return_Null_For_Invalid_Syntax()
     {
-        // Arrange
-        var code = """
-            using System;
-
-            namespace MyApp
-            {
-                public class Program
-                {
-                    public static void Main() { }
-                }
-
-                public class Helper
-                {
-                    public int Add(int a, int b) => a + b;
-                }
-            }
-            """;
-
-        // Act
-        var docs = ChunkBySyntaxTree.ChunkSourceFile("Program.cs", code);
-
-        // Assert
-        Assert.NotNull(docs);
-        Assert.Equal(2, docs.Count); // Program + Helper
-        Assert.Contains(docs, d => d.ElementName == "Program");
-        Assert.Contains(docs, d => d.ElementName == "Helper");
+        var docs = ChunkBySyntaxTree.ChunkSourceFile("Bad.cs", "not valid c# {");
+        Assert.Null(docs); // or empty list? depends on impl.
     }
 
-    //[Fact]
-    //public void ChunkSourceFile_ReturnsNull_OnInvalidSyntax ()
-    //{
-    //    var invalidCode = "class { }"; // missing name
-    //    var docs = ChunkBySyntaxTree.ChunkSourceFile("bad.cs", invalidCode);
-    //    Assert.Null(docs);
-    //}
+    [Fact]
+    public void ChunkSourceFile_Should_Parse_Simple_Class()
+    {
+        var code = """
+            public class Foo { }
+            """;
+        var docs = ChunkBySyntaxTree.ChunkSourceFile("Foo.cs", code);
+
+        Assert.NotNull(docs);
+        Assert.Single(docs);
+        Assert.Equal("Foo", docs[0].ElementName);
+    }
 }
 

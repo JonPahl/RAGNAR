@@ -3,58 +3,64 @@ namespace Ragnar.Embedding.Embedding;
 public class EmbeddingPointBuilder
   : IGeneratorService
 {
-    /// <inheritdoc/>
-    public async ValueTask<GeneratedEmbeddings<Embedding<float>>> GenerateEmbeddingsAsync (
-        ILogger logger,
-        IEmbeddingGenerator<string, Embedding<float>> generator,
-        string text,
-        CancellationToken ct)
+    /// <summary>Generates embeddings and builds vector points.</summary>
+    /// <param name="Logger">Logger instance.</param>
+    /// <param name="Generator">Embedding generator.</param>
+    /// <param name="Text">Input text.</param>
+    /// <param name="Ct">Cancellation Token</param>
+    /// <example><![CDATA[GenerateEmbeddingsAsync(logger, generator, "text", ct)]]></example>
+    public async ValueTask<GeneratedEmbeddings<Embedding<float>>> GenerateEmbeddingsAsync(
+        ILogger Logger,
+        IEmbeddingGenerator<string, Embedding<float>> Generator,
+        string Text,
+        CancellationToken Ct)
     {
         try
         {
-            using var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+            using var TimeoutCts = CancellationTokenSource.CreateLinkedTokenSource(Ct);
 
-            timeoutCts.CancelAfter(TimeSpan.FromMinutes(20)); // Configurable
+            TimeoutCts.CancelAfter(TimeSpan.FromMinutes(20)); // Configurable
 
-            return await generator.GenerateAsync([text], cancellationToken: timeoutCts.Token);
+            return await Generator.GenerateAsync([Text], cancellationToken: TimeoutCts.Token);
         }
-        catch(OperationCanceledException ex) when(ct.IsCancellationRequested)
+        catch(OperationCanceledException Ex) when(Ct.IsCancellationRequested)
         {
-            logger.Warning(ex, "Vector generation canceled.");
-            throw new OperationCanceledException("user cancelled", ex);
+            Logger.Warning(Ex, "Vector generation canceled.");
+            throw new OperationCanceledException("user cancelled", Ex);
+
             //todo: add in circuit breaker exception.
         }
-        catch(Exception ex) when(ex is TimeoutException or TaskCanceledException)
+        catch(Exception Ex) when(Ex is TimeoutException or TaskCanceledException)
         {
-            logger.Fatal(ex, "Embedding generation timed out.");
-            throw new InvalidOperationException("Embedding service unavailable.", ex);
+            Logger.Fatal(Ex, "Embedding generation timed out.");
+            throw new InvalidOperationException("Embedding service unavailable.", Ex);
         }
-        catch(Exception ex)
+        catch(Exception Ex)
         {
-            logger.Fatal(ex, "Embedding generation had an exception. ");
+            Logger.Fatal(Ex, "Embedding generation had an exception. ");
             throw;
         }
     }
 
     /// <inheritdoc/>
-    public List<PointStruct> BuildPointStruts (PointId pointId, float[] embedding, string chunk, string file)
+    public List<PointStruct> BuildPointStruts(PointId PointId, float[] Embedding, string Chunk, string File)
     {
-        ArgumentNullException.ThrowIfNull(chunk);
-        ArgumentNullException.ThrowIfNull(file);
+        ArgumentNullException.ThrowIfNull(Chunk);
+        ArgumentNullException.ThrowIfNull(File);
 
-        List<PointStruct> points = [];
+        List<PointStruct> Points = [];
 
-        points.Add(new PointStruct
+        Points.Add(new PointStruct
         {
-            Id = pointId,
-            Vectors = embedding,
+            Id = PointId,
+            Vectors = Embedding,
             Payload =
             {
-                ["Code"] = chunk,
-                ["file_name"] = file,
+                ["Code"] = Chunk,
+                ["file_name"] = File,
             },
         });
 
-        return points;
+        return Points;
     }
 }

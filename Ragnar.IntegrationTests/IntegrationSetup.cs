@@ -1,9 +1,10 @@
 namespace Ragnar.IntegrationTests;
 
 /// <summary>Base class for integration test setup with pre - configured options.</summary>
+/// <example><![CDATA[new IntegrationSetup()]]></example>
 public abstract class IntegrationSetup
 {
-    public readonly AppConfiguration options = new()
+    public readonly AppConfiguration Options = new()
     {
         RagOptions = new()
         {
@@ -21,7 +22,6 @@ public abstract class IntegrationSetup
         },
         FileLoadOptions = new()
         {
-
         },
         OllamaOptions = new()
         {

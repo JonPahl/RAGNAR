@@ -1,39 +1,37 @@
 namespace Ragnar.Branding;
 
-/// <summary>
-/// Setups up and displays Branding for Ragnar application.
-/// </summary>
-/// <param name="writer">console output library.</param>
-/// <param name="assemblyInfo">AssemblyInfo interface.</param>
-public sealed class ApplicationBanner(IOutputWriter writer, IAssemblyInfo assemblyInfo)
-    : IApplicationBanner
+/// <summary>Displays application branding and version info.</summary>
+/// <param name="Writer">Console output writer.</param>
+/// <param name="AssemblyInfo">Assembly metadata provider.</param>
+/// <example><![CDATA[RenderBranding()]]></example>
+public sealed class ApplicationBanner(IOutputWriter Writer, IAssemblyInfo AssemblyInfo) : IApplicationBanner
 {
     /// <summary>
     /// Gets current assembly version.
     /// </summary>
-    private readonly string _versionNumber = assemblyInfo.InformationalVersion ?? "1.0.0";
+    private readonly string VersionNumber = AssemblyInfo.InformationalVersion ?? "1.0.0";
 
     /// <summary>
     /// RenderBranding branding banner onto the console UI.
     /// </summary>
     public void RenderBranding()
     {
-        const string title = "Ragnar";
-        const string tagLine = "Smart, recursive code reasoning — from query to solution.";
+        const string Title = "Ragnar";
+        const string TagLine = "Smart, recursive code reasoning — from query to solution.";
 
-        var appName = new Text(title, Styles.Blue) { Justification = Justify.Left };
-        var tagLine2 = new Text(tagLine, Styles.BoldSteelBlue) { Justification = Justify.Center };
+        var AppName = new Text(Title, Styles.Blue) { Justification = Justify.Left };
+        var TagLine2 = new Text(TagLine, Styles.BoldSteelBlue) { Justification = Justify.Center };
 
-        var versionText = $"Version {_versionNumber}";
-        var version = new Text(versionText, new Style(Color.Grey)) { Justification = Justify.Center };
+        var VersionText = $"Version {VersionNumber}";
+        var Version = new Text(VersionText, new Style(Color.Grey)) { Justification = Justify.Center };
 
-        writer.Write(appName);
-        writer.Write(new Text(title + " (Repository Augmented Generator & Resolver)", Styles.BoldBlue));
-        writer.Write(version);
-        writer.WriteLine();
-        writer.Write(tagLine2);
-        writer.WriteLine();
-        writer.WriteRule();
-        writer.WriteLine();
+        Writer.Write(AppName);
+        Writer.Write(new Text(Title + " (Repository Augmented Generator & Resolver)", Styles.BoldBlue));
+        Writer.Write(Version);
+        Writer.WriteLine();
+        Writer.Write(TagLine2);
+        Writer.WriteLine();
+        Writer.WriteRule();
+        Writer.WriteLine();
     }
 }

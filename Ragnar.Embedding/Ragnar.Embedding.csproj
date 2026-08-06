@@ -6,6 +6,8 @@
     <Nullable>enable</Nullable>
 	  <EnableNETAnalyzers>true</EnableNETAnalyzers>
 	  <AnalysisLevel>latest</AnalysisLevel>
+      <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
   </PropertyGroup>
 
   <ItemGroup>

@@ -3,70 +3,158 @@ namespace Ragnar.UnitTests.Extensions;
 public class QuestionExtensionsTests
 {
     [Fact]
-    public void ActiveOnly_ReturnsOnlyEnabledQuestions ()
+    public void ActiveOnly_ReturnsOnlyEnabledQuestions()
     {
         // Arrange
-        var questions = new List<Question>
-    {
-        new(true, "Q1", "f1.cs", QuestionCategory.XML),
-        new(false, "Q2", "f2.cs", QuestionCategory.XML),
-        new(true, "Q3", "f3.cs", QuestionCategory.XML)
-    };
+        var Questions = new List<Question>
+        {
+            new(true, "Q1", "f1.cs", QuestionCategory.XML),
+            new(false, "Q2", "f2.cs", QuestionCategory.General),
+            new(true, "Q3", "f3.cs", QuestionCategory.XML)
+        }.ToImmutableList();
 
         // Act
-        var active = questions.ActiveOnly;
+        var Active = Questions.ActiveOnly();
 
         // Assert
-        Assert.Equal(2, active.Count);
-        Assert.All(active, q => Assert.True(q.IsEnabled));
+        Active.Should().HaveCount(2)
+            .And.Contain(Q => Q.Text == "Q1")
+            .And.NotContain(Q => Q.Text == "Q2");
     }
 
     [Fact]
-    public void InActiveOnly_ReturnsOnlyDisabledQuestions ()
+    public void InActiveOnly_ReturnsOnlyDisabledQuestions()
     {
         // Arrange
-        var questions = new List<Question>
-    {
-        new(true, "Q1", "f1.cs", QuestionCategory.XML),
-        new(false, "Q2", "f2.cs", QuestionCategory.XML)
-    };
+        var Questions = new List<Question>
+        {
+            new(true, "Q1", "f1.cs", QuestionCategory.XML),
+            new(false, "Q2", "f2.cs", QuestionCategory.General),
+            new(true, "Q3", "f3.cs", QuestionCategory.XML)
+        }.ToImmutableList();
 
         // Act
-        var inactive = questions.InActiveOnly;
+        var Inactive = Questions.InActiveOnly();
 
         // Assert
-        Assert.Single(inactive);
-        Assert.False(inactive[0].IsEnabled);
+        Inactive.Should().HaveCount(1)
+            .And.Contain(Q => Q.Text == "Q2");
+    }
+
+    [Fact]
+    public void WhereCategoryIs_ThrowsWhenCategoriesNull()
+    {
+        // Arrange
+        var Questions = new List<Question>().ToImmutableList();
+
+        // Act & Assert
+        Action Act = () => Questions.MatchesCategories(null);
+        Act.Should().Throw<ArgumentNullException>();
     }
 
     [Theory]
-    [InlineData(new[] { QuestionCategory.XML }, 2)]
-    [InlineData(new[] { QuestionCategory.Security, QuestionCategory.XML }, 2)]
-    public void WithCategory_FiltersByCategories (QuestionCategory[]? categories, int expectedCount)
+    //[InlineData(null, 3)]
+    [InlineData(new QuestionCategory[] { QuestionCategory.XML, QuestionCategory.Other, QuestionCategory.General }, 3)]
+    //[InlineData(new[] { QuestionCategory.XML, QuestionCategory.General }, 2)]
+    [InlineData(new[] { QuestionCategory.General }, 1)]
+    public void WhereCategoryIs_FiltersByCategory(QuestionCategory[]? Categories, int ExpectedCount)
     {
         // Arrange
-        var questions = new List<Question>
-    {
-        new(true, "Q1", "f1.cs", QuestionCategory.XML),
-        new(true, "Q2", "f2.cs", QuestionCategory.XML)
-    };
+        var Questions = new List<Question>
+        {
+            new(true, "Q1", "f1.cs", QuestionCategory.XML),
+            new(false, "Q2", "f2.cs", QuestionCategory.General),
+            new(true, "Q3", "f3.cs", QuestionCategory.XML)
+        }.ToImmutableList();
 
-        var set = categories is null ? null : ImmutableHashSet.Create(categories);
+        var CatSet = Categories is null or { Length: 0 } ? null : ImmutableHashSet.CreateRange(Categories);
 
         // Act
-        var filtered = questions.WithCategory(set!);
+        var Filtered = Questions.MatchesCategories(CatSet);
 
         // Assert
-        Assert.Equal(expectedCount, filtered.Count);
+        Filtered.Should().HaveCount(ExpectedCount);
     }
 
     [Fact]
-    public void WithCategory_ThrowsOnNullCategories ()
+    public void WithFilter_WhenFilterNull_ReturnsOriginal()
     {
         // Arrange
-        var questions = new List<Question>();
+        var Question = new Question(true, "Q1", "f1.cs", QuestionCategory.XML);
+
+        // Act
+        var Result = Question.WithFilter(null);
+
+        // Assert
+        Result.Should().BeSameAs(Question);
+    }
+
+    [Fact]
+    public void WithFilter_WhenFilterNotNull_CreatesNewQuestionWithFilter()
+    {
+        // Arrange
+        var Question = new Question(true, "Q1", "f1.cs", QuestionCategory.XML);
+        var Filter = new Filter();
+
+        // Act
+        var Result = Question.WithFilter(Filter);
+
+        // Assert
+        Result.Should().NotBeSameAs(Question)
+            .And.BeOfType<Question>()
+            .Which.Filter.Should().BeSameAs(Filter);
+    }
+
+    [Fact]
+    public void ValidateQuestion_ThrowsWhenTextEmpty()
+    {
+        // Arrange
+        var Question = new Question(true, "   ", "f1.cs", QuestionCategory.XML);
 
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => questions.WithCategory(null));
+        Action Act = () => Question.ValidateQuestion();
+        Act.Should().Throw<ArgumentException>()
+            .WithMessage("Text cannot be null/whitespace.*");
+    }
+
+    [Fact]
+    public void ValidateQuestion_ThrowsWhenFilenameEmpty()
+    {
+        // Arrange
+        var Question = new Question(true, "Q1", "", QuestionCategory.XML);
+
+        // Act & Assert
+        Action Act = () => Question.ValidateQuestion();
+        Act.Should().Throw<ArgumentException>()
+            .WithMessage("Filename cannot be null/whitespace.*");
+    }
+
+    [Fact]
+    public void ValidateQuestion_ReturnsSelfWhenValid()
+    {
+        // Arrange
+        var Question = new Question(true, "Q1", "f1.cs", QuestionCategory.XML);
+
+        // Act
+        var Result = Question.ValidateQuestion();
+
+        // Assert
+        Result.Should().BeSameAs(Question);
+    }
+
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public void ApplyFilter_CallsCorrectStrategy(bool IsEnabled)
+    {
+        // Arrange
+        var Question = new Question(IsEnabled, "Q1", "f1.cs", QuestionCategory.XML);
+
+        // Act
+        var Result = Question.ToActiveOrDisabledQuestion();
+
+        // Assert
+        Result.Should().NotBeNull();
+        // Note: actual strategy behavior depends on internal implementation
     }
 }

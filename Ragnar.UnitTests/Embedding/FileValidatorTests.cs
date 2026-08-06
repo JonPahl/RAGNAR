@@ -6,7 +6,7 @@ namespace RAGNAR.UnitTests.Embedding;
 public sealed class FileValidatorTests
 {
     [Fact]
-    public void IsValid_ReturnsTrue_ForValidFile()
+    public void IsValidReturnsTrueForValidFile()
     {
         var validator = new FileValidator();
         var file = new FileInfo("Program.cs");

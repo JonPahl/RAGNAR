@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "B+obccSbKjE=",
+  "dgSpecHash": "7ePZW6jZOVs=",
   "success": true,
   "projectFilePath": "C:\\Users\\jp325\\source\\Ragnar\\Ragnar.Core\\Ragnar.Core.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jp325\\.nuget\\packages\\ardalis.guardclauses\\5.0.0\\ardalis.guardclauses.5.0.0.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\csvhelper\\33.1.0\\csvhelper.33.1.0.nupkg.sha512",
+    "C:\\Users\\jp325\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",
+    "C:\\Users\\jp325\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\12.1.1\\fluentvalidation.dependencyinjectionextensions.12.1.1.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\google.protobuf\\3.31.0\\google.protobuf.3.31.0.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\grpc.core.api\\2.71.0\\grpc.core.api.2.71.0.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\grpc.net.client\\2.71.0\\grpc.net.client.2.71.0.nupkg.sha512",

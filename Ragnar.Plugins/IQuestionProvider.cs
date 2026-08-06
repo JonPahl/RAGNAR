@@ -6,15 +6,15 @@ public interface IQuestionProvider
     /// <summary>Gets the name of this provider (e.g., "JSON", "API").</summary>
     string ProviderName { get; }
 
-    void SetFileName (string fileName);
+    void SetFileName(string FileName);
 
     /// <summary>Lets the provider load and return a set of question configurations asynchronously.</summary>
-    /// <param name="ct">The cancellation token to observe.</param>
+    /// <param name="Ct">The cancellation token to observe.</param>
     /// <returns>A task that yields an enumerable of question configurations.</returns>
     /// <remarks>Implementations should handle cancellation gracefully.</remarks>
     /// <example><![CDATA[
     /// var provider = new JsonQuestionProvider("questions.json");
     /// var questions = await provider.LoadQuestionAsync(ct);
     /// ]]></example>
-    Task<IEnumerable<QuestionConfiguration>> LoadQuestionAsync (CancellationToken ct);
+    Task<IEnumerable<QuestionConfiguration>> LoadQuestionAsync(CancellationToken Ct);
 }

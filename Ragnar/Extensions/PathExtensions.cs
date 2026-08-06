@@ -1,15 +1,28 @@
-﻿namespace Ragnar.Extensions;
+namespace Ragnar.Extensions;
 
 /// <summary>
 /// extensions to handle if file path should be used or not.
 /// </summary>
 public static class PathExtensions
 {
-    /// <summary>PathExtensions.cs IsExcluded checks filename against exclusion list.</summary>
-    /// <param name="fileName">Filename to verify.</param>
-    /// <param name="exclusions">Collection of excluded names.</param>
+    /// <summary>Determines if filename matches any exclusion pattern (case-insensitive).</summary>
+    /// <param name="FileName">The filename to check.</param>
+    /// <param name="Exclusions">List of exclusion patterns.</param>
     /// <returns>True if excluded; otherwise false.</returns>
-    /// <example><![CDATA[bool res = fileName.IsExcluded(excl);]]></example>
-    public static bool IsExcluded(this in ReadOnlySpan<char> fileName, in IReadOnlyCollection<string> exclusions)
-        => exclusions.Contains(fileName.ToString(), StringComparer.OrdinalIgnoreCase);
+    /// <example><![CDATA[var isExcluded = "file.cs".AsSpan().IsExcluded(new[] { "FILE.CS" });]]></example>
+    public static bool IsExcluded(
+        this ReadOnlySpan<char> FileName,
+        in ImmutableHashSet<string>? Exclusions)
+    {
+        if(FileName.IsEmpty || Exclusions is null or { Count: 0 })
+            return false;
+
+        foreach(var Exclusion in Exclusions)
+        {
+            if(FileName.Equals(Exclusion.AsSpan(), StringComparison.OrdinalIgnoreCase))
+                return true;
+        }
+
+        return false;
+    }
 }

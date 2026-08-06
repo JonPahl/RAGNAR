@@ -4,6 +4,10 @@ namespace Ragnar.Core.Options;
 /// </summary>
 public record EmbeddingOptions
 {
+    public EmbeddingOptions()
+    {
+    }
+
     /// <summary>Gets the embedding service host URL (default: "localhost").</summary>
     /// <example>
     /// <![CDATA[options.Host = "localhost";]]></example>

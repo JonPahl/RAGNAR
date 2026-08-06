@@ -3,7 +3,7 @@ namespace RAGNAR.UnitTests.Questions;
 public sealed class AssemblyExtensionsTests
 {
     [Fact]
-    public void InformationalVersion_ReturnsAttribute_Value()
+    public void InformationalVersionReturnsAttributeValue()
     {
         // Arrange
         var asmMock = new Mock<IAssemblyInfo>();
@@ -19,7 +19,7 @@ public sealed class AssemblyExtensionsTests
     }
 
     [Fact]
-    public void InformationalVersion_ReturnsValue_WhenMissing()
+    public void InformationalVersionReturnsValueWhenMissing()
     {
         // Arrange
         var asmMock = new Mock<IAssemblyInfo>();

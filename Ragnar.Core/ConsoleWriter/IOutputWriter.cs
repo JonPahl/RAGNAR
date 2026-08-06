@@ -1,28 +1,28 @@
-﻿namespace Ragnar.Core.ConsoleWriter;
+namespace Ragnar.Core.ConsoleWriter;
 
 public interface IOutputWriter
 {
     /// <summary>
     /// Writes formatted markup to console.
     /// </summary>
-    /// <param name="text">Text to write.</param>
-    /// <param name="style">Optional style.</param>
-    void Markup(string text, Style? style = null);
+    /// <param name="Text">Text to write.</param>
+    /// <param name="Style">Optional Style.</param>
+    void Markup(string Text, Style? Style = null);
 
     /// <summary>
     /// Writes markup line.
     /// </summary>
-    void MarkupLine(string text, Style? style = null);
+    void MarkupLine(string Text, Style? Style = null);
 
     /// <summary>
     /// Writes plain text.
     /// </summary>
-    void Write(string text, Style? style = null);
+    void Write(string Text, Style? Style = null);
 
     /// <summary>
     /// Writes renderable.
     /// </summary>
-    void Write(IRenderable text);
+    void Write(IRenderable Text);
 
     /// <summary>
     /// Writes empty line.
@@ -30,9 +30,9 @@ public interface IOutputWriter
     void WriteLine();
 
     /// <summary>
-    /// Writes line with optional style.
+    /// Writes line with optional Style.
     /// </summary>
-    void WriteLine(string text, Style? style = null);
+    void WriteLine(string Text, Style? Style = null);
 
     /// <summary>
     /// Writes horizontal rule.

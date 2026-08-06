@@ -3,12 +3,12 @@ namespace Ragnar;
 ///<summary>
 /// Hosted service responsible for running the RAG pipeline.
 ///</summary>
-public sealed class RagPipelineRunner (
-    IOutputWriter writer,
-    IEmbeddingPipeline embeddingPipeline,
-    IKnowledgeBaseInitialize ragPipeline,
-    IApplicationBanner brandingDisplay,
-    ISummaryService summaryService)
+public sealed class RagPipelineRunner(
+    IOutputWriter Writer,
+    IEmbeddingPipeline EmbeddingPipeline,
+    IKnowledgeBaseInitialize RagPipeline,
+    IApplicationBanner BrandingDisplay,
+    ISummaryService SummaryService)
     : IHostedService
 {
     /// <summary>Starts the RAG pipeline: collection check, embedding, and query processing.
@@ -16,31 +16,31 @@ public sealed class RagPipelineRunner (
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Task representing async operation.</returns>
     /// <example><![CDATA[await host.ExecuteAsync();]]></example>
-    public async Task StartAsync (CancellationToken cancellationToken)
+    public async Task StartAsync(CancellationToken cancellationToken)
     {
-        brandingDisplay.RenderBranding();
+        BrandingDisplay.RenderBranding();
 
-        await embeddingPipeline.EnsureCollectionExistsAsync(cancellationToken);
+        await EmbeddingPipeline.EnsureCollectionExistsAsync(cancellationToken);
 
-        await embeddingPipeline.PopulateAsync(cancellationToken);
-        writer.MarkupLine("☑ Knowledge base populated.", Styles.Green);
+        await EmbeddingPipeline.PopulateAsync(cancellationToken);
+        Writer.MarkupLine("☑ Knowledge base populated.", Styles.Green);
 
-        await ragPipeline.AskQuestionsAsync(cancellationToken);
+        await RagPipeline.AskQuestionsAsync(cancellationToken);
 
-        writer.WriteLine("RAG pipeline completed.", Styles.BoldBlue);
+        Writer.WriteLine("RAG pipeline completed.", Styles.BoldBlue);
 
-        await summaryService
+        await SummaryService
             .SummarizeAllResponsesAsync(cancellationToken)
             .ConfigureAwait(false);
 
-        writer.WriteRule();
-        writer.MarkupLine("Questions Finished", Styles.BoldBlue);
-        writer.WriteRule();
+        Writer.WriteRule();
+        Writer.MarkupLine("Questions Finished", Styles.BoldBlue);
+        Writer.WriteRule();
     }
 
     /// <summary>Stops the hosted service (no-op).</summary>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Completed task.</returns>
     /// <example><![CDATA[await host.StopAsync(ct);]]></example>
-    public Task StopAsync (CancellationToken cancellationToken) => Task.CompletedTask;
+    public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 }

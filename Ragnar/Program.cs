@@ -3,19 +3,19 @@ Console.OutputEncoding = Encoding.UTF8;
 
 try
 {
-    var builder = RagPipelineHostBuilder
+    var Builder = RagPipelineHostBuilder
         .CreateDefaultBuilder(args);
 
-    using var host = builder.Build();
+    using var Host = Builder.Build();
 
-    await host.RunAsync();
+    await Host.RunAsync();
 
     AnsiConsole.Console.WriteLine("Processes completed.");
 }
-catch (Exception ex)
+catch(Exception Ex)
 {
-    Log.Fatal(ex, "Application terminated unexpectedly");
-    AnsiConsole.WriteException(ex);
+    Log.Fatal(Ex, "Application terminated unexpectedly");
+    AnsiConsole.WriteException(Ex);
 }
 finally
 {

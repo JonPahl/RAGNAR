@@ -1,6 +1,6 @@
 namespace Ragnar.Output;
 /// <summary>Writes response content to a markdown file.</summary>
-public sealed class ResponseWriter (IOptions<AppConfiguration> configWrapper)
+public sealed class ResponseWriter(IOptions<AppConfiguration> configWrapper)
         : IResponseWriter
 {
 
@@ -15,7 +15,7 @@ public sealed class ResponseWriter (IOptions<AppConfiguration> configWrapper)
     /// <![CDATA[ var writer = new ResponseWriter(configWrapper);
     /// string path = await writer.WriteResponseAsync(details, CancellationToken.None); ]]>
     /// </example>
-    public async Task<string> WriteResponseAsync (SaveDetails details, CancellationToken ct)
+    public async Task<string> WriteResponseAsync(SaveDetails details, CancellationToken ct)
     {
         var fileNow = DateTime.Now.ToString("yyyyMMdd_HHmmss");
 
@@ -41,7 +41,7 @@ public sealed class ResponseWriter (IOptions<AppConfiguration> configWrapper)
     /// string dir = ResponseWriter.BuildDirectory("/src/data", "Math");
     /// ]]>
     /// </example>
-    private string BuildDirectory (string? category)
+    private string BuildDirectory(string? category)
     {
         if(string.IsNullOrWhiteSpace(category))
         {
@@ -64,7 +64,7 @@ public sealed class ResponseWriter (IOptions<AppConfiguration> configWrapper)
     /// <param name="detail">Response details including question and response text.</param>
     /// <returns>Formatted markdown string.</returns>
     /// <example><![CDATA[string md = ResponseWriter.FormatResponseMarkdown(details);]]></example>
-    private static string FormatResponseMarkdown (SaveDetails detail)
+    private static string FormatResponseMarkdown(SaveDetails detail)
     {
         var response = new StringBuilder();
 

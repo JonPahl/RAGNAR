@@ -11,5 +11,5 @@ public static class StopwatchExtensions
     /// <param name="sw">Stopwatch instance.</param>
     /// <returns>Elapsed time string (e.g., "02:35").</returns>
     /// <example><![CDATA[string time = sw.ElapsedTimeString();]]></example>
-    public static string ElapsedTimeString (this Stopwatch sw) => sw.Elapsed.ToString(@"mm\:ss");
+    public static string ElapsedTimeString(this Stopwatch sw) => sw.Elapsed.ToString(@"mm\:ss");
 }

@@ -2,23 +2,23 @@ namespace Ragnar.UnitTests.RAG;
 
 public class RAGOrchestratorTests
 {
-    private readonly Mock<IOptions<AppConfiguration>> _mockConfig;
-    private readonly Mock<IOllamaClientFactory> _mockOllamaFactory;
-    private readonly Mock<IOllamaResponse> _mockOllamaResponse;
+    private readonly Mock<IOptions<AppConfiguration>> MockConfig;
+    private readonly Mock<IOllamaClientFactory> MockOllamaFactory;
+    private readonly Mock<IOllamaResponse> MockOllamaResponse;
 
-    public RAGOrchestratorTests ()
+    public RAGOrchestratorTests()
     {
-        _mockConfig = new Mock<IOptions<AppConfiguration>>();
-        var appOpts = new RagOptions { IncludeOriginalPrompt = true, SourceDirectory = "", VectorStoreName = "", SaveDirectory = "" };
-        _mockConfig.Setup(x => x.Value.RagOptions).Returns(appOpts);
+        MockConfig = new Mock<IOptions<AppConfiguration>>();
+        var ApplicationOptions = new RagOptions { IncludeOriginalPrompt = true, SourceDirectory = "", VectorStoreName = "", SaveDirectory = "" };
+        MockConfig.Setup(X => X.Value.RagOptions).Returns(ApplicationOptions);
 
-        _mockOllamaFactory = new Mock<IOllamaClientFactory>();
-        var mockClient = new Mock<OllamaApiClient>();
-        mockClient.SetupGet(c => c.SelectedModel).Returns("test-model");
-        _mockOllamaFactory.Setup(f => f.FindClient(OllamaServiceType.Ollama)).Returns(mockClient.Object);
+        MockOllamaFactory = new Mock<IOllamaClientFactory>();
+        var MockClient = new Mock<OllamaApiClient>();
+        MockClient.SetupGet(C => C.SelectedModel).Returns("test-model");
+        MockOllamaFactory.Setup(F => F.FindClient(OllamaServiceType.Ollama)).Returns(MockClient.Object);
 
-        _mockOllamaResponse = new Mock<IOllamaResponse>();
-        _mockOllamaResponse.Setup(r => r.GenerateResponse(It.IsAny<GenerateRequest>(), It.IsAny<CancellationToken>()))
+        MockOllamaResponse = new Mock<IOllamaResponse>();
+        MockOllamaResponse.Setup(R => R.GenerateResponse(It.IsAny<GenerateRequest>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync("Mocked LLM Response");
     }
 }

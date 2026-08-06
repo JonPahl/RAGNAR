@@ -6,74 +6,76 @@ namespace Ragnar.Embedding.Chunker;
 /// <example><![CDATA[var docs = new ChunkBySyntaxTree().ChunkSourceFile("Program.cs", code);]]></example>
 public static class ChunkBySyntaxTree
 {
-    private const string _unknownElementName = "UNKNOWN";
+    private const string UnknownElementName = "UNKNOWN";
 
     /// <summary>
     /// Parses C# syntax trees into CodeDocument chunks for embedding.
     /// </summary>
-    /// <param name="filename">Source file path.</param>
-    /// <param name="codeText">Full source code text.</param>
+    /// <param name="Filename">Source file path.</param>
+    /// <param name="CodeText">Full source code text.</param>
     /// <remarks>Uses Roslyn syntax tree traversal to extract top-level classes.</remarks>
     /// <example><![CDATA[var docs = new ChunkBySyntaxTree().ChunkSourceFile("Program.cs", code);]]></example>
     /// <returns>List of CodeDocuments or null on parse failure.
     /// </returns>
-    public static IList<CodeDocument>? ChunkSourceFile (string filename, string codeText)
+    public static IList<CodeDocument>? ChunkSourceFile(string Filename, string CodeText)
     {
-        var response = new List<CodeDocument>();
+        var Response = new List<CodeDocument>();
 
-        var tree = CSharpSyntaxTree.ParseText(codeText);
+        var Tree = CSharpSyntaxTree.ParseText(CodeText);
 
-        if (tree.GetRoot() is not CompilationUnitSyntax root)
+        if(Tree.GetRoot() is not CompilationUnitSyntax Root)
             return null;
 
-        foreach (var node in root.DescendantNodes())
+        foreach(var Node in Root.DescendantNodes())
         {
             //if (node is MethodDeclarationSyntax method)
             //{
             // response.Add(LoadMethod(filename, method));
             //}
-            if (node is ClassDeclarationSyntax classDeclaration)
+            if(Node is ClassDeclarationSyntax ClassDeclaration)
             {
-                response.Add(ExtractClassDocument(filename, classDeclaration));
+                Response.Add(ExtractClassDocument(Filename, ClassDeclaration));
             }
         }
 
-        return response;
+        return Response;
     }
 
     /// <summary>
     /// Converts class declaration node to CodeDocument.
     /// </summary>
-    /// <param name="filename">Source file path.</param>
-    /// <param name="classDefine">Class syntax node.</param>
+    /// <param name="Filename">Source file path.</param>
+    /// <param name="ClassDefine">Class syntax node.</param>
     /// <returns>Initialized CodeDocument.</returns>
     /// <example><![CDATA[var doc = chunker.ExtractClassDocument("Program.cs", node);]]></example>
-    private static CodeDocument ExtractClassDocument (string filename, ClassDeclarationSyntax classDefine)
+    private static CodeDocument ExtractClassDocument(string Filename, ClassDeclarationSyntax ClassDefine)
     {
-        var category = InferCategoryFromPath(filename);
-        return CreateCodeDocument(filename, classDefine, classDefine.Kind().ToString(), classDefine?.Identifier.ValueText ?? _unknownElementName, classDefine?.GetLeadingTrivia(), category);
+        var Category = InferCategoryFromPath(Filename);
+
+        return CreateCodeDocument(Filename, ClassDefine, ClassDefine.Kind().ToString(), ClassDefine?.Identifier.ValueText ?? UnknownElementName, ClassDefine?.GetLeadingTrivia(), Category);
     }
 
 
-    private static CodeDocument ExtractMethodDocument (string filename, MethodDeclarationSyntax method)
+    private static CodeDocument ExtractMethodDocument(string Filename, MethodDeclarationSyntax Method)
     {
-        var category = InferCategoryFromPath(filename);
-        return CreateCodeDocument(filename, method, method.Kind().ToString(), method?.Identifier.ValueText ?? _unknownElementName, method?.GetLeadingTrivia(), category);
+        var Category = InferCategoryFromPath(Filename);
+
+        return CreateCodeDocument(Filename, Method, Method.Kind().ToString(), Method?.Identifier.ValueText ?? UnknownElementName, Method?.GetLeadingTrivia(), Category);
     }
 
-    private static string InferCategoryFromPath (string path)
+    private static string InferCategoryFromPath(string Path)
     {
-        var fileName = Path
-            .GetFileNameWithoutExtension(path)
+        var FileName = System.IO.Path
+            .GetFileNameWithoutExtension(Path)
             .ToLowerInvariant();
 
-        const RegexOptions options = default;
-        return fileName switch
+        const RegexOptions Options = default;
+        return FileName switch
         {
-            var _ when Regex.IsMatch(fileName, "^test", options, TimeSpan.FromSeconds(5)) => "Testing",
-            var _ when Regex.IsMatch(fileName, "^plugin", options, TimeSpan.FromSeconds(5)) => "Plugin",
-            var _ when Regex.IsMatch(fileName, "^embedding", options, TimeSpan.FromSeconds(5)) => "Embedding",
-            var _ when Regex.IsMatch(fileName, "^core", options, TimeSpan.FromSeconds(5)) => "Core",
+            var _ when Regex.IsMatch(FileName, "^test", Options, TimeSpan.FromSeconds(5)) => "Testing",
+            var _ when Regex.IsMatch(FileName, "^plugin", Options, TimeSpan.FromSeconds(5)) => "Plugin",
+            var _ when Regex.IsMatch(FileName, "^embedding", Options, TimeSpan.FromSeconds(5)) => "Embedding",
+            var _ when Regex.IsMatch(FileName, "^core", Options, TimeSpan.FromSeconds(5)) => "Core",
             _ => "Other"
         };
     }
@@ -81,45 +83,45 @@ public static class ChunkBySyntaxTree
     /// <summary>
     /// Builds a CodeDocument from a syntax node with comments and code.
     /// </summary>
-    /// <param name="fileName">Source file name.</param>
-    /// <param name="node">Syntax node.</param>
-    /// <param name="elementType">Element type (e.g., Class).</param>
-    /// <param name="elementName">Element name.</param>
-    /// <param name="leadingTrivia">Leading trivia for comments.</param>
-    /// <param name="category">Category inferred from path.</param>
+    /// <param name="FileName">Source file name.</param>
+    /// <param name="Node">Syntax node.</param>
+    /// <param name="ElementType">Element type (e.g., Class).</param>
+    /// <param name="ElementName">Element name.</param>
+    /// <param name="LeadingTrivia">Leading trivia for comments.</param>
+    /// <param name="Category">Category inferred from path.</param>
     /// <returns>Initialized CodeDocument.</returns>
     /// <example><![CDATA[var doc = chunker.CreateCodeDocument("Program.cs", node, "Class", "Program", trivia, "Core");]]>
     /// </example>
-    private static CodeDocument CreateCodeDocument (string fileName, SyntaxNode node, string elementType, string elementName, SyntaxTriviaList? leadingTrivia, string category)
+    private static CodeDocument CreateCodeDocument(string FileName, SyntaxNode Node, string ElementType, string ElementName, SyntaxTriviaList? LeadingTrivia, string Category)
     {
-        var comments = LocateComments(leadingTrivia);
+        var Comments = LocateComments(LeadingTrivia);
 
         return new CodeDocument
-        {
-            FileName = fileName,
-            ElementType = elementType,
-            ElementName = elementName,
-            Comment = string.Join(Environment.NewLine, comments),
-            Comment_Length = string.Join(Environment.NewLine, comments).CharacterCount(),
-            Code = node.NormalizeWhitespace().ToFullString(),
-            Category = category,
-        };
+        (
+            FileName,
+            ElementType,
+            ElementName,
+            Comment: string.Join(Environment.NewLine, Comments),
+            CommentLength: string.Join(Environment.NewLine, Comments).CharacterCount(),
+            Code: Node.NormalizeWhitespace().ToFullString(),
+            Category: Category
+        );
     }
 
     /// <summary>
     /// Extracts documentation comments from leading trivia.
     /// </summary>
-    /// <param name="leadingTrivia">Leading trivia of syntax node.</param>
+    /// <param name="LeadingTrivia">Leading trivia of syntax node.</param>
     /// <returns>List of trimmed comment strings.</returns>
     /// <example><![CDATA[var comments = chunker.LocateComments(node.GetLeadingTrivia());]]></example>
-    private static List<string> LocateComments (SyntaxTriviaList? leadingTrivia)
+    private static List<string> LocateComments(SyntaxTriviaList? LeadingTrivia)
     {
-        if (leadingTrivia == null)
+        if(LeadingTrivia == null)
             return [];
 
-        return [.. leadingTrivia.Value.Where(t => t.IsKind(SyntaxKind.SingleLineDocumentationCommentTrivia)
-        || t.IsKind(SyntaxKind.MultiLineDocumentationCommentTrivia)
-        || t.IsKind(SyntaxKind.SingleLineCommentTrivia))
-            .Select(t => t.ToString().Trim())];
+        return [.. LeadingTrivia.Value.Where(T => T.IsKind(SyntaxKind.SingleLineDocumentationCommentTrivia)
+        || T.IsKind(SyntaxKind.MultiLineDocumentationCommentTrivia)
+        || T.IsKind(SyntaxKind.SingleLineCommentTrivia))
+            .Select(T => T.ToString().Trim())];
     }
 }

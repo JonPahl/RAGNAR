@@ -2,19 +2,17 @@ namespace Ragnar.UnitTests;
 
 public class ResponseWriterTests
 {
-    private readonly Mock<IOptions<AppConfiguration>> _mockConfig;
-    private readonly ResponseWriter _writer;
-    private readonly string _tempDir;
+    private readonly Mock<IOptions<AppConfiguration>> MockConfig;
+    private readonly string TempDir;
 
-    public ResponseWriterTests ()
+    public ResponseWriterTests()
     {
-        _tempDir = Path.Combine(Path.GetTempPath(), $"RagTest_{Guid.NewGuid()}");
-        Directory.CreateDirectory(_tempDir);
+        TempDir = Path.Combine(Path.GetTempPath(), $"RagTest_{Guid.NewGuid()}");
+        Directory.CreateDirectory(TempDir);
 
-        var appOptions = new RagOptions { SourceDirectory = _tempDir, VectorStoreName = "", SaveDirectory = "" };
-        _mockConfig = new Mock<IOptions<AppConfiguration>>();
-        _mockConfig.Setup(x => x.Value.RagOptions).Returns(appOptions);
+        var AppOptions = new RagOptions { SourceDirectory = TempDir, VectorStoreName = "", SaveDirectory = "" };
 
-        _writer = new ResponseWriter(_mockConfig.Object);
+        MockConfig = new Mock<IOptions<AppConfiguration>>();
+        MockConfig.Setup(X => X.Value.RagOptions).Returns(AppOptions);
     }
 }

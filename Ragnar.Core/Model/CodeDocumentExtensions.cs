@@ -1,21 +1,23 @@
 namespace Ragnar.Core.Model;
 
-
-/// <summary>Converts a CodeDocument to a dictionary of payload fields for Qdrant.</summary>
+/// <summary>Extension methods for converting CodeDocument to Qdrant payload structures.</summary>
 public static class CodeDocumentExtensions
 {
-    extension(CodeDocument doc)
+    extension(CodeDocument Doc)
     {
-        public IDictionary<string, Value> ToDictionary
-            => new Dictionary<string, Value>
-            {
-                { nameof(CodeDocument.FileName), doc.FileName },
-                { nameof(CodeDocument.ElementType),  doc.ElementType ?? string.Empty },
-                { nameof(CodeDocument.ElementName), doc.ElementName ?? string.Empty },
-                { nameof(CodeDocument.Comment), doc.Comment ?? string.Empty },
-                { nameof(CodeDocument.Comment_Length), doc.Comment_Length },
-                { nameof(CodeDocument.Code), doc.Code ?? string.Empty },
-                { nameof(CodeDocument.Category), doc.Category ?? "General" },
-            };
+        /// <summary>Converts the code document to a Qdrant-compatible payload dictionary.</summary>
+        /// <returns>A dictionary mapping field names to Qdrant <see cref="Value"/> instances.</returns>
+        /// <example><![CDATA[var payload = Doc.ToPayloadDictionary;]]></example>
+        public IReadOnlyDictionary<string, Value> ToPayloadDictionary => new Dictionary<string, Value>
+        {
+            [nameof(Doc.FileName)] = Doc.FileName ?? string.Empty,
+            [nameof(Doc.ElementType)] = Doc.ElementType ?? string.Empty,
+            [nameof(Doc.ElementName)] = Doc.ElementName ?? string.Empty,
+            [nameof(Doc.Comment)] = Doc.Comment ?? string.Empty,
+            [nameof(Doc.CommentLength)] = Doc.CommentLength,
+            [nameof(Doc.Code)] = Doc.Code ?? string.Empty,
+            [nameof(Doc.Category)] = Doc.Category ?? nameof(QuestionCategory.General)
+        }
+        .ToImmutableDictionary(Kv => Kv.Key, Kv => Kv.Value);
     }
 }
