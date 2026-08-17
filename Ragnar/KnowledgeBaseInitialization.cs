@@ -1,8 +1,6 @@
-﻿using System.Collections.Immutable;
 
-using FileQuestionProvider;
 
-using Ragnar.Questions.Questions;
+
 
 namespace Ragnar;
 
@@ -48,7 +46,7 @@ public sealed class KnowledgeBaseInitialization(
 
 
         //var exists = await vectorService.DoesCollectionExistAsync(ct);
-        if (!exists)
+        if(!exists)
         {
             // await vectorService.CreateCollectionIfNotExistsAsync(ct);
             writer.MarkupLine("[green] ☑ Collection Created [/]");
@@ -76,7 +74,7 @@ public sealed class KnowledgeBaseInitialization(
         var processedCount = 0;
         var total = questions.Count;
 
-        foreach (Question question in questions)
+        foreach(var question in questions)
         {
             writer.WriteRule();
             writer.WriteLine();
@@ -106,7 +104,7 @@ public sealed class KnowledgeBaseInitialization(
 
         var categories = questionLoader.ParseCategoriesOrDefault(options.Value.ApplicationOptions.CategoriesToProcess);
 
-        foreach (var question in questionLoader.LoadQuestions(true, categories))
+        foreach(var question in questionLoader.LoadQuestions(true, categories))
         {
             questions.Add(question);
         }
@@ -115,7 +113,7 @@ public sealed class KnowledgeBaseInitialization(
         var configs = new List<QuestionConfiguration>();
         configs.AddRange(fcl.LoadQuestions());
 
-        foreach (var item in configQuestionLoader.LoadFromConfig(configs))
+        foreach(var item in configQuestionLoader.LoadFromConfig(configs))
         {
             questions.Add(item);
         }
@@ -125,9 +123,9 @@ public sealed class KnowledgeBaseInitialization(
 
         //TODO: Rework to make changing path easier.
         var pluginDir = Path.Combine(AppContext.BaseDirectory, "Plugins");
-        if (Directory.Exists(pluginDir))
+        if(Directory.Exists(pluginDir))
         {
-            foreach (var csvFile in Directory.EnumerateFiles(pluginDir, "*.csv", SearchOption.AllDirectories))
+            foreach(var csvFile in Directory.EnumerateFiles(pluginDir, "*.csv", SearchOption.AllDirectories))
             {
                 provider.SetFileName(csvFile);
                 var csvConfigs = await provider.LoadQuestionAsync(ct);
@@ -135,7 +133,7 @@ public sealed class KnowledgeBaseInitialization(
             }
         }
 
-        foreach (var question in config.Select(c => new Question(c.IsActive, c.Text, c.FileName, c.Category)))
+        foreach(var question in config.Select(c => new Question(c.IsActive, c.Text, c.FileName, c.Category)))
         {
             questions.Add(question);
         }

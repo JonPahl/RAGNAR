@@ -1,5 +1,5 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+
+
 
 namespace Ragnar.Core.Options;
 /// <summary>Filters files by extension, name, and directory.</summary>
@@ -14,7 +14,7 @@ public record FileLoadOptions
 
     /// <summary>Gets file by name that should not be included.</summary>
     /// <example>
-    /// <![CDATA[var opts = new FileLoadOptions { ExlucdedFiles = ["globalusing.cs"]};]]> </example>
+    /// <![CDATA[var opts = new FileLoadOptions { ExcludedFiles = ["globalUsing.cs"]};]]> </example>
     [Required]
     public HashSet<string> ExcludedFiles { get; init; } = new(StringComparer.OrdinalIgnoreCase);
 

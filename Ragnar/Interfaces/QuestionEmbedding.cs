@@ -1,9 +1,12 @@
-﻿using System.Text;
+namespace Ragnar.Interfaces;
 
-using Microsoft.SemanticKernel.Embeddings;
-
-namespace RAGNAR.Interfaces;
-
+/// <summary>QuestionEmbedding.cs - Generates and retrieves embeddings for questions.</summary>
+/// <param name = "logger" > Logger instance.</param>
+/// <param name = "configWrapper" > App config wrapper.</param>
+/// <param name = "embeddingService" > Embedding service.</param>
+/// <param name = "qdrantClient" > Qdrant client.</param>
+/// <param name = "clientFactory" > Ollama client factory.</param>
+/// <returns>Question embedding instance.</returns>
 public class QuestionEmbedding(Serilog.ILogger logger, IOptions<ApplicationConfiguration> configWrapper, IGeneratorService embeddingService, IQdrantClient qdrantClient, IOllamaClientProvider clientFactory) : IQuestionEmbedding
 {
     private readonly IEmbeddingGenerator<string, Embedding<float>> generator = clientFactory.FindClient(OllamaType.Embedding).AsEmbeddingGenerator();
@@ -23,7 +26,7 @@ public class QuestionEmbedding(Serilog.ILogger logger, IOptions<ApplicationConfi
         CancellationToken ct, Filter? filter = null)
     {
         var expectedDim = configWrapper.Value.EmbeddingOptions.Dimension;
-        if (Convert.ToUInt64(QuestionEmbeddingVector.Length) != expectedDim)
+        if(Convert.ToUInt64(QuestionEmbeddingVector.Length) != expectedDim)
         {
             throw new ArgumentException($"Query vector dimension {QuestionEmbeddingVector.Length} ≠ expected {expectedDim}", nameof(QuestionEmbeddingVector));
         }
@@ -80,7 +83,7 @@ public class QuestionEmbedding(Serilog.ILogger logger, IOptions<ApplicationConfi
         const string CODE = nameof(CodeDocument.Code);
         const string ELEMENT_TYPE = nameof(CodeDocument.ElementType);
 
-        foreach (var match in searchResult.Select(p => p.Payload))
+        foreach(var match in searchResult.Select(p => p.Payload))
         {
             var fileName = match.TryGetValue(FILE_NAME, out var fn) ? fn.StringValue ?? string.Empty : string.Empty;
 

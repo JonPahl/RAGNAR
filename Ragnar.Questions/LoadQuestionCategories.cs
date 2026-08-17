@@ -1,5 +1,3 @@
-﻿using System.Collections.Immutable;
-
 namespace Ragnar.Questions;
 /// <summary>
 /// Build list of enum options to Hashset.

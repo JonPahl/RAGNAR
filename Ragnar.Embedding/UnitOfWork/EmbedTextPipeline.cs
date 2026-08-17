@@ -1,10 +1,3 @@
-﻿using Ragnar.Core.Interface;
-using Ragnar.Core.Model;
-using Ragnar.Core.Options;
-using Ragnar.Embedding.Factory;
-
-using Spectre.Console;
-
 namespace Ragnar.Embedding.UnitOfWork;
 
 /// <summary>
@@ -18,13 +11,13 @@ public class EmbedTextPipeline(
     IFileParseFactory parseFactory)
     : IEmbedTextPipeline
 {
-    private const int _bATCHSIZE = 10;
+    private const int BATCHSIZE = 10;
 
-    private readonly ApplicationOptions _appOption = options.Value.ApplicationOptions;
+    private readonly ApplicationOptions AppOption = options.Value.ApplicationOptions;
 
-    private readonly ConcurrentBag<CodeDocument> _codeDocuments = [];
+    private readonly ConcurrentBag<CodeDocument> CodeDocuments = [];
 
-    private IReadOnlyCollection<string> _files = [];
+    private IReadOnlyCollection<string> Files = [];
 
     /// <summary>
     /// Starts the file discovery and embedding pipeline.
@@ -37,13 +30,13 @@ public class EmbedTextPipeline(
     /// <returns>Completed task.</returns>
     public async Task RunAsync(CancellationToken ct)
     {
-        if (!Directory.Exists(_appOption.SourceDirectory))
+        if(!Directory.Exists(AppOption.SourceDirectory))
         {
-            logger.Warning("following not found: {Dir}", _appOption.SourceDirectory);
+            logger.Warning("following not found: {Dir}", AppOption.SourceDirectory);
             return;
         }
 
-        _files = await LocateFilesAsync(ct);
+        Files = await LocateFilesAsync(ct);
         await LoopOverDirectoryAsync(ct);
         await AddCodingFile(ct);
     }
@@ -54,9 +47,9 @@ public class EmbedTextPipeline(
     {
         await AnsiConsole.Progress().StartAsync(async ctx =>
         {
-            var task = ctx.AddTask("Code Processed", maxValue: _codeDocuments.Count);
+            var task = ctx.AddTask("Code Processed", maxValue: CodeDocuments.Count);
 
-            foreach (CodeDocument[] item in _codeDocuments.Chunk(10))
+            foreach(var item in CodeDocuments.Chunk(10))
             {
                 var response = await emeddingRepository.UpsertBatchAsync(item, ct);
 
@@ -73,20 +66,20 @@ public class EmbedTextPipeline(
     /// <returns>return task.</returns>
     private async Task LoopOverDirectoryAsync(CancellationToken ct)
     {
-        if (_files.Count == 0) return;
+        if(Files.Count == 0) return;
 
         var pendingDocs = new ConcurrentBag<CodeDocument>();
         await AnsiConsole.Progress().AutoClear(true)
             .StartAsync(async ctx =>
         {
-            var task = ctx.AddTask("Processing files", maxValue: _files.Count);
-            foreach (var batch in _files.Chunk(_bATCHSIZE))
+            var task = ctx.AddTask("Processing files", maxValue: Files.Count);
+            foreach(var batch in Files.Chunk(BATCHSIZE))
             {
                 await Task.WhenAll(batch.Select(async filePath =>
                 {
                     var elements = await parseFactory.ParseAsync(filePath, ct);
 
-                    foreach (var element in elements)
+                    foreach(var element in elements)
                     {
                         pendingDocs.Add(element);
                     }
@@ -105,7 +98,7 @@ public class EmbedTextPipeline(
         await AnsiConsole.Progress().StartAsync(async ctx =>
         {
             var embedTask = ctx.AddTask("Embedding documents", maxValue: chunks.Count());
-            foreach (var batch in chunks)
+            foreach(var batch in chunks)
             {
                 await emeddingRepository.UpsertBatchAsync(batch, ct);
                 embedTask.Increment(1);
@@ -125,8 +118,8 @@ public class EmbedTextPipeline(
 
         var items = new List<string>();
 
-        await foreach (var file in
-            LoadCustomFiles.GetFilesAsync(_appOption.SourceDirectory, options.Value.FileLoadOptions, enumOptions, FileValidator, ct))
+        await foreach(var file in
+            LoadCustomFiles.GetFilesAsync(AppOption.SourceDirectory, options.Value.FileLoadOptions, enumOptions, FileValidator, ct))
         {
             items.Add(file);
         }

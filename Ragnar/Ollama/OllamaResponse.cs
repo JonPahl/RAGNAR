@@ -1,6 +1,5 @@
-﻿using System.Text;
-
 namespace Ragnar.Ollama;
+
 /// <summary>
 /// Configures and caches OllamaOptions clients per model.
 /// </summary>
@@ -63,9 +62,9 @@ public class OllamaResponse : IOllamaResponse
                 ctx.UpdateTarget(panel);
                 ctx.Refresh();
 
-                await foreach (var stream in ollamaClient.GenerateAsync(request, ct))
+                await foreach(var stream in ollamaClient.GenerateAsync(request, ct))
                 {
-                    if (stream is null)
+                    if(stream is null)
                         throw new InvalidOperationException("Stream returned null response.");
 
                     sb.Append(stream.Response.AsSpan());
@@ -82,7 +81,7 @@ public class OllamaResponse : IOllamaResponse
             });
             return sb.ToString();
         }
-        catch (Exception ex)
+        catch(Exception ex)
         {
             AnsiConsole.WriteException(ex);
             return ex.Message;

@@ -1,13 +1,5 @@
-﻿
-using Ardalis.GuardClauses;
-
-using Qdrant.Client.Grpc;
-
-using Ragnar.Plugins;
-
-using System.Diagnostics.CodeAnalysis;
-
 namespace Ragnar.Core.Model;
+
 /// <summary>
 /// Question to ask AI service against stored text.
 /// </summary>
@@ -56,7 +48,7 @@ public static class QuestionExtensions
     {
         public Question SetFilter(Filter? filter)
         {
-            if (filter is not null)
+            if(filter is not null)
             {
                 return new(question.IsEnabled, question.Text, question.Filename, question.Category, question.Filter);
             }
@@ -66,11 +58,11 @@ public static class QuestionExtensions
 
         public Question ValidateQuestion()
         {
-            foreach (var prop in question.GetType().GetProperties())
+            foreach(var prop in question.GetType().GetProperties())
             {
                 Guard.Against.Null(prop);
                 var value = prop.GetValue(question);
-                if (value is string)
+                if(value is string)
                 {
                     Guard.Against.Null(value.ToString());
                     Guard.Against.WhiteSpace(value.ToString(), prop.Name);

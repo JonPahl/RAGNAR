@@ -46,7 +46,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "10.0.400"
       },
       "frameworks": {
         "net10.0": {
@@ -74,7 +74,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.400/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -398,7 +398,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "10.0.400"
       },
       "frameworks": {
         "net10.0": {
@@ -409,35 +409,43 @@
               "target": "Package",
               "version": "[5.0.0, )"
             },
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[12.1.1, )"
+            },
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[12.1.1, )"
+            },
             "HashDepot": {
               "target": "Package",
               "version": "[3.2.0, )"
             },
             "OllamaSharp": {
               "target": "Package",
-              "version": "[5.4.25, )"
+              "version": "[5.4.30, )"
             },
             "Qdrant.Client": {
               "target": "Package",
-              "version": "[1.18.1, )"
+              "version": "[1.19.0, )"
             },
             "Roslynator.Analyzers": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[4.15.0, )"
+              "version": "[4.16.1, )"
             },
             "Roslynator.CodeAnalysis.Analyzers": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[4.15.0, )"
+              "version": "[4.16.1, )"
             },
             "Roslynator.Formatting.Analyzers": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[4.15.0, )"
+              "version": "[4.16.1, )"
             },
             "Serilog.AspNetCore": {
               "target": "Package",
@@ -445,7 +453,7 @@
             },
             "Spectre.Console": {
               "target": "Package",
-              "version": "[0.57.1, )"
+              "version": "[0.57.2, )"
             }
           },
           "imports": [
@@ -464,7 +472,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.400/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -788,7 +796,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "10.0.400"
       },
       "frameworks": {
         "net10.0": {
@@ -801,45 +809,45 @@
             },
             "Microsoft.CodeAnalysis.CSharp": {
               "target": "Package",
-              "version": "[5.3.0, )"
+              "version": "[5.6.0, )"
             },
             "Microsoft.Extensions.Options": {
               "target": "Package",
-              "version": "[10.0.9, )"
+              "version": "[10.0.11, )"
             },
             "Microsoft.SemanticKernel": {
               "target": "Package",
-              "version": "[1.77.0, )"
+              "version": "[1.79.0, )"
             },
             "OllamaSharp": {
               "target": "Package",
-              "version": "[5.4.25, )"
+              "version": "[5.4.30, )"
             },
             "Qdrant.Client": {
               "target": "Package",
-              "version": "[1.18.1, )"
+              "version": "[1.19.0, )"
             },
             "Roslynator.Analyzers": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[4.15.0, )"
+              "version": "[4.16.1, )"
             },
             "Roslynator.CodeAnalysis.Analyzers": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[4.15.0, )"
+              "version": "[4.16.1, )"
             },
             "Roslynator.Formatting.Analyzers": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[4.15.0, )"
+              "version": "[4.16.1, )"
             },
             "Serilog": {
               "target": "Package",
-              "version": "[4.3.2-dev-02433, )"
+              "version": "[4.4.1-dev-02443, )"
             },
             "Serilog.AspNetCore": {
               "target": "Package",
@@ -862,7 +870,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.400/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -1189,7 +1197,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "10.0.400"
       },
       "frameworks": {
         "net10.0": {
@@ -1211,7 +1219,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.400/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -1541,20 +1549,26 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "10.0.400"
       },
       "frameworks": {
         "net10.0": {
           "framework": "net10.0",
           "targetAlias": "net10.0",
           "dependencies": {
+            "FluentAssertions": {
+              "target": "Package",
+              "version": "[8.10.0, )"
+            },
+            "FluentAssertions.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[0.34.1, )"
+            },
             "Microsoft.Extensions.Options": {
               "target": "Package",
-              "version": "[10.0.9, )"
-            },
-            "Microsoft.NET.Test.Sdk": {
-              "target": "Package",
-              "version": "[18.7.0, )"
+              "version": "[10.0.11, )"
             },
             "Microsoft.SemanticKernel.Connectors.Qdrant": {
               "target": "Package",
@@ -1566,11 +1580,11 @@
             },
             "OllamaSharp": {
               "target": "Package",
-              "version": "[5.4.25, )"
+              "version": "[5.4.30, )"
             },
             "Qdrant.Client": {
               "target": "Package",
-              "version": "[1.18.1, )"
+              "version": "[1.19.0, )"
             },
             "Serilog.AspNetCore": {
               "target": "Package",
@@ -1578,15 +1592,15 @@
             },
             "Spectre.Console.Testing": {
               "target": "Package",
-              "version": "[0.57.1, )"
+              "version": "[0.57.2, )"
             },
             "System.CommandLine": {
               "target": "Package",
-              "version": "[2.0.9, )"
+              "version": "[2.0.11, )"
             },
             "System.IO.Abstractions.TestingHelpers": {
               "target": "Package",
-              "version": "[22.1.1, )"
+              "version": "[22.2.0, )"
             },
             "coverlet.collector": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -1598,11 +1612,11 @@
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[3.1.5, )"
+              "version": "[4.0.0, )"
             },
             "xunit.v3": {
               "target": "Package",
-              "version": "[3.2.2, )"
+              "version": "[4.0.0, )"
             }
           },
           "imports": [
@@ -1621,7 +1635,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.400/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",
@@ -1951,7 +1965,7 @@
           "auditLevel": "low",
           "auditMode": "all"
         },
-        "SdkAnalysisLevel": "10.0.300"
+        "SdkAnalysisLevel": "10.0.400"
       },
       "frameworks": {
         "net10.0": {
@@ -1970,41 +1984,49 @@
               "target": "Package",
               "version": "[1.0.2, )"
             },
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[12.1.1, )"
+            },
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[12.1.1, )"
+            },
             "HashDepot": {
               "target": "Package",
               "version": "[3.2.0, )"
             },
             "Microsoft.CodeAnalysis": {
               "target": "Package",
-              "version": "[5.3.0, )"
+              "version": "[5.6.0, )"
             },
             "Microsoft.CodeAnalysis.CSharp": {
               "target": "Package",
-              "version": "[5.3.0, )"
+              "version": "[5.6.0, )"
             },
             "Microsoft.Extensions.Configuration": {
               "target": "Package",
-              "version": "[10.0.9, )"
+              "version": "[10.0.11, )"
             },
             "Microsoft.Extensions.Hosting": {
               "target": "Package",
-              "version": "[10.0.9, )"
+              "version": "[10.0.11, )"
             },
             "Microsoft.Extensions.Http.Resilience": {
               "target": "Package",
-              "version": "[10.7.0, )"
+              "version": "[10.9.0, )"
             },
             "Microsoft.Extensions.Options": {
               "target": "Package",
-              "version": "[10.0.9, )"
+              "version": "[10.0.11, )"
             },
             "Microsoft.Extensions.Options.DataAnnotations": {
               "target": "Package",
-              "version": "[10.0.9, )"
+              "version": "[10.0.11, )"
             },
             "Microsoft.SemanticKernel": {
               "target": "Package",
-              "version": "[1.77.0, )"
+              "version": "[1.79.0, )"
             },
             "Microsoft.SemanticKernel.Connectors.Qdrant": {
               "target": "Package",
@@ -2016,7 +2038,7 @@
             },
             "OllamaSharp": {
               "target": "Package",
-              "version": "[5.4.25, )"
+              "version": "[5.4.30, )"
             },
             "Polly": {
               "target": "Package",
@@ -2028,25 +2050,25 @@
             },
             "Qdrant.Client": {
               "target": "Package",
-              "version": "[1.18.1, )"
+              "version": "[1.19.0, )"
             },
             "Roslynator.Analyzers": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[4.15.0, )"
+              "version": "[4.16.1, )"
             },
             "Roslynator.CodeAnalysis.Analyzers": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[4.15.0, )"
+              "version": "[4.16.1, )"
             },
             "Roslynator.Formatting.Analyzers": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[4.15.0, )"
+              "version": "[4.16.1, )"
             },
             "Serilog.AspNetCore": {
               "target": "Package",
@@ -2087,7 +2109,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.301/PortableRuntimeIdentifierGraph.json",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.400/PortableRuntimeIdentifierGraph.json",
           "packagesToPrune": {
             "Microsoft.CSharp": "(,4.7.32767]",
             "Microsoft.VisualBasic": "(,10.4.32767]",

@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <None Update="Refactor.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="General.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

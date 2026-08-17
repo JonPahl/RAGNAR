@@ -1,4 +1,4 @@
-﻿namespace Ragnar.Core.Interface;
+namespace Ragnar.Core.Interface;
 
 public interface IEmbedTextPipeline
 {

@@ -1,4 +1,4 @@
-﻿namespace Ragnar.Utils;
+namespace Ragnar.Utils;
 
 /// <summary>
 /// Custom console style classes.

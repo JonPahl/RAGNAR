@@ -1,6 +1,3 @@
-﻿
-using System.Text;
-
 namespace Ragnar.Output;
 /// <summary>Writes response content to a markdown file.</summary>
 public sealed class ResponseWriter(IOptions<ApplicationConfiguration> configWrapper)
@@ -22,7 +19,7 @@ public sealed class ResponseWriter(IOptions<ApplicationConfiguration> configWrap
 
         var path = BuildDirectory(sourceDirectory, details.Question.Category.ToString());
 
-        if (!Directory.Exists(path))
+        if(!Directory.Exists(path))
         {
             throw new ArgumentException($"Save path: {path} does not exist");
         }
@@ -47,7 +44,7 @@ public sealed class ResponseWriter(IOptions<ApplicationConfiguration> configWrap
     /// </example>
     private static string BuildDirectory(string sourceDirectory, string? category)
     {
-        if (string.IsNullOrWhiteSpace(category))
+        if(string.IsNullOrWhiteSpace(category))
         {
             category = "Uncategorized";
         }
@@ -56,7 +53,7 @@ public sealed class ResponseWriter(IOptions<ApplicationConfiguration> configWrap
 
         directory = Path.Combine(directory, category);
 
-        if (!Directory.Exists(directory))
+        if(!Directory.Exists(directory))
         {
             Directory.CreateDirectory(directory);
         }

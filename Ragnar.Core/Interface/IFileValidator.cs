@@ -1,7 +1,5 @@
-﻿
-using Ragnar.Core.Options;
-
 namespace Ragnar.Core.Interface;
+
 /// <summary>
 /// Validates files against load options (extension, name, directory).
 /// </summary>

@@ -1,4 +1,4 @@
-﻿namespace Ragnar;
+namespace Ragnar;
 
 /// <summary>
 /// Extension methods for plugin-related operations.

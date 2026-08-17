@@ -1,7 +1,3 @@
-﻿using OllamaSharp;
-
-using Ragnar.Core.Model;
-
 namespace Ragnar.Core.Interface;
 
 /// <summary>

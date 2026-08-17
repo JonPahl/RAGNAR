@@ -1,8 +1,3 @@
-﻿using Ragnar.Core.Interface;
-using Ragnar.Core.Model;
-using Ragnar.Core.Options;
-using Ragnar.Core.Utils;
-
 namespace Ragnar.Embedding.UnitOfWork;
 
 /// <summary>
@@ -16,8 +11,8 @@ namespace Ragnar.Embedding.UnitOfWork;
 /// <param name="applicationOptions">Application configuration options.</param>
 public class VectorStoreRepository(IOllamaClientProvider clientFactory, IQdrantClient qdrantClient, IOptions<ApplicationOptions> applicationOptions) : IVectorStoreRepository
 {
-    private readonly IOllamaApiClient _embeddingClient = clientFactory.FindClient(OllamaType.Embedding);
-    private readonly ApplicationOptions _applicationOption = applicationOptions.Value;
+    private readonly IOllamaApiClient EmbeddingClient = clientFactory.FindClient(OllamaType.Embedding);
+    private readonly ApplicationOptions ApplicationOption = applicationOptions.Value;
 
     /// <summary>
     /// Generates embeddings for code documents and upserts them to Qdrant.
@@ -34,10 +29,10 @@ public class VectorStoreRepository(IOllamaClientProvider clientFactory, IQdrantC
     public async Task<UpdateResult> UpsertBatchAsync(CodeDocument[] codeDocuments, CancellationToken ct)
     {
         ct.ThrowIfCancellationRequested();
-        var generator = _embeddingClient.AsEmbeddingGenerator();
+        var generator = EmbeddingClient.AsEmbeddingGenerator();
         var embeddingGroup = new List<PointStruct>();
 
-        foreach (var codeDoc in codeDocuments)
+        foreach(var codeDoc in codeDocuments)
         {
             var textToEmbed = $"Context: {codeDoc.ElementName}\nCode:\n{codeDoc.Code}";
             var vector = await GenerateEmbeddingAsync(generator, textToEmbed, ct);
@@ -56,7 +51,7 @@ public class VectorStoreRepository(IOllamaClientProvider clientFactory, IQdrantC
         try
         {
             return embeddingGroup.Count != 0
-                ? await qdrantClient.UpsertAsync(_applicationOption.VectorStoreName, embeddingGroup, cancellationToken: ct)
+                ? await qdrantClient.UpsertAsync(ApplicationOption.VectorStoreName, embeddingGroup, cancellationToken: ct)
                 : new UpdateResult();
         }
         catch

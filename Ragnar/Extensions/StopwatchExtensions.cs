@@ -1,7 +1,5 @@
-﻿
-using System.Diagnostics;
-
 namespace Ragnar.Extensions;
+
 /// <summary>
 /// Format stopwatch time.
 /// </summary>

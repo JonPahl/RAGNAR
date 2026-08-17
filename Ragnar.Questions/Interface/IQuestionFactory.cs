@@ -1,4 +1,4 @@
-﻿namespace Ragnar.Questions.Interface;
+namespace Ragnar.Questions.Interface;
 /// <summary>
 /// A factory for creating Question instances.
 /// </summary>

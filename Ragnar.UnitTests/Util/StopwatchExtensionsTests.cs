@@ -1,8 +1,4 @@
-﻿using Ragnar.Extensions;
-
-using System.Diagnostics;
-
-namespace RAGNAR.UnitTests.Util;
+namespace Ragnar.UnitTests.Util;
 
 public sealed class StopwatchExtensionsTests
 {
@@ -16,10 +12,10 @@ public sealed class StopwatchExtensionsTests
         sw.Stop();
 
         // Act
-        var formatted = sw.ElapsedTimeString();
+        var Formatted = sw.ElapsedTimeString();
 
         // Assert
-        Assert.Matches(@"^00:\d{2}$", formatted);
+        Assert.Matches(@"^00:\d{2}$", Formatted);
     }
 
     [Fact]
@@ -32,9 +28,9 @@ public sealed class StopwatchExtensionsTests
         sw.Stop();
 
         // Act
-        var formatted = sw.ElapsedTimeString();
+        var Formatted = sw.ElapsedTimeString();
 
         // Assert
-        Assert.Matches(@"^\d{2}:\d{2}$", formatted);
+        Assert.Matches(@"^\d{2}:\d{2}$", Formatted);
     }
 }

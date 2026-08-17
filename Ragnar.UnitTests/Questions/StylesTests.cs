@@ -1,8 +1,4 @@
-﻿using Ragnar.Utils;
-
-using Spectre.Console;
-
-namespace RAGNAR.UnitTests.Questions;
+namespace Ragnar.UnitTests.Questions;
 
 public sealed class StylesTests
 {
@@ -10,21 +6,22 @@ public sealed class StylesTests
     public void GreenBlink_HasCorrectStyle()
     {
         // Act
-        var style = Styles.GreenBlink;
+        var Style = Styles.GreenBlink;
 
         // Assert
-        Assert.Equal(Color.Green, style.Foreground);
-        // Assert.Contains(Decoration.SlowBlink, style.Decoration);
+        Assert.Equal(Color.Green, Style.Foreground);
+
+        Style.Decoration.HasFlag(Decoration.SlowBlink).Should().BeTrue();
     }
 
     [Fact]
     public void Yellow_HasCorrectColor()
     {
         // Act
-        var style = Styles.Yellow;
+        var Style = Styles.Yellow;
 
         // Assert
-        Assert.Equal(Color.Yellow, style.Foreground);
+        Assert.Equal(Color.Yellow, Style.Foreground);
     }
 
     [Fact]
@@ -35,7 +32,7 @@ public sealed class StylesTests
 
         // Assert
         Assert.Equal(Color.Blue, style.Foreground);
-        //Assert.Contains(Decoration.Bold, style.Decoration);
-        //Assert.Contains(Decoration.Italic, style.Decoration);
+        Assert.True(style.Decoration.HasFlag(Decoration.Bold));
+        Assert.True(style.Decoration.HasFlag(Decoration.Italic));
     }
 }

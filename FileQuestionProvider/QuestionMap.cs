@@ -1,12 +1,10 @@
-﻿using CsvHelper.Configuration;
-
-using Ragnar.Plugins;
-
 namespace FileQuestionProvider;
 
+/// <summary>Maps CSV columns to question configuration properties using CsvHelper conventions.</summary>
 public sealed class QuestionMap
     : ClassMap<QuestionRecord>
 {
+    /// <summary>Configures column mappings, boolean parsing, and enum conversion for categories.</summary>
     public QuestionMap()
     {
         Map(m => m.IsEnabled).Name("IsEnabled")
@@ -20,7 +18,7 @@ public sealed class QuestionMap
             {
                 var value = args.Row.GetField<string>("Category");
 
-                if (Enum.TryParse<QuestionCategory>(value, true, out var result))
+                if(Enum.TryParse<QuestionCategory>(value, true, out var result))
                 {
                     return result;
                 }

@@ -1,8 +1,5 @@
-﻿using System.Runtime.CompilerServices;
-
-using Ragnar.Questions.Interface;
-
 namespace Ragnar.Factory;
+
 /// <summary>
 /// Default implementation of IQuestionFactory.
 /// </summary>
@@ -42,7 +39,7 @@ public class DefaultQuestionFactory
                 ? throw new ArgumentException("Value cannot be whitespace-only.", paramName)
                 : trimmed.ToString();
         }
-        catch (ArgumentNullException ex)
+        catch(ArgumentNullException ex)
         {
             throw new ArgumentException(ex.Message, ex);
         }

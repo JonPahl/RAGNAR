@@ -1,7 +1,5 @@
-﻿using Spectre.Console;
-using Spectre.Console.Rendering;
-
 namespace Ragnar.Core.ConsoleWriter;
+
 /// <summary>
 /// output writer to wrap specture console output.
 /// </summary>
@@ -9,37 +7,15 @@ public class AnsiConsoleOutputWriter : IOutputWriter
 {
 
     /// <inheritdoc/>
-    public void Markup(string text, Style? style = null)
-    {
-        switch (style)
-        {
-            case null:
-                AnsiConsole.Markup(text);
-                break;
-            default:
-                AnsiConsole.Markup(text, style ?? Style.Plain);
-                break;
-        }
-    }
+    public void Markup(string text, Style? style = null) => AnsiConsole.Markup(text, style);
 
     /// <inheritdoc/>
-    public void MarkupLine(string text, Style? style = null)
-    {
-        switch (style)
-        {
-            case null:
-                AnsiConsole.MarkupLine(text);
-                break;
-            default:
-                AnsiConsole.MarkupLine(text, style ?? Style.Plain);
-                break;
-        }
-    }
+    public void MarkupLine(string text, Style? style = null) => AnsiConsole.MarkupLine(text, style);
 
     /// <inheritdoc/>
     public void Write(string text, Style? style = null)
     {
-        switch (style)
+        switch(style)
         {
             case null:
                 AnsiConsole.Write(text);
@@ -59,7 +35,7 @@ public class AnsiConsoleOutputWriter : IOutputWriter
     /// <inheritdoc/>
     public void WriteLine(string text, Style? style = null)
     {
-        switch (style)
+        switch(style)
         {
             case null:
                 AnsiConsole.WriteLine(text);

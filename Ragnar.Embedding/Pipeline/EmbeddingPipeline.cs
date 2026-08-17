@@ -1,7 +1,3 @@
-﻿using Ragnar.Core.ConsoleWriter;
-using Ragnar.Core.Interface;
-using Ragnar.Core.Options;
-
 namespace Ragnar.Embedding.Pipeline;
 
 public class EmbeddingPipeline(
@@ -38,7 +34,7 @@ public class EmbeddingPipeline(
 
         //var collectionExists = await qdrantClient.DoesCollectionExistAsync(ct);
 
-        if (!collectionExists)
+        if(!collectionExists)
         {
             //    await qdrantClient.CreateCollectionIfNotExistsAsync(ct);
 

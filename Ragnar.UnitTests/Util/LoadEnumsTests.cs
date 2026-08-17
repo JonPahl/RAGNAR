@@ -1,7 +1,4 @@
-﻿using Ragnar.Plugins;
-using Ragnar.Questions;
-
-namespace RAGNAR.UnitTests.Util;
+namespace Ragnar.UnitTests.Util;
 
 public sealed class LoadEnumsTests
 {
@@ -9,11 +6,11 @@ public sealed class LoadEnumsTests
     public void All_ReturnsAllQuestionCategories()
     {
         // Act
-        var all = LoadQuestionCategories.All();
+        var All = LoadQuestionCategories.All();
 
         // Assert
-        Assert.Equal(Enum.GetNames<QuestionCategory>().Length, all.Count);
-        Assert.Contains(QuestionCategory.Refactor, all);
-        Assert.Contains(QuestionCategory.Security, all);
+        Assert.Equal(Enum.GetNames<QuestionCategory>().Length, All.Count);
+        All.Should().Contain(QuestionCategory.Refactor);
+        All.Should().Contain(QuestionCategory.Security);
     }
 }

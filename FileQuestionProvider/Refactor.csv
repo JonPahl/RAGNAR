@@ -7,7 +7,7 @@ IsEnabled,Text,FileName,Category
 "1","Can you provide a sample on how to implement all mentioned TODOs if enough details are present?","TODO","Refactor"
 "1","Please suggest any design patterns that should be implemented this code base?","DesignPatterns2","General"
 "0","Can you generate a combined version of .editorconfig .roslynatorconfig and into a single file with the most common settings, along with keeping the rules consistent between each different analyzer. i.e., naming, spacing, and document format.","One","Editor"
-"1","Are there any hot paths that could be optimized with Span<T>, Memory<T>, or parallelization?","HostPath","Performance"
+"1","Are there any hot paths that could be optimized with Span<T>, Memory<T>, or parallelization?","HotPath","Performance"
 "0","Is the Qdrant search (e.g., GetContext) using optimal vector dimensionality and filtering (e.g., by category payload index)?","EvectorSearch","Performance"
 "0","How can I register a custom plugin (e.g., IQuestionProvider) that injects domain-specific questions (e.g., 'Are we using Microsoft.Extensions.Hosting correctly?')?","RegisterPlugin","Plugin"
 "0","Can the FileConfigLoader be extended to load questions from embedded resources or a remote config (e.g., Azure App Configuration)?","ConfigLoader","Plugin"

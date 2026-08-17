@@ -1,8 +1,3 @@
-﻿using Ragnar.Core.ConsoleWriter;
-using Ragnar.Questions.Interface;
-
-using System.Collections.Immutable;
-
 namespace Ragnar.Questions.Questions;
 
 /// <summary>
@@ -45,14 +40,14 @@ public class DefaultQuestionCatalogLoader(Serilog.ILogger logger, IOutputWriter 
     {
         HashSet<QuestionCategory> categories = [];
 
-        if (categoryFilter is null or [])
+        if(categoryFilter is null or [])
         {
             return LoadQuestionCategories.All();
         }
 
-        foreach (var category in categoryFilter)
+        foreach(var category in categoryFilter)
         {
-            if (Enum.TryParse(category, ignoreCase: true, out QuestionCategory categoryCategory))
+            if(Enum.TryParse(category, ignoreCase: true, out QuestionCategory categoryCategory))
             {
                 categories.Add(categoryCategory);
             }
@@ -63,7 +58,7 @@ public class DefaultQuestionCatalogLoader(Serilog.ILogger logger, IOutputWriter 
             }
         }
 
-        if (categories.Count == 0)
+        if(categories.Count == 0)
         {
             writer.MarkupLine("[yellow]⚠ No valid categories specified; defaulting to all.[/]");
             return LoadQuestionCategories.All();

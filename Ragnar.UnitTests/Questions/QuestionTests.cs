@@ -1,8 +1,4 @@
-﻿using Ragnar.Core.Utils;
-using Ragnar.Extensions;
-using Ragnar.Plugins;
-
-namespace RAGNAR.UnitTests.Questions;
+namespace Ragnar.UnitTests.Questions;
 
 public sealed class QuestionTests
 {
@@ -38,7 +34,7 @@ public sealed class QuestionTests
     public void IsActive_Throws_WhenTextIsInvalid(string? text)
     {
         // Act & Assert
-        Assert.Throws<ArgumentException>(() => Ragnar.Core.Model.Question.IsActive(text!, "key", QuestionCategory.Refactor));
+        Assert.Throws<ArgumentException>(() => Question.IsActive(text!, "key", QuestionCategory.Refactor));
     }
 
 
@@ -93,7 +89,7 @@ public sealed class QuestionTests
         var result = folders.GetResponseDirectory(baseDir);
 
         // Assert
-        Assert.Equal(Path.Combine("/output", "Category1", "Category2"), result);
+        result.Should().Be(Path.Combine("/output", "Category1", "Category2"));
     }
 
     [Fact]
@@ -106,34 +102,6 @@ public sealed class QuestionTests
         var result = folders.GetResponseDirectory();
 
         // Assert
-        Assert.Equal("Response", result);
+        result.Should().Be("Response");
     }
-
-    //[Fact]
-    //public void IsExcluded_ReturnsTrue_ForMatchingExclusion()
-    //{
-    //    // Arrange
-    //    var fileName = "Program.cs";
-    //    var exclusions = new List<string> = ["Program.cs", "bin"];
-
-    //    // Act
-    //    var result = fileName.AsSpan().IsExcluded(in exclusions);
-
-    //    // Assert
-    //    Assert.True(result);
-    //}
-
-    //[Fact]
-    //public void IsExcluded_IgnoresCase()
-    //{
-    //    // Arrange
-    //    var fileName = "program.cs";
-    //    var exclusions = ["PROGRAM.CS"];
-
-    //    // Act
-    //    var result = fileName.AsSpan().IsExcluded(in exclusions);
-
-    //    // Assert
-    //    Assert.True(result);
-    //}
 }

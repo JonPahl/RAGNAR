@@ -1,4 +1,6 @@
-﻿using Qdrant.Client.Grpc;
+
+
+
 
 namespace Ragnar.Questions.Questions;
 /// <summary>
@@ -25,11 +27,11 @@ public class ConfigurationBasedQuestionLoader(QuestionFactoryDelegate factory)
 
         var customQuestions = new List<Question>();
 
-        foreach (var question in questions)
+        foreach(var question in questions)
         {
-            if (question.IsEnabled)
+            if(question.IsEnabled)
             {
-                if (question.Category == QuestionCategory.XML)
+                if(question.Category == QuestionCategory.XML)
                 {
                     /*
                     var filter = new Filter

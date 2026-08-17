@@ -1,4 +1,4 @@
-﻿namespace Ragnar.Questions.Interface;
+namespace Ragnar.Questions.Interface;
 
 /// <summary>
 /// Gets questions from a configuration location.

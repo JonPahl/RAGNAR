@@ -1,16 +1,13 @@
-﻿using Microsoft.SemanticKernel.Text;
-
-using Ragnar.Core.Model;
-using Ragnar.Core.Options;
 
 namespace Ragnar.Embedding.UnitOfWork;
+
 #pragma warning disable SKEXP0050
 /// <summary>
 /// ParseAsync file processing.
 /// </summary>
 /// <param name="configWrapper">Wrapped configuration objects.</param>
-public sealed class FileParser(IOptions<ApplicationConfiguration> configWrapper)
-    : AFileParser
+public sealed class FileParser(IOptions<ApplicationConfiguration> configWrapper, Serilog.ILogger Logger)
+    : BaseFileParser(Logger)
 {
     private EmbeddingOptions EmbeddingOption => configWrapper.Value.EmbeddingOptions;
 
@@ -61,7 +58,7 @@ public sealed class FileParser(IOptions<ApplicationConfiguration> configWrapper)
     private static List<string> LineSplit(in ReadOnlyMemory<char> content)
     {
         var lines = new List<string>();
-        foreach (var line in content.Span.Split("\n"))
+        foreach(var line in content.Span.Split("\n"))
         {
             lines.Add(line.ToString());
         }

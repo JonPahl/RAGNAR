@@ -1,7 +1,4 @@
-﻿using Ragnar.Factory;
-using Ragnar.Plugins;
-
-namespace RAGNAR.UnitTests;
+namespace Ragnar.UnitTests;
 
 public sealed class DefaultQuestionFactoryTests
 {

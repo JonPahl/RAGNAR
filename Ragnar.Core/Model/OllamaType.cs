@@ -1,4 +1,4 @@
-﻿namespace Ragnar.Core.Model;
+namespace Ragnar.Core.Model;
 
 /// <summary>
 /// Types of llm and related settings to use when creating an ollamaApiClient.

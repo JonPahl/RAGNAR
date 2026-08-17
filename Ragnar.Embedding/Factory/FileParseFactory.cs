@@ -1,19 +1,15 @@
-﻿
-using Ragnar.Core.Model;
-using Ragnar.Core.Options;
-using Ragnar.Embedding.UnitOfWork;
-
 namespace Ragnar.Embedding.Factory;
+
 /// <summary>
 /// Represents a factory for parsing files.
 /// </summary>
 /// <param name = "configWrapper" > The configuration wrapper.</param>
-public class FileParseFactory(IOptions<ApplicationConfiguration> configWrapper)
+public class FileParseFactory(IOptions<ApplicationConfiguration> configWrapper, Serilog.ILogger Logger)
     : IFileParseFactory
 {
-    private readonly ParseCSharpFile _codeParser = new();
+    private readonly ParseCSharpFile CodeParser = new(Logger);
 
-    private readonly FileParser _parser = new(configWrapper);
+    private readonly FileParser Parser = new(configWrapper, Logger);
 
     /// <summary>
     /// Based on file type determines what type of _parser to use.
@@ -31,7 +27,7 @@ public class FileParseFactory(IOptions<ApplicationConfiguration> configWrapper)
         };
     }
 
-    private async Task<CodeDocument[]> ParseFile(string file, CancellationToken ct) => await _parser.ParseFileAsync(file, ct);
+    private async Task<CodeDocument[]> ParseFile(string file, CancellationToken ct) => await Parser.ParseFileAsync(file, ct);
 
-    private async Task<CodeDocument[]> GetCodeDocumentsAsync(string file, CancellationToken ct) => await _codeParser.ParseFileAsync(file, ct);
+    private async Task<CodeDocument[]> GetCodeDocumentsAsync(string file, CancellationToken ct) => await CodeParser.ParseFileAsync(file, ct);
 }

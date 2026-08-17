@@ -1,4 +1,4 @@
-﻿namespace Ragnar;
+namespace Ragnar;
 
 ///<summary>
 /// Hosted service responsible for running the RAG pipeline.
@@ -7,7 +7,7 @@ public sealed class RagPipelineRunner(
     IOutputWriter writer,
     IEmbeddingPipeline embeddingPipeline,
     IKnowledgeBaseInitialize ragPipeline,
-    IApplicationBanner brandingDisplay,
+    IApplicationHeader brandingDisplay,
     ISummaryService summaryService)
     : IHostedService
 {

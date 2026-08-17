@@ -1,9 +1,4 @@
-﻿using Ragnar.Extensions;
-using Ragnar.Utils;
-
-using Spectre.Console;
-
-namespace RAGNAR.UnitTests;
+namespace Ragnar.UnitTests;
 
 public sealed class StylesTests
 {
@@ -15,7 +10,7 @@ public sealed class StylesTests
 
         // Assert
         Assert.Equal(Color.Green, style.Foreground);
-        // Assert.Contains(Decoration.SlowBlink, style.Decoration);
+        style.Decoration.HasFlag(Decoration.SlowBlink).Should().BeTrue();
     }
 
     [Fact]
@@ -29,9 +24,7 @@ public sealed class StylesTests
         Assert.Equal(Decoration.None, style.Decoration);
     }
 
-
     [Theory]
-    //[InlineData("file.txt", Array.Empty<string>(), false)]
     [InlineData("", new[] { "file.txt" }, false)]
     public void IsExcluded_EdgeCases(string fileName, string[] exclusions, bool expected)
     {

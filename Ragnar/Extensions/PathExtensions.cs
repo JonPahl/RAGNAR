@@ -1,4 +1,4 @@
-﻿namespace Ragnar.Extensions;
+namespace Ragnar.Extensions;
 
 /// <summary>
 /// extensions to handle if file path should be used or not.

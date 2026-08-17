@@ -1,18 +1,12 @@
-﻿
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-
-using Ragnar.Core.Model;
-
 namespace Ragnar.Embedding.Chunker;
+
 /// <summary>
 /// Parses C# syntax trees into CodeDocument chunks for embedding.
 /// </summary>
 /// <example><![CDATA[var docs = new ChunkBySyntaxTree().ChunkSourceFile("Program.cs", code);]]></example>
 public class ChunkBySyntaxTree
 {
-    private const string _unknownElementName = "UNKNOWN";
+    private const string UnknownElementName = "UNKNOWN";
 
     /// <summary>
     /// Parses C# syntax trees into CodeDocument chunks for embedding.
@@ -28,16 +22,16 @@ public class ChunkBySyntaxTree
 
         var tree = CSharpSyntaxTree.ParseText(codeText);
 
-        if (tree.GetRoot() is not CompilationUnitSyntax root)
+        if(tree.GetRoot() is not CompilationUnitSyntax root)
             return null;
 
-        foreach (var node in root.DescendantNodes())
+        foreach(var node in root.DescendantNodes())
         {
             //if (node is MethodDeclarationSyntax method)
             //{
             // response.Add(LoadMethod(filename, method));
             //}
-            if (node is ClassDeclarationSyntax classDeclaration)
+            if(node is ClassDeclarationSyntax classDeclaration)
             {
                 response.Add(LoadClass(filename, classDeclaration));
             }
@@ -56,14 +50,7 @@ public class ChunkBySyntaxTree
     private CodeDocument LoadClass(string filename, ClassDeclarationSyntax classDefine)
     {
         var category = InferCategoryFromPath(filename);
-        return CreateCodeDocument(filename, classDefine, classDefine.Kind().ToString(), classDefine?.Identifier.ValueText ?? _unknownElementName, classDefine?.GetLeadingTrivia(), category);
-    }
-
-
-    private CodeDocument LoadMethod(string filename, MethodDeclarationSyntax method)
-    {
-        var category = InferCategoryFromPath(filename);
-        return CreateCodeDocument(filename, method, method.Kind().ToString(), method?.Identifier.ValueText ?? _unknownElementName, method?.GetLeadingTrivia(), category);
+        return CreateCodeDocument(filename, classDefine, classDefine.Kind().ToString(), classDefine?.Identifier.ValueText ?? UnknownElementName, classDefine?.GetLeadingTrivia(), category);
     }
 
     private string InferCategoryFromPath(string path)
@@ -112,7 +99,7 @@ public class ChunkBySyntaxTree
     /// <example><![CDATA[var comments = chunker.LocateComments(node.GetLeadingTrivia());]]></example>
     private static List<string> LocateComments(SyntaxTriviaList? leadingTrivia)
     {
-        if (leadingTrivia == null)
+        if(leadingTrivia == null)
             return [];
 
         return [.. leadingTrivia.Value.Where(t => t.IsKind(SyntaxKind.SingleLineDocumentationCommentTrivia)

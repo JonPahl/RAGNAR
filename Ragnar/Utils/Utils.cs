@@ -1,4 +1,4 @@
-﻿namespace Ragnar.Utils;
+namespace Ragnar.Utils;
 /// <summary>
 /// Common Util classes.
 /// </summary>
@@ -13,7 +13,7 @@ public static class Utils
         var expanded = Environment.ExpandEnvironmentVariables(path);
         var fullPath = Path.GetFullPath(expanded);
 
-        if (!Directory.Exists(fullPath))
+        if(!Directory.Exists(fullPath))
             throw new DirectoryNotFoundException($"Directory not found: '{fullPath}'");
 
         return fullPath;

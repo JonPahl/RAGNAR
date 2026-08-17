@@ -1,6 +1,5 @@
-﻿using System.Collections.Immutable;
-
 namespace Ragnar.Questions;
+
 /// <summary>
 /// Methods to load question to ask along with converting an Ollama class into an Embedding Generator.
 /// </summary>

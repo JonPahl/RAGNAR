@@ -1,12 +1,5 @@
-﻿
-using Ardalis.GuardClauses;
-
-using Ragnar.Core.Interface;
-using Ragnar.Core.Options;
-
-using System.Runtime.CompilerServices;
-
 namespace Ragnar.Embedding.UnitOfWork;
+
 /// <summary>
 /// Static class to call Custom system enumerable.
 /// </summary>
@@ -15,7 +8,7 @@ public static class LoadCustomFiles
     /// <summary>
     /// Yields filtered file paths asynchronously.
     /// </summary>
-    /// <param name="directory">Search root.</param>
+    /// <param name="Directory">Search root.</param>
     /// <param name="filter">Filter options.</param>
     /// <param name="options">Enumeration settings.</param>
     /// <param name="fileValidator">Validate file paths should be included.</param>
@@ -26,29 +19,28 @@ public static class LoadCustomFiles
     /// </exception>
     /// <exception cref="ArgumentException">Thrown when no file options are provided. </exception>
     public static IAsyncEnumerable<string> GetFilesAsync(
-        string directory,
+        string Directory,
         FileLoadOptions filter,
         EnumerationOptions options,
         IFileValidator fileValidator,
         CancellationToken ct)
     {
         ArgumentNullException.ThrowIfNull(filter);
-        ArgumentNullException.ThrowIfNull(directory);
-        Guard.Against.NullOrEmpty(directory);
+        Guard.Against.NullOrEmpty(Directory);
 
-        if (!Directory.Exists(directory))
+        if(!System.IO.Directory.Exists(Directory))
         {
-            throw new DirectoryNotFoundException($"Directory not found: {directory}");
+            throw new DirectoryNotFoundException($"Directory not found: {Directory}");
         }
 
         return GetValuesAsync(ct);
 
         async IAsyncEnumerable<string> GetValuesAsync([EnumeratorCancellation] CancellationToken token = default)
         {
-            foreach (var path in Directory.EnumerateFiles(directory, "*", options))
+            foreach(var path in System.IO.Directory.EnumerateFiles(Directory, "*", options))
             {
                 token.ThrowIfCancellationRequested();
-                if (fileValidator.IsValid(new FileInfo(path), filter))
+                if(fileValidator.IsValid(new FileInfo(path), filter))
                 {
                     yield return path;
                 }

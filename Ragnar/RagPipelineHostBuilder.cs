@@ -1,15 +1,5 @@
-﻿using System.Runtime.Loader;
-
-using Microsoft.Extensions.Http.Resilience;
-
-using Polly;
-
-using Ragnar.Questions.Interface;
-using Ragnar.Questions.Questions;
-
-using Serilog;
-
 namespace Ragnar;
+
 /// <summary>Centralized application builder with services, config, and logging.</summary>
 public static class RagPipelineHostBuilder
 {
@@ -49,7 +39,7 @@ public static class RagPipelineHostBuilder
 
               services.AddSingleton<IKnowledgeBaseInitialize, KnowledgeBaseInitialization>()
               .AddScoped<IAssemblyInfo, AssemblyInfo>()
-              .AddSingleton<IApplicationBanner, ApplicationBanner>()
+              .AddSingleton<IApplicationHeader, ApplicationHeader>()
               .AddSingleton<ISummaryService, SummaryService>()
 
               .AddSingleton<IOutputWriter, AnsiConsoleOutputWriter>()
@@ -62,7 +52,6 @@ public static class RagPipelineHostBuilder
               .AddSingleton<IQuestionCatalogLoader, DefaultQuestionCatalogLoader>();
 
               services.EmbeddingSetup();
-
               services.AddHostedService<RagPipelineRunner>();
           })
           .UseSerilog((ctx, configuration) =>
@@ -170,12 +159,12 @@ public static class RagPipelineHostBuilder
     {
         var pluginDir = Path.Combine(AppContext.BaseDirectory, "Questions", "Plugins");
 
-        if (!Directory.Exists(pluginDir))
+        if(!Directory.Exists(pluginDir))
         {
             return services;
         }
 
-        foreach (var dll in Directory.EnumerateFiles(pluginDir, "*.dll"))
+        foreach(var dll in Directory.EnumerateFiles(pluginDir, "*.dll"))
         {
             try
             {
@@ -188,12 +177,12 @@ public static class RagPipelineHostBuilder
                     && t.IsClass && !t.IsAbstract
                     && t.GetConstructor(Type.EmptyTypes) != null);
 
-                foreach (var type in providers)
+                foreach(var type in providers)
                 {
                     services.AddTransient(typeof(IQuestionProvider), type);
                 }
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 AnsiConsole.WriteLine(ex.ToString());
                 AnsiConsole.WriteLine($"Failed to load plugin assembly: {dll}", dll);
@@ -209,6 +198,9 @@ public static class RagPipelineHostBuilder
     /// <returns>Updated service collection.</returns>
     private static IServiceCollection RegisterOptions(this IServiceCollection services, HostBuilderContext context)
     {
+        //services.AddFluentValidationAutoValidation(); // Enables automatic validation in DI
+        services.AddValidatorsFromAssemblyContaining<OllamaOptions>(); // Scans & registers validators
+
         // Register all services once
         services
             .AddOptions<ApplicationOptions>()

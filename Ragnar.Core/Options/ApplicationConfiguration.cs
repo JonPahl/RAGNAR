@@ -1,4 +1,4 @@
-﻿namespace Ragnar.Core.Options;
+namespace Ragnar.Core.Options;
 
 /// <summary>Configuration container for application components: options, embeddings, Ollama, and file loading.</summary>
 public class ApplicationConfiguration

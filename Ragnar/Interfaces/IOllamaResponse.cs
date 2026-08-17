@@ -1,4 +1,5 @@
-﻿namespace Ragnar.Interfaces;
+namespace Ragnar.Interfaces;
+
 /// <summary>
 /// Call Ollama to generate a response to asked question.
 /// </summary>

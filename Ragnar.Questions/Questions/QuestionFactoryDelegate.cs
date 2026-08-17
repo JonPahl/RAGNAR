@@ -1,4 +1,4 @@
-﻿namespace Ragnar.Questions.Questions;
+namespace Ragnar.Questions.Questions;
 /// <summary>
 /// Delegate for creating a Question from parts.
 /// </summary>

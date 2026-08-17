@@ -1,5 +1,3 @@
-﻿using System.Text.RegularExpressions;
-
 namespace Ragnar.Embedding;
 
 public static class StringExtensions
@@ -11,11 +9,21 @@ public static class StringExtensions
         /// <example><![CDATA[int len = comment.CharacterCount();]]></example>
         public int CharacterCount()
         {
-            string noTags = Regex.Replace(xmlComment, "<.*?>", string.Empty);
+            var count = 0;
+            var insideTag = false;
 
-            string cleanText = noTags.Replace("/", "").Trim();
+            for(var i = 0; i < xmlComment.Length; i++)
+            {
+                var c = xmlComment[i];
 
-            return cleanText.Length;
+                if(c == '<') { insideTag = true; continue; }
+                if(c == '>') { insideTag = false; continue; }
+
+                if(!insideTag && c != '/' && !char.IsWhiteSpace(c))
+                    count++;
+            }
+
+            return count;
         }
     }
 }

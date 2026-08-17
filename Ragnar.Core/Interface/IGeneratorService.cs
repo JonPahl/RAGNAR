@@ -1,7 +1,3 @@
-﻿using Microsoft.Extensions.AI;
-
-using Qdrant.Client.Grpc;
-
 namespace Ragnar.Core.Interface;
 
 /// <summary>
@@ -17,7 +13,7 @@ public interface IGeneratorService
     /// <param name="chunk">The chunk.</param>
     /// <param name="file">The file.</param>
     /// <returns>A list of point structs.</returns>
-    abstract List<PointStruct> BuildPointStruts(PointId pointId, float[] embedding, string chunk, string file);
+    abstract List<PointStruct> BuildPointSructs(PointId pointId, float[] embedding, string chunk, string file);
 
     /// <summary>
     /// Generates embeddings asynchronously based on the provided logger, generator, text, and cancellation token.

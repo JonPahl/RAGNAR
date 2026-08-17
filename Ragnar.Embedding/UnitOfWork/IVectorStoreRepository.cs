@@ -1,5 +1,3 @@
-﻿using Ragnar.Core.Model;
-
 namespace Ragnar.Embedding.UnitOfWork;
 
 /// <summary>

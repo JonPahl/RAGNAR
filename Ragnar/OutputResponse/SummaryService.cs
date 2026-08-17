@@ -1,11 +1,10 @@
-﻿using System.Text;
-
 namespace Ragnar.OutputResponse;
+
 /// <summary>
 /// Summary each response into a single file.
 /// </summary>
 /// <param name="logger">Seri.logger.</param>
-/// <param name="_writer">Console writer.</param>
+/// <param name="Writer">Console writer.</param>
 /// <param name="factory">Ollama Client factory.</param>
 /// <param name="SummaryPrompt">System prompt.</param>
 /// <param name="ollamaClientProvider">Ollama option lookup.
@@ -13,7 +12,7 @@ namespace Ragnar.OutputResponse;
 /// <param name="configWrapper">Wrapper for all configuration.</param>
 public class SummaryService(
     Serilog.ILogger logger,
-    IOutputWriter _writer,
+    IOutputWriter Writer,
     IOllamaClientProvider factory,
     [FromKeyedServices("Summary")] ISystemPromptProvider SummaryPrompt,
     IOllamaResponse ollamaClientProvider,
@@ -41,9 +40,9 @@ public class SummaryService(
 
         var responseDir = baseDir.GetResponseDirectory();
 
-        if (!Directory.Exists(responseDir))
+        if(!Directory.Exists(responseDir))
         {
-            _writer.MarkupLine($"[yellow]Response directory not found: {responseDir}[/]");
+            Writer.MarkupLine($"[yellow]Response directory not found: {responseDir}[/]");
             return;
         }
 
@@ -52,7 +51,7 @@ public class SummaryService(
             RecurseSubdirectories = true
         });
 
-        foreach (var folder in folders)
+        foreach(var folder in folders)
         {
             var contents = await LoadFolderContents(folder, ct);
             var response = await AskQuestionAsync(contents, ct);
@@ -69,9 +68,9 @@ public class SummaryService(
 
             await File.WriteAllTextAsync(summaryPath, $"# RAG Response Summary\n\n{summary}\n\nGenerated: {DateTime.UtcNow:O}", ct);
 
-            _writer.MarkupLine($"[green]Summary saved: {summaryPath}[/]");
+            Writer.MarkupLine($"[green]Summary saved: {summaryPath}[/]");
         }
-        catch (Exception ex)
+        catch(Exception ex)
         {
             AnsiConsole.WriteException(ex);
         }
@@ -92,9 +91,9 @@ public class SummaryService(
         {
             return await ollamaClientProvider.GenerateResponse(summaryRequest, ct);
         }
-        catch (Exception ex)
+        catch(Exception ex)
         {
-            logger.Warning("Summary response ex: {Message}, {Ex}", ex.Message, ex);
+            logger.Warning(ex, "Summary response ex: {Ex}");
             return ex.Message;
         }
     }
@@ -103,7 +102,7 @@ public class SummaryService(
     {
         var sanitizedCombined = new StringBuilder();
 
-        foreach (var file in Directory.GetFiles(folder))
+        foreach(var file in Directory.GetFiles(folder))
         {
             var text = await File.ReadAllTextAsync(file, ct) ?? string.Empty;
 

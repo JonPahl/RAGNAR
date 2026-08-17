@@ -1,5 +1,5 @@
-﻿
-using System.Diagnostics;
+
+
 
 namespace Ragnar.RagPipeline;
 
@@ -48,7 +48,7 @@ public sealed class RagOrchestrator(
         var response = await GenerateAsync(request, ct);
         sw.Stop();
 
-        if (ConfigWrapper.Value.ApplicationOptions.IncludeOriginalPrompt)
+        if(ConfigWrapper.Value.ApplicationOptions.IncludeOriginalPrompt)
         {
             finalPrompt.ShowPrompt();
         }

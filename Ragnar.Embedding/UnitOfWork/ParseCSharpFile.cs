@@ -1,6 +1,3 @@
-﻿
-using Ragnar.Core.Model;
-
 namespace Ragnar.Embedding.UnitOfWork;
 
 /// <summary>
@@ -8,7 +5,7 @@ namespace Ragnar.Embedding.UnitOfWork;
 /// </summary>
 /// <example><![CDATA[var parser = new ParseCSharpFile();]]>
 /// </example>
-internal class ParseCSharpFile : AFileParser
+internal class ParseCSharpFile(Serilog.ILogger Logger) : BaseFileParser(Logger)
 {
     public override async ValueTask<CodeDocument[]> ParseFileAsync(string filePath, CancellationToken ct)
     {

@@ -1,4 +1,4 @@
-﻿namespace Ragnar.Services;
+namespace Ragnar.Services;
 
 /// <summary>
 /// Provides system prompts for .NET 10 / C# 14 code generation.

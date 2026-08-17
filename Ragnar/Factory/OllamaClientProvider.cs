@@ -1,4 +1,4 @@
-﻿namespace Ragnar.Factory;
+namespace Ragnar.Factory;
 /// <summary>
 /// Creates Ollama API clients based on type (Ollama or Embedding).
 /// </summary>
@@ -46,7 +46,7 @@ public class OllamaClientProvider(
         var host = ValidateHost(ollamaOptions.Value.Host);
         var port = ValidatePort(ollamaOptions.Value.Port);
 
-        var httpClient = httpClientFactory.CreateClient(nameof(OllamaType.Ollama));
+        var httpClient = httpClientFactory.CreateClient(nameof(ollama));
 
         httpClient.BaseAddress = new Uri($"{host}:{port}");
 
@@ -82,12 +82,12 @@ public class OllamaClientProvider(
     {
         Guard.Against.NullOrEmpty(host);
 
-        if (!host.StartsWith("http", StringComparison.InvariantCultureIgnoreCase))
+        if(!host.StartsWith("http", StringComparison.InvariantCultureIgnoreCase))
         {
             host = $"http://{host}";
         }
 
-        if (!Uri.TryCreate(host, UriKind.RelativeOrAbsolute, out var validUri))
+        if(!Uri.TryCreate(host, UriKind.RelativeOrAbsolute, out var validUri))
             throw new ArgumentException("Cannot create uri from provided host");
 
         return validUri.OriginalString;
@@ -106,7 +106,7 @@ public class OllamaClientProvider(
     /// </example>
     private static int ValidatePort(int port)
     {
-        if (port is < 1 or > 65535)
+        if(port is < 1 or > 65535)
         {
             throw new ArgumentOutOfRangeException(nameof(port), "Port must be between 1 and 65535.");
         }

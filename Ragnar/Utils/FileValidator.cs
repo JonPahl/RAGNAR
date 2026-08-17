@@ -1,4 +1,4 @@
-﻿namespace Ragnar.Utils;
+namespace Ragnar.Utils;
 /// <summary>
 /// Implements file validation logic based on extension, name, and d filters.
 /// </summary>

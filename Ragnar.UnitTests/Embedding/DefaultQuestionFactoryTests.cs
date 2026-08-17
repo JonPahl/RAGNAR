@@ -1,7 +1,4 @@
-﻿using Ragnar.Factory;
-using Ragnar.Plugins;
-
-namespace RAGNAR.UnitTests.Embedding;
+namespace Ragnar.UnitTests.Embedding;
 
 public sealed class DefaultQuestionFactoryTests
 {
@@ -11,9 +8,9 @@ public sealed class DefaultQuestionFactoryTests
         var factory = new DefaultQuestionFactory();
         var question = factory.CreateActive("Test?", "test", QuestionCategory.Refactor);
 
-        Assert.True(question.IsEnabled);
-        Assert.Equal("Test?", question.Text);
-        Assert.Equal("test", question.Filename);
+        question.IsEnabled.Should().BeTrue();
+        question.Text.Should().Be("Test?");
+        question.Filename.Should().Be("test");
         Assert.Equal(QuestionCategory.Refactor, question.Category);
     }
 

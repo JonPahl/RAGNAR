@@ -1,5 +1,5 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+
+
 
 namespace Ragnar.Core.Options;
 /// <summary>
@@ -13,6 +13,7 @@ public record ApplicationOptions
     /// Gets or sets the directory containing source files to process.
     /// </summary>
     [Required]
+
     public required string SourceDirectory { get; set; } = default!;
 
     /// <summary>
