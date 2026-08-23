@@ -56,6 +56,28 @@
             "CsvHelper": {
               "target": "Package",
               "version": "[33.1.0, )"
+            },
+            "Roslynator.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[4.16.1, )"
+            },
+            "Roslynator.CodeAnalysis.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[4.16.1, )"
+            },
+            "Roslynator.Formatting.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[4.16.1, )"
+            },
+            "Serilog": {
+              "target": "Package",
+              "version": "[4.4.0, )"
             }
           },
           "imports": [
@@ -446,6 +468,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[4.16.1, )"
+            },
+            "Serilog": {
+              "target": "Package",
+              "version": "[4.4.0, )"
             },
             "Serilog.AspNetCore": {
               "target": "Package",

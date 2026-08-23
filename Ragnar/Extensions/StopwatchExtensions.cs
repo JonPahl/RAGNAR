@@ -1,15 +1,15 @@
 namespace Ragnar.Extensions;
 
 /// <summary>
-/// Format stopwatch time.
+/// Extension methods for formatting Stopwatch elapsed time.
 /// </summary>
 public static class StopwatchExtensions
 {
     /// <summary>
     /// Formats elapsed time as mm:ss.
     /// </summary>
-    /// <param name="sw">Stopwatch instance.</param>
+    /// <param name="Sw">Stopwatch instance.</param>
     /// <returns>Elapsed time string (e.g., "02:35").</returns>
     /// <example><![CDATA[string time = sw.ElapsedTimeString();]]></example>
-    public static string ElapsedTimeString(this Stopwatch sw) => sw.Elapsed.ToString(@"mm\:ss");
+    public static string ElapsedTimeString(this Stopwatch Sw) => Sw.Elapsed.ToString(@"mm\:ss");
 }

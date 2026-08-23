@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "N6E3u6Izs/0=",
+  "dgSpecHash": "CZ7ufLqDOjU=",
   "success": true,
   "projectFilePath": "C:\\Users\\jp325\\source\\Ragnar\\Ragnar.Core\\Ragnar.Core.csproj",
   "expectedPackageFiles": [
@@ -34,7 +34,7 @@
     "C:\\Users\\jp325\\.nuget\\packages\\roslynator.analyzers\\4.16.1\\roslynator.analyzers.4.16.1.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\roslynator.codeanalysis.analyzers\\4.16.1\\roslynator.codeanalysis.analyzers.4.16.1.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\roslynator.formatting.analyzers\\4.16.1\\roslynator.formatting.analyzers.4.16.1.nupkg.sha512",
-    "C:\\Users\\jp325\\.nuget\\packages\\serilog\\4.3.0\\serilog.4.3.0.nupkg.sha512",
+    "C:\\Users\\jp325\\.nuget\\packages\\serilog\\4.4.0\\serilog.4.4.0.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\serilog.aspnetcore\\10.0.0\\serilog.aspnetcore.10.0.0.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\serilog.extensions.hosting\\10.0.0\\serilog.extensions.hosting.10.0.0.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\serilog.extensions.logging\\10.0.0\\serilog.extensions.logging.10.0.0.nupkg.sha512",

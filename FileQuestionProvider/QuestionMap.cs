@@ -1,4 +1,4 @@
-namespace FileQuestionProvider;
+﻿namespace FileQuestionProvider;
 
 /// <summary>Maps CSV columns to question configuration properties using CsvHelper conventions.</summary>
 public sealed class QuestionMap
@@ -18,7 +18,7 @@ public sealed class QuestionMap
             {
                 var value = args.Row.GetField<string>("Category");
 
-                if(Enum.TryParse<QuestionCategory>(value, true, out var result))
+                if (Enum.TryParse<QuestionCategory>(value, true, out var result))
                 {
                     return result;
                 }

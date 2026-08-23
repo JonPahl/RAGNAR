@@ -1,4 +1,4 @@
-namespace Ragnar.IntegrationTests;
+﻿namespace Ragnar.IntegrationTests;
 
 /// <summary>
 /// Integration tests for response persistence.
@@ -11,13 +11,13 @@ public class ResponseWriterIntegrationTests
 
     public void Initialize()
     {
-        TempDir = Path.Combine(Path.GetTempPath(), $"RagnarResponseTest_{Guid.NewGuid()}");
+        TempDir = Path.Join(Path.GetTempPath(), $"RagnarResponseTest_{Guid.NewGuid()}");
         Directory.CreateDirectory(TempDir);
 
         var host = Host.CreateDefaultBuilder()
             .ConfigureServices((ctx, services) =>
             {
-                services.AddOptions<ApplicationConfiguration>()
+                services.AddOptions<RagnarConfig>()
                     .Bind(ctx.Configuration.GetSection("ApplicationOptions"))
                     .ValidateDataAnnotations()
                     .ValidateOnStart();
@@ -30,7 +30,7 @@ public class ResponseWriterIntegrationTests
 
     public void Dispose()
     {
-        if(Directory.Exists(TempDir))
+        if (Directory.Exists(TempDir))
             Directory.Delete(TempDir, true);
         Services?.Dispose();
     }

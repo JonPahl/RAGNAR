@@ -1,65 +1,66 @@
-namespace Ragnar.Embedding.Embedding;
+﻿namespace Ragnar.Embedding.Embedding;
 
 /// <summary>Builds vector points for storage.</summary>
 public class EmbeddingPointFactory
   : IGeneratorService
 {
     ///<summary>Generates embeddings for text.</summary>
-    ///<param name = "logger"> Logger instance.</param>
-    ///<param name ="generator"> Embedding generator.</param>
-    ///<param name ="text"> Input text to embed.</param>
-    ///<param name ="ct"> Cancellation token.</param>
+    ///<param name = "Logger"> Logger instance.</param>
+    ///<param name ="Generator"> Embedding generator.</param>
+    ///<param name ="Text"> Input text to embed.</param>
+    ///<param name ="Ct"> Cancellation token.</param>
     ///<returns>Generated embeddings.</returns>
     public async ValueTask<GeneratedEmbeddings<Embedding<float>>> GenerateEmbeddingsAsync(
-        Serilog.ILogger logger,
-        IEmbeddingGenerator<string, Embedding<float>> generator,
-        string text,
-        CancellationToken ct)
+        Serilog.ILogger Logger,
+        IOptions<RagnarConfig> Configuration,
+        IEmbeddingGenerator<string, Embedding<float>> Generator,
+        string Text,
+        CancellationToken Ct)
     {
         try
         {
-            using var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+            using var TimeoutCts = CancellationTokenSource.CreateLinkedTokenSource(Ct);
 
-            timeoutCts.CancelAfter(TimeSpan.FromMinutes(20)); // Configurable
+            TimeoutCts.CancelAfter(Configuration.Value.OllamaOptions.Timeout);
 
-            return await generator.GenerateAsync([text], cancellationToken: timeoutCts.Token);
+            return await Generator.GenerateAsync([Text], cancellationToken: TimeoutCts.Token);
         }
-        catch(OperationCanceledException ex) when(ct.IsCancellationRequested)
+        catch (OperationCanceledException ex) when (Ct.IsCancellationRequested)
         {
-            logger.Warning(ex, "Vector generation canceled.");
+            Logger.Warning(ex, "Vector generation canceled.");
             throw new OperationCanceledException("user cancelled", ex);
         }
-        catch(Exception ex) when(ex is TimeoutException or TaskCanceledException)
+        catch (Exception Ex) when (Ex is TimeoutException or TaskCanceledException)
         {
-            logger.Fatal(ex, "Embedding generation timed out.");
-            throw new InvalidOperationException("Embedding service unavailable.", ex);
+            Logger.Fatal(Ex, "Embedding generation timed out or cancelled.");
+            throw;
         }
     }
 
     ///<summary>Creates point structs from vectors.</summary>
-    /// <param name = "pointId"> Unique identifier.</param>
-    /// <param name = "embedding"> Vector data.</param>
-    /// <param name = "chunk"> Code snippet text.</param>
-    /// <param name = "file"> Source filename.</param>
+    /// <param name="PointId"> Unique identifier.</param>
+    /// <param name="Embedding"> Vector data.</param>
+    /// <param name="Chunk"> Code snippet text.</param>
+    /// <param name="File"> Source filename.</param>
     /// <returns>List of point structs.</returns>
-    public List<PointStruct> BuildPointSructs(PointId pointId, float[] embedding, string chunk, string file)
+    public List<PointStruct> BuildPointStructs(PointId PointId, float[] Embedding, string Chunk, string File)
     {
-        ArgumentNullException.ThrowIfNull(chunk);
-        ArgumentNullException.ThrowIfNull(file);
+        ArgumentNullException.ThrowIfNull(Chunk);
+        ArgumentNullException.ThrowIfNull(File);
 
-        List<PointStruct> points = [];
+        List<PointStruct> Points = [];
 
-        points.Add(new PointStruct
+        Points.Add(new PointStruct
         {
-            Id = pointId,
-            Vectors = embedding,
+            Id = PointId,
+            Vectors = Embedding,
             Payload =
             {
-                ["code_snippet"] = chunk,
-                ["file_name"] = file,
+                ["code_snippet"] = Chunk,
+                ["file_name"] = File,
             },
         });
 
-        return points;
+        return Points;
     }
 }

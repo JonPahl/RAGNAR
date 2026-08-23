@@ -6,5 +6,5 @@ services:
       - "6333:6333" # HTTP API
       - "6334:6334" # gRPC API
     volumes:
-      - ./qdrant_storage:/qdrant/storage:z
+        - C:/qdrant_storage:/qdrant/storage
     restart: always

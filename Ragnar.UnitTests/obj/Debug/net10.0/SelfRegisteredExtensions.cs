@@ -4,7 +4,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Ragnar.UnitTests
+namespace Ragnar.Tests
 {
     [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [global::Microsoft.CodeAnalysis.Embedded]

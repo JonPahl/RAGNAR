@@ -2,11 +2,12 @@
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
     <File Path=".roslynatorconfig" />
+    <File Path="docker-compose.yml" />
     <File Path="README.md" />
   </Folder>
   <Folder Name="/Tests/">
     <Project Path="Ragnar.IntegrationTests/Ragnar.IntegrationTests.csproj" Id="23e8d6a5-5a3d-47a0-8cd7-e9a03bcbdd59" />
-    <Project Path="Ragnar.UnitTests/Ragnar.UnitTests.csproj" />
+    <Project Path="Ragnar.UnitTests/Ragnar.Tests.csproj" />
   </Folder>
   <Project Path="FileQuestionProvider/FileQuestionProvider.csproj" />
   <Project Path="Ragnar.Core/Ragnar.Core.csproj" />

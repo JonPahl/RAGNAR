@@ -1,33 +1,33 @@
-namespace Ragnar.Embedding.Factory;
+﻿namespace Ragnar.Embedding.Factory;
 
 /// <summary>
 /// Represents a factory for parsing files.
 /// </summary>
-/// <param name = "configWrapper" > The configuration wrapper.</param>
-public class FileParseFactory(IOptions<ApplicationConfiguration> configWrapper, Serilog.ILogger Logger)
+/// <param name = "ConfigWrapper" > The configuration wrapper.</param>
+public class FileParseFactory(IOptions<RagnarConfig> ConfigWrapper, Serilog.ILogger Logger)
     : IFileParseFactory
 {
-    private readonly ParseCSharpFile CodeParser = new(Logger);
+    private readonly ParseCSharpFile _codeParser = new(Logger);
 
-    private readonly FileParser Parser = new(configWrapper, Logger);
+    private readonly FileParser _parser = new(ConfigWrapper, Logger);
 
     /// <summary>
     /// Based on file type determines what type of _parser to use.
     /// </summary>
-    /// <param name="file">File path.</param>
-    /// <param name="ct">Cancellation Token.</param>
+    /// <param name="File">File path.</param>
+    /// <param name="Ct">Cancellation Token.</param>
     /// <returns>An array of code documents.</returns>
-    public async Task<CodeDocument[]> ParseAsync(string file, CancellationToken ct)
+    public async Task<CodeDocument[]> ParseAsync(string File, CancellationToken Ct)
     {
-        var fileInfo = new FileInfo(file);
+        var fileInfo = new FileInfo(File);
         return fileInfo.Extension switch
         {
-            ".cs" => await GetCodeDocumentsAsync(file, ct),
-            _ => await ParseFile(file, ct),
+            ".cs" => await GetCodeDocumentsAsync(File, Ct),
+            _ => await ParseFile(File, Ct),
         };
     }
 
-    private async Task<CodeDocument[]> ParseFile(string file, CancellationToken ct) => await Parser.ParseFileAsync(file, ct);
+    private async Task<CodeDocument[]> ParseFile(string File, CancellationToken Ct) => await _parser.ParseFileAsync(File, Ct);
 
-    private async Task<CodeDocument[]> GetCodeDocumentsAsync(string file, CancellationToken ct) => await CodeParser.ParseFileAsync(file, ct);
+    private async Task<CodeDocument[]> GetCodeDocumentsAsync(string File, CancellationToken Ct) => await _codeParser.ParseFileAsync(File, Ct);
 }

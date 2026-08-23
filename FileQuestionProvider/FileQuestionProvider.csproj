@@ -7,7 +7,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <Import Project="..\Ragnar.Plugins\Ragnar.Plugins.projitems" Label="Shared" />
+	<PropertyGroup>
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+		<AnalysisLevel>latest</AnalysisLevel>
+	</PropertyGroup>
+
+	<Import Project="..\Ragnar.Plugins\Ragnar.Plugins.projitems" Label="Shared" />
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
@@ -16,6 +21,19 @@
 
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="33.1.0" />
+    <PackageReference Include="Roslynator.Analyzers" Version="4.16.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Roslynator.CodeAnalysis.Analyzers" Version="4.16.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Roslynator.Formatting.Analyzers" Version="4.16.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Serilog" Version="4.4.0" />
   </ItemGroup>
 
   <ItemGroup>

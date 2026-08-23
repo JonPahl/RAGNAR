@@ -1,7 +1,5 @@
+﻿namespace Ragnar.Core.Options;
 
-
-
-namespace Ragnar.Core.Options;
 /// <summary>Provides configuration options for embedding service connectivity and behavior.
 /// </summary>
 public record EmbeddingOptions

@@ -1,4 +1,4 @@
-namespace Ragnar.UnitTests.Embedding;
+namespace Ragnar.Tests.Embedding;
 
 public sealed class EnumBuilderTests
 {

@@ -1,10 +1,5 @@
+﻿namespace Ragnar.Core.Options;
 
-
-
-namespace Ragnar.Core.Options;
-/// <summary>
-/// Application configuration options for processing source files and vector data.
-/// </summary>
 public record ApplicationOptions
 {
     public bool IncludeOriginalPrompt { get; init; } = false;
@@ -13,7 +8,6 @@ public record ApplicationOptions
     /// Gets or sets the directory containing source files to process.
     /// </summary>
     [Required]
-
     public required string SourceDirectory { get; set; } = default!;
 
     /// <summary>

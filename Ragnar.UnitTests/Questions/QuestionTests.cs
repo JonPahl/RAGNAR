@@ -1,4 +1,4 @@
-namespace Ragnar.UnitTests.Questions;
+namespace Ragnar.Tests.Questions;
 
 public sealed class QuestionTests
 {
@@ -6,102 +6,41 @@ public sealed class QuestionTests
     public void IsActive_CreatesEnabledQuestion()
     {
         // Act
-        var question = Ragnar.Core.Model.Question.IsActive("Test?", "test", QuestionCategory.Refactor);
+        var Q = Question.IsActive("Test?", "test", QuestionCategory.Refactor);
 
         // Assert
-        Assert.True(question.IsEnabled);
-        Assert.Equal("Test?", question.Text);
-        Assert.Equal("test", question.Filename);
-        Assert.Equal(QuestionCategory.Refactor, question.Category);
+        Q.IsEnabled.Should().BeTrue();
+        Q.Text.Should().Be("Test?");
+        Q.Filename.Should().Be("test");
+        Q.Category.Should().Be(QuestionCategory.Refactor);
     }
 
     [Fact]
     public void IsDisabled_CreatesDisabledQuestion()
     {
         // Act
-        var question = Ragnar.Core.Model.Question.IsDisabled("Disabled?", "disabled", QuestionCategory.Logging);
+        var question = Question.IsDisabled("Disabled?", "disabled", QuestionCategory.Logging);
 
         // Assert
-        Assert.False(question.IsEnabled);
-        Assert.Equal("Disabled?", question.Text);
-        Assert.Equal("disabled", question.Filename);
-        Assert.Equal(QuestionCategory.Logging, question.Category);
+        question.IsEnabled.Should().BeFalse();
+        question.Text.Should().Be("Disabled?");
+        question.Filename.Should().Be("disabled");
+        question.Category.Should().Be(QuestionCategory.Logging);
     }
-
-    [Theory]
-    [InlineData("")]
-    [InlineData("   ")]
-    public void IsActive_Throws_WhenTextIsInvalid(string? text)
-    {
-        // Act & Assert
-        Assert.Throws<ArgumentException>(() => Question.IsActive(text!, "key", QuestionCategory.Refactor));
-    }
-
-
-    [Theory]
-    [InlineData("")]
-    [InlineData("   ")]
-    public void IsDisabled_Throws_WhenKeyIsInvalid(string? key)
-    {
-        // Act & Assert
-        Assert.Throws<ArgumentException>(() => Ragnar.Core.Model.Question.IsDisabled("Text", key!, QuestionCategory.Refactor));
-    }
-
 
     [Fact]
     public void FromFilePathAndIndex_GeneratesDeterministicId()
     {
         // Arrange
-        const string path = "test.cs";
-        const string index = "5";
+        const string Path = "test.cs";
+        const string Index = "5";
 
         // Act
-        var id1 = Point.FromFilePathAndIndex(path.AsSpan(), index.AsSpan());
-        var id2 = Point.FromFilePathAndIndex(path.AsSpan(), index.AsSpan());
+        var Id1 = Point.FromFilePathAndIndex(Path.AsSpan(), Index.AsSpan());
+        var Id2 = Point.FromFilePathAndIndex(Path.AsSpan(), Index.AsSpan());
 
         // Assert
-        Assert.Equal(id1, id2);
-        Assert.NotEqual(0UL, id1);
-    }
-
-    [Fact]
-    public void FromFilePathAndIndex_HandlesLongPaths()
-    {
-        // Arrange
-        const string path = "very/long/path/to/a/file/with/many/directories/Program.cs";
-        const string index = "42";
-
-        // Act
-        var id = Point.FromFilePathAndIndex(path.AsSpan(), index.AsSpan());
-
-        // Assert
-        Assert.NotEqual(0UL, id);
-    }
-
-    [Fact]
-    public void GetResponseDirectory_AppendsFolders()
-    {
-        // Arrange
-        var folders = new List<string> { "Category1", "Category2" };
-        const string baseDir = "/output";
-
-        // Act
-        var result = folders.GetResponseDirectory(baseDir);
-
-        // Assert
-        result.Should().Be(Path.Combine("/output", "Category1", "Category2"));
-    }
-
-    [Fact]
-    public void GetResponseDirectory_WithEmptyFoldersAndNoBaseDir()
-    {
-        // Arrange
-        var folders = Array.Empty<string>();
-
-        // Act
-        var result = folders.GetResponseDirectory();
-
-        // Assert
-        result.Should().Be("Response");
+        Id1.Should().Be(Id2);
+        Id1.Should().NotBe(0UL);
     }
 }

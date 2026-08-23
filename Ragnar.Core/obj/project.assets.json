@@ -473,20 +473,20 @@
       "Roslynator.Formatting.Analyzers/4.16.1": {
         "type": "package"
       },
-      "Serilog/4.3.0": {
+      "Serilog/4.4.0": {
         "type": "package",
         "compile": {
-          "lib/net9.0/Serilog.dll": {
+          "lib/net10.0/Serilog.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net9.0/Serilog.dll": {
+          "lib/net10.0/Serilog.dll": {
             "related": ".xml"
           }
         },
         "build": {
-          "build/_._": {}
+          "buildTransitive/Serilog.targets": {}
         }
       },
       "Serilog.AspNetCore/10.0.0": {
@@ -682,7 +682,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
-          "CsvHelper": "33.1.0"
+          "CsvHelper": "33.1.0",
+          "Serilog": "4.4.0"
         },
         "compile": {
           "bin/placeholder/FileQuestionProvider.dll": {}
@@ -1568,16 +1569,19 @@
         "tools/uninstall.ps1"
       ]
     },
-    "Serilog/4.3.0": {
-      "sha512": "+cDryFR0GRhsGOnZSKwaDzRRl4MupvJ42FhCE4zhQRVanX0Jpg6WuCBk59OVhVDPmab1bB+nRykAnykYELA9qQ==",
+    "Serilog/4.4.0": {
+      "sha512": "ZC6Le3rr4TVJJjS4KsQAesxeF1EhW9qcZmmG7eP5Y2G3+gTGkJEUXkq4+tZNPtyp05I0wWOxnIjwtxFweJsObw==",
       "type": "package",
-      "path": "serilog/4.3.0",
+      "path": "serilog/4.4.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "README.md",
         "build/Serilog.targets",
+        "buildTransitive/Serilog.targets",
         "icon.png",
+        "lib/net10.0/Serilog.dll",
+        "lib/net10.0/Serilog.xml",
         "lib/net462/Serilog.dll",
         "lib/net462/Serilog.xml",
         "lib/net471/Serilog.dll",
@@ -1590,7 +1594,7 @@
         "lib/net9.0/Serilog.xml",
         "lib/netstandard2.0/Serilog.dll",
         "lib/netstandard2.0/Serilog.xml",
-        "serilog.4.3.0.nupkg.sha512",
+        "serilog.4.4.0.nupkg.sha512",
         "serilog.nuspec"
       ]
     },
@@ -1875,6 +1879,7 @@
       "Roslynator.Analyzers >= 4.16.1",
       "Roslynator.CodeAnalysis.Analyzers >= 4.16.1",
       "Roslynator.Formatting.Analyzers >= 4.16.1",
+      "Serilog >= 4.4.0",
       "Serilog.AspNetCore >= 10.0.0",
       "Spectre.Console >= 0.57.2"
     ]
@@ -1977,6 +1982,10 @@
             "suppressParent": "All",
             "target": "Package",
             "version": "[4.16.1, )"
+          },
+          "Serilog": {
+            "target": "Package",
+            "version": "[4.4.0, )"
           },
           "Serilog.AspNetCore": {
             "target": "Package",

@@ -1,4 +1,4 @@
-namespace Ragnar.Embedding;
+﻿namespace Ragnar.Embedding;
 
 public static class StringExtensions
 {
@@ -12,14 +12,14 @@ public static class StringExtensions
             var count = 0;
             var insideTag = false;
 
-            for(var i = 0; i < xmlComment.Length; i++)
+            for (var i = 0; i < xmlComment.Length; i++)
             {
                 var c = xmlComment[i];
 
-                if(c == '<') { insideTag = true; continue; }
-                if(c == '>') { insideTag = false; continue; }
+                if (c == '<') { insideTag = true; continue; }
+                if (c == '>') { insideTag = false; continue; }
 
-                if(!insideTag && c != '/' && !char.IsWhiteSpace(c))
+                if (!insideTag && c != '/' && !char.IsWhiteSpace(c))
                     count++;
             }
 

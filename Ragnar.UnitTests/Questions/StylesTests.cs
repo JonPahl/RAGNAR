@@ -1,4 +1,4 @@
-namespace Ragnar.UnitTests.Questions;
+namespace Ragnar.Tests.Questions;
 
 public sealed class StylesTests
 {

@@ -13,3 +13,5 @@ global using Ragnar.Core.Utils;
 global using Ragnar.Plugins;
 global using Spectre.Console;
 global using Spectre.Console.Rendering;
+global using Microsoft.Extensions.Options;
+global using Ragnar.Core.Enums;

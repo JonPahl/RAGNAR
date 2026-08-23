@@ -1,7 +1,8 @@
-namespace FileQuestionProvider;
+﻿namespace FileQuestionProvider;
 
 /// <summary>Loads questions from CSV files into configuration objects for processing.</summary>
-public class CsvFileQuestionProvider : IQuestionProvider
+public class CsvFileQuestionProvider
+    : IQuestionProvider
 {
     public string ProviderName => "CSV File";
 
@@ -9,17 +10,17 @@ public class CsvFileQuestionProvider : IQuestionProvider
 
 
     /// <summary>Sets the target CSV file path for subsequent loading operations.</summary>
-    /// <param name="fileName">Absolute or relative path to the CSV file.</param>
-    public void SetFileName(string fileName)
+    /// <param name="FileName">Absolute or relative path to the CSV file.</param>
+    public void SetFileName(string FileName)
     {
-        FileName = fileName;
+        this.FileName = FileName;
     }
 
     /// <summary>Initiates asynchronous loading of questions from the configured CSV source.</summary>
-    /// <param name="ct">Cancellation Token.</param>
+    /// <param name="Ct">Cancellation Token.</param>
     /// <returns>A task representing the asynchronous load operation with configured questions.</returns>
     /// <example><![CDATA[var q = await provider.LoadQuestionAsync(ct);]]></example>
-    public async Task<IEnumerable<QuestionConfiguration>> LoadQuestionAsync(CancellationToken ct) => await ReadCsvFile();
+    public async Task<IEnumerable<QuestionConfiguration>> LoadQuestionAsync(CancellationToken Ct) => await ReadCsvFile();
 
 
     /// /// <summary>Parses the CSV file and maps records into QuestionConfiguration objects.</summary>
@@ -34,12 +35,13 @@ public class CsvFileQuestionProvider : IQuestionProvider
             TrimOptions = TrimOptions.Trim,
         };
 
-        using(var Reader = new StreamReader(FileName))
-        using(var Csv = new CsvReader(Reader, config))
+        using (var reader = new StreamReader(FileName))
+        using (var csv = new CsvReader(reader, config))
         {
-            Csv.Context.RegisterClassMap<QuestionMap>();
+            csv.Context
+                .RegisterClassMap<QuestionMap>();
 
-            foreach(var record in Csv.GetRecords<QuestionRecord>())
+            foreach (var record in csv.GetRecords<QuestionRecord>())
             {
                 var question = new QuestionConfiguration
                 (

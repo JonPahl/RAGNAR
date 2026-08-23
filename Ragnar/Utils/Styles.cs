@@ -8,7 +8,12 @@ public static class Styles
     /// <summary>
     /// Gets green blinking style.
     /// </summary>
-    public static Style GreenBlink => new(foreground: Color.Green, decoration: Decoration.SlowBlink);
+    public static Style GreenBlink => new(Color.Green, decoration: Decoration.SlowBlink);
+
+    /// <summary>
+    /// Gets green text style.
+    /// </summary>
+    public static Style Green => new(Color.Green);
 
     /// <summary>
     /// Gets yellow style.
@@ -33,5 +38,5 @@ public static class Styles
     /// <summary>
     /// Gets Bold Steel Blue style.
     /// </summary>
-    public static Style BoldSteelBlue => new(foreground: Color.SteelBlue, decoration: Decoration.Bold | Decoration.Italic);
+    public static Style BoldSteelBlue => new(foreground: ConsoleColor.DarkBlue, decoration: Decoration.Bold | Decoration.Italic);
 }

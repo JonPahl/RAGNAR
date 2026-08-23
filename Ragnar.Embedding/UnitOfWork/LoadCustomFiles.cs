@@ -1,4 +1,4 @@
-namespace Ragnar.Embedding.UnitOfWork;
+﻿namespace Ragnar.Embedding.UnitOfWork;
 
 /// <summary>
 /// Static class to call Custom system enumerable.
@@ -28,7 +28,7 @@ public static class LoadCustomFiles
         ArgumentNullException.ThrowIfNull(filter);
         Guard.Against.NullOrEmpty(Directory);
 
-        if(!System.IO.Directory.Exists(Directory))
+        if (!System.IO.Directory.Exists(Directory))
         {
             throw new DirectoryNotFoundException($"Directory not found: {Directory}");
         }
@@ -37,10 +37,10 @@ public static class LoadCustomFiles
 
         async IAsyncEnumerable<string> GetValuesAsync([EnumeratorCancellation] CancellationToken token = default)
         {
-            foreach(var path in System.IO.Directory.EnumerateFiles(Directory, "*", options))
+            foreach (var path in System.IO.Directory.EnumerateFiles(Directory, "*", options))
             {
                 token.ThrowIfCancellationRequested();
-                if(fileValidator.IsValid(new FileInfo(path), filter))
+                if (fileValidator.IsValid(new FileInfo(path), filter))
                 {
                     yield return path;
                 }

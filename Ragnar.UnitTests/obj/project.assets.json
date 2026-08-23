@@ -232,6 +232,47 @@
           }
         }
       },
+      "Microsoft.Agents.AI/1.18.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Agents.AI.Abstractions": "1.18.0",
+          "Microsoft.Extensions.AI": "10.7.0",
+          "Microsoft.Extensions.AI.Abstractions": "10.7.0",
+          "Microsoft.Extensions.AI.Evaluation": "10.7.0",
+          "Microsoft.Extensions.Compliance.Abstractions": "10.5.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.9",
+          "Microsoft.Extensions.FileSystemGlobbing": "10.0.6",
+          "Microsoft.Extensions.Logging.Abstractions": "10.0.9",
+          "Microsoft.Extensions.VectorData.Abstractions": "10.7.0",
+          "Microsoft.ML.Tokenizers": "2.0.0"
+        },
+        "compile": {
+          "lib/net10.0/Microsoft.Agents.AI.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.Agents.AI.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Agents.AI.Abstractions/1.18.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.AI.Abstractions": "10.7.0"
+        },
+        "compile": {
+          "lib/net10.0/Microsoft.Agents.AI.Abstractions.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.Agents.AI.Abstractions.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.ApplicationInsights/2.23.0": {
         "type": "package",
         "compile": {
@@ -269,28 +310,28 @@
           }
         }
       },
-      "Microsoft.CodeAnalysis/5.6.0": {
+      "Microsoft.CodeAnalysis/5.9.0": {
         "type": "package",
         "dependencies": {
           "Humanizer.Core": "2.14.1",
           "Microsoft.Bcl.AsyncInterfaces": "10.0.1",
-          "Microsoft.CodeAnalysis.Analyzers": "5.3.0",
-          "Microsoft.CodeAnalysis.CSharp.Workspaces": "[5.6.0]",
-          "Microsoft.CodeAnalysis.VisualBasic.Workspaces": "[5.6.0]",
+          "Microsoft.CodeAnalysis.Analyzers": "5.9.0-1.26328.17",
+          "Microsoft.CodeAnalysis.CSharp.Workspaces": "[5.9.0]",
+          "Microsoft.CodeAnalysis.VisualBasic.Workspaces": "[5.9.0]",
           "System.Composition": "10.0.1"
         }
       },
-      "Microsoft.CodeAnalysis.Analyzers/5.3.0": {
+      "Microsoft.CodeAnalysis.Analyzers/5.9.0-1.26328.17": {
         "type": "package",
         "build": {
           "buildTransitive/Microsoft.CodeAnalysis.Analyzers.props": {},
           "buildTransitive/Microsoft.CodeAnalysis.Analyzers.targets": {}
         }
       },
-      "Microsoft.CodeAnalysis.Common/5.6.0": {
+      "Microsoft.CodeAnalysis.Common/5.9.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.CodeAnalysis.Analyzers": "5.3.0"
+          "Microsoft.CodeAnalysis.Analyzers": "5.9.0-1.26328.17"
         },
         "compile": {
           "lib/net10.0/Microsoft.CodeAnalysis.dll": {
@@ -344,11 +385,11 @@
           }
         }
       },
-      "Microsoft.CodeAnalysis.CSharp/5.6.0": {
+      "Microsoft.CodeAnalysis.CSharp/5.9.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.CodeAnalysis.Analyzers": "5.3.0",
-          "Microsoft.CodeAnalysis.Common": "[5.6.0]"
+          "Microsoft.CodeAnalysis.Analyzers": "5.9.0-1.26328.17",
+          "Microsoft.CodeAnalysis.Common": "[5.9.0]"
         },
         "compile": {
           "lib/net10.0/Microsoft.CodeAnalysis.CSharp.dll": {
@@ -402,14 +443,14 @@
           }
         }
       },
-      "Microsoft.CodeAnalysis.CSharp.Workspaces/5.6.0": {
+      "Microsoft.CodeAnalysis.CSharp.Workspaces/5.9.0": {
         "type": "package",
         "dependencies": {
           "Humanizer.Core": "2.14.1",
-          "Microsoft.CodeAnalysis.Analyzers": "5.3.0",
-          "Microsoft.CodeAnalysis.CSharp": "[5.6.0]",
-          "Microsoft.CodeAnalysis.Common": "[5.6.0]",
-          "Microsoft.CodeAnalysis.Workspaces.Common": "[5.6.0]",
+          "Microsoft.CodeAnalysis.Analyzers": "5.9.0-1.26328.17",
+          "Microsoft.CodeAnalysis.CSharp": "[5.9.0]",
+          "Microsoft.CodeAnalysis.Common": "[5.9.0]",
+          "Microsoft.CodeAnalysis.Workspaces.Common": "[5.9.0]",
           "System.Composition": "10.0.1"
         },
         "compile": {
@@ -464,11 +505,11 @@
           }
         }
       },
-      "Microsoft.CodeAnalysis.VisualBasic/5.6.0": {
+      "Microsoft.CodeAnalysis.VisualBasic/5.9.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.CodeAnalysis.Analyzers": "5.3.0",
-          "Microsoft.CodeAnalysis.Common": "[5.6.0]"
+          "Microsoft.CodeAnalysis.Analyzers": "5.9.0-1.26328.17",
+          "Microsoft.CodeAnalysis.Common": "[5.9.0]"
         },
         "compile": {
           "lib/net10.0/Microsoft.CodeAnalysis.VisualBasic.dll": {
@@ -522,14 +563,14 @@
           }
         }
       },
-      "Microsoft.CodeAnalysis.VisualBasic.Workspaces/5.6.0": {
+      "Microsoft.CodeAnalysis.VisualBasic.Workspaces/5.9.0": {
         "type": "package",
         "dependencies": {
           "Humanizer.Core": "2.14.1",
-          "Microsoft.CodeAnalysis.Analyzers": "5.3.0",
-          "Microsoft.CodeAnalysis.Common": "[5.6.0]",
-          "Microsoft.CodeAnalysis.VisualBasic": "[5.6.0]",
-          "Microsoft.CodeAnalysis.Workspaces.Common": "[5.6.0]",
+          "Microsoft.CodeAnalysis.Analyzers": "5.9.0-1.26328.17",
+          "Microsoft.CodeAnalysis.Common": "[5.9.0]",
+          "Microsoft.CodeAnalysis.VisualBasic": "[5.9.0]",
+          "Microsoft.CodeAnalysis.Workspaces.Common": "[5.9.0]",
           "System.Composition": "10.0.1"
         },
         "compile": {
@@ -584,12 +625,12 @@
           }
         }
       },
-      "Microsoft.CodeAnalysis.Workspaces.Common/5.6.0": {
+      "Microsoft.CodeAnalysis.Workspaces.Common/5.9.0": {
         "type": "package",
         "dependencies": {
           "Humanizer.Core": "2.14.1",
-          "Microsoft.CodeAnalysis.Analyzers": "5.3.0",
-          "Microsoft.CodeAnalysis.Common": "[5.6.0]",
+          "Microsoft.CodeAnalysis.Analyzers": "5.9.0-1.26328.17",
+          "Microsoft.CodeAnalysis.Common": "[5.9.0]",
           "System.Composition": "10.0.1"
         },
         "compile": {
@@ -675,6 +716,25 @@
           "lib/net10.0/Microsoft.Extensions.AI.Abstractions.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "Microsoft.Extensions.AI.Evaluation/10.7.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.AI.Abstractions": "10.7.0"
+        },
+        "compile": {
+          "lib/net10.0/Microsoft.Extensions.AI.Evaluation.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Microsoft.Extensions.AI.Evaluation.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net8.0/_._": {}
         }
       },
       "Microsoft.Extensions.AI.OpenAI/10.5.0": {
@@ -1550,10 +1610,10 @@
           "buildTransitive/net8.0/Microsoft.Extensions.Telemetry.Abstractions.targets": {}
         }
       },
-      "Microsoft.Extensions.VectorData.Abstractions/10.5.2": {
+      "Microsoft.Extensions.VectorData.Abstractions/10.7.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.AI.Abstractions": "10.5.2"
+          "Microsoft.Extensions.AI.Abstractions": "10.7.0"
         },
         "compile": {
           "lib/net10.0/Microsoft.Extensions.VectorData.Abstractions.dll": {
@@ -1566,11 +1626,27 @@
           }
         }
       },
-      "Microsoft.SemanticKernel/1.79.0": {
+      "Microsoft.ML.Tokenizers/2.0.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.SemanticKernel.Connectors.AzureOpenAI": "1.79.0",
-          "Microsoft.SemanticKernel.Core": "1.79.0"
+          "Google.Protobuf": "3.30.2"
+        },
+        "compile": {
+          "lib/net8.0/Microsoft.ML.Tokenizers.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.ML.Tokenizers.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.SemanticKernel/1.80.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.SemanticKernel.Connectors.AzureOpenAI": "1.80.0",
+          "Microsoft.SemanticKernel.Core": "1.80.0"
         },
         "compile": {
           "lib/net10.0/Microsoft.SemanticKernel.dll": {
@@ -1583,7 +1659,7 @@
           }
         }
       },
-      "Microsoft.SemanticKernel.Abstractions/1.79.0": {
+      "Microsoft.SemanticKernel.Abstractions/1.80.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Bcl.HashCode": "1.1.1",
@@ -1601,12 +1677,12 @@
           }
         }
       },
-      "Microsoft.SemanticKernel.Connectors.AzureOpenAI/1.79.0": {
+      "Microsoft.SemanticKernel.Connectors.AzureOpenAI/1.80.0": {
         "type": "package",
         "dependencies": {
           "Azure.AI.OpenAI": "2.9.0-beta.1",
-          "Microsoft.SemanticKernel.Connectors.OpenAI": "1.79.0",
-          "Microsoft.SemanticKernel.Core": "1.79.0"
+          "Microsoft.SemanticKernel.Connectors.OpenAI": "1.80.0",
+          "Microsoft.SemanticKernel.Core": "1.80.0"
         },
         "compile": {
           "lib/net10.0/Microsoft.SemanticKernel.Connectors.AzureOpenAI.dll": {
@@ -1619,11 +1695,11 @@
           }
         }
       },
-      "Microsoft.SemanticKernel.Connectors.OpenAI/1.79.0": {
+      "Microsoft.SemanticKernel.Connectors.OpenAI/1.80.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.AI.OpenAI": "10.5.0",
-          "Microsoft.SemanticKernel.Core": "1.79.0",
+          "Microsoft.SemanticKernel.Core": "1.80.0",
           "OpenAI": "2.10.0"
         },
         "compile": {
@@ -1656,12 +1732,12 @@
           }
         }
       },
-      "Microsoft.SemanticKernel.Core/1.79.0": {
+      "Microsoft.SemanticKernel.Core/1.80.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection": "10.0.2",
-          "Microsoft.SemanticKernel.Abstractions": "1.79.0",
-          "System.Numerics.Tensors": "10.0.9"
+          "Microsoft.SemanticKernel.Abstractions": "1.80.0",
+          "System.Numerics.Tensors": "10.0.10"
         },
         "compile": {
           "lib/net10.0/Microsoft.SemanticKernel.Core.dll": {
@@ -2051,7 +2127,16 @@
           }
         }
       },
-      "Serilog/4.4.1-dev-02443": {
+      "Roslynator.Analyzers/4.16.1": {
+        "type": "package"
+      },
+      "Roslynator.CodeAnalysis.Analyzers/4.16.1": {
+        "type": "package"
+      },
+      "Roslynator.Formatting.Analyzers/4.16.1": {
+        "type": "package"
+      },
+      "Serilog/4.4.0": {
         "type": "package",
         "compile": {
           "lib/net10.0/Serilog.dll": {
@@ -2254,6 +2339,54 @@
         "runtime": {
           "lib/net10.0/Spectre.Console.Ansi.dll": {
             "related": ".xml"
+          }
+        }
+      },
+      "Spectre.Console.Cli/0.55.0": {
+        "type": "package",
+        "dependencies": {
+          "Spectre.Console": "0.55.0"
+        },
+        "compile": {
+          "lib/net10.0/Spectre.Console.Cli.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Spectre.Console.Cli.dll": {
+            "related": ".xml"
+          }
+        },
+        "resource": {
+          "lib/net10.0/de/Spectre.Console.Cli.resources.dll": {
+            "locale": "de"
+          },
+          "lib/net10.0/es/Spectre.Console.Cli.resources.dll": {
+            "locale": "es"
+          },
+          "lib/net10.0/fr/Spectre.Console.Cli.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/net10.0/it/Spectre.Console.Cli.resources.dll": {
+            "locale": "it"
+          },
+          "lib/net10.0/ja/Spectre.Console.Cli.resources.dll": {
+            "locale": "ja"
+          },
+          "lib/net10.0/ko/Spectre.Console.Cli.resources.dll": {
+            "locale": "ko"
+          },
+          "lib/net10.0/pt/Spectre.Console.Cli.resources.dll": {
+            "locale": "pt"
+          },
+          "lib/net10.0/ru/Spectre.Console.Cli.resources.dll": {
+            "locale": "ru"
+          },
+          "lib/net10.0/sv/Spectre.Console.Cli.resources.dll": {
+            "locale": "sv"
+          },
+          "lib/net10.0/zh-Hans/Spectre.Console.Cli.resources.dll": {
+            "locale": "zh-Hans"
           }
         }
       },
@@ -2763,7 +2896,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
-          "CsvHelper": "33.1.0"
+          "CsvHelper": "33.1.0",
+          "Serilog": "4.4.0"
         },
         "compile": {
           "bin/placeholder/FileQuestionProvider.dll": {}
@@ -2782,14 +2916,15 @@
           "FluentValidation": "12.1.1",
           "FluentValidation.DependencyInjectionExtensions": "12.1.1",
           "HashDepot": "3.2.0",
-          "Microsoft.CodeAnalysis": "5.6.0",
-          "Microsoft.CodeAnalysis.CSharp": "5.6.0",
+          "Microsoft.Agents.AI": "1.18.0",
+          "Microsoft.CodeAnalysis": "5.9.0",
+          "Microsoft.CodeAnalysis.CSharp": "5.9.0",
           "Microsoft.Extensions.Configuration": "10.0.11",
           "Microsoft.Extensions.Hosting": "10.0.11",
           "Microsoft.Extensions.Http.Resilience": "10.9.0",
           "Microsoft.Extensions.Options": "10.0.11",
           "Microsoft.Extensions.Options.DataAnnotations": "10.0.11",
-          "Microsoft.SemanticKernel": "1.79.0",
+          "Microsoft.SemanticKernel": "1.80.0",
           "Microsoft.SemanticKernel.Connectors.Qdrant": "1.74.0-preview",
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.23.0",
           "OllamaSharp": "5.4.30",
@@ -2799,10 +2934,14 @@
           "Ragnar.Core": "1.0.0",
           "Ragnar.Embedding": "1.0.0",
           "Ragnar.Questions": "1.0.0",
+          "Serilog": "4.4.0",
           "Serilog.AspNetCore": "10.0.0",
           "Serilog.Sinks.Console": "6.1.1",
           "Serilog.Sinks.File": "7.0.0",
-          "Serilog.Sinks.Seq": "9.1.0"
+          "Serilog.Sinks.Seq": "9.1.0",
+          "Spectre.Console": "0.57.2",
+          "Spectre.Console.Ansi": "0.57.2",
+          "Spectre.Console.Cli": "0.55.0"
         },
         "compile": {
           "bin/placeholder/Ragnar.dll": {}
@@ -2822,6 +2961,7 @@
           "HashDepot": "3.2.0",
           "OllamaSharp": "5.4.30",
           "Qdrant.Client": "1.19.0",
+          "Serilog": "4.4.0",
           "Serilog.AspNetCore": "10.0.0",
           "Spectre.Console": "0.57.2"
         },
@@ -2837,13 +2977,13 @@
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
           "Ardalis.GuardClauses": "5.0.0",
-          "Microsoft.CodeAnalysis.CSharp": "5.6.0",
+          "Microsoft.CodeAnalysis.CSharp": "5.9.0",
           "Microsoft.Extensions.Options": "10.0.11",
-          "Microsoft.SemanticKernel": "1.79.0",
+          "Microsoft.SemanticKernel": "1.80.0",
           "OllamaSharp": "5.4.30",
           "Qdrant.Client": "1.19.0",
           "Ragnar.Core": "1.0.0",
-          "Serilog": "4.4.1-dev-02443",
+          "Serilog": "4.4.0",
           "Serilog.AspNetCore": "10.0.0"
         },
         "compile": {
@@ -2858,7 +2998,8 @@
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
           "FileQuestionProvider": "1.0.0",
-          "Ragnar.Core": "1.0.0"
+          "Ragnar.Core": "1.0.0",
+          "Serilog": "4.4.0"
         },
         "compile": {
           "bin/placeholder/Ragnar.Questions.dll": {}
@@ -3378,6 +3519,52 @@
         "logo.png"
       ]
     },
+    "Microsoft.Agents.AI/1.18.0": {
+      "sha512": "jj65gSDbHgUNbIuUSxXpE229EHkY7J2gq8Y8Jfqb+knWbX7ZmfGaRS8uiOV17Zc1Q3k+yMBeXgOpw5ttkTmknA==",
+      "type": "package",
+      "path": "microsoft.agents.ai/1.18.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "NUGET.md",
+        "icon.png",
+        "lib/net10.0/Microsoft.Agents.AI.dll",
+        "lib/net10.0/Microsoft.Agents.AI.xml",
+        "lib/net472/Microsoft.Agents.AI.dll",
+        "lib/net472/Microsoft.Agents.AI.xml",
+        "lib/net8.0/Microsoft.Agents.AI.dll",
+        "lib/net8.0/Microsoft.Agents.AI.xml",
+        "lib/net9.0/Microsoft.Agents.AI.dll",
+        "lib/net9.0/Microsoft.Agents.AI.xml",
+        "lib/netstandard2.0/Microsoft.Agents.AI.dll",
+        "lib/netstandard2.0/Microsoft.Agents.AI.xml",
+        "microsoft.agents.ai.1.18.0.nupkg.sha512",
+        "microsoft.agents.ai.nuspec"
+      ]
+    },
+    "Microsoft.Agents.AI.Abstractions/1.18.0": {
+      "sha512": "kMab7u/cfZ45S5Eqq2MeoIowgHxkx7hXkpCPzv2So4ZUv2EJA5TeOV0e025ZLaNbj4DdW7oiyMJfsMS89QbXhA==",
+      "type": "package",
+      "path": "microsoft.agents.ai.abstractions/1.18.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "NUGET.md",
+        "icon.png",
+        "lib/net10.0/Microsoft.Agents.AI.Abstractions.dll",
+        "lib/net10.0/Microsoft.Agents.AI.Abstractions.xml",
+        "lib/net472/Microsoft.Agents.AI.Abstractions.dll",
+        "lib/net472/Microsoft.Agents.AI.Abstractions.xml",
+        "lib/net8.0/Microsoft.Agents.AI.Abstractions.dll",
+        "lib/net8.0/Microsoft.Agents.AI.Abstractions.xml",
+        "lib/net9.0/Microsoft.Agents.AI.Abstractions.dll",
+        "lib/net9.0/Microsoft.Agents.AI.Abstractions.xml",
+        "lib/netstandard2.0/Microsoft.Agents.AI.Abstractions.dll",
+        "lib/netstandard2.0/Microsoft.Agents.AI.Abstractions.xml",
+        "microsoft.agents.ai.abstractions.1.18.0.nupkg.sha512",
+        "microsoft.agents.ai.abstractions.nuspec"
+      ]
+    },
     "Microsoft.ApplicationInsights/2.23.0": {
       "sha512": "nWArUZTdU7iqZLycLKWe0TDms48KKGE6pONH2terYNa8REXiqixrMOkf1sk5DHGMaUTqONU2YkS4SAXBhLStgw==",
       "type": "package",
@@ -3450,23 +3637,23 @@
         "version.txt"
       ]
     },
-    "Microsoft.CodeAnalysis/5.6.0": {
-      "sha512": "h/Y/7vwq4KqmSalHHzT9qjoZB770flcABfrre9ziyFmXQ2bOsE9aBXxeikRvWbfti4d5Ps4vtuf0Tfh3pbd6Uw==",
+    "Microsoft.CodeAnalysis/5.9.0": {
+      "sha512": "csIUVVdxg3IM0O9PTq5YjMoHX59yc2cBmdecX5B1huL54P3VAv5/jot3Fy69sHDIL9jiRjRnWwjozxYc4Znk5w==",
       "type": "package",
-      "path": "microsoft.codeanalysis/5.6.0",
+      "path": "microsoft.codeanalysis/5.9.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "ThirdPartyNotices.rtf",
-        "microsoft.codeanalysis.5.6.0.nupkg.sha512",
+        "microsoft.codeanalysis.5.9.0.nupkg.sha512",
         "microsoft.codeanalysis.nuspec"
       ]
     },
-    "Microsoft.CodeAnalysis.Analyzers/5.3.0": {
-      "sha512": "KuLhbZwB0L8JikL86AE5VWEp3RLNjIcp+j8yz9EJ/UBgRz4+qDEjHg/tluRFbpYpD/e37BqaaNFbQ0vqawBwWQ==",
+    "Microsoft.CodeAnalysis.Analyzers/5.9.0-1.26328.17": {
+      "sha512": "HP9NNk8ZjOSI2hgOyXnQg+kv7/X837Vr2nAlXiGAtqtYnYKjRRa1UmQFr8KFs5ynGYKqfbb8zB9APoWjiAGdMg==",
       "type": "package",
-      "path": "microsoft.codeanalysis.analyzers/5.3.0",
+      "path": "microsoft.codeanalysis.analyzers/5.9.0-1.26328.17",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -3533,7 +3720,7 @@
         "editorconfig/MicrosoftCodeAnalysisReleaseTrackingRulesEnabled/.editorconfig",
         "editorconfig/PortedFromFxCopRulesDefault/.editorconfig",
         "editorconfig/PortedFromFxCopRulesEnabled/.editorconfig",
-        "microsoft.codeanalysis.analyzers.5.3.0.nupkg.sha512",
+        "microsoft.codeanalysis.analyzers.5.9.0-1.26328.17.nupkg.sha512",
         "microsoft.codeanalysis.analyzers.nuspec",
         "rulesets/AllRulesDefault.ruleset",
         "rulesets/AllRulesDisabled.ruleset",
@@ -3564,10 +3751,10 @@
         "tools/uninstall.ps1"
       ]
     },
-    "Microsoft.CodeAnalysis.Common/5.6.0": {
-      "sha512": "eWYNB5e92PSdkQ0xcmy2aLtrvBXNydnVi0Hj/VjaAely6XBqA3By+ClGAJaj4d16pzQmrXPLLK9RDVuS1Ec9xQ==",
+    "Microsoft.CodeAnalysis.Common/5.9.0": {
+      "sha512": "IYaIaUWdIx539AReKZOBEqTskFusZfCh/wFSPilDvCn5Say8MegLw2LONcSIcVy+v3Gzv53qYBspgvBGSErfbQ==",
       "type": "package",
-      "path": "microsoft.codeanalysis.common/5.6.0",
+      "path": "microsoft.codeanalysis.common/5.9.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3589,22 +3776,6 @@
         "lib/net10.0/tr/Microsoft.CodeAnalysis.resources.dll",
         "lib/net10.0/zh-Hans/Microsoft.CodeAnalysis.resources.dll",
         "lib/net10.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/Microsoft.CodeAnalysis.dll",
-        "lib/net8.0/Microsoft.CodeAnalysis.pdb",
-        "lib/net8.0/Microsoft.CodeAnalysis.xml",
-        "lib/net8.0/cs/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/de/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/es/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/fr/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/it/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/ja/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/ko/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/pl/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/pt-BR/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/ru/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/tr/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/zh-Hans/Microsoft.CodeAnalysis.resources.dll",
-        "lib/net8.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.dll",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.pdb",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.xml",
@@ -3621,14 +3792,14 @@
         "lib/netstandard2.0/tr/Microsoft.CodeAnalysis.resources.dll",
         "lib/netstandard2.0/zh-Hans/Microsoft.CodeAnalysis.resources.dll",
         "lib/netstandard2.0/zh-Hant/Microsoft.CodeAnalysis.resources.dll",
-        "microsoft.codeanalysis.common.5.6.0.nupkg.sha512",
+        "microsoft.codeanalysis.common.5.9.0.nupkg.sha512",
         "microsoft.codeanalysis.common.nuspec"
       ]
     },
-    "Microsoft.CodeAnalysis.CSharp/5.6.0": {
-      "sha512": "r1DrKQ/L0xTw03wJrLr36AMQNslyaeEKBFyFmQcOKa8HX3YvmhY//JEUafb6IR/m0gmaUVCfBTWitKJRNb7YAA==",
+    "Microsoft.CodeAnalysis.CSharp/5.9.0": {
+      "sha512": "7JGDA0UT1+h7k9ZcA3rF4eFC8+QPq1xyYaXxag4p8r/zzPurEJxvdi7aM+MRL/SfP7XADXpWF/pl/eUYXOq/ww==",
       "type": "package",
-      "path": "microsoft.codeanalysis.csharp/5.6.0",
+      "path": "microsoft.codeanalysis.csharp/5.9.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3650,22 +3821,6 @@
         "lib/net10.0/tr/Microsoft.CodeAnalysis.CSharp.resources.dll",
         "lib/net10.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll",
         "lib/net10.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/Microsoft.CodeAnalysis.CSharp.dll",
-        "lib/net8.0/Microsoft.CodeAnalysis.CSharp.pdb",
-        "lib/net8.0/Microsoft.CodeAnalysis.CSharp.xml",
-        "lib/net8.0/cs/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/de/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/es/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/fr/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/it/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/ja/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/ko/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/pl/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/ru/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/tr/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "lib/net8.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.dll",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.pdb",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.xml",
@@ -3682,14 +3837,14 @@
         "lib/netstandard2.0/tr/Microsoft.CodeAnalysis.CSharp.resources.dll",
         "lib/netstandard2.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll",
         "lib/netstandard2.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll",
-        "microsoft.codeanalysis.csharp.5.6.0.nupkg.sha512",
+        "microsoft.codeanalysis.csharp.5.9.0.nupkg.sha512",
         "microsoft.codeanalysis.csharp.nuspec"
       ]
     },
-    "Microsoft.CodeAnalysis.CSharp.Workspaces/5.6.0": {
-      "sha512": "ojTMowxK2X0QPNSixGLI5RBgBQLgo1Blwyct4+HWCVYLXT4iKCyVKKmGjxw4h0AvPzGgd0XfWzSGKJk/jS2LkA==",
+    "Microsoft.CodeAnalysis.CSharp.Workspaces/5.9.0": {
+      "sha512": "D2zqK/k16fto0yMz0hcXMTkzOxEwMDJyA1mu/KXF9Befwz4zub3MpHQD8FeRxJtVSSsC3dQFYBw7zu7r/pfO7g==",
       "type": "package",
-      "path": "microsoft.codeanalysis.csharp.workspaces/5.6.0",
+      "path": "microsoft.codeanalysis.csharp.workspaces/5.9.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3711,22 +3866,6 @@
         "lib/net10.0/tr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
         "lib/net10.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
         "lib/net10.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
-        "lib/net8.0/Microsoft.CodeAnalysis.CSharp.Workspaces.dll",
-        "lib/net8.0/Microsoft.CodeAnalysis.CSharp.Workspaces.pdb",
-        "lib/net8.0/Microsoft.CodeAnalysis.CSharp.Workspaces.xml",
-        "lib/net8.0/cs/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
-        "lib/net8.0/de/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
-        "lib/net8.0/es/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
-        "lib/net8.0/fr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
-        "lib/net8.0/it/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
-        "lib/net8.0/ja/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
-        "lib/net8.0/ko/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
-        "lib/net8.0/pl/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
-        "lib/net8.0/pt-BR/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
-        "lib/net8.0/ru/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
-        "lib/net8.0/tr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
-        "lib/net8.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
-        "lib/net8.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.Workspaces.dll",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.Workspaces.pdb",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.CSharp.Workspaces.xml",
@@ -3743,14 +3882,14 @@
         "lib/netstandard2.0/tr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
         "lib/netstandard2.0/zh-Hans/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
         "lib/netstandard2.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll",
-        "microsoft.codeanalysis.csharp.workspaces.5.6.0.nupkg.sha512",
+        "microsoft.codeanalysis.csharp.workspaces.5.9.0.nupkg.sha512",
         "microsoft.codeanalysis.csharp.workspaces.nuspec"
       ]
     },
-    "Microsoft.CodeAnalysis.VisualBasic/5.6.0": {
-      "sha512": "biaSTpVc2aVkqg1fQsVmKGqxLnckzdJEOV0aUVPqpV9GczuwtxONyVrlQ2AzZNE6741FkO75tyj0VS6qlxJ/PA==",
+    "Microsoft.CodeAnalysis.VisualBasic/5.9.0": {
+      "sha512": "Z+MbJE5QLzgU1gt7q7HSQQ2LN6n3gewv/Evfp/Ya8VXd5pGeyFVEQpXbDsM6tuJJZ5eOQ/6q2wBV3rqMzpKG7g==",
       "type": "package",
-      "path": "microsoft.codeanalysis.visualbasic/5.6.0",
+      "path": "microsoft.codeanalysis.visualbasic/5.9.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3772,22 +3911,6 @@
         "lib/net10.0/tr/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
         "lib/net10.0/zh-Hans/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
         "lib/net10.0/zh-Hant/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "lib/net8.0/Microsoft.CodeAnalysis.VisualBasic.dll",
-        "lib/net8.0/Microsoft.CodeAnalysis.VisualBasic.pdb",
-        "lib/net8.0/Microsoft.CodeAnalysis.VisualBasic.xml",
-        "lib/net8.0/cs/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "lib/net8.0/de/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "lib/net8.0/es/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "lib/net8.0/fr/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "lib/net8.0/it/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "lib/net8.0/ja/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "lib/net8.0/ko/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "lib/net8.0/pl/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "lib/net8.0/pt-BR/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "lib/net8.0/ru/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "lib/net8.0/tr/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "lib/net8.0/zh-Hans/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "lib/net8.0/zh-Hant/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.VisualBasic.dll",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.VisualBasic.pdb",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.VisualBasic.xml",
@@ -3804,14 +3927,14 @@
         "lib/netstandard2.0/tr/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
         "lib/netstandard2.0/zh-Hans/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
         "lib/netstandard2.0/zh-Hant/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
-        "microsoft.codeanalysis.visualbasic.5.6.0.nupkg.sha512",
+        "microsoft.codeanalysis.visualbasic.5.9.0.nupkg.sha512",
         "microsoft.codeanalysis.visualbasic.nuspec"
       ]
     },
-    "Microsoft.CodeAnalysis.VisualBasic.Workspaces/5.6.0": {
-      "sha512": "p+t/PdrtID/HXlIZDRkW17+sGK7hEZoAVvG+UPchH0XT9tWR+po1SQT+mP+TSaP9pxSlR7ViPnxKt/EKJ9Rn9Q==",
+    "Microsoft.CodeAnalysis.VisualBasic.Workspaces/5.9.0": {
+      "sha512": "WPhh809s5+wewiwuxsA5Ly3JBIk7IUEIvKMnGQ5oDkSHCE+wKGo1sEf7YKSBnUde59rT82glra6vt6t/5j77ag==",
       "type": "package",
-      "path": "microsoft.codeanalysis.visualbasic.workspaces/5.6.0",
+      "path": "microsoft.codeanalysis.visualbasic.workspaces/5.9.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3833,22 +3956,6 @@
         "lib/net10.0/tr/Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll",
         "lib/net10.0/zh-Hans/Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll",
         "lib/net10.0/zh-Hant/Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll",
-        "lib/net8.0/Microsoft.CodeAnalysis.VisualBasic.Workspaces.dll",
-        "lib/net8.0/Microsoft.CodeAnalysis.VisualBasic.Workspaces.pdb",
-        "lib/net8.0/Microsoft.CodeAnalysis.VisualBasic.Workspaces.xml",
-        "lib/net8.0/cs/Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll",
-        "lib/net8.0/de/Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll",
-        "lib/net8.0/es/Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll",
-        "lib/net8.0/fr/Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll",
-        "lib/net8.0/it/Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll",
-        "lib/net8.0/ja/Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll",
-        "lib/net8.0/ko/Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll",
-        "lib/net8.0/pl/Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll",
-        "lib/net8.0/pt-BR/Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll",
-        "lib/net8.0/ru/Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll",
-        "lib/net8.0/tr/Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll",
-        "lib/net8.0/zh-Hans/Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll",
-        "lib/net8.0/zh-Hant/Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.VisualBasic.Workspaces.dll",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.VisualBasic.Workspaces.pdb",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.VisualBasic.Workspaces.xml",
@@ -3865,14 +3972,14 @@
         "lib/netstandard2.0/tr/Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll",
         "lib/netstandard2.0/zh-Hans/Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll",
         "lib/netstandard2.0/zh-Hant/Microsoft.CodeAnalysis.VisualBasic.Workspaces.resources.dll",
-        "microsoft.codeanalysis.visualbasic.workspaces.5.6.0.nupkg.sha512",
+        "microsoft.codeanalysis.visualbasic.workspaces.5.9.0.nupkg.sha512",
         "microsoft.codeanalysis.visualbasic.workspaces.nuspec"
       ]
     },
-    "Microsoft.CodeAnalysis.Workspaces.Common/5.6.0": {
-      "sha512": "ILscYALZ5u7MRl2paiiSqn23/5qiy3vvcqBEP/C7RnGJtQQKKtPz5vEBtvDeDTaLzB9/w9d/bxfRYnaq5Pz00g==",
+    "Microsoft.CodeAnalysis.Workspaces.Common/5.9.0": {
+      "sha512": "1A6jz50NG4nOEW8tX5+h+MyHqjWL0mPGwrUdwu+OlTfyknLo0GfxSqj4zEks8uVUdHdo9v8Ir9dHxACf8iYNEA==",
       "type": "package",
-      "path": "microsoft.codeanalysis.workspaces.common/5.6.0",
+      "path": "microsoft.codeanalysis.workspaces.common/5.9.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3894,22 +4001,6 @@
         "lib/net10.0/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll",
         "lib/net10.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll",
         "lib/net10.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll",
-        "lib/net8.0/Microsoft.CodeAnalysis.Workspaces.dll",
-        "lib/net8.0/Microsoft.CodeAnalysis.Workspaces.pdb",
-        "lib/net8.0/Microsoft.CodeAnalysis.Workspaces.xml",
-        "lib/net8.0/cs/Microsoft.CodeAnalysis.Workspaces.resources.dll",
-        "lib/net8.0/de/Microsoft.CodeAnalysis.Workspaces.resources.dll",
-        "lib/net8.0/es/Microsoft.CodeAnalysis.Workspaces.resources.dll",
-        "lib/net8.0/fr/Microsoft.CodeAnalysis.Workspaces.resources.dll",
-        "lib/net8.0/it/Microsoft.CodeAnalysis.Workspaces.resources.dll",
-        "lib/net8.0/ja/Microsoft.CodeAnalysis.Workspaces.resources.dll",
-        "lib/net8.0/ko/Microsoft.CodeAnalysis.Workspaces.resources.dll",
-        "lib/net8.0/pl/Microsoft.CodeAnalysis.Workspaces.resources.dll",
-        "lib/net8.0/pt-BR/Microsoft.CodeAnalysis.Workspaces.resources.dll",
-        "lib/net8.0/ru/Microsoft.CodeAnalysis.Workspaces.resources.dll",
-        "lib/net8.0/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll",
-        "lib/net8.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll",
-        "lib/net8.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.Workspaces.dll",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.Workspaces.pdb",
         "lib/netstandard2.0/Microsoft.CodeAnalysis.Workspaces.xml",
@@ -3926,7 +4017,7 @@
         "lib/netstandard2.0/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll",
         "lib/netstandard2.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll",
         "lib/netstandard2.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll",
-        "microsoft.codeanalysis.workspaces.common.5.6.0.nupkg.sha512",
+        "microsoft.codeanalysis.workspaces.common.5.9.0.nupkg.sha512",
         "microsoft.codeanalysis.workspaces.common.nuspec"
       ]
     },
@@ -3974,6 +4065,31 @@
         "lib/netstandard2.0/Microsoft.Extensions.AI.Abstractions.xml",
         "microsoft.extensions.ai.abstractions.10.8.0.nupkg.sha512",
         "microsoft.extensions.ai.abstractions.nuspec"
+      ]
+    },
+    "Microsoft.Extensions.AI.Evaluation/10.7.0": {
+      "sha512": "BdbJNfhc/pb3RkD19Sm/XuLK3x5AdU+AB+0HC8Nlu7WZTrVLnA8lpqIx1BB4k+KIKy5ZSH5RVH5HHfT+gwL9yg==",
+      "type": "package",
+      "path": "microsoft.extensions.ai.evaluation/10.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "README.md",
+        "buildTransitive/net462/Microsoft.Extensions.AI.Evaluation.targets",
+        "buildTransitive/net8.0/_._",
+        "lib/net10.0/Microsoft.Extensions.AI.Evaluation.dll",
+        "lib/net10.0/Microsoft.Extensions.AI.Evaluation.xml",
+        "lib/net462/Microsoft.Extensions.AI.Evaluation.dll",
+        "lib/net462/Microsoft.Extensions.AI.Evaluation.xml",
+        "lib/net8.0/Microsoft.Extensions.AI.Evaluation.dll",
+        "lib/net8.0/Microsoft.Extensions.AI.Evaluation.xml",
+        "lib/net9.0/Microsoft.Extensions.AI.Evaluation.dll",
+        "lib/net9.0/Microsoft.Extensions.AI.Evaluation.xml",
+        "lib/netstandard2.0/Microsoft.Extensions.AI.Evaluation.dll",
+        "lib/netstandard2.0/Microsoft.Extensions.AI.Evaluation.xml",
+        "microsoft.extensions.ai.evaluation.10.7.0.nupkg.sha512",
+        "microsoft.extensions.ai.evaluation.nuspec"
       ]
     },
     "Microsoft.Extensions.AI.OpenAI/10.5.0": {
@@ -5228,10 +5344,10 @@
         "microsoft.extensions.telemetry.abstractions.nuspec"
       ]
     },
-    "Microsoft.Extensions.VectorData.Abstractions/10.5.2": {
-      "sha512": "yDAXNuIO0zXl6zkDqUvTN3rynut0m1bBoWo3ylZQ/B510hGjnRO7cQIs/iGvT3tuxyOL1oKAAONidXH495hZzQ==",
+    "Microsoft.Extensions.VectorData.Abstractions/10.7.0": {
+      "sha512": "eh0JLxoztc9Wz7TrFVRQyotMY9CBh2t22lMPvzy61yaBDDFBsrisrFOD4NId2z/ujwsHVKDtyfDb9tkXwSV5Vw==",
       "type": "package",
-      "path": "microsoft.extensions.vectordata.abstractions/10.5.2",
+      "path": "microsoft.extensions.vectordata.abstractions/10.7.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5245,14 +5361,33 @@
         "lib/net8.0/Microsoft.Extensions.VectorData.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.Extensions.VectorData.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.Extensions.VectorData.Abstractions.xml",
-        "microsoft.extensions.vectordata.abstractions.10.5.2.nupkg.sha512",
+        "microsoft.extensions.vectordata.abstractions.10.7.0.nupkg.sha512",
         "microsoft.extensions.vectordata.abstractions.nuspec"
       ]
     },
-    "Microsoft.SemanticKernel/1.79.0": {
-      "sha512": "s2JwQtEL3NX9mQuFRZPvf6nUvJYJxrdTdVkYeERZHup2CQK8bGRA22JG5DavG+IixVT4i/S8OR9SYNhy3ythyg==",
+    "Microsoft.ML.Tokenizers/2.0.0": {
+      "sha512": "+b8lT4cLLO/sBR2hjvE/qG6qrZG15h7/PBvnIrzTh4xDaAxdHUY6449rC+1pHzQUsBiCHZVbj+VMn+xS0sL7TA==",
       "type": "package",
-      "path": "microsoft.semantickernel/1.79.0",
+      "path": "microsoft.ml.tokenizers/2.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net8.0/Microsoft.ML.Tokenizers.dll",
+        "lib/net8.0/Microsoft.ML.Tokenizers.xml",
+        "lib/netstandard2.0/Microsoft.ML.Tokenizers.dll",
+        "lib/netstandard2.0/Microsoft.ML.Tokenizers.xml",
+        "microsoft.ml.tokenizers.2.0.0.nupkg.sha512",
+        "microsoft.ml.tokenizers.nuspec",
+        "mlnetlogo.png"
+      ]
+    },
+    "Microsoft.SemanticKernel/1.80.0": {
+      "sha512": "KasYhur11+rrmwrOOnT0+fAFrf59xa3ykpXf7rzl8Nc2DfeFKYh1aRjReXtxVpzFMnlkpH8ZptAyTN5WAmwGMg==",
+      "type": "package",
+      "path": "microsoft.semantickernel/1.80.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5264,14 +5399,14 @@
         "lib/net8.0/Microsoft.SemanticKernel.xml",
         "lib/netstandard2.0/Microsoft.SemanticKernel.dll",
         "lib/netstandard2.0/Microsoft.SemanticKernel.xml",
-        "microsoft.semantickernel.1.79.0.nupkg.sha512",
+        "microsoft.semantickernel.1.80.0.nupkg.sha512",
         "microsoft.semantickernel.nuspec"
       ]
     },
-    "Microsoft.SemanticKernel.Abstractions/1.79.0": {
-      "sha512": "Ls9yuHB24uX6Q2fhMuREZLvVZjihy5x25OP5P2WYixKqJkL5j3+nqugLgV+hh4GInzRl+O5dyZKdGt/A7ePHsA==",
+    "Microsoft.SemanticKernel.Abstractions/1.80.0": {
+      "sha512": "l0MnUvjXGYWEUEbJ+pD9796+p4lGWDhe787WhNaP7mcG4d9z6apNuSZQEI0WrI9aiWgee6tPngBwRrP7In40xg==",
       "type": "package",
-      "path": "microsoft.semantickernel.abstractions/1.79.0",
+      "path": "microsoft.semantickernel.abstractions/1.80.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5283,14 +5418,14 @@
         "lib/net8.0/Microsoft.SemanticKernel.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.SemanticKernel.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.SemanticKernel.Abstractions.xml",
-        "microsoft.semantickernel.abstractions.1.79.0.nupkg.sha512",
+        "microsoft.semantickernel.abstractions.1.80.0.nupkg.sha512",
         "microsoft.semantickernel.abstractions.nuspec"
       ]
     },
-    "Microsoft.SemanticKernel.Connectors.AzureOpenAI/1.79.0": {
-      "sha512": "8J3xAH09wHwGQAKUJIk6ei4Vv8cOKgUxjvp5hoGJk9boXgLanWzhHH/5CyAZ+wZQKJhs1rYPs/gGkUijBTmyhQ==",
+    "Microsoft.SemanticKernel.Connectors.AzureOpenAI/1.80.0": {
+      "sha512": "D1o3ukNykxfi+3KfAELkuqQACyoSEX7cvNDoAW3b3858+zwBbQT1FSjFnQWHpl/cMEHdu/DQMCMA57boC+/s/g==",
       "type": "package",
-      "path": "microsoft.semantickernel.connectors.azureopenai/1.79.0",
+      "path": "microsoft.semantickernel.connectors.azureopenai/1.80.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5302,14 +5437,14 @@
         "lib/net8.0/Microsoft.SemanticKernel.Connectors.AzureOpenAI.xml",
         "lib/netstandard2.0/Microsoft.SemanticKernel.Connectors.AzureOpenAI.dll",
         "lib/netstandard2.0/Microsoft.SemanticKernel.Connectors.AzureOpenAI.xml",
-        "microsoft.semantickernel.connectors.azureopenai.1.79.0.nupkg.sha512",
+        "microsoft.semantickernel.connectors.azureopenai.1.80.0.nupkg.sha512",
         "microsoft.semantickernel.connectors.azureopenai.nuspec"
       ]
     },
-    "Microsoft.SemanticKernel.Connectors.OpenAI/1.79.0": {
-      "sha512": "64iGUuFn8h7PuK03Xe6zYqGt98H/r4hdC82d1e4Kwq6Kor0TEsTgligc2H0HbkL1J44Ry162v+WWUnXsUBZg9A==",
+    "Microsoft.SemanticKernel.Connectors.OpenAI/1.80.0": {
+      "sha512": "+CD4MswCUJ6poywp5jWuK9nbbDHEP3V07AkX/LCZr0uDTHwo5Ke+o/5+2DPGzwvFiQF90a02Y4gNnvBtfws0Jw==",
       "type": "package",
-      "path": "microsoft.semantickernel.connectors.openai/1.79.0",
+      "path": "microsoft.semantickernel.connectors.openai/1.80.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5321,7 +5456,7 @@
         "lib/net8.0/Microsoft.SemanticKernel.Connectors.OpenAI.xml",
         "lib/netstandard2.0/Microsoft.SemanticKernel.Connectors.OpenAI.dll",
         "lib/netstandard2.0/Microsoft.SemanticKernel.Connectors.OpenAI.xml",
-        "microsoft.semantickernel.connectors.openai.1.79.0.nupkg.sha512",
+        "microsoft.semantickernel.connectors.openai.1.80.0.nupkg.sha512",
         "microsoft.semantickernel.connectors.openai.nuspec"
       ]
     },
@@ -5347,10 +5482,10 @@
         "microsoft.semantickernel.connectors.qdrant.nuspec"
       ]
     },
-    "Microsoft.SemanticKernel.Core/1.79.0": {
-      "sha512": "95b61oIBzcMiy5zHdte35vXq7OxELskjPbnpXIkn9R1/e/nIB2l198pJ8D7UEIz2XuIkmEph1nADxesuJrNDIA==",
+    "Microsoft.SemanticKernel.Core/1.80.0": {
+      "sha512": "7zEOHLi5dnNTnXXVQ8btNXQ84nU1Cw1MBGQi0W0VSEaZjZKGZFHOU+9+Yvac20JS0Kc+S95nxhd4DbCbey351w==",
       "type": "package",
-      "path": "microsoft.semantickernel.core/1.79.0",
+      "path": "microsoft.semantickernel.core/1.80.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5362,7 +5497,7 @@
         "lib/net8.0/Microsoft.SemanticKernel.Core.xml",
         "lib/netstandard2.0/Microsoft.SemanticKernel.Core.dll",
         "lib/netstandard2.0/Microsoft.SemanticKernel.Core.xml",
-        "microsoft.semantickernel.core.1.79.0.nupkg.sha512",
+        "microsoft.semantickernel.core.1.80.0.nupkg.sha512",
         "microsoft.semantickernel.core.nuspec"
       ]
     },
@@ -5972,10 +6107,106 @@
         "qdrant.client.nuspec"
       ]
     },
-    "Serilog/4.4.1-dev-02443": {
-      "sha512": "b9JtU+ByGJ83I+dESzaUxw2B3RQYhJbNqa140H+4s8j/4ThZe1w+0q8Wy+ktdVWO0Qh3s+YY+ry0Mc9mkO/KLQ==",
+    "Roslynator.Analyzers/4.16.1": {
+      "sha512": "AGzq3UZvIwTGSh9xyIna+Q9F666S8UaLlX/Pk3Iz21qIAWjL8iYporVCcX1k/oi5chrRZ8VJRahup4me4HZptw==",
       "type": "package",
-      "path": "serilog/4.4.1-dev-02443",
+      "path": "roslynator.analyzers/4.16.1",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator.CSharp.Analyzers.CodeFixes.dll",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator.CSharp.Analyzers.dll",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator_Analyzers_Roslynator.CSharp.Workspaces.dll",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator_Analyzers_Roslynator.CSharp.dll",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator_Analyzers_Roslynator.Common.dll",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator_Analyzers_Roslynator.Core.dll",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator_Analyzers_Roslynator.Workspaces.Common.dll",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator_Analyzers_Roslynator.Workspaces.Core.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator.CSharp.Analyzers.CodeFixes.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator.CSharp.Analyzers.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator_Analyzers_Roslynator.CSharp.Workspaces.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator_Analyzers_Roslynator.CSharp.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator_Analyzers_Roslynator.Common.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator_Analyzers_Roslynator.Core.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator_Analyzers_Roslynator.Workspaces.Common.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator_Analyzers_Roslynator.Workspaces.Core.dll",
+        "docs/README.md",
+        "icon.png",
+        "roslynator.analyzers.4.16.1.nupkg.sha512",
+        "roslynator.analyzers.nuspec",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
+      ]
+    },
+    "Roslynator.CodeAnalysis.Analyzers/4.16.1": {
+      "sha512": "1RTxtLoPwvedkYx4lV6QFEkLnnh7AGjJckFcZcIWbaNAWgSflLHjk0i6xB5OoPROzMAGMc/8I10kh3BW01pj3g==",
+      "type": "package",
+      "path": "roslynator.codeanalysis.analyzers/4.16.1",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator.CodeAnalysis.Analyzers.CodeFixes.dll",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator.CodeAnalysis.Analyzers.dll",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.CSharp.Workspaces.dll",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.CSharp.dll",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Common.dll",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Core.dll",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Workspaces.Common.dll",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Workspaces.Core.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator.CodeAnalysis.Analyzers.CodeFixes.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator.CodeAnalysis.Analyzers.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.CSharp.Workspaces.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.CSharp.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Common.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Core.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Workspaces.Common.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Workspaces.Core.dll",
+        "docs/README.md",
+        "icon.png",
+        "roslynator.codeanalysis.analyzers.4.16.1.nupkg.sha512",
+        "roslynator.codeanalysis.analyzers.nuspec",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
+      ]
+    },
+    "Roslynator.Formatting.Analyzers/4.16.1": {
+      "sha512": "/ZJSaEux84qnviRHJysHGKufCO3+9TtHHijQMZCW+zVrd7c2lFI6Utbzxb2ddCZAJOZaCT4RgbAEeCsOPIf4uw==",
+      "type": "package",
+      "path": "roslynator.formatting.analyzers/4.16.1",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator.Formatting.Analyzers.CodeFixes.dll",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator.Formatting.Analyzers.dll",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator_Formatting_Analyzers_Roslynator.CSharp.Workspaces.dll",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator_Formatting_Analyzers_Roslynator.CSharp.dll",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator_Formatting_Analyzers_Roslynator.Common.dll",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator_Formatting_Analyzers_Roslynator.Core.dll",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator_Formatting_Analyzers_Roslynator.Workspaces.Common.dll",
+        "analyzers/dotnet/roslyn3.8/cs/Roslynator_Formatting_Analyzers_Roslynator.Workspaces.Core.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator.Formatting.Analyzers.CodeFixes.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator.Formatting.Analyzers.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator_Formatting_Analyzers_Roslynator.CSharp.Workspaces.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator_Formatting_Analyzers_Roslynator.CSharp.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator_Formatting_Analyzers_Roslynator.Common.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator_Formatting_Analyzers_Roslynator.Core.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator_Formatting_Analyzers_Roslynator.Workspaces.Common.dll",
+        "analyzers/dotnet/roslyn4.7/cs/Roslynator_Formatting_Analyzers_Roslynator.Workspaces.Core.dll",
+        "docs/README.md",
+        "icon.png",
+        "roslynator.formatting.analyzers.4.16.1.nupkg.sha512",
+        "roslynator.formatting.analyzers.nuspec",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
+      ]
+    },
+    "Serilog/4.4.0": {
+      "sha512": "ZC6Le3rr4TVJJjS4KsQAesxeF1EhW9qcZmmG7eP5Y2G3+gTGkJEUXkq4+tZNPtyp05I0wWOxnIjwtxFweJsObw==",
+      "type": "package",
+      "path": "serilog/4.4.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5997,7 +6228,7 @@
         "lib/net9.0/Serilog.xml",
         "lib/netstandard2.0/Serilog.dll",
         "lib/netstandard2.0/Serilog.xml",
-        "serilog.4.4.1-dev-02443.nupkg.sha512",
+        "serilog.4.4.0.nupkg.sha512",
         "serilog.nuspec"
       ]
     },
@@ -6252,6 +6483,67 @@
         "logo.png",
         "spectre.console.ansi.0.57.2.nupkg.sha512",
         "spectre.console.ansi.nuspec"
+      ]
+    },
+    "Spectre.Console.Cli/0.55.0": {
+      "sha512": "cFJTB1te4eaAICd4Zp+8T/kiRn1ikQxgGqmoNarb1qoQ/7LzHAvVQ62x5U9GW3E0QI7sZLcXIIoq4CpqgTx42Q==",
+      "type": "package",
+      "path": "spectre.console.cli/0.55.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "lib/net10.0/Spectre.Console.Cli.dll",
+        "lib/net10.0/Spectre.Console.Cli.xml",
+        "lib/net10.0/de/Spectre.Console.Cli.resources.dll",
+        "lib/net10.0/es/Spectre.Console.Cli.resources.dll",
+        "lib/net10.0/fr/Spectre.Console.Cli.resources.dll",
+        "lib/net10.0/it/Spectre.Console.Cli.resources.dll",
+        "lib/net10.0/ja/Spectre.Console.Cli.resources.dll",
+        "lib/net10.0/ko/Spectre.Console.Cli.resources.dll",
+        "lib/net10.0/pt/Spectre.Console.Cli.resources.dll",
+        "lib/net10.0/ru/Spectre.Console.Cli.resources.dll",
+        "lib/net10.0/sv/Spectre.Console.Cli.resources.dll",
+        "lib/net10.0/zh-Hans/Spectre.Console.Cli.resources.dll",
+        "lib/net8.0/Spectre.Console.Cli.dll",
+        "lib/net8.0/Spectre.Console.Cli.xml",
+        "lib/net8.0/de/Spectre.Console.Cli.resources.dll",
+        "lib/net8.0/es/Spectre.Console.Cli.resources.dll",
+        "lib/net8.0/fr/Spectre.Console.Cli.resources.dll",
+        "lib/net8.0/it/Spectre.Console.Cli.resources.dll",
+        "lib/net8.0/ja/Spectre.Console.Cli.resources.dll",
+        "lib/net8.0/ko/Spectre.Console.Cli.resources.dll",
+        "lib/net8.0/pt/Spectre.Console.Cli.resources.dll",
+        "lib/net8.0/ru/Spectre.Console.Cli.resources.dll",
+        "lib/net8.0/sv/Spectre.Console.Cli.resources.dll",
+        "lib/net8.0/zh-Hans/Spectre.Console.Cli.resources.dll",
+        "lib/net9.0/Spectre.Console.Cli.dll",
+        "lib/net9.0/Spectre.Console.Cli.xml",
+        "lib/net9.0/de/Spectre.Console.Cli.resources.dll",
+        "lib/net9.0/es/Spectre.Console.Cli.resources.dll",
+        "lib/net9.0/fr/Spectre.Console.Cli.resources.dll",
+        "lib/net9.0/it/Spectre.Console.Cli.resources.dll",
+        "lib/net9.0/ja/Spectre.Console.Cli.resources.dll",
+        "lib/net9.0/ko/Spectre.Console.Cli.resources.dll",
+        "lib/net9.0/pt/Spectre.Console.Cli.resources.dll",
+        "lib/net9.0/ru/Spectre.Console.Cli.resources.dll",
+        "lib/net9.0/sv/Spectre.Console.Cli.resources.dll",
+        "lib/net9.0/zh-Hans/Spectre.Console.Cli.resources.dll",
+        "lib/netstandard2.0/Spectre.Console.Cli.dll",
+        "lib/netstandard2.0/Spectre.Console.Cli.xml",
+        "lib/netstandard2.0/de/Spectre.Console.Cli.resources.dll",
+        "lib/netstandard2.0/es/Spectre.Console.Cli.resources.dll",
+        "lib/netstandard2.0/fr/Spectre.Console.Cli.resources.dll",
+        "lib/netstandard2.0/it/Spectre.Console.Cli.resources.dll",
+        "lib/netstandard2.0/ja/Spectre.Console.Cli.resources.dll",
+        "lib/netstandard2.0/ko/Spectre.Console.Cli.resources.dll",
+        "lib/netstandard2.0/pt/Spectre.Console.Cli.resources.dll",
+        "lib/netstandard2.0/ru/Spectre.Console.Cli.resources.dll",
+        "lib/netstandard2.0/sv/Spectre.Console.Cli.resources.dll",
+        "lib/netstandard2.0/zh-Hans/Spectre.Console.Cli.resources.dll",
+        "logo.png",
+        "spectre.console.cli.0.55.0.nupkg.sha512",
+        "spectre.console.cli.nuspec"
       ]
     },
     "Spectre.Console.Testing/0.57.2": {
@@ -6990,6 +7282,10 @@
       "Ragnar >= 1.0.0",
       "Ragnar.Core >= 1.0.0",
       "Ragnar.Embedding >= 1.0.0",
+      "Roslynator.Analyzers >= 4.16.1",
+      "Roslynator.CodeAnalysis.Analyzers >= 4.16.1",
+      "Roslynator.Formatting.Analyzers >= 4.16.1",
+      "Serilog >= 4.4.0",
       "Serilog.AspNetCore >= 10.0.0",
       "Spectre.Console.Testing >= 0.57.2",
       "System.CommandLine >= 2.0.11",
@@ -7006,9 +7302,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jp325\\source\\Ragnar\\Ragnar.UnitTests\\Ragnar.UnitTests.csproj",
-      "projectName": "Ragnar.UnitTests",
-      "projectPath": "C:\\Users\\jp325\\source\\Ragnar\\Ragnar.UnitTests\\Ragnar.UnitTests.csproj",
+      "projectUniqueName": "C:\\Users\\jp325\\source\\Ragnar\\Ragnar.UnitTests\\Ragnar.Tests.csproj",
+      "projectName": "Ragnar.Tests",
+      "projectPath": "C:\\Users\\jp325\\source\\Ragnar\\Ragnar.UnitTests\\Ragnar.Tests.csproj",
       "packagesPath": "C:\\Users\\jp325\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\jp325\\source\\Ragnar\\Ragnar.UnitTests\\obj\\",
       "projectStyle": "PackageReference",
@@ -7091,6 +7387,28 @@
           "Qdrant.Client": {
             "target": "Package",
             "version": "[1.19.0, )"
+          },
+          "Roslynator.Analyzers": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[4.16.1, )"
+          },
+          "Roslynator.CodeAnalysis.Analyzers": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[4.16.1, )"
+          },
+          "Roslynator.Formatting.Analyzers": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[4.16.1, )"
+          },
+          "Serilog": {
+            "target": "Package",
+            "version": "[4.4.0, )"
           },
           "Serilog.AspNetCore": {
             "target": "Package",

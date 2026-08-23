@@ -1,14 +1,14 @@
-namespace Ragnar.UnitTests;
+namespace Ragnar.Tests;
 
 public class AnsiConsoleOutputWriterTests
 {
-    private readonly IOutputWriter Writer = new AnsiConsoleOutputWriter();
+    private readonly IOutputWriter _writer = new AnsiConsoleOutputWriter();
 
     [Fact]
     public void Markup_WithNullStyle_CallsPlainMarkup()
     {
         // Act & Assert (Verifies no exceptions and correct routing logic)
-        var ex = Record.Exception(() => Writer.Markup("Test", null));
+        var ex = Record.Exception(() => _writer.Markup("Test", null));
         ex.Should().BeNull();
     }
 
@@ -16,14 +16,14 @@ public class AnsiConsoleOutputWriterTests
     public void Markup_WithStyle_CallsStyledMarkup()
     {
         var style = new Style(Color.Red);
-        var ex = Record.Exception(() => Writer.Markup("Test", style));
+        var ex = Record.Exception(() => _writer.Markup("Test", style));
         ex.Should().BeNull();
     }
 
     [Fact]
     public void WriteRule_CallsAnsiConsoleWriteRule()
     {
-        var ex = Record.Exception(() => Writer.WriteRule());
-        ex.Should().BeNull();
+        var Ex = Record.Exception(() => _writer.WriteRule());
+        Ex.Should().BeNull();
     }
 }

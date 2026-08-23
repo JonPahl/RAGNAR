@@ -1,6 +1,3 @@
-
-
-
 namespace Ragnar.Branding;
 
 /// <summary>
@@ -8,16 +5,14 @@ namespace Ragnar.Branding;
 /// </summary>
 public static class AssemblyExtensions
 {
-    extension(IAssemblyInfo asm)
+    /// <summary>
+    /// Assembly extension method.
+    /// </summary>
+    /// <param name="Asm">Assembly Info.</param>
+    extension(IAssemblyInfo Asm)
     {
-        /// <summary>
-        /// Gets the informational version of an assembly.
-        /// </summary>
-        /// <returns>The informational version as a string, or null if not found.</returns>
-        /// <example>
-        /// <![CDATA[ var asm = new MyAssembly();
-        /// string? infoVersion = AssemblyExtensions.InformationalVersion(asm); ]]>
-        /// </example>
-        public string? InformationalVersion => asm.Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "1.0.0";
+        /// <summary>Retrieves the informational version from an assembly.</summary>
+        /// <returns>The informational version string or default fallback.</returns>
+        public string? InformationalVersion => Asm.Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "1.0.0";
     }
 }

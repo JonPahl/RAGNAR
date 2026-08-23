@@ -1,4 +1,4 @@
-namespace Ragnar.UnitTests.Extensions;
+namespace Ragnar.Tests.Extensions;
 
 public sealed class QuestionExtensionsTests
 {
@@ -13,11 +13,11 @@ public sealed class QuestionExtensionsTests
         }.ToImmutableArray();
 
         // Act
-        var Inactive = questions.InActiveOnly;
+        var inactive = questions.InActiveOnly;
 
         // Assert
-        var Item = Assert.Single(Inactive);
-        Item.Text.Should().Be("Q2");
+        var item = Assert.Single(inactive);
+        item.Text.Should().Be("Q2");
     }
 
     [Fact]
@@ -25,14 +25,14 @@ public sealed class QuestionExtensionsTests
     {
         var questions = new[]
         {
-            Ragnar.Core.Model.Question.IsActive("Q1", "k1", QuestionCategory.Refactor),
-            Ragnar.Core.Model.Question.IsDisabled("Q2", "k2", QuestionCategory.Logging)
+            Question.IsActive("Q1", "k1", QuestionCategory.Refactor),
+            Question.IsDisabled("Q2", "k2", QuestionCategory.Logging)
         }.ToImmutableArray();
 
-        var Active = questions.ActiveOnly;
+        var active = questions.ActiveOnly;
 
-        var Item = Assert.Single(Active);
-        Item.Text.Should().Be("Q1");
+        var item = Assert.Single(active);
+        item.Text.Should().Be("Q1");
     }
 
     [Fact]
@@ -40,23 +40,22 @@ public sealed class QuestionExtensionsTests
     {
         var questions = new[]
         {
-            Ragnar.Core.Model.Question.IsActive("Q1", "k1", QuestionCategory.Refactor),
-            Ragnar.Core.Model.Question.IsActive("Q2", "k2", QuestionCategory.Logging)
+            Question.IsActive("Q1", "k1", QuestionCategory.Refactor),
+            Question.IsActive("Q2", "k2", QuestionCategory.Logging)
         }.ToImmutableArray();
 
         var categories = ImmutableHashSet.Create(QuestionCategory.Refactor);
 
         var filtered = questions.WithCategory(categories);
 
-        Assert.Single(filtered);
-        Assert.Equal(QuestionCategory.Refactor, filtered[0].Category);
+        var item = Assert.Single(filtered);
+        Assert.Equal(QuestionCategory.Refactor, item.Category);
     }
 
     [Fact]
     public void WithCategory_Throws_WhenCategoriesNull()
     {
-        var questions = ImmutableArray<Ragnar.Core.Model.Question>.Empty;
+        var questions = ImmutableArray<Question>.Empty;
         Assert.Throws<ArgumentNullException>(() => questions.WithCategory(null!));
     }
-
 }

@@ -1,4 +1,4 @@
-namespace Ragnar.UnitTests.Branding;
+namespace Ragnar.Tests.Branding;
 
 public sealed class BrandingHeaderTests
 {
@@ -6,17 +6,17 @@ public sealed class BrandingHeaderTests
     public void Display_WritesExpectedOutput_WithVersion()
     {
         // Arrange
-        var AssemblyMock = new Mock<IAssemblyInfo>();
-        AssemblyMock.Setup(A => A.Assembly).Returns(Assembly.GetExecutingAssembly());
-        var WriterMock = new Mock<IOutputWriter>();
-        var display = new ApplicationHeader(WriterMock.Object, AssemblyMock.Object);
+        var assemblyMock = new Mock<IAssemblyInfo>();
+        assemblyMock.Setup(a => a.Assembly).Returns(Assembly.GetExecutingAssembly());
+        var writerMock = new Mock<IOutputWriter>();
+        var display = new ApplicationHeader(writerMock.Object, assemblyMock.Object);
 
         // Act
         display.RenderBranding();
 
         // Assert
-        WriterMock.Verify(w => w.Write(It.IsAny<IRenderable>()), Times.AtLeastOnce);
-        WriterMock.Verify(w => w.WriteLine(), Times.AtLeastOnce);
-        WriterMock.Verify(w => w.WriteRule(), Times.Once);
+        writerMock.Verify(w => w.Write(It.IsAny<IRenderable>()), Times.AtLeastOnce);
+        writerMock.Verify(w => w.WriteLine(), Times.AtLeastOnce);
+        writerMock.Verify(w => w.WriteRule(), Times.Once);
     }
 }

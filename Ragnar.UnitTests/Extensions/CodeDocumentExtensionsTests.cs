@@ -1,4 +1,4 @@
-namespace Ragnar.UnitTests.Extensions;
+namespace Ragnar.Tests.Extensions;
 
 public sealed class CodeDocumentExtensionsTests
 {

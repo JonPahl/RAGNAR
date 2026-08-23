@@ -1,17 +1,16 @@
+using Ragnar.Contracts;
+
 namespace Ragnar.Branding;
 
-/// <summary>
-/// Setups up and displays Branding for Ragnar application.
-/// </summary>
-/// <param name="writer">console output library.</param>
-/// <param name="assemblyInfo">AssemblyInfo interface.</param>
-public sealed class ApplicationHeader(IOutputWriter writer, IAssemblyInfo assemblyInfo)
+/// <summary>Initializes a new instance of the application header.</summary>
+/// <param name = "Writer"> Console output writer for branding display.</param>
+/// <param name = "AssemblyInfo"> Assembly information provider.</param>
+public sealed class ApplicationHeader(IOutputWriter Writer, IAssemblyInfo AssemblyInfo)
     : IApplicationHeader
 {
-    /// <summary>
-    /// Gets current assembly version.
-    /// </summary>
-    private readonly string versionNumber = assemblyInfo.InformationalVersion ?? "1.0.0";
+
+    /// <summary>Caches the current assembly informational version string.</summary>
+    private readonly string versionNumber = AssemblyInfo.InformationalVersion ?? "1.0.0";
 
     /// <summary>
     /// RenderBranding branding banner onto the console UI.
@@ -27,13 +26,13 @@ public sealed class ApplicationHeader(IOutputWriter writer, IAssemblyInfo assemb
         var versionText = $"Version {versionNumber}";
         var version = new Text(versionText, new Style(Color.Grey)) { Justification = Justify.Center };
 
-        writer.Write(appName);
-        writer.Write(new Text(title + " (Repository Augmented Generator & Resolver)", Styles.BoldBlue));
-        writer.Write(version);
-        writer.WriteLine();
-        writer.Write(tagLine2);
-        writer.WriteLine();
-        writer.WriteRule();
-        writer.WriteLine();
+        Writer.Write(appName);
+        Writer.Write(new Text(title + " (Repository Augmented Generator & Resolver)", Styles.BoldBlue));
+        Writer.Write(version);
+        Writer.WriteLine();
+        Writer.Write(tagLine2);
+        Writer.WriteLine();
+        Writer.WriteRule();
+        Writer.WriteLine();
     }
 }

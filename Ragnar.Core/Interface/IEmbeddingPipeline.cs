@@ -2,7 +2,7 @@ namespace Ragnar.Core.Interface;
 
 public interface IEmbeddingPipeline
 {
-    ValueTask EnsureCollectionExistsAsync(CancellationToken ct);
+    ValueTask EnsureCollectionExistsAsync(CancellationToken Ct);
 
-    ValueTask PopulateAsync(CancellationToken ct);
+    ValueTask PopulateAsync(CancellationToken Ct);
 }

@@ -1,10 +1,8 @@
-
-
-namespace Ragnar.UnitTests;
+namespace Ragnar.Tests;
 
 public class ConfigurationValidatorTests
 {
-    private readonly OllamaOptionsValidator Validator = new();
+    private readonly OllamaOptionsValidator _validator = new();
 
     [Fact]
     public void Validate_ValidOptions_ReturnsNoErrors()
@@ -14,10 +12,10 @@ public class ConfigurationValidatorTests
             Host = "localhost",
             Port = 11434,
             Timeout = TimeSpan.FromMinutes(20),
-            LlmModel = ""
+            LlmModel = "model"
         };
 
-        var result = Validator.Validate(options);
+        var result = _validator.Validate(options);
         result.IsValid.Should().BeTrue();
     }
 
@@ -26,9 +24,9 @@ public class ConfigurationValidatorTests
     {
         var options = new OllamaOptions { Host = "", Port = 99999, Timeout = TimeSpan.Zero, LlmModel = "" };
 
-        var result = Validator.Validate(options);
+        var result = _validator.Validate(options);
         result.IsValid.Should().BeFalse();
-        result.Errors.Should().HaveCount(3);
+        result.Errors.Should().HaveCount(4);
 
         result.Errors.First().PropertyName.Should().Be("Host");
     }

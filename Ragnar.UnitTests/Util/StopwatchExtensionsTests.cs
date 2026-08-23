@@ -1,36 +1,23 @@
-namespace Ragnar.UnitTests.Util;
+namespace Ragnar.Tests.Util;
 
 public sealed class StopwatchExtensionsTests
 {
-    [Fact]
-    public void ElapsedTimeString_FormatsAs_mm_ss_WithLeadingZero()
+    [Theory]
+    [InlineData(1500)]
+    [InlineData(61_000)] // > 1 minute)]
+    public void ElapsedTimeString_ReturnsMmSsFormat(int delay)
     {
         // Arrange
-        var sw = new Stopwatch();
-        sw.Start();
-        Thread.Sleep(100);
-        sw.Stop();
+        var Sw = new Stopwatch();
 
         // Act
-        var Formatted = sw.ElapsedTimeString();
+        Sw.Start();
+        Thread.Sleep(delay);
+        Sw.Stop();
+
+        var Result = Sw.ElapsedTimeString();
 
         // Assert
-        Assert.Matches(@"^00:\d{2}$", Formatted);
-    }
-
-    [Fact]
-    public void ElapsedTimeString_HandlesLargeValues()
-    {
-        // Arrange
-        var sw = new Stopwatch();
-        sw.Start();
-        Thread.Sleep(61_000); // > 1 minute
-        sw.Stop();
-
-        // Act
-        var Formatted = sw.ElapsedTimeString();
-
-        // Assert
-        Assert.Matches(@"^\d{2}:\d{2}$", Formatted);
+        Result.Should().MatchRegex(@"^\d{2}:\d{2}$");
     }
 }

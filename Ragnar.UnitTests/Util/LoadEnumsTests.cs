@@ -1,4 +1,4 @@
-namespace Ragnar.UnitTests.Util;
+namespace Ragnar.Tests.Util;
 
 public sealed class LoadEnumsTests
 {

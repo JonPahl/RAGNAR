@@ -56,6 +56,28 @@
             "CsvHelper": {
               "target": "Package",
               "version": "[33.1.0, )"
+            },
+            "Roslynator.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[4.16.1, )"
+            },
+            "Roslynator.CodeAnalysis.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[4.16.1, )"
+            },
+            "Roslynator.Formatting.Analyzers": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[4.16.1, )"
+            },
+            "Serilog": {
+              "target": "Package",
+              "version": "[4.4.0, )"
             }
           },
           "imports": [
@@ -447,6 +469,10 @@
               "target": "Package",
               "version": "[4.16.1, )"
             },
+            "Serilog": {
+              "target": "Package",
+              "version": "[4.4.0, )"
+            },
             "Serilog.AspNetCore": {
               "target": "Package",
               "version": "[10.0.0, )"
@@ -809,7 +835,7 @@
             },
             "Microsoft.CodeAnalysis.CSharp": {
               "target": "Package",
-              "version": "[5.6.0, )"
+              "version": "[5.9.0, )"
             },
             "Microsoft.Extensions.Options": {
               "target": "Package",
@@ -817,7 +843,7 @@
             },
             "Microsoft.SemanticKernel": {
               "target": "Package",
-              "version": "[1.79.0, )"
+              "version": "[1.80.0, )"
             },
             "OllamaSharp": {
               "target": "Package",
@@ -847,7 +873,7 @@
             },
             "Serilog": {
               "target": "Package",
-              "version": "[4.4.1-dev-02443, )"
+              "version": "[4.4.0, )"
             },
             "Serilog.AspNetCore": {
               "target": "Package",

@@ -1,9 +1,5 @@
+﻿namespace Ragnar.Core.Options;
 
-
-
-namespace Ragnar.Core.Options;
-/// <summary>Filters files by extension, name, and directory.</summary>
-/// <example><![CDATA[var opts = new FileLoadOptions { AllowedFileExtensions = [".cs", ".json"] };]]></example>
 public record FileLoadOptions
 {
     /// <summary>Gets filters files by extension, name, and directory.</summary>

@@ -1,4 +1,4 @@
-namespace Ragnar.Core.Utils;
+﻿namespace Ragnar.Core.Utils;
 
 /// <summary>
 /// Provides deterministic ID generation for vector store points.
@@ -12,7 +12,7 @@ public static class Point
     /// <example><![CDATA[PointId id = Utils.CreateStringPointId("file.cs", 5);]]></example>
     public static ulong FromFilePathAndIndex(in ReadOnlySpan<char> path, in ReadOnlySpan<char> index)
     {
-        if(index.IsEmpty || index.IsWhiteSpace())
+        if (index.IsEmpty || index.IsWhiteSpace())
             throw new ArgumentException("Index cannot be null or whitespace.", nameof(index));
 
         var normalizedPath = Path.GetFullPath(path.ToString()).AsSpan().TrimEnd(Path.DirectorySeparatorChar);

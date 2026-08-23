@@ -1,4 +1,4 @@
-namespace Ragnar.UnitTests.Embedding;
+namespace Ragnar.Tests.Embedding;
 
 public sealed class DefaultQuestionFactoryTests
 {
@@ -20,26 +20,26 @@ public sealed class DefaultQuestionFactoryTests
         var factory = new DefaultQuestionFactory();
         var question = factory.CreateInactive("Disabled?", "disabled", QuestionCategory.Logging);
 
-        Assert.False(question.IsEnabled);
+        question.IsEnabled.Should().BeFalse();
     }
 
     [Theory]
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    public void CreateActive_Throws_WhenTextIsInvalid(string? text)
+    public void CreateActive_Throws_WhenTextIsInvalid(string? Text)
     {
         var factory = new DefaultQuestionFactory();
-        Assert.Throws<ArgumentException>(() => factory.CreateActive(text!, "key", QuestionCategory.Refactor));
+        Assert.Throws<ArgumentException>(() => factory.CreateActive(Text!, "key", QuestionCategory.Refactor));
     }
 
     [Theory]
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    public void CreateInactive_Throws_WhenKeyIsInvalid(string? key)
+    public void CreateInactive_Throws_WhenKeyIsInvalid(string? Key)
     {
         var factory = new DefaultQuestionFactory();
-        Assert.Throws<ArgumentException>(() => factory.CreateInactive("Text", key!, QuestionCategory.Refactor));
+        Assert.Throws<ArgumentException>(() => factory.CreateInactive("Text", Key!, QuestionCategory.Refactor));
     }
 }

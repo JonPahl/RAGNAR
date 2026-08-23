@@ -1,14 +1,12 @@
+﻿namespace Ragnar.Plugins;
 
-
-
-namespace Ragnar.Plugins;
 /// <summary>Provides questions from an external source.</summary>
 public interface IQuestionProvider
 {
     /// <summary>Gets the name of this provider (e.g., "JSON", "API").</summary>
     string ProviderName { get; }
 
-    void SetFileName(string fileName);
+    void SetFileName(string FileName);
 
     /// <summary>Lets the provider load and return a set of question configurations asynchronously.</summary>
     /// <param name="ct">The cancellation token to observe.</param>
@@ -18,5 +16,5 @@ public interface IQuestionProvider
     /// var provider = new JsonQuestionProvider("questions.json");
     /// var questions = await provider.LoadQuestionAsync(ct);
     /// ]]></example>
-    Task<IEnumerable<QuestionConfiguration>> LoadQuestionAsync(CancellationToken ct);
+    Task<IEnumerable<QuestionConfiguration>> LoadQuestionAsync(CancellationToken Ct);
 }

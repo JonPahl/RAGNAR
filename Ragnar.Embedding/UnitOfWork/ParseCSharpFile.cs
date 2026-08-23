@@ -1,4 +1,4 @@
-namespace Ragnar.Embedding.UnitOfWork;
+﻿namespace Ragnar.Embedding.UnitOfWork;
 
 /// <summary>
 /// Parses C# files using syntax tree chunker.
@@ -7,12 +7,13 @@ namespace Ragnar.Embedding.UnitOfWork;
 /// </example>
 internal class ParseCSharpFile(Serilog.ILogger Logger) : BaseFileParser(Logger)
 {
+    protected ChunkBySyntaxTree CodeChunker = new();
+
     public override async ValueTask<CodeDocument[]> ParseFileAsync(string filePath, CancellationToken ct)
     {
-        var fileConent = await ReadFileAsync(filePath, ct);
+        var fileContent = await ReadFileAsync(filePath, ct);
 
-        var codeChunker = new ChunkBySyntaxTree();
-        var response = codeChunker.ChunkSourceFile(filePath, fileConent);
+        var response = CodeChunker.ChunkSourceFile(filePath, fileContent);
 
         return response is null ? [] : [.. response];
     }

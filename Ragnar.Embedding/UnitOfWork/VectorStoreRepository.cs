@@ -1,4 +1,4 @@
-namespace Ragnar.Embedding.UnitOfWork;
+﻿namespace Ragnar.Embedding.UnitOfWork;
 
 /// <summary>
 /// Repository for upserting code embeddings into Qdrant vector store.
@@ -6,19 +6,38 @@ namespace Ragnar.Embedding.UnitOfWork;
 /// <remarks>
 /// Initializes a new instance of the <see cref="VectorStoreRepository"/> class.
 /// </remarks>
-/// <param name="clientFactory">Factory to resolve Ollama embedding client.</param>
-/// <param name="qdrantClient">Qdrant vector database client.</param>
-/// <param name="applicationOptions">Application configuration options.</param>
-public class VectorStoreRepository(IOllamaClientProvider clientFactory, IQdrantClient qdrantClient, IOptions<ApplicationOptions> applicationOptions) : IVectorStoreRepository
+public class VectorStoreRepository
+    : IVectorStoreRepository
 {
-    private readonly IOllamaApiClient EmbeddingClient = clientFactory.FindClient(OllamaType.Embedding);
-    private readonly ApplicationOptions ApplicationOption = applicationOptions.Value;
+    private readonly IOllamaApiClient _embeddingClient;
+
+    private readonly ApplicationOptions _applicationOption;
+
+    private readonly IEmbeddingGenerator<string, Embedding<float>> _generator;
+
+    private readonly IQdrantClient _qdrantClient;
+
+    private readonly Serilog.ILogger _logger;
+
+    public VectorStoreRepository(
+        Serilog.ILogger Logger,
+        IOllamaClientFactory ClientFactory, IQdrantClient QdrantClient, IOptions<RagnarConfig> RagnarOptions)
+    {
+        _embeddingClient = ClientFactory.FindClient(OllamaServiceType.Embedding);
+
+        this._qdrantClient = QdrantClient;
+        this._logger = Logger;
+
+        _applicationOption = RagnarOptions.Value.ApplicationOptions;
+
+        _generator = _embeddingClient.AsEmbeddingGenerator();
+    }
 
     /// <summary>
     /// Generates embeddings for code documents and upserts them to Qdrant.
     /// </summary>
-    /// <param name="codeDocuments">Array of code documents to embed and store.</param>
-    /// <param name="ct">Cancellation token.</param>
+    /// <param name="CodeDocuments">Array of code documents to embed and store.</param>
+    /// <param name="Ct">Cancellation token.</param>
     /// <returns>Result of the upsert operation.</returns>
     /// <example>
     /// <code><![CDATA[
@@ -26,21 +45,21 @@ public class VectorStoreRepository(IOllamaClientProvider clientFactory, IQdrantC
     /// new CodeDocument { FileName = "Program.cs", ElementName = "Main", Code = "void Main() {}" }};
     /// var result = await repository.UpsertBatchAsync(codeDocuments, CancellationToken.None); ]]></code>
     /// </example>
-    public async Task<UpdateResult> UpsertBatchAsync(CodeDocument[] codeDocuments, CancellationToken ct)
+    public async Task<UpdateResult> UpsertBatchAsync(CodeDocument[] CodeDocuments, CancellationToken Ct)
     {
-        ct.ThrowIfCancellationRequested();
-        var generator = EmbeddingClient.AsEmbeddingGenerator();
+        Ct.ThrowIfCancellationRequested();
+
         var embeddingGroup = new List<PointStruct>();
 
-        foreach(var codeDoc in codeDocuments)
+        foreach (var codeDoc in CodeDocuments)
         {
             var textToEmbed = $"Context: {codeDoc.ElementName}\nCode:\n{codeDoc.Code}";
-            var vector = await GenerateEmbeddingAsync(generator, textToEmbed, ct);
-            var pointId = codeDoc.AsPoint();
+
+            var vector = await GenerateEmbeddingAsync(textToEmbed, Ct);
 
             var point = new PointStruct
             {
-                Id = pointId,
+                Id = codeDoc.AsPoint(),
                 Vectors = vector,
                 Payload = { codeDoc.Dictionary }
             };
@@ -51,11 +70,12 @@ public class VectorStoreRepository(IOllamaClientProvider clientFactory, IQdrantC
         try
         {
             return embeddingGroup.Count != 0
-                ? await qdrantClient.UpsertAsync(ApplicationOption.VectorStoreName, embeddingGroup, cancellationToken: ct)
+                ? await _qdrantClient.UpsertAsync(_applicationOption.VectorStoreName, embeddingGroup, cancellationToken: Ct)
                 : new UpdateResult();
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.Fatal(ex, ex.Message);
             return new UpdateResult() { Status = UpdateStatus.UnknownUpdateStatus };
         }
     }
@@ -63,13 +83,12 @@ public class VectorStoreRepository(IOllamaClientProvider clientFactory, IQdrantC
     /// <summary>
     /// Generates a vector embedding for the given text chunk.
     /// </summary>
-    /// <param name="generator">Embedding generator instance.</param>
-    /// <param name="chunk">Text to embed.</param>
-    /// <param name="ct">Cancellation token.</param>
+    /// <param name="Chunk">Text to embed.</param>
+    /// <param name="Ct">Cancellation token.</param>
     /// <returns>Float array representing the embedding vector.</returns>
-    private static async Task<float[]> GenerateEmbeddingAsync(IEmbeddingGenerator<string, Embedding<float>> generator, string chunk, CancellationToken ct)
+    private async Task<float[]> GenerateEmbeddingAsync(string Chunk, CancellationToken Ct)
     {
-        var embedding = await generator.GenerateAsync(chunk, cancellationToken: ct).ConfigureAwait(false);
+        var embedding = await _generator.GenerateAsync(Chunk, cancellationToken: Ct).ConfigureAwait(false);
         return embedding.Vector.ToArray();
     }
 }

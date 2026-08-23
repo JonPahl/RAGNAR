@@ -1,10 +1,10 @@
-namespace Ragnar.Core.Model;
+﻿namespace Ragnar.Core.Model;
 
 /// <summary>
-/// Question to ask AI service against stored text.
+/// question to ask AI service against stored text.
 /// </summary>
-/// <param name="IsEnabled">Bool should load Question.</param>
-/// <param name="Text">Question text.</param>
+/// <param name="IsEnabled">Bool should load question.</param>
+/// <param name="Text">question text.</param>
 /// <param name="Filename">Save filename.</param>
 /// <param name="Category">QuestionCategory to group questions together. </param>
 public sealed record class Question(
@@ -20,56 +20,63 @@ public sealed record class Question(
     public string MarkdownHeader => $"### <span style=\"color:darkblue;\">[{Category}]</span> {Text}";
 
     /// <summary>Creates an active question.</summary>
-    /// <param name="text">The question text.</param>
-    /// <param name="key">The key identifier.</param>
-    /// <param name="category">The category.</param>
+    /// <param name="Text">The question text.</param>
+    /// <param name="Key">The key identifier.</param>
+    /// <param name="Category">The category.</param>
     /// <returns>A new active question instance.</returns>
-    public static Question IsActive(string text, string key, QuestionCategory category)
+    public static Question IsActive(string Text, string Key, QuestionCategory Category)
     {
-        Question question = new(true, text, key, category);
+        //TODO: Call question AbstractValidation.
+
+        Guard.Against.NullOrWhiteSpace(Text);
+        Guard.Against.NullOrWhiteSpace(Key);
+
+        Question question = new(true, Text, Key, Category);
         return question.ValidateQuestion();
     }
 
     /// <summary>Creates an active question.</summary>
-    /// <param name="text">The question text.</param>
-    /// <param name="key">The key identifier.</param>
-    /// <param name="category">The category.</param>
+    /// <param name="Text">The question text.</param>
+    /// <param name="Key">The key identifier.</param>
+    /// <param name="Category">The category.</param>
     /// <returns>A new Inactive question instance.</returns>
-    public static Question IsDisabled(string text, string key, QuestionCategory category)
+    public static Question IsDisabled(string Text, string Key, QuestionCategory Category)
     {
-        Question question = new(false, text, key, category);
+        Question question = new(false, Text, Key, Category);
         return question.ValidateQuestion();
     }
 }
 
 public static class QuestionExtensions
 {
-    extension(Question question)
+    extension(Question Question)
     {
-        public Question SetFilter(Filter? filter)
+        public Question SetFilter(Filter? Filter)
         {
-            if(filter is not null)
+            if (Filter is not null)
             {
-                return new(question.IsEnabled, question.Text, question.Filename, question.Category, question.Filter);
+                return new(Question.IsEnabled, Question.Text, Question.Filename, Question.Category, Question.Filter);
             }
 
-            return question;
+            return Question;
         }
 
         public Question ValidateQuestion()
         {
-            foreach(var prop in question.GetType().GetProperties())
+            //TODO: Replace with call to AbstractValidation.
+
+            foreach (var prop in Question.GetType().GetProperties())
             {
                 Guard.Against.Null(prop);
-                var value = prop.GetValue(question);
-                if(value is string)
+                var value = prop.GetValue(Question);
+                if (value is string)
                 {
                     Guard.Against.Null(value.ToString());
                     Guard.Against.WhiteSpace(value.ToString(), prop.Name);
                 }
             }
 
-            return question;
+            return Question;
         }
     }
 }

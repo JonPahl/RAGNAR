@@ -6,20 +6,20 @@ namespace Ragnar.Core.Interface;
 public interface IKnowledgeBaseInitialize
 {
     /// <summary> Ensures a collection exists asynchronously. </summary>
-    /// <param name="ct">A cancellation token that can be used to cancel this operation.</param>
+    /// <param name="Ct">A cancellation token that can be used to cancel this operation.</param>
     /// <returns>Returns task.</returns>
-    ValueTask EnsureCollectionExistsAsync(CancellationToken ct);
+    ValueTask EnsureCollectionExistsAsync(CancellationToken Ct);
 
     /// <summary>
     /// Populates the knowledge base asynchronously. </summary>
-    /// <param name="ct">A cancellation token that can be used to cancel this operation.</param>
+    /// <param name="Ct">A cancellation token that can be used to cancel this operation.</param>
     /// <returns>Returns task.</returns>
-    Task PopulateAsync(CancellationToken ct);
+    Task PopulateAsync(CancellationToken Ct);
 
     /// <summary>
     /// Processes questions asynchronously.
     /// </summary>
-    /// <param name="ct">The ct parameter.</param>
+    /// <param name="Ct">The ct parameter.</param>
     /// <returns>Returns task.</returns>
-    Task AskQuestionsAsync(CancellationToken ct);
+    Task AskQuestionsAsync(CancellationToken Ct);
 }

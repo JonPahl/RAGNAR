@@ -4,87 +4,81 @@ namespace Ragnar.Ollama;
 /// Configures and caches OllamaOptions clients per model.
 /// </summary>
 /// <example><![CDATA[var provider = new OllamaResponse(opts);]]></example>
-public class OllamaResponse : IOllamaResponse
+/// <remarks>
+/// Initializes a new instance of the <see cref="OllamaResponse"/> class.
+/// Template Ollama api call.
+/// </remarks>
+/// <param name="ClientFactory">Ollama setup factory.</param>
+public class OllamaResponse(IOllamaClientFactory ClientFactory, IOptions<RagnarConfig> options) : IOllamaResponse
 {
-    private readonly OllamaApiClient ollamaClient;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="OllamaResponse"/> class.
-    /// Template Ollama api call.
-    /// </summary>
-    /// <param name="ClientFactory">Ollama setup factory.</param>
-    public OllamaResponse(IOllamaClientProvider ClientFactory)
-    {
-        var client = ClientFactory.FindClient(OllamaType.Ollama);
-
-        var httpClient = new HttpClient()
-        {
-            BaseAddress = client.Uri,
-            Timeout = TimeSpan.FromMinutes(20),
-        };
-        ollamaClient = new OllamaApiClient(httpClient)
-        { SelectedModel = client.SelectedModel, };
-    }
+    private readonly OllamaApiClient _ollamaClient = ClientFactory.FindClient(OllamaServiceType.Ollama);
 
     /// <summary>Streams and collects full LLM response into a string.</summary>
-    /// <param name="request">Generation request with prompt/options.</param>
-    /// <param name="ct">Cancellation token.</param>
+    /// <param name="Request">Generation request with prompt/options.</param>
+    /// <param name="Ct">Cancellation token.</param>
     /// <returns>Full generated text.</returns>
     /// <example><![CDATA[string answer = await provider.GenerateResponse(request, ct);]]></example>
     public async Task<string> GenerateResponse(
-        GenerateRequest request,
-        CancellationToken ct)
+        GenerateRequest Request,
+        CancellationToken Ct)
     {
-        request.Options = new()
-        {
-            Temperature = 0.2f,
-            RepeatPenalty = 1.02f,
-        };
-
         var sb = new StringBuilder();
-
-        var panelText = new Markup(string.Empty, Styles.Yellow).LeftJustified();
-
-        var headerText = " Generating... ";
-
-        var panel = new Panel(panelText)
-            .Header(headerText)
-            .BorderColor(Color.Green)
-            .RoundedBorder()
-            .BorderStyle(Styles.GreenBlink)
-            .Expand()
-            .Padding(1, 1, 1, 1);
 
         try
         {
-            await AnsiConsole.Live(panel).StartAsync(async ctx =>
+            Request.Options = new()
+            {
+                Temperature = 0.2f,
+                RepeatPenalty = 1.02f,
+            };
+
+            sb = new StringBuilder();
+
+            var panelText = new Markup(string.Empty, Styles.Yellow).LeftJustified();
+
+            var headerText = " Generating... ";
+
+            var panel = new Panel(panelText)
+                .Header(headerText)
+                .BorderColor(Color.Green)
+                .RoundedBorder()
+                .BorderStyle(Styles.GreenBlink)
+                .Expand()
+                .Padding(1, 1, 1, 1);
+
+            await AnsiConsole.Live(panel)
+                .StartAsync(async ctx =>
             {
                 ctx.UpdateTarget(panel);
                 ctx.Refresh();
 
-                await foreach(var stream in ollamaClient.GenerateAsync(request, ct))
+                await foreach (var stream in _ollamaClient.GenerateAsync(Request, Ct))
                 {
-                    if(stream is null)
+                    if (stream is null)
                         throw new InvalidOperationException("Stream returned null response.");
 
                     sb.Append(stream.Response.AsSpan());
 
-                    panel.BorderStyle = null;
+                    if (!string.IsNullOrWhiteSpace(stream.Response))
+                    {
+                        panel.BorderStyle = null;
 
-                    panelText = new Markup(sb.ToString().EscapeMarkup(), Styles.Yellow);
+                        panelText = new Markup(sb.ToString().EscapeMarkup(), Styles.Yellow);
 
-                    headerText = " Streaming Response ";
+                        headerText = " Streaming Response ";
 
-                    ctx.UpdateTarget(panelText);
-                    ctx.Refresh();
+                        ctx.UpdateTarget(panelText);
+                        ctx.Refresh();
+                    }
                 }
             });
+
             return sb.ToString();
         }
-        catch(Exception ex)
+        catch (Exception Ex)
         {
-            AnsiConsole.WriteException(ex);
-            return ex.Message;
+            AnsiConsole.WriteException(Ex);
+            return Ex.Message;
         }
         finally
         {
