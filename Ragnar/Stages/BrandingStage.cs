@@ -1,4 +1,4 @@
-namespace Ragnar.Stages;
+﻿namespace Ragnar.Stages;
 
 public class BrandingStage(IApplicationHeader Header)
     : IPipelineStage

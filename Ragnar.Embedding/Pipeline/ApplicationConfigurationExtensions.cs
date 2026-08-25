@@ -4,18 +4,17 @@ public static class ApplicationConfigurationExtensions
 {
     extension(IServiceCollection Services)
     {
-        public IServiceCollection ConfigureApplicationOptions(HostBuilderContext Context)
-        {
-            var optionTypes = new[]
-            {
-                typeof(ApplicationOptions),
-                typeof(EmbeddingOptions),
-                typeof(FileLoadOptions),
-                typeof(OllamaOptions)
-            };
-
-            return Services;
-        }
+        //public IServiceCollection ConfigureApplicationOptions(HostBuilderContext Context)
+        //{
+        //    var optionTypes = new[]
+        //    {
+        //        typeof(ApplicationOptions),
+        //        typeof(EmbeddingOptions),
+        //        typeof(FileLoadOptions),
+        //        typeof(OllamaOptions)
+        //    };
+        //    return Services;
+        //}
 
         public IServiceCollection RegisterEmbeddingServices(HostBuilderContext Context)
         {
@@ -27,7 +26,6 @@ public static class ApplicationConfigurationExtensions
 
                 return new OllamaEmbeddingService(logger, ollamaClientProvider);
             });
-            Services.AddSingleton<IVectorSearchService, QdrantSearchService>();
 
             return Services;
         }

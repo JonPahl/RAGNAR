@@ -1,4 +1,4 @@
-namespace Ragnar.Questions.Filters;
+﻿namespace Ragnar.Questions.Filters;
 
 public interface IFilterStrategy
 {

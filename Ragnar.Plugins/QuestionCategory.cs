@@ -1,4 +1,4 @@
-namespace Ragnar.Plugins;
+﻿namespace Ragnar.Plugins;
 
 /// <summary>Represents categories for plugin questions.</summary>
 public enum QuestionCategory

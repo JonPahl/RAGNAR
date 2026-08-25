@@ -1,4 +1,4 @@
-namespace Ragnar.Core.ConsoleWriter;
+﻿namespace Ragnar.Core.ConsoleWriter;
 
 public interface IOutputWriter
 {

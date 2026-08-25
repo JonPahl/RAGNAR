@@ -1,4 +1,4 @@
-namespace Ragnar.Core.Enums;
+﻿namespace Ragnar.Core.Enums;
 
 /// <summary>
 /// Types of llm and related settings to use when creating an ollamaApiClient.

@@ -1,4 +1,4 @@
-namespace Ragnar.OutputResponse;
+﻿namespace Ragnar.OutputResponse;
 
 // TODO: Rewrite save to use the following item.
 // var details = new SaveDetails()

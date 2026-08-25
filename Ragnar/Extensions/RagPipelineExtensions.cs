@@ -1,4 +1,4 @@
-namespace Ragnar.Extensions;
+﻿namespace Ragnar.Extensions;
 
 public static class RagPipelineExtensions
 {
@@ -20,32 +20,10 @@ public static class RagPipelineExtensions
                 });
             };
 
-            registerClient(nameof(OllamaServiceType.Embedding), _ => { });
+            registerClient(nameof(OllamaServiceType.Embedding), _ =>
+            {
 
-            //Services.AddHttpClient(nameof(OllamaServiceType.Ollama))
-            //    .AddStandardResilienceHandler(opt =>
-            //{
-            //    opt.TotalRequestTimeout = new HttpTimeoutStrategyOptions { Timeout = TimeSpan.FromMinutes(20) };
-            //    opt.Retry = new HttpRetryStrategyOptions
-            //    {
-            //        Delay = TimeSpan.FromSeconds(2),
-            //        MaxDelay = TimeSpan.FromSeconds(20),
-            //        MaxRetryAttempts = 3,
-            //        BackoffType = DelayBackoffType.Exponential,
-            //        OnRetry = ctx =>
-            //        {
-            //            var jitter = TimeSpan.FromMilliseconds(Random.Shared.Next(0, 500));
-            //            ctx.RetryDelay.Add(jitter);
-            //            return ValueTask.CompletedTask;
-            //        }
-            //    };
-            //    opt.CircuitBreaker = new HttpCircuitBreakerStrategyOptions
-            //    {
-            //        BreakDuration = TimeSpan.FromMinutes(1),
-            //        MinimumThroughput = 3,
-            //        SamplingDuration = TimeSpan.FromMinutes(5)
-            //    };
-            //});
+            });
 
             return Services;
         }
@@ -59,6 +37,7 @@ public static class RagPipelineExtensions
             Services.AddValidatorsFromAssemblyContaining<RagnarConfig>();
 
             // Register all services once
+
             Services
                 .AddOptions<RagnarConfig>()
                 .Bind(Context.Configuration

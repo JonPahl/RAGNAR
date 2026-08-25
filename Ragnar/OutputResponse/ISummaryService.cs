@@ -1,4 +1,4 @@
-namespace Ragnar.OutputResponse;
+﻿namespace Ragnar.OutputResponse;
 
 /// <summary>
 /// Provides a service to summarize all responses.

@@ -1,4 +1,4 @@
-namespace Ragnar.Embedding.UnitOfWork;
+﻿namespace Ragnar.Embedding.UnitOfWork;
 
 /// <summary>
 /// Build text encoding to and insert/update to Qdrant database.

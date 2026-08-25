@@ -23,15 +23,15 @@
     <PackageReference Include="Microsoft.SemanticKernel" Version="1.80.0" />
     <PackageReference Include="OllamaSharp" Version="5.4.30" />
     <PackageReference Include="Qdrant.Client" Version="1.19.0" />
-    <PackageReference Include="Roslynator.Analyzers" Version="4.16.1">
+    <PackageReference Include="Roslynator.Analyzers" Version="5.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Roslynator.CodeAnalysis.Analyzers" Version="4.16.1">
+    <PackageReference Include="Roslynator.CodeAnalysis.Analyzers" Version="5.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Roslynator.Formatting.Analyzers" Version="4.16.1">
+    <PackageReference Include="Roslynator.Formatting.Analyzers" Version="5.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

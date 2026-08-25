@@ -1,4 +1,4 @@
-namespace Ragnar.RagPipeline;
+﻿namespace Ragnar.RagPipeline;
 
 /// <summary>Executes RAG pipeline: embeds question → retrieve → generate answer.</summary>
 /// <param name="Writer">Custom console writer.</param>

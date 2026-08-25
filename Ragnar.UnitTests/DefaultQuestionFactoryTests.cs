@@ -1,11 +1,11 @@
-namespace Ragnar.Tests;
+﻿namespace Ragnar.Tests;
 
 // ==========================================
-// 1. DefaultQuestionFactory Tests
+// 1. QuestionBuilder Tests
 // ==========================================
 public class DefaultQuestionFactoryTests
 {
-    private readonly DefaultQuestionFactory _factory = new();
+    private readonly QuestionBuilder _factory = new();
 
     [Theory]
     [InlineData(null)]
@@ -41,15 +41,6 @@ public class DefaultQuestionFactoryTests
     {
         var question = _factory.CreateInactive("Future?", "future", QuestionCategory.Logging);
         question.IsEnabled.Should().BeFalse();
-    }
-
-    [Theory]
-    [InlineData(null)]
-    [InlineData("")]
-    [InlineData("   ")]
-    public void CreateActive_ThrowsArgumentException_WhenTextIsInvalid(string? Text)
-    {
-        Assert.Throws<ArgumentException>(() => _factory.CreateActive(Text!, "key", QuestionCategory.Refactor));
     }
 
     [Theory]

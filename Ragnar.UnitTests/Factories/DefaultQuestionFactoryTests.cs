@@ -2,7 +2,7 @@
 
 public class DefaultQuestionFactoryTests
 {
-    private readonly DefaultQuestionFactory _factory = new();
+    private readonly QuestionBuilder _factory = new();
 
     [Theory]
     [InlineData(null)]
@@ -17,7 +17,7 @@ public class DefaultQuestionFactoryTests
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    public void CreateInactive_Throws_ArgException_WhenKeyInvalid(string Key)
+    public void CreateInactive_Throws_ArgException_WhenKeyInvalid(string? Key)
     {
         Assert.Throws<ArgumentException>(() => _factory.CreateInactive("Text", Key!, QuestionCategory.Refactor));
     }

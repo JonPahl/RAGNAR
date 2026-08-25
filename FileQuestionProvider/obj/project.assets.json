@@ -15,13 +15,13 @@
           }
         }
       },
-      "Roslynator.Analyzers/4.16.1": {
+      "Roslynator.Analyzers/5.0.0": {
         "type": "package"
       },
-      "Roslynator.CodeAnalysis.Analyzers/4.16.1": {
+      "Roslynator.CodeAnalysis.Analyzers/5.0.0": {
         "type": "package"
       },
-      "Roslynator.Formatting.Analyzers/4.16.1": {
+      "Roslynator.Formatting.Analyzers/5.0.0": {
         "type": "package"
       },
       "Serilog/4.4.0": {
@@ -69,10 +69,10 @@
         "lib/netstandard2.1/CsvHelper.xml"
       ]
     },
-    "Roslynator.Analyzers/4.16.1": {
-      "sha512": "AGzq3UZvIwTGSh9xyIna+Q9F666S8UaLlX/Pk3Iz21qIAWjL8iYporVCcX1k/oi5chrRZ8VJRahup4me4HZptw==",
+    "Roslynator.Analyzers/5.0.0": {
+      "sha512": "+J5kR/naCd62IwY2BG9P0QoHnJM8liBUFFAk6jga1t9s61JC3M+ofb3AY3wc73/pdROyKFCURqctQh8WRCIT/w==",
       "type": "package",
-      "path": "roslynator.analyzers/4.16.1",
+      "path": "roslynator.analyzers/5.0.0",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -93,18 +93,26 @@
         "analyzers/dotnet/roslyn4.7/cs/Roslynator_Analyzers_Roslynator.Core.dll",
         "analyzers/dotnet/roslyn4.7/cs/Roslynator_Analyzers_Roslynator.Workspaces.Common.dll",
         "analyzers/dotnet/roslyn4.7/cs/Roslynator_Analyzers_Roslynator.Workspaces.Core.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator.CSharp.Analyzers.CodeFixes.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator.CSharp.Analyzers.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Analyzers_Roslynator.CSharp.Workspaces.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Analyzers_Roslynator.CSharp.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Analyzers_Roslynator.Common.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Analyzers_Roslynator.Core.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Analyzers_Roslynator.Workspaces.Common.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Analyzers_Roslynator.Workspaces.Core.dll",
         "docs/README.md",
         "icon.png",
-        "roslynator.analyzers.4.16.1.nupkg.sha512",
+        "roslynator.analyzers.5.0.0.nupkg.sha512",
         "roslynator.analyzers.nuspec",
         "tools/install.ps1",
         "tools/uninstall.ps1"
       ]
     },
-    "Roslynator.CodeAnalysis.Analyzers/4.16.1": {
-      "sha512": "1RTxtLoPwvedkYx4lV6QFEkLnnh7AGjJckFcZcIWbaNAWgSflLHjk0i6xB5OoPROzMAGMc/8I10kh3BW01pj3g==",
+    "Roslynator.CodeAnalysis.Analyzers/5.0.0": {
+      "sha512": "sMaUCuDLUGDskCweg0LcLnTEa/hc8M8fJyWj9PrX1iLVvWUMyt6edxUwD+QxjDA7pNs3NLTJJLOSedbCw38Yug==",
       "type": "package",
-      "path": "roslynator.codeanalysis.analyzers/4.16.1",
+      "path": "roslynator.codeanalysis.analyzers/5.0.0",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -125,18 +133,26 @@
         "analyzers/dotnet/roslyn4.7/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Core.dll",
         "analyzers/dotnet/roslyn4.7/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Workspaces.Common.dll",
         "analyzers/dotnet/roslyn4.7/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Workspaces.Core.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator.CodeAnalysis.Analyzers.CodeFixes.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator.CodeAnalysis.Analyzers.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.CSharp.Workspaces.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.CSharp.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Common.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Core.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Workspaces.Common.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Workspaces.Core.dll",
         "docs/README.md",
         "icon.png",
-        "roslynator.codeanalysis.analyzers.4.16.1.nupkg.sha512",
+        "roslynator.codeanalysis.analyzers.5.0.0.nupkg.sha512",
         "roslynator.codeanalysis.analyzers.nuspec",
         "tools/install.ps1",
         "tools/uninstall.ps1"
       ]
     },
-    "Roslynator.Formatting.Analyzers/4.16.1": {
-      "sha512": "/ZJSaEux84qnviRHJysHGKufCO3+9TtHHijQMZCW+zVrd7c2lFI6Utbzxb2ddCZAJOZaCT4RgbAEeCsOPIf4uw==",
+    "Roslynator.Formatting.Analyzers/5.0.0": {
+      "sha512": "0gs34JcWtDbPjBhF93RSDRx4Cj7DVFOshMMdQR6ABJkEO1cewK2qZl2y2VnIsC0/JoWOyZVrZfVEwQK8UiNXLw==",
       "type": "package",
-      "path": "roslynator.formatting.analyzers/4.16.1",
+      "path": "roslynator.formatting.analyzers/5.0.0",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -157,9 +173,17 @@
         "analyzers/dotnet/roslyn4.7/cs/Roslynator_Formatting_Analyzers_Roslynator.Core.dll",
         "analyzers/dotnet/roslyn4.7/cs/Roslynator_Formatting_Analyzers_Roslynator.Workspaces.Common.dll",
         "analyzers/dotnet/roslyn4.7/cs/Roslynator_Formatting_Analyzers_Roslynator.Workspaces.Core.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator.Formatting.Analyzers.CodeFixes.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator.Formatting.Analyzers.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Formatting_Analyzers_Roslynator.CSharp.Workspaces.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Formatting_Analyzers_Roslynator.CSharp.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Formatting_Analyzers_Roslynator.Common.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Formatting_Analyzers_Roslynator.Core.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Formatting_Analyzers_Roslynator.Workspaces.Common.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Formatting_Analyzers_Roslynator.Workspaces.Core.dll",
         "docs/README.md",
         "icon.png",
-        "roslynator.formatting.analyzers.4.16.1.nupkg.sha512",
+        "roslynator.formatting.analyzers.5.0.0.nupkg.sha512",
         "roslynator.formatting.analyzers.nuspec",
         "tools/install.ps1",
         "tools/uninstall.ps1"
@@ -198,9 +222,9 @@
   "projectFileDependencyGroups": {
     "net10.0": [
       "CsvHelper >= 33.1.0",
-      "Roslynator.Analyzers >= 4.16.1",
-      "Roslynator.CodeAnalysis.Analyzers >= 4.16.1",
-      "Roslynator.Formatting.Analyzers >= 4.16.1",
+      "Roslynator.Analyzers >= 5.0.0",
+      "Roslynator.CodeAnalysis.Analyzers >= 5.0.0",
+      "Roslynator.Formatting.Analyzers >= 5.0.0",
       "Serilog >= 4.4.0"
     ]
   },
@@ -265,19 +289,19 @@
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
             "target": "Package",
-            "version": "[4.16.1, )"
+            "version": "[5.0.0, )"
           },
           "Roslynator.CodeAnalysis.Analyzers": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
             "target": "Package",
-            "version": "[4.16.1, )"
+            "version": "[5.0.0, )"
           },
           "Roslynator.Formatting.Analyzers": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
             "target": "Package",
-            "version": "[4.16.1, )"
+            "version": "[5.0.0, )"
           },
           "Serilog": {
             "target": "Package",

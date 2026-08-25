@@ -1,4 +1,4 @@
-namespace Ragnar.Core.Utils;
+﻿namespace Ragnar.Core.Utils;
 
 public static class GeneratorExtensions
 {

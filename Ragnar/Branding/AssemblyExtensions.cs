@@ -1,4 +1,4 @@
-namespace Ragnar.Branding;
+﻿namespace Ragnar.Branding;
 
 /// <summary>
 /// Gets the informational version of an assembly.

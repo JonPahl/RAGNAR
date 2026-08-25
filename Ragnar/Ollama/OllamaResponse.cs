@@ -1,4 +1,4 @@
-namespace Ragnar.Ollama;
+﻿namespace Ragnar.Ollama;
 
 /// <summary>
 /// Configures and caches OllamaOptions clients per model.
@@ -9,7 +9,7 @@ namespace Ragnar.Ollama;
 /// Template Ollama api call.
 /// </remarks>
 /// <param name="ClientFactory">Ollama setup factory.</param>
-public class OllamaResponse(IOllamaClientFactory ClientFactory, IOptions<RagnarConfig> options) : IOllamaResponse
+public class OllamaResponse(IOllamaClientFactory ClientFactory, IOptions<RagnarConfig> Options) : IOllamaResponse
 {
     private readonly OllamaApiClient _ollamaClient = ClientFactory.FindClient(OllamaServiceType.Ollama);
 
@@ -75,10 +75,10 @@ public class OllamaResponse(IOllamaClientFactory ClientFactory, IOptions<RagnarC
 
             return sb.ToString();
         }
-        catch (Exception Ex)
+        catch (Exception ex)
         {
-            AnsiConsole.WriteException(Ex);
-            return Ex.Message;
+            AnsiConsole.WriteException(ex);
+            return ex.Message;
         }
         finally
         {

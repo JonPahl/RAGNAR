@@ -14,8 +14,7 @@ public class SummaryAgent(
     /// <summary>
     /// Holds the underlying chat client instance for LLM communication.
     /// </summary>
-    private readonly IChatClient ChatClient =
-        ClientFactory.FindClient(OllamaServiceType.Ollama);
+    private readonly IChatClient _agentChatClient = ClientFactory.FindClient(OllamaServiceType.Ollama);
 
     /// <summary>Generates a high-level summary of files in a directory.</summary>
     /// <param name ="Folder"> Directory path to analyze and summarize.</param>
@@ -39,7 +38,12 @@ public class SummaryAgent(
             System = SummaryPrompt.Template + Question
         };
 
-        return await OllamaClientProvider.GenerateResponse(request, Ct);
+        var policy = Policy.Handle<HttpRequestException>()
+            .WaitAndRetryAsync(3, retry => TimeSpan.FromSeconds(Math.Pow(2, retry)));
+
+        return await policy.ExecuteAsync(async () => await OllamaClientProvider.GenerateResponse(request, Ct));
+
+        // return await OllamaClientProvider.GenerateResponse(request, Ct);
     }
 
     /// <summary>Executes an interactive AI query against directory files.</summary>
@@ -50,7 +54,7 @@ public class SummaryAgent(
     /// <example><![CDATA[var resp = await agent.AskAgent(path, q, ct);]]></example>
     public async Task<string> AskAgent(string Folder, string Question, CancellationToken Ct)
     {
-        var agent = ChatClient.AsBuilder()
+        ChatClientAgent agent = _agentChatClient.AsBuilder()
             .UseFunctionInvocation()
             .Build()
             .AsAIAgent(
@@ -67,33 +71,33 @@ public class SummaryAgent(
     ///<param name = "Folder"> Directory path to read files from.</param>
     ///<param name = "Ct"> Cancellation Token to abort reading.</param>
     ///<returns>A combined string of all file contents.</returns>
-    private static async Task<string> LoadFolderContentsAsync(string Folder, CancellationToken Ct)
+    ///<example><![CDATA[var txt = await agent.LoadFolderContentsAsync(path, ct);]]></example>
+    private async Task<string> LoadFolderContentsAsync(string Folder, CancellationToken Ct)
     {
-        var files = Directory.GetFiles(Folder);
-        if (files.Length == 0)
-        {
-            return "No items to summary. Please ignore.";
-        }
+        var files = Directory.EnumerateFiles(Folder).ToList();
 
-        // Pre-allocate array to avoid dynamic resizing
-        var pooledBuffer = ArrayPool<char>.Shared.Rent(8192);
+        if (files.Count == 0)
+            return "No items to summarize. Please ignore.";
 
-        var contents = new List<string>();
+        var builder = new StringBuilder();
 
-        await Parallel.ForEachAsync(files, new ParallelOptions { CancellationToken = Ct }, async (file, token) =>
+        foreach (var file in files)
         {
             using var reader = File.OpenText(file);
-            int bytesRead;
-            var text = new StringBuilder();
-            while ((bytesRead = await reader.ReadAsync(pooledBuffer.AsMemory(0, pooledBuffer.Length), token)) > 0)
-            {
-                text.Append(pooledBuffer.AsSpan(0, bytesRead));
-            }
+            var text = await reader.ReadToEndAsync(Ct);
 
-            contents.Add($"---\n[RESPONSE_FILE]{Path.GetFileName(file)}[/RESPONSE_FILE]\n{text}\n");
-        });
+            builder.AppendLine($"---\n{AppDefaults.FILE_MARKER_START}{Path.GetFileName(file)}{AppDefaults.FILEMARKEREND}\n{text}\n");
+        }
 
-        // string.Join is highly optimized and avoids StringBuilder thread-safety issues
-        return "[RESPONSE_CODE] " + string.Concat(contents) + "[/RESPONSE_CODE]";
+        return $"{AppDefaults.CODE_BLOCK_START} {builder} {AppDefaults.CODE_BLOCK_END}";
+
+        //// Parallel file reads are safe; string concatenation happens after completion
+        // var contents = await Task.WhenAll(files.Select(async file => {
+        // using var reader = File.OpenText(file);
+        // var text=await reader.ReadToEndAsync(Ct);
+        // return $"---\n{AppDefaults.FILE_MARKER_START}{Path.GetFileName(file)}{AppDefaults.FILEMARKEREND}\n{text}\n";
+        //}));
+
+        //return $"{AppDefaults.CODE_BLOCK_START} " + string.Concat(contents) + AppDefaults.CODE_BLOCK_END;
     }
 }

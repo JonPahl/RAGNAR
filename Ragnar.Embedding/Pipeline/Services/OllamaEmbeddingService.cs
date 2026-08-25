@@ -1,4 +1,4 @@
-namespace Ragnar.Embedding.Pipeline.Services;
+﻿namespace Ragnar.Embedding.Pipeline.Services;
 
 /// <summary>Initializes a new instance of the embedding service.</summary>
 /// <param name ="Logger"> Serilog logger for tracking errors and info.</param>

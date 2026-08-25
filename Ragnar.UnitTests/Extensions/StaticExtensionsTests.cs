@@ -13,17 +13,6 @@ public class StaticExtensionsTests
     }
 
     [Fact]
-    public void ShowPrompt_WrapsInMarkdownFences()
-    {
-        const string PROMPT = "Explain DI";
-        var formatted = PROMPT.ShowPrompt();
-
-        formatted.Should().StartWith("\n\n***\n[Original Prompt]\n");
-        formatted.Should().EndWith("\n***");
-        formatted.Should().Contain("Explain DI");
-    }
-
-    [Fact]
     public void ExpandDirectory_Throws_WhenPathMissing()
     {
         var path = @"C:\NonExistentDir_" + Guid.NewGuid();

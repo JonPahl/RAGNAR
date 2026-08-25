@@ -1,4 +1,4 @@
-namespace Ragnar.Stages.Questions;
+﻿namespace Ragnar.Stages.Questions;
 
 public class QuestionOneStage : IPipelineStage
 {

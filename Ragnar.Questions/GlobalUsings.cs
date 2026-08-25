@@ -1,4 +1,4 @@
-global using System.Collections.Immutable;
+﻿global using System.Collections.Immutable;
 
 global using Qdrant.Client.Grpc;
 

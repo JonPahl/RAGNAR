@@ -1,4 +1,4 @@
-namespace Ragnar.Output;
+﻿namespace Ragnar.Output;
 
 /// <summary>
 /// Writes out response from question to either disk or in future other location.

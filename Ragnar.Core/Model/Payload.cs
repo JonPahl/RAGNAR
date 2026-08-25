@@ -1,4 +1,4 @@
-namespace Ragnar.Core.Model;
+﻿namespace Ragnar.Core.Model;
 
 public record Payload(
     string FileName,

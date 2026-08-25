@@ -117,6 +117,22 @@
       "FluentAssertions.Analyzers/0.34.1": {
         "type": "package"
       },
+      "FluentAssertions.Extensions/1.0.18": {
+        "type": "package",
+        "dependencies": {
+          "NUnit": "3.6.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/FluentAssertions.Extensions.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/FluentAssertions.Extensions.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "FluentValidation/12.1.1": {
         "type": "package",
         "compile": {
@@ -232,17 +248,17 @@
           }
         }
       },
-      "Microsoft.Agents.AI/1.18.0": {
+      "Microsoft.Agents.AI/1.19.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Agents.AI.Abstractions": "1.18.0",
-          "Microsoft.Extensions.AI": "10.7.0",
-          "Microsoft.Extensions.AI.Abstractions": "10.7.0",
-          "Microsoft.Extensions.AI.Evaluation": "10.7.0",
+          "Microsoft.Agents.AI.Abstractions": "1.19.0",
+          "Microsoft.Extensions.AI": "10.9.0",
+          "Microsoft.Extensions.AI.Abstractions": "10.9.0",
+          "Microsoft.Extensions.AI.Evaluation": "10.9.0",
           "Microsoft.Extensions.Compliance.Abstractions": "10.5.0",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.9",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.11",
           "Microsoft.Extensions.FileSystemGlobbing": "10.0.6",
-          "Microsoft.Extensions.Logging.Abstractions": "10.0.9",
+          "Microsoft.Extensions.Logging.Abstractions": "10.0.11",
           "Microsoft.Extensions.VectorData.Abstractions": "10.7.0",
           "Microsoft.ML.Tokenizers": "2.0.0"
         },
@@ -257,10 +273,10 @@
           }
         }
       },
-      "Microsoft.Agents.AI.Abstractions/1.18.0": {
+      "Microsoft.Agents.AI.Abstractions/1.19.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.AI.Abstractions": "10.7.0"
+          "Microsoft.Extensions.AI.Abstractions": "10.9.0"
         },
         "compile": {
           "lib/net10.0/Microsoft.Agents.AI.Abstractions.dll": {
@@ -685,14 +701,14 @@
           }
         }
       },
-      "Microsoft.Extensions.AI/10.8.0": {
+      "Microsoft.Extensions.AI/10.9.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.AI.Abstractions": "10.8.0",
-          "Microsoft.Extensions.Caching.Abstractions": "10.0.10",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.10",
-          "Microsoft.Extensions.Logging.Abstractions": "10.0.10",
-          "System.Numerics.Tensors": "10.0.10"
+          "Microsoft.Extensions.AI.Abstractions": "10.9.0",
+          "Microsoft.Extensions.Caching.Abstractions": "10.0.11",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.11",
+          "Microsoft.Extensions.Logging.Abstractions": "10.0.11",
+          "System.Numerics.Tensors": "10.0.11"
         },
         "compile": {
           "lib/net10.0/Microsoft.Extensions.AI.dll": {
@@ -705,7 +721,7 @@
           }
         }
       },
-      "Microsoft.Extensions.AI.Abstractions/10.8.0": {
+      "Microsoft.Extensions.AI.Abstractions/10.9.0": {
         "type": "package",
         "compile": {
           "lib/net10.0/Microsoft.Extensions.AI.Abstractions.dll": {
@@ -718,10 +734,10 @@
           }
         }
       },
-      "Microsoft.Extensions.AI.Evaluation/10.7.0": {
+      "Microsoft.Extensions.AI.Evaluation/10.9.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.AI.Abstractions": "10.7.0"
+          "Microsoft.Extensions.AI.Abstractions": "10.9.0"
         },
         "compile": {
           "lib/net10.0/Microsoft.Extensions.AI.Evaluation.dll": {
@@ -775,10 +791,10 @@
           "buildTransitive/net8.0/_._": {}
         }
       },
-      "Microsoft.Extensions.Caching.Abstractions/10.0.10": {
+      "Microsoft.Extensions.Caching.Abstractions/10.0.11": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.Primitives": "10.0.10"
+          "Microsoft.Extensions.Primitives": "10.0.11"
         },
         "compile": {
           "lib/net10.0/Microsoft.Extensions.Caching.Abstractions.dll": {
@@ -1642,6 +1658,15 @@
           }
         }
       },
+      "Microsoft.NETCore.Platforms/1.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard1.0/_._": {}
+        },
+        "runtime": {
+          "lib/netstandard1.0/_._": {}
+        }
+      },
       "Microsoft.SemanticKernel/1.80.0": {
         "type": "package",
         "dependencies": {
@@ -1994,6 +2019,28 @@
           "lib/net6.0/Moq.dll": {}
         }
       },
+      "NETStandard.Library/1.6.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "1.0.1"
+        }
+      },
+      "NUnit/3.6.1": {
+        "type": "package",
+        "dependencies": {
+          "NETStandard.Library": "1.6.0"
+        },
+        "compile": {
+          "lib/netstandard1.6/nunit.framework.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard1.6/nunit.framework.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "OllamaSharp/5.4.30": {
         "type": "package",
         "dependencies": {
@@ -2127,13 +2174,13 @@
           }
         }
       },
-      "Roslynator.Analyzers/4.16.1": {
+      "Roslynator.Analyzers/5.0.0": {
         "type": "package"
       },
-      "Roslynator.CodeAnalysis.Analyzers/4.16.1": {
+      "Roslynator.CodeAnalysis.Analyzers/5.0.0": {
         "type": "package"
       },
-      "Roslynator.Formatting.Analyzers/4.16.1": {
+      "Roslynator.Formatting.Analyzers/5.0.0": {
         "type": "package"
       },
       "Serilog/4.4.0": {
@@ -2650,7 +2697,7 @@
           "buildTransitive/net8.0/_._": {}
         }
       },
-      "System.Numerics.Tensors/10.0.10": {
+      "System.Numerics.Tensors/10.0.11": {
         "type": "package",
         "compile": {
           "lib/net10.0/System.Numerics.Tensors.dll": {
@@ -2916,10 +2963,12 @@
           "FluentValidation": "12.1.1",
           "FluentValidation.DependencyInjectionExtensions": "12.1.1",
           "HashDepot": "3.2.0",
-          "Microsoft.Agents.AI": "1.18.0",
+          "Microsoft.Agents.AI": "1.19.0",
+          "Microsoft.Agents.AI.Abstractions": "1.19.0",
           "Microsoft.CodeAnalysis": "5.9.0",
           "Microsoft.CodeAnalysis.CSharp": "5.9.0",
           "Microsoft.Extensions.Configuration": "10.0.11",
+          "Microsoft.Extensions.Configuration.Json": "10.0.11",
           "Microsoft.Extensions.Hosting": "10.0.11",
           "Microsoft.Extensions.Http.Resilience": "10.9.0",
           "Microsoft.Extensions.Options": "10.0.11",
@@ -3350,6 +3399,23 @@
         "tools/uninstall.ps1"
       ]
     },
+    "FluentAssertions.Extensions/1.0.18": {
+      "sha512": "TfHiZNmmZNmru6k0zhqPsGAp10dMZEQRUIKpmZr0vITPP0ZYgBIBZgNjDtM9mFUOfOIjMGNKr30e06KT11uYVA==",
+      "type": "package",
+      "path": "fluentassertions.extensions/1.0.18",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "fluentassertions.extensions.1.0.18.nupkg.sha512",
+        "fluentassertions.extensions.nuspec",
+        "lib/net45/FluentAssertions.Extensions.XML",
+        "lib/net45/FluentAssertions.Extensions.dll",
+        "lib/net45/FluentAssertions.Extensions.pdb",
+        "lib/netstandard2.0/FluentAssertions.Extensions.dll",
+        "lib/netstandard2.0/FluentAssertions.Extensions.pdb",
+        "lib/netstandard2.0/FluentAssertions.Extensions.xml"
+      ]
+    },
     "FluentValidation/12.1.1": {
       "sha512": "EPpkIe1yh1a0OXyC100oOA8WMbZvqUu5plwhvYcb7oSELfyUZzfxV48BLhvs3kKo4NwG7MGLNgy1RJiYtT8Dpw==",
       "type": "package",
@@ -3519,10 +3585,10 @@
         "logo.png"
       ]
     },
-    "Microsoft.Agents.AI/1.18.0": {
-      "sha512": "jj65gSDbHgUNbIuUSxXpE229EHkY7J2gq8Y8Jfqb+knWbX7ZmfGaRS8uiOV17Zc1Q3k+yMBeXgOpw5ttkTmknA==",
+    "Microsoft.Agents.AI/1.19.0": {
+      "sha512": "t8scDj5Qx0xUT8owJdUYBIwlEbSUBpYFAhtf0nfhERSWi3IQ8637gfOuZsvW3IIRsUSjq966fOgrJXjBp6R22A==",
       "type": "package",
-      "path": "microsoft.agents.ai/1.18.0",
+      "path": "microsoft.agents.ai/1.19.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3538,14 +3604,14 @@
         "lib/net9.0/Microsoft.Agents.AI.xml",
         "lib/netstandard2.0/Microsoft.Agents.AI.dll",
         "lib/netstandard2.0/Microsoft.Agents.AI.xml",
-        "microsoft.agents.ai.1.18.0.nupkg.sha512",
+        "microsoft.agents.ai.1.19.0.nupkg.sha512",
         "microsoft.agents.ai.nuspec"
       ]
     },
-    "Microsoft.Agents.AI.Abstractions/1.18.0": {
-      "sha512": "kMab7u/cfZ45S5Eqq2MeoIowgHxkx7hXkpCPzv2So4ZUv2EJA5TeOV0e025ZLaNbj4DdW7oiyMJfsMS89QbXhA==",
+    "Microsoft.Agents.AI.Abstractions/1.19.0": {
+      "sha512": "Aw/MMRWjuics4Ryuv3qqj7Bvrv8KCQmKI7X5EQLoR77YJE4gpD8lOh/6GkLzWS1kZwyA1T04V7jgCMw2DCVyEQ==",
       "type": "package",
-      "path": "microsoft.agents.ai.abstractions/1.18.0",
+      "path": "microsoft.agents.ai.abstractions/1.19.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3561,7 +3627,7 @@
         "lib/net9.0/Microsoft.Agents.AI.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.Agents.AI.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.Agents.AI.Abstractions.xml",
-        "microsoft.agents.ai.abstractions.1.18.0.nupkg.sha512",
+        "microsoft.agents.ai.abstractions.1.19.0.nupkg.sha512",
         "microsoft.agents.ai.abstractions.nuspec"
       ]
     },
@@ -4021,10 +4087,10 @@
         "microsoft.codeanalysis.workspaces.common.nuspec"
       ]
     },
-    "Microsoft.Extensions.AI/10.8.0": {
-      "sha512": "QfthL8e2X/Z6jRs4YyVS2+HTApJvhz725l35HYZ9cfwlEuQnpzY89NJoGNmpuNZn4LIvvQOQeZIbu3jggBXgUg==",
+    "Microsoft.Extensions.AI/10.9.0": {
+      "sha512": "ymREzi/+uQ9KL0d0ir3FXHUb/XLHyLYcJYH/7A/uO6rg6Km8hUk++nMRG4/gDpDYrrU6s6YIpSDTexofexMGRg==",
       "type": "package",
-      "path": "microsoft.extensions.ai/10.8.0",
+      "path": "microsoft.extensions.ai/10.9.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4040,14 +4106,14 @@
         "lib/net9.0/Microsoft.Extensions.AI.xml",
         "lib/netstandard2.0/Microsoft.Extensions.AI.dll",
         "lib/netstandard2.0/Microsoft.Extensions.AI.xml",
-        "microsoft.extensions.ai.10.8.0.nupkg.sha512",
+        "microsoft.extensions.ai.10.9.0.nupkg.sha512",
         "microsoft.extensions.ai.nuspec"
       ]
     },
-    "Microsoft.Extensions.AI.Abstractions/10.8.0": {
-      "sha512": "1tJZ5sAYrEq1YjNg8GrZSL1tVodsWRfrgybGsZo5DQsWQgLZ+dSR5uFowIS6vb/9zxGBPl7xpYq53QMjNObO9w==",
+    "Microsoft.Extensions.AI.Abstractions/10.9.0": {
+      "sha512": "//nASHMCJVxnYfE/WSzfaLOao6/q816kPpgB9rxU0gfSmAny1u3rfQT0D4xAmcIo4yQqJs7rAeBB+M/dIMdZYA==",
       "type": "package",
-      "path": "microsoft.extensions.ai.abstractions/10.8.0",
+      "path": "microsoft.extensions.ai.abstractions/10.9.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4063,14 +4129,14 @@
         "lib/net9.0/Microsoft.Extensions.AI.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.Extensions.AI.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.Extensions.AI.Abstractions.xml",
-        "microsoft.extensions.ai.abstractions.10.8.0.nupkg.sha512",
+        "microsoft.extensions.ai.abstractions.10.9.0.nupkg.sha512",
         "microsoft.extensions.ai.abstractions.nuspec"
       ]
     },
-    "Microsoft.Extensions.AI.Evaluation/10.7.0": {
-      "sha512": "BdbJNfhc/pb3RkD19Sm/XuLK3x5AdU+AB+0HC8Nlu7WZTrVLnA8lpqIx1BB4k+KIKy5ZSH5RVH5HHfT+gwL9yg==",
+    "Microsoft.Extensions.AI.Evaluation/10.9.0": {
+      "sha512": "X1W8yH63os/Me/5+ipZLmgRXjZJDJ1kUHxYRWxqP3c/DezHfSHD+Qf5nKgN1EHIY9GYqkIBTvtPEC8Hs+t4KBQ==",
       "type": "package",
-      "path": "microsoft.extensions.ai.evaluation/10.7.0",
+      "path": "microsoft.extensions.ai.evaluation/10.9.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4088,7 +4154,7 @@
         "lib/net9.0/Microsoft.Extensions.AI.Evaluation.xml",
         "lib/netstandard2.0/Microsoft.Extensions.AI.Evaluation.dll",
         "lib/netstandard2.0/Microsoft.Extensions.AI.Evaluation.xml",
-        "microsoft.extensions.ai.evaluation.10.7.0.nupkg.sha512",
+        "microsoft.extensions.ai.evaluation.10.9.0.nupkg.sha512",
         "microsoft.extensions.ai.evaluation.nuspec"
       ]
     },
@@ -4140,10 +4206,10 @@
         "microsoft.extensions.ambientmetadata.application.nuspec"
       ]
     },
-    "Microsoft.Extensions.Caching.Abstractions/10.0.10": {
-      "sha512": "4ZFBNE+jzR+CrWWlhOesnmywCW7pYKT0dxyAQRdL11yJwxe4jvcAu31eorFtEkoFeCDcUTeNssgPv2yaRRptaQ==",
+    "Microsoft.Extensions.Caching.Abstractions/10.0.11": {
+      "sha512": "vUl798SmruTqqlt/xH2gDk3tJlhk6k3HdOXAHirlRfbNKDym4g/kRpUL9S4sl6F6FsOTOMW+ZsDapqlZMOOiEw==",
       "type": "package",
-      "path": "microsoft.extensions.caching.abstractions/10.0.10",
+      "path": "microsoft.extensions.caching.abstractions/10.0.11",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4164,7 +4230,7 @@
         "lib/net9.0/Microsoft.Extensions.Caching.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Caching.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Caching.Abstractions.xml",
-        "microsoft.extensions.caching.abstractions.10.0.10.nupkg.sha512",
+        "microsoft.extensions.caching.abstractions.10.0.11.nupkg.sha512",
         "microsoft.extensions.caching.abstractions.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -5384,6 +5450,20 @@
         "mlnetlogo.png"
       ]
     },
+    "Microsoft.NETCore.Platforms/1.0.1": {
+      "sha512": "2G6OjjJzwBfNOO8myRV/nFrbTw5iA+DEm0N+qUqhrOmaVtn4pC77h38I1jsXGw5VH55+dPfQsqHD0We9sCl9FQ==",
+      "type": "package",
+      "path": "microsoft.netcore.platforms/1.0.1",
+      "files": [
+        ".nupkg.metadata",
+        "ThirdPartyNotices.txt",
+        "dotnet_library_license.txt",
+        "lib/netstandard1.0/_._",
+        "microsoft.netcore.platforms.1.0.1.nupkg.sha512",
+        "microsoft.netcore.platforms.nuspec",
+        "runtime.json"
+      ]
+    },
     "Microsoft.SemanticKernel/1.80.0": {
       "sha512": "KasYhur11+rrmwrOOnT0+fAFrf59xa3ykpXf7rzl8Nc2DfeFKYh1aRjReXtxVpzFMnlkpH8ZptAyTN5WAmwGMg==",
       "type": "package",
@@ -5911,6 +5991,49 @@
         "readme.md"
       ]
     },
+    "NETStandard.Library/1.6.0": {
+      "sha512": "ypsCvIdCZ4IoYASJHt6tF2fMo7N30NLgV1EbmC+snO490OMl9FvVxmumw14rhReWU3j3g7BYudG6YCrchwHJlA==",
+      "type": "package",
+      "path": "netstandard.library/1.6.0",
+      "files": [
+        ".nupkg.metadata",
+        "ThirdPartyNotices.txt",
+        "dotnet_library_license.txt",
+        "netstandard.library.1.6.0.nupkg.sha512",
+        "netstandard.library.nuspec"
+      ]
+    },
+    "NUnit/3.6.1": {
+      "sha512": "0FPgTzx3+8HQsQLv85IRXuQVlc53whh1gWQkYL2sqQu7sj9cCiNTgiv0SCTut7lvRX/fXyBIS954VJEjxtL5gw==",
+      "type": "package",
+      "path": "nunit/3.6.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "CHANGES.txt",
+        "LICENSE.txt",
+        "NOTICES.txt",
+        "lib/MonoAndroid/nunit.framework.dll",
+        "lib/MonoAndroid/nunit.framework.xml",
+        "lib/Xamarin.iOS10/nunit.framework.dll",
+        "lib/Xamarin.iOS10/nunit.framework.xml",
+        "lib/net20/NUnit.System.Linq.dll",
+        "lib/net20/nunit.framework.dll",
+        "lib/net20/nunit.framework.xml",
+        "lib/net35/nunit.framework.dll",
+        "lib/net35/nunit.framework.xml",
+        "lib/net40/nunit.framework.dll",
+        "lib/net40/nunit.framework.xml",
+        "lib/net45/nunit.framework.dll",
+        "lib/net45/nunit.framework.xml",
+        "lib/netstandard1.6/nunit.framework.dll",
+        "lib/netstandard1.6/nunit.framework.xml",
+        "lib/portable-net45+win8+wp8+wpa81/nunit.framework.dll",
+        "lib/portable-net45+win8+wp8+wpa81/nunit.framework.xml",
+        "nunit.3.6.1.nupkg.sha512",
+        "nunit.nuspec"
+      ]
+    },
     "OllamaSharp/5.4.30": {
       "sha512": "r/dtO3cm/D+OCB1A3dPcA//YnC9Cak3SSSK1dxfvG9RbEKjMezf3l04Ag1j8tiDul/oGn9nb8+fIwlrg0KOkww==",
       "type": "package",
@@ -6107,10 +6230,10 @@
         "qdrant.client.nuspec"
       ]
     },
-    "Roslynator.Analyzers/4.16.1": {
-      "sha512": "AGzq3UZvIwTGSh9xyIna+Q9F666S8UaLlX/Pk3Iz21qIAWjL8iYporVCcX1k/oi5chrRZ8VJRahup4me4HZptw==",
+    "Roslynator.Analyzers/5.0.0": {
+      "sha512": "+J5kR/naCd62IwY2BG9P0QoHnJM8liBUFFAk6jga1t9s61JC3M+ofb3AY3wc73/pdROyKFCURqctQh8WRCIT/w==",
       "type": "package",
-      "path": "roslynator.analyzers/4.16.1",
+      "path": "roslynator.analyzers/5.0.0",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -6131,18 +6254,26 @@
         "analyzers/dotnet/roslyn4.7/cs/Roslynator_Analyzers_Roslynator.Core.dll",
         "analyzers/dotnet/roslyn4.7/cs/Roslynator_Analyzers_Roslynator.Workspaces.Common.dll",
         "analyzers/dotnet/roslyn4.7/cs/Roslynator_Analyzers_Roslynator.Workspaces.Core.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator.CSharp.Analyzers.CodeFixes.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator.CSharp.Analyzers.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Analyzers_Roslynator.CSharp.Workspaces.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Analyzers_Roslynator.CSharp.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Analyzers_Roslynator.Common.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Analyzers_Roslynator.Core.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Analyzers_Roslynator.Workspaces.Common.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Analyzers_Roslynator.Workspaces.Core.dll",
         "docs/README.md",
         "icon.png",
-        "roslynator.analyzers.4.16.1.nupkg.sha512",
+        "roslynator.analyzers.5.0.0.nupkg.sha512",
         "roslynator.analyzers.nuspec",
         "tools/install.ps1",
         "tools/uninstall.ps1"
       ]
     },
-    "Roslynator.CodeAnalysis.Analyzers/4.16.1": {
-      "sha512": "1RTxtLoPwvedkYx4lV6QFEkLnnh7AGjJckFcZcIWbaNAWgSflLHjk0i6xB5OoPROzMAGMc/8I10kh3BW01pj3g==",
+    "Roslynator.CodeAnalysis.Analyzers/5.0.0": {
+      "sha512": "sMaUCuDLUGDskCweg0LcLnTEa/hc8M8fJyWj9PrX1iLVvWUMyt6edxUwD+QxjDA7pNs3NLTJJLOSedbCw38Yug==",
       "type": "package",
-      "path": "roslynator.codeanalysis.analyzers/4.16.1",
+      "path": "roslynator.codeanalysis.analyzers/5.0.0",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -6163,18 +6294,26 @@
         "analyzers/dotnet/roslyn4.7/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Core.dll",
         "analyzers/dotnet/roslyn4.7/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Workspaces.Common.dll",
         "analyzers/dotnet/roslyn4.7/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Workspaces.Core.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator.CodeAnalysis.Analyzers.CodeFixes.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator.CodeAnalysis.Analyzers.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.CSharp.Workspaces.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.CSharp.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Common.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Core.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Workspaces.Common.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_CodeAnalysis_Analyzers_Roslynator.Workspaces.Core.dll",
         "docs/README.md",
         "icon.png",
-        "roslynator.codeanalysis.analyzers.4.16.1.nupkg.sha512",
+        "roslynator.codeanalysis.analyzers.5.0.0.nupkg.sha512",
         "roslynator.codeanalysis.analyzers.nuspec",
         "tools/install.ps1",
         "tools/uninstall.ps1"
       ]
     },
-    "Roslynator.Formatting.Analyzers/4.16.1": {
-      "sha512": "/ZJSaEux84qnviRHJysHGKufCO3+9TtHHijQMZCW+zVrd7c2lFI6Utbzxb2ddCZAJOZaCT4RgbAEeCsOPIf4uw==",
+    "Roslynator.Formatting.Analyzers/5.0.0": {
+      "sha512": "0gs34JcWtDbPjBhF93RSDRx4Cj7DVFOshMMdQR6ABJkEO1cewK2qZl2y2VnIsC0/JoWOyZVrZfVEwQK8UiNXLw==",
       "type": "package",
-      "path": "roslynator.formatting.analyzers/4.16.1",
+      "path": "roslynator.formatting.analyzers/5.0.0",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -6195,9 +6334,17 @@
         "analyzers/dotnet/roslyn4.7/cs/Roslynator_Formatting_Analyzers_Roslynator.Core.dll",
         "analyzers/dotnet/roslyn4.7/cs/Roslynator_Formatting_Analyzers_Roslynator.Workspaces.Common.dll",
         "analyzers/dotnet/roslyn4.7/cs/Roslynator_Formatting_Analyzers_Roslynator.Workspaces.Core.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator.Formatting.Analyzers.CodeFixes.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator.Formatting.Analyzers.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Formatting_Analyzers_Roslynator.CSharp.Workspaces.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Formatting_Analyzers_Roslynator.CSharp.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Formatting_Analyzers_Roslynator.Common.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Formatting_Analyzers_Roslynator.Core.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Formatting_Analyzers_Roslynator.Workspaces.Common.dll",
+        "analyzers/dotnet/roslyn5.0/cs/Roslynator_Formatting_Analyzers_Roslynator.Workspaces.Core.dll",
         "docs/README.md",
         "icon.png",
-        "roslynator.formatting.analyzers.4.16.1.nupkg.sha512",
+        "roslynator.formatting.analyzers.5.0.0.nupkg.sha512",
         "roslynator.formatting.analyzers.nuspec",
         "tools/install.ps1",
         "tools/uninstall.ps1"
@@ -6901,10 +7048,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "System.Numerics.Tensors/10.0.10": {
-      "sha512": "9Ildb4Y9maDztB0ZRGxsNShbpCQ2Tjv2dr4IjskBxpTGhH7aIz1+oC+Hl833ASs/htWwsH6myNe+sRpeyCzeMQ==",
+    "System.Numerics.Tensors/10.0.11": {
+      "sha512": "4jNNt67NhCqf3bf2FN0mrsC+EH60L7Sny6poqVeiviB27Kw7TQzMmgn8HIaPc8E9EcuGusUyfeu21gLfzcBpDA==",
       "type": "package",
-      "path": "system.numerics.tensors/10.0.10",
+      "path": "system.numerics.tensors/10.0.11",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -6925,7 +7072,7 @@
         "lib/net9.0/System.Numerics.Tensors.xml",
         "lib/netstandard2.0/System.Numerics.Tensors.dll",
         "lib/netstandard2.0/System.Numerics.Tensors.xml",
-        "system.numerics.tensors.10.0.10.nupkg.sha512",
+        "system.numerics.tensors.10.0.11.nupkg.sha512",
         "system.numerics.tensors.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -7274,6 +7421,7 @@
     "net10.0": [
       "FluentAssertions >= 8.10.0",
       "FluentAssertions.Analyzers >= 0.34.1",
+      "FluentAssertions.Extensions >= 1.0.18",
       "Microsoft.Extensions.Options >= 10.0.11",
       "Microsoft.SemanticKernel.Connectors.Qdrant >= 1.74.0-preview",
       "Moq >= 4.20.72",
@@ -7282,9 +7430,9 @@
       "Ragnar >= 1.0.0",
       "Ragnar.Core >= 1.0.0",
       "Ragnar.Embedding >= 1.0.0",
-      "Roslynator.Analyzers >= 4.16.1",
-      "Roslynator.CodeAnalysis.Analyzers >= 4.16.1",
-      "Roslynator.Formatting.Analyzers >= 4.16.1",
+      "Roslynator.Analyzers >= 5.0.0",
+      "Roslynator.CodeAnalysis.Analyzers >= 5.0.0",
+      "Roslynator.Formatting.Analyzers >= 5.0.0",
       "Serilog >= 4.4.0",
       "Serilog.AspNetCore >= 10.0.0",
       "Spectre.Console.Testing >= 0.57.2",
@@ -7368,6 +7516,10 @@
             "target": "Package",
             "version": "[0.34.1, )"
           },
+          "FluentAssertions.Extensions": {
+            "target": "Package",
+            "version": "[1.0.18, )"
+          },
           "Microsoft.Extensions.Options": {
             "target": "Package",
             "version": "[10.0.11, )"
@@ -7392,19 +7544,19 @@
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
             "target": "Package",
-            "version": "[4.16.1, )"
+            "version": "[5.0.0, )"
           },
           "Roslynator.CodeAnalysis.Analyzers": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
             "target": "Package",
-            "version": "[4.16.1, )"
+            "version": "[5.0.0, )"
           },
           "Roslynator.Formatting.Analyzers": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
             "target": "Package",
-            "version": "[4.16.1, )"
+            "version": "[5.0.0, )"
           },
           "Serilog": {
             "target": "Package",

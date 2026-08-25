@@ -1,4 +1,4 @@
-namespace Ragnar.Tests.Extensions;
+﻿namespace Ragnar.Tests.Extensions;
 
 public sealed class PathExtensionsTests
 {

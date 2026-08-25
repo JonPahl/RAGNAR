@@ -1,4 +1,4 @@
-global using System.Collections.Immutable;
+﻿global using System.Collections.Immutable;
 global using System.ComponentModel;
 global using System.Diagnostics;
 global using System.IO.Enumeration;

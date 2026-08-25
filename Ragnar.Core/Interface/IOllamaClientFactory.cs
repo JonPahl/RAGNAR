@@ -1,4 +1,4 @@
-namespace Ragnar.Core.Interface;
+﻿namespace Ragnar.Core.Interface;
 
 /// <summary>
 /// Build Ollama Api client.

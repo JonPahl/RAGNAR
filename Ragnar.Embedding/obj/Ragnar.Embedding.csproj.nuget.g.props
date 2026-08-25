@@ -17,9 +17,9 @@
     <Import Project="$(NuGetPackageRoot)microsoft.codeanalysis.analyzers\5.9.0-1.26328.17\buildTransitive\Microsoft.CodeAnalysis.Analyzers.props" Condition="Exists('$(NuGetPackageRoot)microsoft.codeanalysis.analyzers\5.9.0-1.26328.17\buildTransitive\Microsoft.CodeAnalysis.Analyzers.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <PkgRoslynator_Formatting_Analyzers Condition=" '$(PkgRoslynator_Formatting_Analyzers)' == '' ">C:\Users\jp325\.nuget\packages\roslynator.formatting.analyzers\4.16.1</PkgRoslynator_Formatting_Analyzers>
-    <PkgRoslynator_CodeAnalysis_Analyzers Condition=" '$(PkgRoslynator_CodeAnalysis_Analyzers)' == '' ">C:\Users\jp325\.nuget\packages\roslynator.codeanalysis.analyzers\4.16.1</PkgRoslynator_CodeAnalysis_Analyzers>
-    <PkgRoslynator_Analyzers Condition=" '$(PkgRoslynator_Analyzers)' == '' ">C:\Users\jp325\.nuget\packages\roslynator.analyzers\4.16.1</PkgRoslynator_Analyzers>
+    <PkgRoslynator_Formatting_Analyzers Condition=" '$(PkgRoslynator_Formatting_Analyzers)' == '' ">C:\Users\jp325\.nuget\packages\roslynator.formatting.analyzers\5.0.0</PkgRoslynator_Formatting_Analyzers>
+    <PkgRoslynator_CodeAnalysis_Analyzers Condition=" '$(PkgRoslynator_CodeAnalysis_Analyzers)' == '' ">C:\Users\jp325\.nuget\packages\roslynator.codeanalysis.analyzers\5.0.0</PkgRoslynator_CodeAnalysis_Analyzers>
+    <PkgRoslynator_Analyzers Condition=" '$(PkgRoslynator_Analyzers)' == '' ">C:\Users\jp325\.nuget\packages\roslynator.analyzers\5.0.0</PkgRoslynator_Analyzers>
     <PkgMicrosoft_CodeAnalysis_Analyzers Condition=" '$(PkgMicrosoft_CodeAnalysis_Analyzers)' == '' ">C:\Users\jp325\.nuget\packages\microsoft.codeanalysis.analyzers\5.9.0-1.26328.17</PkgMicrosoft_CodeAnalysis_Analyzers>
   </PropertyGroup>
 </Project>

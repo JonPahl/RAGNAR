@@ -1,4 +1,4 @@
-namespace Ragnar.Models;
+﻿namespace Ragnar.Models;
 
 /// <summary>List of qdrantClient point embeddings.
 /// </summary>

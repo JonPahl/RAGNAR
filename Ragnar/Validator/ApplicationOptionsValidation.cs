@@ -1,4 +1,4 @@
-namespace Ragnar.Validator;
+﻿namespace Ragnar.Validator;
 
 public class ApplicationOptionsValidation
     : AbstractValidator<ApplicationOptions>

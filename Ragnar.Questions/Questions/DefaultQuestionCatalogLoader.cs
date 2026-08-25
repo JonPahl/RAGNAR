@@ -15,7 +15,7 @@ public class DefaultQuestionCatalogLoader(Serilog.ILogger Logger, IOutputWriter 
     : IQuestionCatalogLoader
 {
     /// <summary>Loads active/inactive questions filtered by category.</summary>
-    /// <param name="IsActive">Filter active questions.</param>
+    /// <param name="IsActive">BuildFilter active questions.</param>
     /// <param name="Categories">Optional categories to include.</param>
     /// <returns>Filtered question collection.</returns>
     /// <example><![CDATA[var questions = loader.LoadQuestions(true, categories);]]></example>

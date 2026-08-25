@@ -1,4 +1,4 @@
-namespace Ragnar.OutputResponse;
+﻿namespace Ragnar.OutputResponse;
 
 /// <summary>
 /// Summary each response into a single file.
@@ -22,8 +22,6 @@ public class SummaryService(
     private readonly OllamaApiClient _ollamaClient = Factory.FindClient(OllamaServiceType.Ollama);
 
     private readonly EmbeddingOptions _embeddingOptions = ConfigWrapper.Value.EmbeddingOptions;
-
-    //private readonly OllamaOptions OllamaOptions = ConfigWrapper.Value.OllamaOptions;
 
     /// <summary>
     /// Summarizes all .md responses in the Response/ directory into one markdown summary.
@@ -95,7 +93,7 @@ public class SummaryService(
 
     private async Task SaveResponseAsync(string Summary, string SaveFolder, string Folder, string FileName, CancellationToken Ct)
     {
-        //TODO: Move to IResponseWriter implementation..
+        // TODO: Move to IResponseWriter implementation..
         try
         {
             var path = Path.Join(SaveFolder, Folder);
@@ -113,9 +111,9 @@ public class SummaryService(
             Writer.MarkupLine($"Summary saved: {summaryPath}", Styles.Cyan);
             Writer.WriteRule();
         }
-        catch (Exception Ex)
+        catch (Exception ex)
         {
-            Logger.Error(Ex, Ex.Message);
+            Logger.Error(ex, ex.Message);
         }
     }
 }

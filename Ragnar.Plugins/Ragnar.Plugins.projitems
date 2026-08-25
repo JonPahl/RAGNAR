@@ -13,4 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)QuestionCategory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)QuestionConfiguration.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Directory.Build.props" />
+  </ItemGroup>
 </Project>

@@ -1,8 +1,7 @@
-namespace Ragnar.Tests;
+﻿namespace Ragnar.Tests;
 
 public class FileParseFactoryTests
 {
-
     private readonly Mock<Serilog.ILogger> _loggerMock = new();
 
     private readonly Mock<IOptions<RagnarConfig>> _configMock = new();

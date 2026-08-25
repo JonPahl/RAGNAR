@@ -1,4 +1,4 @@
-namespace Ragnar.Extensions;
+﻿namespace Ragnar.Extensions;
 
 /// <summary> Provides extension methods for <see cref="FileSystemEntry"/>.</summary>
 public static class FileSystemEntryExtensions

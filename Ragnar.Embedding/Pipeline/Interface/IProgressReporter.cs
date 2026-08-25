@@ -1,4 +1,4 @@
-namespace Ragnar.Embedding.Pipeline.Interface;
+﻿namespace Ragnar.Embedding.Pipeline.Interface;
 
 public class ProgressReporter
     : IProgressReporter

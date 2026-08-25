@@ -1,4 +1,4 @@
-namespace Ragnar.Tests.Branding;
+﻿namespace Ragnar.Tests.Branding;
 
 public sealed class BrandingHeaderTests
 {

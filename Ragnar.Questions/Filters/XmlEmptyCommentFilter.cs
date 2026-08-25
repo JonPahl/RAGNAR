@@ -4,13 +4,13 @@ public static class XmlEmptyCommentFilter
 {
     /// <summary>Creates a filter to exclude non-empty comments in XML documents.</summary>
     /// <param name="Category">The question category (must be XML).</param>
-    /// <returns>A <see cref="Filter"/> with conditions for empty or missing comments.</returns>
+    /// <returns>A <see cref="BuildFilter"/> with conditions for empty or missing comments.</returns>
     /// <remarks>XML or XML_SINGLE</remarks>
-    /// <example><![CDATA[var filter = XmlEmptyCommentFilter.Filter(QuestionCategory.XML);]]></example>
-    public static Filter Filter(QuestionCategory Category)
+    /// <example><![CDATA[var filter = XmlEmptyCommentFilter.BuildFilter(QuestionCategory.XML);]]></example>
+    public static Filter BuildFilter(QuestionCategory Category)
     {
         if (!Enum.IsDefined(Category))
-            throw new System.ComponentModel.InvalidEnumArgumentException(nameof(Category), (int)Category, typeof(QuestionCategory));
+            throw new ArgumentException(nameof(Category));
 
         return new()
         {

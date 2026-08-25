@@ -1,4 +1,4 @@
-namespace Ragnar.Extensions;
+﻿namespace Ragnar.Extensions;
 
 /// <summary>Extends <see cref="string"/> with utility methods for comment processing.</summary>
 public static class StringExtensions

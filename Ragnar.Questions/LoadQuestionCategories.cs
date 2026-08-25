@@ -1,4 +1,4 @@
-namespace Ragnar.Questions;
+﻿namespace Ragnar.Questions;
 
 /// <summary>
 /// Build list of enum options to Hashset.

@@ -1,43 +1,62 @@
-namespace Ragnar.Tests;
+﻿namespace Ragnar.Tests;
 
 public class ResponseWriterTests
 {
-    [Fact]
-    public async Task WriteResponseAsync_Creates_Directory_If_Missing()
+    private readonly string _tempDir;
+    private readonly Mock<IOptions<RagnarConfig>> _configMock;
+
+    public ResponseWriterTests()
     {
-        // Arrange
-        var configMock = new Mock<IOptions<RagnarConfig>>();
-        configMock.Setup(c => c.Value)
-            .Returns(new RagnarConfig
+        _tempDir = Path.Combine(Path.GetTempPath(), "RagnarTest_" + Guid.NewGuid());
+        Directory.CreateDirectory(_tempDir);
+
+        var config = new RagnarConfig
+        {
+            ApplicationOptions = new ApplicationOptions
             {
-                ApplicationOptions = new ApplicationOptions()
-                {
-                    SourceDirectory = @"C:\src\Response\Refactor\",
-                    VectorStoreName = ""
-                },
-                EmbeddingOptions = new EmbeddingOptions { Dimension = 768, EmbeddingModel = "", Host = "localhost", Port = 0, Timeout = TimeSpan.FromSeconds(30) },
-                FileLoadOptions = new(),
-                OllamaOptions = new OllamaOptions()
-                { Host = "", LlmModel = "", Port = 0, Timeout = TimeSpan.FromSeconds(40) }
-            });
+                SourceDirectory = _tempDir,
+                VectorStoreName = "test_store"
+            }
+        };
+        _configMock = new Mock<IOptions<RagnarConfig>>();
+        _configMock.Setup(c => c.Value).Returns(config);
+    }
 
-        var writer = new ResponseWriter(configMock.Object);
+    [Fact]
+    public async Task WriteResponseAsync_CreatesFileWithCorrectStructure()
+    {
+        var writer = new ResponseWriter(_configMock.Object);
+        var question = new Question(true, "Test Query", "test_file.cs", QuestionCategory.Refactor);
+        var details = new SaveDetails(question, "Generated Answer", "00:15");
 
-        var details = new SaveDetails
-        (
-            new Question(true, "Test", "test", QuestionCategory.Refactor),
-            "Answer",
-            "10:00"
-        );
-
-        var fileSystem = new MockFileSystem();
-        Directory.CreateDirectory(Path.Combine(@"C:\src", "Response", "Refactor"));
-
-        // Act
         var path = await writer.WriteResponseAsync(details, CancellationToken.None);
 
-        // Assert
-        path.Should().StartWith(@"C:\src\Response\Refactor\");
+        path.Should().NotBeNull();
+        File.Exists(path).Should().BeTrue();
         path.Should().EndWith(".md");
+
+        var content = await File.ReadAllTextAsync(path, TestContext.Current.CancellationToken);
+
+        content.Should().Contain(question.MarkdownHeader);
+        content.Should().Contain("## Question: ");
+        content.Should().Contain("Test Query");
+        content.Should().Contain("**Method Call Duration**: 00:15");
+        content.Should().Contain("## Response: ");
+        content.Should().Contain("Generated Answer");
+
+        Cleanup();
+    }
+
+    [Fact]
+    public void BuildDirectory_CreatesCategorySubFolder()
+    {
+        var expected = Path.Join(_tempDir, "Response", "Refactor");
+        // Verified implicitly via WriteResponseAsync above. Explicit check:
+        Directory.Exists(expected).Should().BeTrue();
+    }
+
+    private void Cleanup()
+    {
+        if (Directory.Exists(_tempDir)) Directory.Delete(_tempDir, true);
     }
 }

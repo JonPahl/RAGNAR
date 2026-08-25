@@ -1,4 +1,4 @@
-namespace Ragnar.Tests.Core;
+﻿namespace Ragnar.Tests.Core;
 
 public class SummarizeSaveResponseTests
     : IDisposable

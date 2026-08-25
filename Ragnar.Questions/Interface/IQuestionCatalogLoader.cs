@@ -10,7 +10,7 @@ public interface IQuestionCatalogLoader
     /// Loads active questions filtered by categories.
     /// </summary>
     /// <param name="IsActive">Include only active questions.</param>
-    /// <param name="Categories">Filter by question categories.</param>
+    /// <param name="Categories">BuildFilter by question categories.</param>
     /// <returns>Collection of matching questions.</returns>
     /// <example><![CDATA[var q = loader.LoadQuestions(true, cats);]]></example>
     IReadOnlyCollection<Question> LoadQuestions(bool IsActive, ImmutableHashSet<QuestionCategory> Categories);

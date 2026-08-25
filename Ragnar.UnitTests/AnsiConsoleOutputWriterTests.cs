@@ -1,4 +1,4 @@
-namespace Ragnar.Tests;
+﻿namespace Ragnar.Tests;
 
 public class AnsiConsoleOutputWriterTests
 {

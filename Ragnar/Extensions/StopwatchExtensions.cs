@@ -1,4 +1,4 @@
-namespace Ragnar.Extensions;
+﻿namespace Ragnar.Extensions;
 
 /// <summary>
 /// Extension methods for formatting Stopwatch elapsed time.

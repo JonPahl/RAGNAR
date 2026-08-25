@@ -1,4 +1,4 @@
-namespace Ragnar.Tests.Extensions;
+﻿namespace Ragnar.Tests.Extensions;
 
 public sealed class QuestionExtensionsTests
 {
@@ -49,7 +49,8 @@ public sealed class QuestionExtensionsTests
         var filtered = questions.WithCategory(categories);
 
         var item = Assert.Single(filtered);
-        Assert.Equal(QuestionCategory.Refactor, item.Category);
+        item.Category.Should()
+            .Be(QuestionCategory.Refactor);
     }
 
     [Fact]

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "w2na6/vzAB4=",
+  "dgSpecHash": "XIBSUcrMCtA=",
   "success": true,
   "projectFilePath": "C:\\Users\\jp325\\source\\Ragnar\\Ragnar.Questions\\Ragnar.Questions.csproj",
   "expectedPackageFiles": [
@@ -31,9 +31,9 @@
     "C:\\Users\\jp325\\.nuget\\packages\\microsoft.extensions.primitives\\10.0.10\\microsoft.extensions.primitives.10.0.10.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\ollamasharp\\5.4.30\\ollamasharp.5.4.30.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\qdrant.client\\1.19.0\\qdrant.client.1.19.0.nupkg.sha512",
-    "C:\\Users\\jp325\\.nuget\\packages\\roslynator.analyzers\\4.16.1\\roslynator.analyzers.4.16.1.nupkg.sha512",
-    "C:\\Users\\jp325\\.nuget\\packages\\roslynator.codeanalysis.analyzers\\4.16.1\\roslynator.codeanalysis.analyzers.4.16.1.nupkg.sha512",
-    "C:\\Users\\jp325\\.nuget\\packages\\roslynator.formatting.analyzers\\4.16.1\\roslynator.formatting.analyzers.4.16.1.nupkg.sha512",
+    "C:\\Users\\jp325\\.nuget\\packages\\roslynator.analyzers\\5.0.0\\roslynator.analyzers.5.0.0.nupkg.sha512",
+    "C:\\Users\\jp325\\.nuget\\packages\\roslynator.codeanalysis.analyzers\\5.0.0\\roslynator.codeanalysis.analyzers.5.0.0.nupkg.sha512",
+    "C:\\Users\\jp325\\.nuget\\packages\\roslynator.formatting.analyzers\\5.0.0\\roslynator.formatting.analyzers.5.0.0.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\serilog\\4.4.0\\serilog.4.4.0.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\serilog.aspnetcore\\10.0.0\\serilog.aspnetcore.10.0.0.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\serilog.extensions.hosting\\10.0.0\\serilog.extensions.hosting.10.0.0.nupkg.sha512",

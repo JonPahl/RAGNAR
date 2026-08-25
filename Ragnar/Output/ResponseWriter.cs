@@ -1,4 +1,4 @@
-namespace Ragnar.Output;
+﻿namespace Ragnar.Output;
 
 /// <summary>Initializes a new instance of the Response writer.</summary>
 /// <param name = "Config"> Application configuration options.</param>
@@ -21,7 +21,6 @@ public sealed class ResponseWriter(IOptions<RagnarConfig> Config)
 
         var path = BuildDirectory(sourceDir, Details.Question.Category.ToString());
 
-
         var filePath = Path.Join(path, $"{Details.Question.Filename}_{fileNow}.md");
 
         var content = FormatFile(Details);
@@ -31,15 +30,11 @@ public sealed class ResponseWriter(IOptions<RagnarConfig> Config)
         return filePath;
     }
 
-    /// <summary>Builds and ensures the target directory path exists; returns the full directory path.</summary>
-    /// <param name="SourceDirectory">Base application source directory.</param>
-    /// <param name="Category">Question category (defaults to "Uncategorized").</param>
-    /// <returns>The absolute path to the category subdirectory.</returns>
-    /// <example>
-    /// <![CDATA[
-    /// string dir = ResponseWriter.BuildDirectory("/src/data", "Math");
-    /// ]]>
-    /// </example>
+    /// <summary>Builds and ensures the target directory path exists.</summary>
+    /// <param name ="SourceDirectory"> Base application source directory.</param>
+    /// <param name="Category"> Question category for subdirectory naming.</param>
+    /// <returns>The absolute path to the created category subdirectory.</returns>
+    /// <example><![CDATA[var dir = writer.BuildDirectory(src, "xml");]]></example>
     private static string BuildDirectory(string SourceDirectory, string? Category)
     {
         var baseDir = string.IsNullOrWhiteSpace(Category) ? "Uncategorized" : Category;
@@ -49,10 +44,10 @@ public sealed class ResponseWriter(IOptions<RagnarConfig> Config)
         return targetDir;
     }
 
-    /// <summary>Formats a Response into markdown with question metadata.</summary>
-    /// <param name="Detail">Response details including question and Response text.</param>
-    /// <returns>Formatted markdown string.</returns>
-    /// <example><![CDATA[string md = ResponseWriter.FormatFile(details);]]></example>
+    /// <summary>Formats a response into markdown with question metadata.</summary>
+    /// <param name="Detail"> Response details including question and text.</param>
+    /// <returns>Formatted markdown string ready for file output.</returns>
+    /// <example><![CDATA[var md = writer.FormatFile(details);]]></example>
     private static string FormatFile(SaveDetails Detail)
     {
         var response = new StringBuilder();

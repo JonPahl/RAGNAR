@@ -1,4 +1,4 @@
-namespace Ragnar.Factory;
+﻿namespace Ragnar.Factory;
 
 /// <summary>
 /// Creates Ollama API clients based on type (Ollama or Embedding).

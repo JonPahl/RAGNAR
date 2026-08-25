@@ -1,4 +1,4 @@
-namespace Ragnar.Utils;
+﻿namespace Ragnar.Utils;
 /// <summary>
 /// Implements File validation logic based on extension, name, and d filters.
 /// </summary>
@@ -13,16 +13,16 @@ public class FileValidator(
 
     /// <summary>Checks if File passes all filtering rules.</summary>
     /// <param name="File">File to validate.</param>
-    /// <param name="Filter">Filter criteria.</param>
+    /// <param name="Filter">BuildFilter criteria.</param>
     /// <returns>true if File matches criteria; otherwise false.</returns>
     /// <example><![CDATA[bool ok = validator.IsValid(info, opts);]]></example>
     public bool IsValid(FileInfo File, in FileLoadOptions Filter)
     {
         //var DirectoryName = File.DirectoryName;
 
-        //return Filter.AllowedFileExtensions.Any(D => D.Contains(File.Extension, StringComparison.OrdinalIgnoreCase)) &&
-        //!Filter.ExcludedFiles.Contains(File.Name) &&
-        //!Filter.ExcludedDirectories
+        //return BuildFilter.AllowedFileExtensions.Any(D => D.Contains(File.Extension, StringComparison.OrdinalIgnoreCase)) &&
+        //!BuildFilter.ExcludedFiles.Contains(File.Name) &&
+        //!BuildFilter.ExcludedDirectories
         //.Any(D => DirectoryName.Contains(D, StringComparison.OrdinalIgnoreCase));
 
         // 1. Extension check (exact match is usually intended for extensions)

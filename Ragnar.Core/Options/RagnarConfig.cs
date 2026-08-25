@@ -4,13 +4,13 @@
 public record RagnarConfig
 {
     /// <summary>Gets or sets the main application options.</summary>
-    public ApplicationOptions ApplicationOptions { get; init; }
+    public ApplicationOptions? ApplicationOptions { get; init; }
 
     /// <summary>Gets or sets the embedding model options.</summary>
-    public EmbeddingOptions EmbeddingOptions { get; init; }
+    public EmbeddingOptions? EmbeddingOptions { get; init; }
 
     /// <summary>Gets or sets Ollama-specific configuration settings.</summary>
-    public OllamaOptions OllamaOptions { get; init; }
+    public OllamaOptions? OllamaOptions { get; init; }
 
     /// <summary>Gets or sets file loading behavior and validation options.</summary>
     public FileLoadOptions FileLoadOptions { get; init; } = new();

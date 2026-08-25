@@ -35,10 +35,10 @@ public class AnsiConsoleOutputWriter
 /// <summary>Extends Spectre.Console style handling with null-safe fallback.</summary>
 public static class StylesExtensions
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="Style">Optional Spectre.Console style.</param>
+    /// <summary>Ensures a valid style is returned, defaulting to plain if null.</summary>
+    /// <param name="Style"> Optional Spectre.Console style instance.</param>
+    /// <returns>A valid Style instance, never null.</returns>
+    /// <example><![CDATA[var s = myStyle?.GetStyle;]]></example>
     extension(Style? Style)
     {
         /// <summary>Ensures a valid style is returned, defaulting to plain if null.</summary>

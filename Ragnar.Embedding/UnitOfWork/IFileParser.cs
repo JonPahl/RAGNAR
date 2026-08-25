@@ -1,4 +1,4 @@
-namespace Ragnar.Embedding.UnitOfWork;
+﻿namespace Ragnar.Embedding.UnitOfWork;
 
 /// <summary>
 /// Interface for file parsing functionality.

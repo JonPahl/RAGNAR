@@ -1,4 +1,4 @@
-namespace Ragnar.Extensions;
+﻿namespace Ragnar.Extensions;
 
 /// <summary>Registers embedding-related services and pipelines in the dependency injection container.</summary>
 public static class EmbeddingSetupExtension

@@ -1,4 +1,4 @@
-namespace Ragnar;
+﻿namespace Ragnar;
 
 ///<summary>
 /// Hosted service responsible for running the RAG pipeline.

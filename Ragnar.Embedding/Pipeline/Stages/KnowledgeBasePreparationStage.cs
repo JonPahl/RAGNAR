@@ -1,4 +1,4 @@
-namespace Ragnar.Embedding.Pipeline.Stages;
+﻿namespace Ragnar.Embedding.Pipeline.Stages;
 
 public class KnowledgeBasePreparationStage(IEmbeddingPipeline Pipeline, IOutputWriter Writer)
     : IPipelineStage

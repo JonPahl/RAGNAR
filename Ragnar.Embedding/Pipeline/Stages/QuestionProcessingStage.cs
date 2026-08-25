@@ -1,4 +1,4 @@
-namespace Ragnar.Embedding.Pipeline.Stages;
+﻿namespace Ragnar.Embedding.Pipeline.Stages;
 
 public class QuestionProcessingStage(IKnowledgeBaseInitialize KnowledgeBase)
         : IPipelineStage

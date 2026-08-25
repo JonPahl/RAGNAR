@@ -1,7 +1,7 @@
 ﻿namespace Ragnar.Questions;
 
 /// <summary>Selects appropriate question filter based on input criteria.</summary>
-public class QuestionFilterSelector
+public static class QuestionFilterSelector
 {
     private static readonly ImmutableDictionary<QuestionCategory, IFilterStrategy> Strategies =
     ImmutableDictionary<QuestionCategory, IFilterStrategy>.Empty

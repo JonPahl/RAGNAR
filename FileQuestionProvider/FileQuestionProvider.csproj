@@ -14,6 +14,10 @@
 
 	<Import Project="..\Ragnar.Plugins\Ragnar.Plugins.projitems" Label="Shared" />
 
+	<ItemGroup>
+	  <Compile Include="..\Ragnar.Plugins\AppDefaults.cs" Link="AppDefaults.cs" />
+	</ItemGroup>
+
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="..\.roslynatorconfig" Link=".roslynatorconfig" />
@@ -21,15 +25,15 @@
 
   <ItemGroup>
     <PackageReference Include="CsvHelper" Version="33.1.0" />
-    <PackageReference Include="Roslynator.Analyzers" Version="4.16.1">
+    <PackageReference Include="Roslynator.Analyzers" Version="5.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Roslynator.CodeAnalysis.Analyzers" Version="4.16.1">
+    <PackageReference Include="Roslynator.CodeAnalysis.Analyzers" Version="5.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Roslynator.Formatting.Analyzers" Version="4.16.1">
+    <PackageReference Include="Roslynator.Formatting.Analyzers" Version="5.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

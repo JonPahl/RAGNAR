@@ -1,4 +1,4 @@
-namespace Ragnar.Interfaces;
+﻿namespace Ragnar.Interfaces;
 
 /// <summary>Generates and retrieves embeddings for questions.</summary>
 /// <param name="Logger"> Logger instance.</param>

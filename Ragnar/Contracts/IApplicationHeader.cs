@@ -1,4 +1,4 @@
-namespace Ragnar.Contracts;
+﻿namespace Ragnar.Contracts;
 
 /// <summary>
 /// Displays branding information.

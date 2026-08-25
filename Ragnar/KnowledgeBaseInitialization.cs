@@ -1,9 +1,8 @@
-namespace Ragnar;
+﻿namespace Ragnar;
 
 /// <summary>Initializes a new instance of the embedding pipeline.</summary>
+/// <param name="RagnarConfig"> Application configuration options wrapper.</param>
 /// <param name = "Writer"> Output writer for displaying console messages.</param>
-/// <param name = "uow"> Unit of work handling text embedding tasks.</param>
-/// <param name="config"> Application configuration options wrapper.</param>
 /// <param name = "Logger"> Logger for recording operational events.</param>
 /// <param name = "QdrantClient"> Qdrant client for vector database operations.</param>
 /// <return>A task representing the initialization operation.
@@ -24,7 +23,7 @@ public sealed class KnowledgeBaseInitialization(
     private readonly DefaultQuestionCatalogLoader _questionLoader = new(Logger, Writer);
 
     /// <inheritdoc/>
-    public async ValueTask EnsureCollectionExistsAsync(CancellationToken Ct)
+    public async ValueTask InitializeVectorStoreAsync(CancellationToken Ct)
     {
         var dimension = RagnarConfig.Value.EmbeddingOptions.Dimension;
 
@@ -34,7 +33,6 @@ public sealed class KnowledgeBaseInitialization(
 
         if (!exists)
         {
-            // await vectorService.CreateCollectionIfNotExistsAsync(ct);
             Writer.MarkupLine("[green] ☑ Collection Created [/]");
         }
 
@@ -46,8 +44,8 @@ public sealed class KnowledgeBaseInitialization(
     /// </summary>
     /// <param name="Ct">Cancellation token.</param>
     ///<returns>A task representing the population operation.</returns>
-    ///<example><![CDATA[await PopulateAsync(ct);]]></example>
-    public async Task PopulateAsync(CancellationToken Ct) => await EmbeddingPipeline.RunAsync(Ct);
+    ///<example><![CDATA[await RunEmbeddingPipelineAsync(ct);]]></example>
+    public async Task RunEmbeddingPipelineAsync(CancellationToken Ct) => await EmbeddingPipeline.RunAsync(Ct);
 
     /// <summary>
     /// Asks questions asynchronously.
@@ -60,15 +58,13 @@ public sealed class KnowledgeBaseInitialization(
         var processedCount = 0;
         var total = questions.Count;
 
-        foreach (var question in questions.Where(x => x.IsEnabled))
+        foreach (var question in questions)
         {
             Writer.WriteRule();
             Writer.WriteLine();
             Writer.MarkupLine($"[blue]Question: {Environment.NewLine}{Markup.Escape(question.Text)} [/]");
             Writer.WriteLine();
             Writer.Write(new Rule());
-
-            // var questionVector = await QuestionEmbedding.GenerateEmbeddingAsync(question.Text, Ct);
 
             var contextText = await QuestionEmbedding.GetContext(_collectionName, Ct);
 
@@ -96,35 +92,3 @@ public sealed class KnowledgeBaseInitialization(
         return [.. sorted];
     }
 }
-
-//var categories = QuestionLoader.ParseCategoriesOrDefault(Options.Value.ApplicationOptions.CategoriesToProcess);
-
-//foreach (var question in QuestionLoader.LoadQuestions(true, categories))
-//{
-//    questions.Add(question);
-//}
-
-//var fcl = new FileConfigLoader();
-//var configs = new List<QuestionConfiguration>();
-//configs.AddRange(fcl.LoadQuestions());
-
-//foreach (var item in ConfigQuestionLoader.LoadFromConfig(configs)){ questions.Add(item); }
-
-//var config = new List<QuestionConfiguration>();
-//var provider = new CsvFileQuestionProvider();
-
-////TODO: Rework to make changing path easier.
-//var pluginDir = Path.Join(AppContext.BaseDirectory, "Plugins");
-//if (Directory.Exists(pluginDir)){
-//    foreach (var csvFile in Directory.EnumerateFiles(pluginDir, "*.csv", SearchOption.AllDirectories)) {
-// provider.SetFileName(csvFile);
-// var csvConfigs = await provider.LoadQuestionAsync(Ct);
-// questions.UnionWith(csvConfigs.Select(c => new Question(c.IsActive, c.Text, c.FileName, c.Category))); }}
-
-//foreach (var question in config
-// .Select(c => new Question(c.IsActive, c.Text, c.FileName, c.Category))) { questions.Add(question); }
-
-//var sortedQuestions = questions
-//    .Where(x => x.IsEnabled)
-//    .OrderBy(X => X.Category.ToString());
-//return [.. sortedQuestions];

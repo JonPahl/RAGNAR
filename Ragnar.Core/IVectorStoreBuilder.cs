@@ -1,4 +1,4 @@
-namespace Ragnar.Core;
+﻿namespace Ragnar.Core;
 
 public interface IVectorStoreBuilder
 {
