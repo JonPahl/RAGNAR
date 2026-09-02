@@ -1,74 +1,76 @@
 ﻿namespace Ragnar.RagPipeline;
 
 /// <summary>Executes RAG pipeline: embeds question → retrieve → generate answer.</summary>
-/// <param name="Writer">Custom console writer.</param>
-/// <param name="ConfigWrapper">Wraps all options.</param>
-/// <param name="SystemPromptProvider">System prompt provider.</param>
-/// <param name="SaveService">Response writer service.</param>
-/// <param name="OllamaClientFactory">OllamaOptions client factory.</param>
-/// <param name="OllamaProvider">Ollama question calling operations.</param>
+/// <param name="writer">Custom console writer.</param>
+/// <param name="configWrapper">Wraps all options.</param>
+/// <param name="promptTemplateProvider">System prompt provider.</param>
+/// <param name="saveService">Response writer service.</param>
+/// <param name="ollamaClientFactory">OllamaOptions client factory.</param>
+/// <param name="ollamaProvider">Ollama question calling operations.</param>
 /// <example><![CDATA[await new RagPipeline().ExecuteAsync(q, ctx, ct);]]></example>
 public sealed class RagOrchestrator(
-    IOutputWriter Writer,
-    IOptions<RagnarConfig> ConfigWrapper,
-    [FromKeyedServices("Common")] ISystemPromptProvider
-    SystemPromptProvider,
-    IResponseWriter SaveService,
-    IOllamaClientFactory OllamaClientFactory,
-    IOllamaResponse OllamaProvider)
+    IOutputWriter writer,
+    IOptions<RagnarConfig> configWrapper,
+    [FromKeyedServices("Common")] IPromptProvider
+    promptTemplateProvider,
+    IResponseWriter saveService,
+    IOllamaClientFactory ollamaClientFactory,
+    IOllamaGenerationService ollamaProvider)
     : IRagOrchestrator
 {
     /// <summary>Runs full RAG pipeline for a question using context.</summary>
-    /// <param name="Question">User question.</param>
-    /// <param name="ContextText">Retrieved code context.</param>
-    /// <param name="Ct">Cancellation token.</param>
+    /// <param name="question">User question.</param>
+    /// <param name="contextText">Retrieved code context.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
     /// <example><![CDATA[await pipeline.ExecuteAsync(question, ctx, ct);]]></example>
     /// <returns>Returns a task.</returns>
     public async Task ExecuteAsync(
-      Question Question,
-      string ContextText,
-      CancellationToken Ct)
+      Core.Model.Question question,
+      string contextText,
+      CancellationToken cancellationToken)
     {
-        var finalPrompt = $"Context:\n{ContextText}\n\nQuestion:\n{Question.Text}\n\nAnswer:";
+        var finalPrompt = $"Context:\n{contextText}\n\nQuestion:\n{question.Text}\n\nAnswer:";
 
-        var ollamaClient = OllamaClientFactory.FindClient(OllamaServiceType.Ollama);
+        var ollamaClient = ollamaClientFactory.FindClient(OllamaServiceType.Ollama);
 
         var request = new GenerateRequest
         {
             Model = ollamaClient.SelectedModel,
             Prompt = finalPrompt,
-            System = SystemPromptProvider.Template,
+            System = promptTemplateProvider.System,
         };
 
         var sw = Stopwatch.StartNew();
 
-        var response = await GenerateAsync(request, Ct);
+        var response = await GenerateAsync(request, cancellationToken);
         sw.Stop();
 
-        if (ConfigWrapper.Value.ApplicationOptions.IncludeOriginalPrompt)
+        if (configWrapper.Value.ApplicationOptions.IncludeOriginalPrompt)
         {
             response += finalPrompt.ShowPrompt();
+            response += Environment.NewLine;
+            response += request.System;
         }
 
-        await SaveResponseAsync(new SaveDetails(Question, response, sw.ElapsedTimeString()), Ct);
+        await SaveResponseAsync(new SaveDetails(question, response, sw.ElapsedTimeString()), cancellationToken);
     }
 
     /// <summary>Saves generation response to disk and prints path.</summary>
-    /// <param name="Details">Response details to save.</param>
-    /// <param name="Ct">Cancellation token.</param>
+    /// <param name="details">Response details to save.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
     /// <example><![CDATA[await SaveResponseAsync(new SaveDetails(...), ct);]]></example>
-    private async Task SaveResponseAsync(SaveDetails Details, CancellationToken Ct)
+    private async Task SaveResponseAsync(SaveDetails details, CancellationToken cancellationToken)
     {
-        var path = await SaveService.WriteResponseAsync(Details, Ct);
-        Writer.WriteLine();
-        Writer.MarkupLine($"[red underline]{path}[/]");
+        var path = await saveService.WriteResponseAsync(details, cancellationToken);
+        writer.WriteLine();
+        writer.MarkupLine($"[red underline]{path}[/]");
     }
 
     /// <summary>Invokes OllamaOptions generation with config.</summary>
-    /// <param name="Request">LLM prompt request.</param>
-    /// <param name="Ct">Cancellation token.</param>
+    /// <param name="request">LLM prompt request.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
     /// <example>
     /// <![CDATA[string answer = await GenerateAsync(request, ct);]]></example>
     /// <returns>Generated text.</returns>
-    private async ValueTask<string> GenerateAsync(GenerateRequest Request, CancellationToken Ct) => await OllamaProvider.GenerateResponse(Request, Ct);
+    private async ValueTask<string> GenerateAsync(GenerateRequest request, CancellationToken cancellationToken) => await ollamaProvider.GenerateResponse(request, cancellationToken);
 }

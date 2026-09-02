@@ -39,4 +39,6 @@ public static class Styles
     /// Gets Bold Steel Blue style.
     /// </summary>
     public static Style BoldSteelBlue => new(foreground: ConsoleColor.DarkBlue, decoration: Decoration.Bold | Decoration.Italic);
+
+    public static Style Red => new(foreground: ConsoleColor.Red);
 }

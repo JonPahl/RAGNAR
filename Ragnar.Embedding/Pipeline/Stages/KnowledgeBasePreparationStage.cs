@@ -1,12 +1,12 @@
 ﻿namespace Ragnar.Embedding.Pipeline.Stages;
 
-public class KnowledgeBasePreparationStage(IEmbeddingPipeline Pipeline, IOutputWriter Writer)
+public class KnowledgeBasePreparationStage(IEmbeddingPipeline pipeline, IOutputWriter writer)
     : IPipelineStage
 {
-    public async Task ExecuteAsync(CancellationToken Ct)
+    public async Task ExecuteAsync(CancellationToken cancellationToken)
     {
-        await Pipeline.EnsureCollectionExistsAsync(Ct);
-        await Pipeline.PopulateAsync(Ct);
-        Writer.MarkupLine("☑ Knowledge base populated.", new Style(ConsoleColor.Green));
+        await pipeline.EnsureCollectionExistsAsync(cancellationToken);
+        await pipeline.PopulateAsync(cancellationToken);
+        writer.MarkupLine("☑ Knowledge base populated.", new Style(ConsoleColor.Green));
     }
 }

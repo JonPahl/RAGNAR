@@ -2,13 +2,13 @@
 
 public static class RagPipelineExtensions
 {
-    extension(IServiceCollection Services)
+    extension(IServiceCollection services)
     {
         public IServiceCollection AddHttpClients()
         {
             var registerClient = (string name, Action<HttpClient> configure) =>
             {
-                Services.AddHttpClient(name).AddStandardResilienceHandler(opt =>
+                services.AddHttpClient(name).AddStandardResilienceHandler(opt =>
                 {
                     opt.TotalRequestTimeout = new HttpTimeoutStrategyOptions { Timeout = TimeSpan.FromMinutes(5) };
                     opt.CircuitBreaker = new HttpCircuitBreakerStrategyOptions
@@ -25,30 +25,30 @@ public static class RagPipelineExtensions
 
             });
 
-            return Services;
+            return services;
         }
 
 
         /// <summary>Registers configuration binding and validation for all ollamaOption.</summary>
-        /// <param name="Context">Host <paramref name="Context"/>.</param>
+        /// <param name="context">Host <paramref name="context"/>.</param>
         /// <returns>Updated service collection.</returns>
-        public IServiceCollection RegisterOptions(HostBuilderContext Context)
+        public IServiceCollection RegisterOptions(HostBuilderContext context)
         {
-            Services.AddValidatorsFromAssemblyContaining<RagnarConfig>();
+            services.AddValidatorsFromAssemblyContaining<RagnarConfig>();
 
             // Register all services once
 
-            Services
+            services
                 .AddOptions<RagnarConfig>()
-                .Bind(Context.Configuration
+                .Bind(context.Configuration
                 .GetSection("RagnarConfig"))
                 .ValidateDataAnnotations()
                 .ValidateOnStart();
 
-            Services
+            services
               .PostConfigure<RagnarConfig>(options => options.ApplicationOptions.SourceDirectory = options.ApplicationOptions.SourceDirectory.ExpandDirectory());
 
-            return Services;
+            return services;
         }
     }
 }

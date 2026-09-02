@@ -1,7 +1,7 @@
 ﻿namespace Ragnar.Embedding.Pipeline.Stages;
 
-public class QuestionProcessingStage(IKnowledgeBaseInitialize KnowledgeBase)
+public class QuestionProcessingStage(IKnowledgeBaseInitialize knowledgeBase)
         : IPipelineStage
 {
-    public Task ExecuteAsync(CancellationToken Ct) => KnowledgeBase.AskQuestionsAsync(Ct);
+    public Task ExecuteAsync(CancellationToken cancellationToken) => knowledgeBase.AskQuestionsAsync(cancellationToken);
 }

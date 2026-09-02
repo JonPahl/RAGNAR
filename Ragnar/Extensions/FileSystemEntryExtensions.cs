@@ -6,8 +6,8 @@ public static class FileSystemEntryExtensions
     /// <summary>
     /// Determines whether the file has one of the allowed extensions (case-insensitive).
     /// </summary>
-    /// <param name="Entry">The file system entry.</param>
-    /// <param name="AllowedExtensions">The collection of allowed file extensions.</param>
+    /// <param name="entry">The file system entry.</param>
+    /// <param name="allowedExtensions">The collection of allowed file extensions.</param>
     /// <returns><c>true</c> if the extension is allowed; otherwise, <c>false</c>.</returns>
     /// <example>
     /// <![CDATA[
@@ -16,7 +16,16 @@ public static class FileSystemEntryExtensions
     /// ]]>
     /// </example>
     public static bool HasAllowedExtension(
-        this FileSystemEntry Entry,
-        IReadOnlyCollection<string> AllowedExtensions)
-        => !Entry.IsDirectory && AllowedExtensions.Contains(Path.GetExtension(Entry.FileName.ToString()), StringComparer.OrdinalIgnoreCase);
+        this FileSystemEntry entry,
+        IReadOnlyCollection<string> allowedExtensions)
+    {
+        Guard.Against.Null(allowedExtensions);
+
+        if (entry.IsDirectory)
+            return false;
+
+        var extension = Path.GetExtension(entry.FileName.ToString());
+
+        return allowedExtensions.Contains(extension, StringComparer.OrdinalIgnoreCase);
+    }
 }

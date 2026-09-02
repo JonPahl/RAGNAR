@@ -3,7 +3,7 @@
 /// <summary>Extends <see cref="string"/> with utility methods for comment processing.</summary>
 public static class StringExtensions
 {
-    extension(ReadOnlySpan<char> Value)
+    extension(ReadOnlySpan<char> value)
     {
         /// <summary>
         /// Counts non-tag, non-comment characters in an XML comment.
@@ -14,11 +14,11 @@ public static class StringExtensions
             var count = 0;
             var inTag = false;
 
-            for (var i = 0; i < Value.Length; i++)
+            for (var i = 0; i < value.Length; i++)
             {
-                if (Value[i] == '<') inTag = true;
-                else if (Value[i] == '>') inTag = false;
-                else if (!inTag && Value[i] != '/')
+                if (value[i] == '<') inTag = true;
+                else if (value[i] == '>') inTag = false;
+                else if (!inTag && value[i] != '/')
                     count++;
             }
             return count;
@@ -28,14 +28,13 @@ public static class StringExtensions
         /// Retrieves the last folder from a given path.
         /// </summary>
         /// <returns>The span of characters representing the last folder in the path.</returns>
-        public string LastFolder => Path.GetFileName(Value.ToString().TrimEnd('/', '\\'));
+        public string LastFolder => Path.GetFileName(value.ToString().TrimEnd('/', '\\'));
 
 
         /// <summary>Checks if a filename is in the exclusion list (case-insensitive).</summary>
-        /// <param name="FileName">Filename to check.</param>
-        /// <param name="Exclusions">Set of excluded filenames.</param>
+        /// <param name="exclusions">Set of excluded filenames.</param>
         /// <returns><c>true</c> if excluded; otherwise <c>false</c>.</returns>
-        public bool IsExcluded(in IReadOnlyCollection<string> Exclusions)
-            => Exclusions.Contains(Value.ToString(), StringComparer.OrdinalIgnoreCase);
+        public bool IsExcluded(in IReadOnlyCollection<string> exclusions)
+            => exclusions.Contains(value.ToString(), StringComparer.OrdinalIgnoreCase);
     }
 }

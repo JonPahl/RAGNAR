@@ -10,39 +10,21 @@ public class SummarizeSaveResponse
     private static readonly string _template = "# RAG Response Summary\n\n{0}\n\nGenerated: {1}";
     private string? _responseDir;
 
-    public async Task<string> WriteResponseAsync(SaveDetails Details, CancellationToken Ct)
+    public async Task<string> WriteResponseAsync(SaveDetails details, CancellationToken cancellationToken)
     {
-        //var Summary = Details.Response;
 
-        //await File.WriteAllTextAsync(SummaryPath, $"# RAG Response Summary\n\n{Summary}\n\nGenerated: {DateTime.Now:O}", Ct);
-
-        var sourceDir = Path.GetDirectoryName(Details.Question.Filename)
+        var sourceDir = Path.GetDirectoryName(details.Question.Filename)
                         ?? Directory.GetCurrentDirectory();
 
         _responseDir ??= Directory
             .CreateDirectory(Path.Join(sourceDir, "Response")).FullName;
 
-        var fileName = $"{Path.GetFileNameWithoutExtension(Details.Question.Filename)}_summary.md";
+        var fileName = $"{Path.GetFileNameWithoutExtension(details.Question.Filename)}_summary.md";
         var summaryPath = Path.Join(_responseDir, fileName);
 
-        var content = string.Format(_template, Details.Response, DateTime.UtcNow.ToString("O"));
-        await File.WriteAllTextAsync(summaryPath, content, Ct);
+        var content = string.Format(_template, details.Content, DateTime.UtcNow.ToString("O"));
+        await File.WriteAllTextAsync(summaryPath, content, cancellationToken);
+
         return summaryPath;
-
-
-        //var fileName = Details.Question.Filename;
-        //var summaryPath = Path.Join(
-        //    Path.GetDirectoryName(Details.Question.Filename) ?? Directory.GetCurrentDirectory(),
-        //    "Response", $"{Path.GetFileNameWithoutExtension(Details.Question.Filename)}_summary.md");
-
-        //// Ensure directory exists (avoids runtime crashes)
-        //Directory.CreateDirectory(Path.GetDirectoryName(summaryPath)!);
-
-        //// Use StringBuilder or pre-allocated buffer if this is a hot path
-        //var content = string.Format(_template, Details.Response, DateTime.Now.ToString("O"));
-
-        //await File.WriteAllTextAsync(summaryPath, content, Ct);
-
-        //return summaryPath;
     }
 }

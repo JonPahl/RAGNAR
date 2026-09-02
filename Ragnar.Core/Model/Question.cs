@@ -11,7 +11,7 @@ public sealed record class Question(
     bool IsEnabled,
     [NotNull] string Text,
     [NotNull] string Filename,
-    QuestionCategory Category = QuestionCategory.Other,
+    QuestionCategory? Category = QuestionCategory.Other,
     Filter? Filter = null)
 {
     /// <summary>
@@ -20,55 +20,55 @@ public sealed record class Question(
     public string MarkdownHeader => $"### <span style=\"color:darkblue;\">[{Category}]</span> {Text}";
 
     /// <summary>Creates an active question.</summary>
-    /// <param name="Text">The question text.</param>
-    /// <param name="Key">The key identifier.</param>
-    /// <param name="Category">The category.</param>
+    /// <param name="text">The question text.</param>
+    /// <param name="key">The key identifier.</param>
+    /// <param name="category">The category.</param>
     /// <returns>A new active question instance.</returns>
-    public static Question IsActive(string Text, string Key, QuestionCategory Category)
+    public static Question IsActive(string text, string key, QuestionCategory category)
     {
         //TODO: Call question AbstractValidation.
 
-        Guard.Against.NullOrWhiteSpace(Text);
-        Guard.Against.NullOrWhiteSpace(Key);
+        Guard.Against.NullOrWhiteSpace(text);
+        Guard.Against.NullOrWhiteSpace(key);
 
-        Question question = new(true, Text, Key, Category);
+        Question question = new(true, text, key, category);
         return question.ValidateQuestion();
     }
 
     /// <summary>Creates an active question.</summary>
-    /// <param name="Text">The question text.</param>
-    /// <param name="Key">The key identifier.</param>
-    /// <param name="Category">The category.</param>
+    /// <param name="text">The question text.</param>
+    /// <param name="key">The key identifier.</param>
+    /// <param name="category">The category.</param>
     /// <returns>A new Inactive question instance.</returns>
-    public static Question IsDisabled(string Text, string Key, QuestionCategory Category)
+    public static Question IsDisabled(string text, string key, QuestionCategory category)
     {
-        Question question = new(false, Text, Key, Category);
+        Question question = new(false, text, key, category);
         return question.ValidateQuestion();
     }
 }
 
 public static class QuestionExtensions
 {
-    extension(Question Question)
+    extension(Question question)
     {
-        public Question SetFilter(Filter? Filter)
+        public Question SetFilter(Filter? filter)
         {
-            if (Filter is not null)
+            if (filter is not null)
             {
-                return new(Question.IsEnabled, Question.Text, Question.Filename, Question.Category, Question.Filter);
+                return new(question.IsEnabled, question.Text, question.Filename, question.Category, question.Filter);
             }
 
-            return Question;
+            return question;
         }
 
         public Question ValidateQuestion()
         {
             //TODO: Replace with call to AbstractValidation.
 
-            foreach (var prop in Question.GetType().GetProperties())
+            foreach (var prop in question.GetType().GetProperties())
             {
                 Guard.Against.Null(prop);
-                var value = prop.GetValue(Question);
+                var value = prop.GetValue(question);
                 if (value is string)
                 {
                     Guard.Against.Null(value.ToString());
@@ -76,7 +76,7 @@ public static class QuestionExtensions
                 }
             }
 
-            return Question;
+            return question;
         }
     }
 }

@@ -19,12 +19,11 @@ public record ApplicationOptions
     /// <summary>
     /// Gets optional array of category names to process; defaults to all.
     /// <![CDATA[
-    /// var options = new ApplicationOptions
-    /// {
-    ///     SourceDirectory = "/data/sources",
-    ///     VectorStoreName = "my_vectors"
-    /// };
-    /// ]]>
+    /// var options = new ApplicationOptions{
+    /// SourceDirectory = "/data/sources",
+    /// VectorStoreName = "my_vectors"};]]>
     /// </summary>
-    public string[]? CategoriesToProcess { get; init; } = [];
+    public QuestionCategory[]? CategoriesToProcess { get; init; } = [];
+
+    public string OutputFolder { get; init; } = "Response";
 }

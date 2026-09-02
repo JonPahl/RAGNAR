@@ -1,45 +1,36 @@
 ﻿namespace Ragnar.Utils;
-/// <summary>
-/// Implements File validation logic based on extension, name, and d filters.
-/// </summary>
-public class FileValidator(
-    FileLoadOptions Options) : IFileValidator
+
+/// <summary>Validates file access against extension and exclusion rules.</summary>
+/// <remarks>Uses case-insensitive matching for extensions, files, and directories.</remarks>
+/// <example><![CDATA[bool ok = validator.IsValid(file, in options);]]></example>
+public class FileValidator(FileLoadOptions options) : IFileValidator
 {
-    private readonly HashSet<string> _excludedFiles = new(Options.ExcludedFiles, StringComparer.OrdinalIgnoreCase);
+    private readonly HashSet<string> _excludedFiles = new(options.ExcludedFiles, StringComparer.OrdinalIgnoreCase);
 
-    private readonly HashSet<string> _excludedDirectories = new(Options.ExcludedDirectories, StringComparer.OrdinalIgnoreCase);
+    private readonly HashSet<string> _excludedDirectories = new(options.ExcludedDirectories, StringComparer.OrdinalIgnoreCase);
 
-    private readonly string[] _allowedExtensions = [.. Options.AllowedFileExtensions];
+    private readonly string[] _allowedExtensions = [.. options.AllowedFileExtensions];
 
-    /// <summary>Checks if File passes all filtering rules.</summary>
-    /// <param name="File">File to validate.</param>
-    /// <param name="Filter">BuildFilter criteria.</param>
-    /// <returns>true if File matches criteria; otherwise false.</returns>
-    /// <example><![CDATA[bool ok = validator.IsValid(info, opts);]]></example>
-    public bool IsValid(FileInfo File, in FileLoadOptions Filter)
+    /// <summary>Checks if a file passes all load-option validation rules.</summary>
+    /// <param name="file">The file to validate.</param>
+    /// <param name="filter">Allowed and excluded file/dir patterns.</param>
+    /// <remarks>Performs extension, file-name, and directory prefix checks.</remarks>
+    /// <example><![CDATA[bool ok = sut.IsValid(info, in opts);]]></example>
+    /// <returns><c>true</c> when the file satisfies every rule.</returns>
+    public bool IsValid(FileInfo file, in FileLoadOptions filter)
     {
-        //var DirectoryName = File.DirectoryName;
-
-        //return BuildFilter.AllowedFileExtensions.Any(D => D.Contains(File.Extension, StringComparison.OrdinalIgnoreCase)) &&
-        //!BuildFilter.ExcludedFiles.Contains(File.Name) &&
-        //!BuildFilter.ExcludedDirectories
-        //.Any(D => DirectoryName.Contains(D, StringComparison.OrdinalIgnoreCase));
-
-        // 1. Extension check (exact match is usually intended for extensions)
-        var ext = File.Extension;
+        var ext = file.Extension;
 
         if (!ext.Equals(".", StringComparison.Ordinal))
         {
-            var allowed = CheckExtension(File);
+            var allowed = CheckExtension(file);
             if (!allowed)
                 return false;
         }
 
-        // 2. Excluded files (O(1) lookup)
-        if (_excludedFiles.Contains(File.Name)) return false;
+        if (_excludedFiles.Contains(file.Name)) return false;
 
-        // 3. Excluded directories (O(1) lookup per segment or full path)
-        var dirName = File.DirectoryName;
+        var dirName = file.DirectoryName;
         if (!string.IsNullOrEmpty(dirName))
         {
             foreach (var excludedDir in _excludedDirectories)
@@ -52,11 +43,11 @@ public class FileValidator(
         return true;
     }
 
-    private bool CheckExtension(FileInfo File)
+    private bool CheckExtension(FileInfo file)
     {
         var allowed = false;
 
-        var ext = File.Extension;
+        var ext = file.Extension;
         foreach (var _ in _allowedExtensions.Where(allowedExt => ext.Equals(allowedExt, StringComparison.OrdinalIgnoreCase))
             .Select(allowedExt => new { }))
         {

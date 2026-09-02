@@ -3,86 +3,92 @@
 /// <summary>
 /// Loads active questions from configured categories, supporting both built-in and plugin-based sources.
 /// </summary>
-/// <param name="Logger">Serilog logger for diagnostics.</param>
-/// <param name="Writer">Output Writer for user feedback.</param>
+/// <param name="logger">Serilog logger for diagnostics.</param>
+/// <param name="writer">Output Writer for user feedback.</param>
 /// <example>
 /// <code>
 /// var loader = new DefaultQuestionCatalogLoader(logger, Writer);
 /// var questions = loader.LoadQuestions(true, categories);
 /// </code>
 /// </example>
-public class DefaultQuestionCatalogLoader(Serilog.ILogger Logger, IOutputWriter Writer)
+public class DefaultQuestionCatalogLoader(Serilog.ILogger logger, IOutputWriter writer)
     : IQuestionCatalogLoader
 {
+
+    private HashSet<QuestionCategory>? _categories = [];
+
     /// <summary>Loads active/inactive questions filtered by category.</summary>
-    /// <param name="IsActive">BuildFilter active questions.</param>
-    /// <param name="Categories">Optional categories to include.</param>
+    /// <param name="isActive">BuildFilter active questions.</param>
+    /// <param name="categories">Optional categories to include.</param>
     /// <returns>Filtered question collection.</returns>
     /// <example><![CDATA[var questions = loader.LoadQuestions(true, categories);]]></example>
-    public IReadOnlyCollection<Question> LoadQuestions(
-        bool IsActive,
-        ImmutableHashSet<QuestionCategory>? Categories)
+    public IReadOnlyCollection<Core.Model.Question> LoadQuestions(
+        bool isActive,
+        HashSet<QuestionCategory>? categories)
     {
+        _categories = categories;
+
         var questions = GetDefaultQuestions();
 
-        return IsActive switch
+        if (categories is not null)
         {
-            true when Categories is null => questions.ActiveOnly,
-            true => [.. questions.WithCategory(Categories).OrderBy(q => q.Category)],
-            false => questions.InActiveOnly
-        };
+            var category = questions.WithCategory(categories).ToList();
+
+            return [.. category.Where(x => x.IsEnabled).OrderBy(q => q.Category)];
+        }
+        else
+        {
+            return [.. questions.Where(x => x.IsEnabled)];
+        }
     }
 
     /// <summary>Converts appsetting array to list of QuestionCategory.</summary>
-    /// <param name="CategoryFilter">Possible categories.</param>
+    /// <param name="categoryFilter">Possible categories.</param>
     /// <returns>List of found enum categories.</returns>
     /// <example><![CDATA[var categories = loader.ParseCategoriesOrDefault(["Refactor", "XML"]);]]></example>
-    public ImmutableHashSet<QuestionCategory>? ParseCategoriesOrDefault(string[]? CategoryFilter)
+    public HashSet<QuestionCategory>? ParseCategoriesOrDefault(QuestionCategory[]? categoryFilter)
     {
-        HashSet<QuestionCategory> categories = [];
-
-        if (CategoryFilter is null or [])
+        if (categoryFilter is null or [])
         {
             return LoadQuestionCategories.All();
         }
 
-        foreach (var category in CategoryFilter)
-        {
-            if (Enum.TryParse(category, ignoreCase: true, out QuestionCategory categoryCategory))
-            {
-                categories.Add(categoryCategory);
-            }
-            else
-            {
-                Logger.Error("Could not parse: {Category}. Please check name", category);
-                Writer.MarkupLine($"[red]⚠ Could not parse: {category}. Please check name.[/]");
-            }
-        }
+        //foreach (var category in categoryFilter)
+        //{
+        //    if (Enum.TryParse(category, ignoreCase: true, out QuestionCategory categoryCategory))
+        //    {
+        //        _categories.Add(categoryCategory);
+        //    }
+        //    else
+        //    {
+        //        logger.Error("Could not parse: {Category}. Please check name", category);
+        //        writer.MarkupLine($"[red]⚠ Could not parse: {category}. Please check name.[/]");
+        //    }
+        //}
 
-        if (categories.Count == 0)
+        if (_categories.Count == 0)
         {
-            Writer.MarkupLine("[yellow]⚠ No valid categories specified; defaulting to all.[/]");
+            writer.MarkupLine("[yellow]⚠ No valid categories specified; defaulting to all.[/]");
             return LoadQuestionCategories.All();
         }
 
-        Logger.Information("📊 Processing categories: ({Cat})", string.Join(", ", categories));
+        logger.Information("📊 Processing categories: ({Cat})", string.Join(", ", _categories));
 
-        return categories.Count == 0
+        return _categories.Count == 0
         ? LoadQuestionCategories.All()
-        : [.. categories];
+        : [.. _categories];
     }
 
     /// <summary>
     /// Returns a default list of questions.
     /// </summary>
     /// <returns>Immutable list of questions.</returns>
-    public ImmutableList<Question> GetDefaultQuestions()
+    public ImmutableList<Core.Model.Question> GetDefaultQuestions()
     {
         return
         [
-            Question.IsActive("Generate concise XML comments (Summary, Param, Remarks, Example wrapped in <![CDATA[ ]]>, Return) only for undocumented class, interface or public methods. Keep under 120 characters each. Please provide an example for each class and method, When writing the summary focus on what the method does, including the filename and method name, before the new or updated XML comments.", "XML", QuestionCategory.XML),
+            new Core.Model.Question(true, "Generate concise XML comments (Summary, Param, Remarks, Example wrapped in <![CDATA[ ]]>, Return) only for undocumented class, interface or public methods. Keep under 120 characters each. Please provide an example for each class and method, When writing the summary focus on what the method does, including the filename and method name, before the new or updated XML comments.", "XML", QuestionCategory.XML),
             //Question.IsActive("Please recommend improved class, method, and variable names to make this application easier to understand.", "Rename", QuestionCategory.Refactor),
-
         ];
     }
 }

@@ -6,7 +6,7 @@
 public class OllamaOptionsValidator
     : AbstractValidator<OllamaOptions>
 {
-    ///<summary>Initializes a new instance of the validator with default rules. </summary>
+    /// <summary>Initializes validation rules.</summary>
     public OllamaOptionsValidator()
     {
         RuleFor(x => x.Host).NotEmpty().WithMessage("Host is required.");

@@ -3,47 +3,41 @@
 /// <summary>
 /// Read and parse over file to be embedded.
 /// </summary>
-public abstract class BaseFileParser(Serilog.ILogger Logger) : IFileParser
+public abstract class BaseFileParser(Serilog.ILogger logger)
+    : IFileParser
 {
     /// <summary>
     /// ParseAsync provided file into individual segments to be embedded.
     /// </summary>
-    /// <param name="FilePath">Path to file to be parsed.</param>
-    /// <param name="Ct">Cancellation Token.</param>
+    /// <param name="filePath">Path to file to be parsed.</param>
+    /// <param name="cancellationToken">Cancellation Token.</param>
     /// <returns>Array of file segments.</returns>
-    public abstract ValueTask<CodeDocument[]> ParseFileAsync(string FilePath, CancellationToken Ct);
+    public abstract ValueTask<CodeDocument[]> ParseFileAsync(string filePath, CancellationToken cancellationToken);
 
     /// <summary>
     /// Used to read over file and get it's content.
     /// </summary>
-    /// <param name="FilePath">Path to file.</param>
-    /// <param name="Ct">Cancellation token.</param>
+    /// <param name="filePath">Path to file.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>File's content.</returns>
-    public async ValueTask<string> ReadFileAsync(string FilePath, CancellationToken Ct)
+    /// <exception cref="ArgumentException">Thrown when <paramref name="filePath"/> is null or empty.</exception>
+    /// <exception cref="InvalidOperationException">Thrown when the file cannot be read.</exception>
+    public async ValueTask<string> ReadFileAsync(string filePath, CancellationToken cancellationToken)
     {
-        Guard.Against.NullOrEmpty(FilePath, nameof(FilePath));
+        Guard.Against.NullOrEmpty(filePath);
 
         try
         {
-            return await File.ReadAllTextAsync(FilePath, Ct);
-
-            //await using var FileStream = new FileStream(
-            //    FilePath, FileMode.Open,
-            //    FileAccess.Read,
-            //    FileShare.Read,
-            //    bufferSize: 81920,
-            //    useAsync: true);
-            //using var Reader = new StreamReader(FileStream);
-            //return await Reader.ReadToEndAsync(Ct);
+            return await File.ReadAllTextAsync(filePath, cancellationToken);
         }
-        catch (OperationCanceledException) when (Ct.IsCancellationRequested)
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
             throw;
         }
-        catch (Exception Ex)
+        catch (Exception ex)
         {
-            Logger.Error(Ex, "Failed to read file: {FilePath}", FilePath);
-            throw new InvalidOperationException($"Could not read file '{FilePath}'.", Ex);
+            logger.Error(ex, "Failed to read file: {FilePath}", filePath);
+            throw new InvalidOperationException($"Could not read file '{filePath}'.", ex);
         }
     }
 }

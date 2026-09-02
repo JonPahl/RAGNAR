@@ -5,29 +5,29 @@
 /// </summary>
 public static class QuestionExtensions
 {
-    extension(IReadOnlyList<Question> Questions)
+    extension(IReadOnlyList<Ragnar.Core.Model.Question> questions)
     {
         /// <summary>
         /// Load and returns a list of active questions.
         /// </summary>
-        public IReadOnlyList<Question> ActiveOnly => [.. Questions.Where(q => q.IsEnabled)];
+        public IReadOnlyList<Ragnar.Core.Model.Question> ActiveOnly => [.. questions.Where(q => q.IsEnabled)];
 
         /// <summary>
         /// Gets load and returns a list of inactive questions.
         /// </summary>
-        public IReadOnlyList<Question> InActiveOnly => [.. Questions.Where(q => !q.IsEnabled)];
+        public IReadOnlyList<Ragnar.Core.Model.Question> InActiveOnly => [.. questions.Where(q => !q.IsEnabled)];
 
         /// <summary>Filters questions by specified categories.</summary>
-        /// <param name="Categories">Categories to include; null returns all.</param>
-        /// <returns>Questions matching any category in <paramref name="Categories"/>.</returns>
+        /// <param name="categories">Categories to include; null returns all.</param>
+        /// <returns>Questions matching any category in <paramref name="categories"/>.</returns>
         /// <example><![CDATA[var filtered = questions.WithCategory(categories);]]></example>
-        public IReadOnlyList<Question> WithCategory(ImmutableHashSet<QuestionCategory> Categories)
+        public IReadOnlyList<Core.Model.Question> WithCategory(HashSet<QuestionCategory> categories)
         {
-            ArgumentNullException.ThrowIfNull(Categories);
+            ArgumentNullException.ThrowIfNull(categories);
 
-            return Categories is null or { Count: 0 }
-            ? [.. Questions]
-            : [.. Questions.Where(q => Categories.Contains(q.Category))];
+            return categories is null or { Count: 0 }
+            ? [.. questions]
+            : [.. questions.Where(q => categories.Contains(q.Category.Value))];
         }
     }
 }

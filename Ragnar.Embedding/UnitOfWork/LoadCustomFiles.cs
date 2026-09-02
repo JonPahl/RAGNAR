@@ -8,43 +8,77 @@ public static class LoadCustomFiles
     /// <summary>
     /// Yields filtered file paths asynchronously.
     /// </summary>
-    /// <param name="Directory">Search root.</param>
+    /// <param name="directory">Search root.</param>
     /// <param name="filter">Filter options.</param>
-    /// <param name="options">Enumeration settings.</param>
-    /// <param name="fileValidator">Validate file paths should be included.</param>
-    /// <param name="ct">Cancellation Token.</param>
+    /// <param name="Options">Enumeration settings.</param>
+    /// <param name="FileValidator">Validate file paths should be included.</param>
+    /// <param name="Ct">Cancellation cancellationToken.</param>
     /// <returns>Async sequence of file paths.</returns>
     /// <example><![CDATA[await foreach(var f in LoadCustomFiles.GetFilesAsync(opt, ".", new())){...}]]></example>
     /// <exception cref="DirectoryNotFoundException">Thrown when provided directory path is not found.
     /// </exception>
     /// <exception cref="ArgumentException">Thrown when no file options are provided. </exception>
     public static IAsyncEnumerable<string> GetFilesAsync(
-        string Directory,
+        string directory,
         FileLoadOptions filter,
-        EnumerationOptions options,
-        IFileValidator fileValidator,
-        CancellationToken ct)
+        CancellationToken cancellationToken)
     {
         ArgumentNullException.ThrowIfNull(filter);
-        Guard.Against.NullOrEmpty(Directory);
+        Guard.Against.NullOrEmpty(directory);
 
-        if (!System.IO.Directory.Exists(Directory))
+        if (!System.IO.Directory.Exists(directory))
         {
-            throw new DirectoryNotFoundException($"Directory not found: {Directory}");
+            throw new DirectoryNotFoundException($"Directory not found: {directory}");
         }
 
-        return GetValuesAsync(ct);
+        return GetValuesAsync(directory, filter, cancellationToken);
+    }
 
-        async IAsyncEnumerable<string> GetValuesAsync([EnumeratorCancellation] CancellationToken token = default)
+    private static async IAsyncEnumerable<string> GetValuesAsync(
+        string directory,
+        FileLoadOptions filter,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        foreach (var path in ListFiles(directory, filter))
         {
-            foreach (var path in System.IO.Directory.EnumerateFiles(Directory, "*", options))
+            cancellationToken.ThrowIfCancellationRequested();
+            yield return path;
+        }
+    }
+
+    private static IEnumerable<string> ListFiles(string rootPath, FileLoadOptions filter)
+    {
+        var allowedExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var ext in filter.AllowedFileExtensions)
+        {
+            allowedExtensions.Add(ext);
+        }
+
+        // Define directory names or relative paths you want to skip
+        var skippedDirectories = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var dir in filter.ExcludedDirectories)
+        {
+            skippedDirectories.Add(dir);
+        }
+
+
+        return Directory.EnumerateFiles(rootPath, "*.*", SearchOption.AllDirectories)
+            .Where(filePath =>
             {
-                token.ThrowIfCancellationRequested();
-                if (fileValidator.IsValid(new FileInfo(path), filter))
+                var dirName = Path.GetDirectoryName(filePath);
+                if (dirName != null)
                 {
-                    yield return path;
+                    var segments = dirName.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+                    if (segments.Any(seg => skippedDirectories.Contains(seg)))
+                    {
+                        return false; // Skip this file
+                    }
                 }
-            }
-        }
+
+                // Check if the file extension is allowed
+                var ext = Path.GetExtension(filePath);
+                return allowedExtensions.Contains(ext);
+            });
     }
 }

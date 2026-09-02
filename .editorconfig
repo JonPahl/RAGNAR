@@ -45,6 +45,18 @@ csharp_prefer_braces = when_multiline:suggestion
 # Naming Conventions (Roslyn Analyzers)
 # ------------------------------------------
 
+# 1. Define the symbol group for parameters
+dotnet_naming_symbols.parameter_symbols.applicable_kinds = parameter
+dotnet_naming_symbols.parameter_symbols.applicable_accessibilities = *
+
+# 2. Define the naming style for camelCase
+dotnet_naming_style.camel_case_style.capitalization = camel_case
+
+# 3. Create the rule linking symbols and style
+dotnet_naming_rule.parameters_should_be_camel_case.symbols = parameter_symbols
+dotnet_naming_rule.parameters_should_be_camel_case.style = camel_case_style
+dotnet_naming_rule.parameters_should_be_camel_case.severity = warning
+
 # 1. Define the rule for constants
 dotnet_naming_rule.constants_should_be_all_caps.severity = warning
 dotnet_naming_rule.constants_should_be_all_caps.symbols = constant_symbols

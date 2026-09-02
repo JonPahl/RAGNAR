@@ -8,5 +8,5 @@ public static class LoadQuestionCategories
     /// <summary>Returns all values of the QuestionCategory enum.</summary>
     /// <returns>HashSet of all QuestionCategory values.</returns>
     /// <example><![CDATA[var categories = LoadQuestionCategories.All();]]></example>
-    public static ImmutableHashSet<QuestionCategory> All() => [.. Enum.GetValues<QuestionCategory>()];
+    public static HashSet<QuestionCategory> All() => [.. Enum.GetValues<QuestionCategory>()];
 }

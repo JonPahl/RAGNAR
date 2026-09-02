@@ -189,7 +189,7 @@
           }
         }
       },
-      "Microsoft.CodeAnalysis.Analyzers/5.9.0-1.26328.17": {
+      "Microsoft.CodeAnalysis.Analyzers/5.9.0": {
         "type": "package",
         "build": {
           "buildTransitive/Microsoft.CodeAnalysis.Analyzers.props": {},
@@ -310,6 +310,9 @@
             "locale": "zh-Hant"
           }
         }
+      },
+      "Microsoft.CodeAnalysis.NetAnalyzers/10.0.400": {
+        "type": "package"
       },
       "Microsoft.Extensions.AI/10.8.0": {
         "type": "package",
@@ -1042,6 +1045,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
+          "Ardalis.GuardClauses": "5.0.0",
           "CsvHelper": "33.1.0",
           "Serilog": "4.4.0"
         },
@@ -1050,6 +1054,20 @@
         },
         "runtime": {
           "bin/placeholder/FileQuestionProvider.dll": {}
+        }
+      },
+      "Ragnar.Abstractions/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "Microsoft.Extensions.Options": "10.0.11",
+          "Ragnar.Core": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Ragnar.Abstractions.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Ragnar.Abstractions.dll": {}
         }
       },
       "Ragnar.Core/1.0.0": {
@@ -1372,10 +1390,10 @@
         "version.txt"
       ]
     },
-    "Microsoft.CodeAnalysis.Analyzers/5.9.0-1.26328.17": {
-      "sha512": "HP9NNk8ZjOSI2hgOyXnQg+kv7/X837Vr2nAlXiGAtqtYnYKjRRa1UmQFr8KFs5ynGYKqfbb8zB9APoWjiAGdMg==",
+    "Microsoft.CodeAnalysis.Analyzers/5.9.0": {
+      "sha512": "jMNOo+uoBGiWbZ6Wx0dqU93r5WD4P5WnIRZdoz67RP5N09OUetHgAbo4L7hihOH1NHdD2TgW5/l+SP4gQukwww==",
       "type": "package",
-      "path": "microsoft.codeanalysis.analyzers/5.9.0-1.26328.17",
+      "path": "microsoft.codeanalysis.analyzers/5.9.0",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -1442,7 +1460,7 @@
         "editorconfig/MicrosoftCodeAnalysisReleaseTrackingRulesEnabled/.editorconfig",
         "editorconfig/PortedFromFxCopRulesDefault/.editorconfig",
         "editorconfig/PortedFromFxCopRulesEnabled/.editorconfig",
-        "microsoft.codeanalysis.analyzers.5.9.0-1.26328.17.nupkg.sha512",
+        "microsoft.codeanalysis.analyzers.5.9.0.nupkg.sha512",
         "microsoft.codeanalysis.analyzers.nuspec",
         "rulesets/AllRulesDefault.ruleset",
         "rulesets/AllRulesDisabled.ruleset",
@@ -1561,6 +1579,60 @@
         "lib/netstandard2.0/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll",
         "microsoft.codeanalysis.csharp.5.9.0.nupkg.sha512",
         "microsoft.codeanalysis.csharp.nuspec"
+      ]
+    },
+    "Microsoft.CodeAnalysis.NetAnalyzers/10.0.400": {
+      "sha512": "Uogs/xCuSxYuEYAU7oUPddK3MFcT3A+FkrBcx/wVse6P4joptMAfh/H9jtIhl9IkHARCvJHFjL3jhKFs9YMktA==",
+      "type": "package",
+      "path": "microsoft.codeanalysis.netanalyzers/10.0.400",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "ThirdPartyNotices.txt",
+        "analyzers/dotnet/cs/Microsoft.CodeAnalysis.CSharp.NetAnalyzers.dll",
+        "analyzers/dotnet/cs/Microsoft.CodeAnalysis.CSharp.NetAnalyzers.xml",
+        "analyzers/dotnet/cs/Microsoft.CodeAnalysis.NetAnalyzers.dll",
+        "analyzers/dotnet/cs/Microsoft.CodeAnalysis.NetAnalyzers.xml",
+        "analyzers/dotnet/cs/cs/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/cs/de/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/cs/es/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/cs/fr/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/cs/it/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/cs/ja/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/cs/ko/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/cs/pl/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/cs/pt-BR/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/cs/ru/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/cs/tr/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/cs/zh-Hans/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/cs/zh-Hant/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/vb/Microsoft.CodeAnalysis.NetAnalyzers.dll",
+        "analyzers/dotnet/vb/Microsoft.CodeAnalysis.NetAnalyzers.xml",
+        "analyzers/dotnet/vb/Microsoft.CodeAnalysis.VisualBasic.NetAnalyzers.dll",
+        "analyzers/dotnet/vb/Microsoft.CodeAnalysis.VisualBasic.NetAnalyzers.xml",
+        "analyzers/dotnet/vb/cs/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/vb/de/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/vb/es/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/vb/fr/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/vb/it/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/vb/ja/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/vb/ko/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/vb/pl/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/vb/pt-BR/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/vb/ru/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/vb/tr/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/vb/zh-Hans/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "analyzers/dotnet/vb/zh-Hant/Microsoft.CodeAnalysis.NetAnalyzers.resources.dll",
+        "documentation/Analyzer Configuration.md",
+        "documentation/Microsoft.CodeAnalysis.NetAnalyzers.md",
+        "documentation/Microsoft.CodeAnalysis.NetAnalyzers.sarif",
+        "documentation/README.md",
+        "microsoft.codeanalysis.netanalyzers.10.0.400.nupkg.sha512",
+        "microsoft.codeanalysis.netanalyzers.nuspec",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
       ]
     },
     "Microsoft.Extensions.AI/10.8.0": {
@@ -2776,6 +2848,11 @@
       "path": "../FileQuestionProvider/FileQuestionProvider.csproj",
       "msbuildProject": "../FileQuestionProvider/FileQuestionProvider.csproj"
     },
+    "Ragnar.Abstractions/1.0.0": {
+      "type": "project",
+      "path": "../Ragnar.Abstractions/Ragnar.Abstractions.csproj",
+      "msbuildProject": "../Ragnar.Abstractions/Ragnar.Abstractions.csproj"
+    },
     "Ragnar.Core/1.0.0": {
       "type": "project",
       "path": "../Ragnar.Core/Ragnar.Core.csproj",
@@ -2785,11 +2862,14 @@
   "projectFileDependencyGroups": {
     "net10.0": [
       "Ardalis.GuardClauses >= 5.0.0",
+      "Microsoft.CodeAnalysis.Analyzers >= 5.9.0",
       "Microsoft.CodeAnalysis.CSharp >= 5.9.0",
+      "Microsoft.CodeAnalysis.NetAnalyzers >= 10.0.400",
       "Microsoft.Extensions.Options >= 10.0.11",
       "Microsoft.SemanticKernel >= 1.80.0",
       "OllamaSharp >= 5.4.30",
       "Qdrant.Client >= 1.19.0",
+      "Ragnar.Abstractions >= 1.0.0",
       "Ragnar.Core >= 1.0.0",
       "Roslynator.Analyzers >= 5.0.0",
       "Roslynator.CodeAnalysis.Analyzers >= 5.0.0",
@@ -2832,6 +2912,9 @@
           "framework": "net10.0",
           "targetAlias": "net10.0",
           "projectReferences": {
+            "C:\\Users\\jp325\\source\\Ragnar\\Ragnar.Abstractions\\Ragnar.Abstractions.csproj": {
+              "projectPath": "C:\\Users\\jp325\\source\\Ragnar\\Ragnar.Abstractions\\Ragnar.Abstractions.csproj"
+            },
             "C:\\Users\\jp325\\source\\Ragnar\\Ragnar.Core\\Ragnar.Core.csproj": {
               "projectPath": "C:\\Users\\jp325\\source\\Ragnar\\Ragnar.Core\\Ragnar.Core.csproj"
             }
@@ -2859,9 +2942,21 @@
             "target": "Package",
             "version": "[5.0.0, )"
           },
+          "Microsoft.CodeAnalysis.Analyzers": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[5.9.0, )"
+          },
           "Microsoft.CodeAnalysis.CSharp": {
             "target": "Package",
             "version": "[5.9.0, )"
+          },
+          "Microsoft.CodeAnalysis.NetAnalyzers": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[10.0.400, )"
           },
           "Microsoft.Extensions.Options": {
             "target": "Package",

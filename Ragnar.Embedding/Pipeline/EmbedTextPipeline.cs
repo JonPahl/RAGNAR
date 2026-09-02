@@ -1,106 +1,91 @@
 ﻿namespace Ragnar.Embedding.Pipeline;
 
 public class EmbedTextPipeline(
-    IOptions<RagnarConfig> Options,
-    IVectorStoreRepository Repository,
-    ILogger Logger,
-    IFileParseFactory ParseFactory)
+    IOptions<RagnarConfig> options,
+    IVectorStoreRepository repository,
+    ILogger logger,
+    IFileParseFactory parseFactory)
         : IEmbedTextPipeline
 {
 
     //TODO: Rewrite this class to use IPipelineStage logic.
 
-    private const int BATCHSIZE = 10;
-    private ConcurrentBag<CodeDocument> _codeDocuments = [];
+    private const int BATCHSIZE = 1;
 
-    private IReadOnlyCollection<string> _files = [];
-
-    public async Task RunAsync(CancellationToken Ct)
+    public async Task RunAsync(CancellationToken cancellationToken)
     {
-        if (!Directory.Exists(
-            Options.Value.ApplicationOptions.SourceDirectory))
+
+        var sourceDir = options.Value.ApplicationOptions.SourceDirectory;
+
+        if (!Directory.Exists(sourceDir))
         {
-            Logger.Warning("Source directory not found: {Dir}", Options.Value.ApplicationOptions.SourceDirectory);
+            logger.Warning("Source directory not found: {Dir}", sourceDir);
             return;
         }
 
-        _files = await DiscoverSourceFilesAsync(Ct);
+        var files = await DiscoverSourceFilesAsync(cancellationToken);
+        if (files.Count == 0)
+        {
+            logger.Information("No source files discovered. Nothing to embed.");
+            return;
+        }
 
-        await ParseDocuments(Ct);
-
-        await AnsiConsole.Progress()
-            .AutoClear(true)
-            .StartAsync(async ctx =>
-       {
-           var embeddingTask = ctx.AddTask("Embedding Files", maxValue: _codeDocuments.Count);
-
-           foreach (var batch in _codeDocuments
-                    .Chunk(BATCHSIZE))
-           {
-               await Repository.UpsertBatchAsync(batch, Ct);
-
-               embeddingTask.Increment(BATCHSIZE);
-               ctx.Refresh();
-           }
-       });
+        var documents = await ParseDocumentsAsync(files, cancellationToken);
+        await UpsertInBatchesAsync(documents, cancellationToken);
     }
 
-    private async Task ParseDocuments(
-        CancellationToken Ct)
+    private async Task<IReadOnlyList<string>> DiscoverSourceFilesAsync(CancellationToken cancellationToken)
     {
-        if (_files.Count == 0) return;
+        return await LoadCustomFiles.GetFilesAsync(
+            options.Value.ApplicationOptions.SourceDirectory,
+            options.Value.FileLoadOptions,
+            cancellationToken).ToListAsync(cancellationToken);
+    }
 
-        var concurrentDocuments = new ConcurrentBag<CodeDocument>();
+    private async Task<IReadOnlyList<CodeDocument>> ParseDocumentsAsync(
+        IReadOnlyList<string> files, CancellationToken ct)
+    {
+        var documents = new ConcurrentBag<CodeDocument>();
 
-        await AnsiConsole
-            .Progress()
-            .AutoClear(true)
-            .StartAsync(async ctx =>
-            {
-                var processTask = ctx.AddTask("Processing files", maxValue: _files.Count);
+        await AnsiConsole.Progress().AutoClear(true).StartAsync(async ctx =>
+        {
+            var task = ctx.AddTask("Parsing files…", maxValue: files.Count);
 
-                // Configure degree of parallelism based on system capabilities or I/O limits
-                var parallelOptions = new ParallelOptions
+            await Parallel.ForEachAsync(files,
+                new ParallelOptions
                 {
-                    CancellationToken = Ct,
-                    MaxDegreeOfParallelism = Environment.ProcessorCount
-                };
-
-                await Parallel.ForEachAsync(_files, parallelOptions, async (filePath, token) =>
+                    CancellationToken = ct,
+                    MaxDegreeOfParallelism = Math.Min(Environment.ProcessorCount, 8) // I/O-bound; cap to avoid over-subscription
+                },
+                async (filePath, token) =>
                 {
-                    var elements = await ParseFactory.ParseAsync(filePath, token);
+                    var elements = await parseFactory.ParseAsync(filePath, token);
 
                     foreach (var element in elements)
-                    {
-                        concurrentDocuments.Add(element);
-                    }
+                        documents.Add(element);
 
-                    // Increment progress thread-safely
-                    processTask.Increment(1);
+                    task.Increment(1);
                 });
-            });
+        });
 
-        // Merge or assign results back to your primary collection if needed
-        foreach (var doc in concurrentDocuments)
-        {
-            _codeDocuments.Add(doc);
-        }
+        return [.. documents];
     }
 
-    private async Task<IReadOnlyCollection<string>> DiscoverSourceFilesAsync(CancellationToken Ct)
+    private async Task UpsertInBatchesAsync(IReadOnlyList<CodeDocument> documents, CancellationToken ct)
     {
-        var enumOptions = new EnumerationOptions
-        {
-            RecurseSubdirectories = true,
-            IgnoreInaccessible = true,
-            MatchCasing = MatchCasing.CaseInsensitive
-        };
+        if (documents.Count == 0) return;
 
-        return await LoadCustomFiles.GetFilesAsync(
-            Options.Value.ApplicationOptions.SourceDirectory,
-            Options.Value.FileLoadOptions,
-            enumOptions,
-            new FileValidator(),
-            Ct).ToListAsync(Ct);
+        await AnsiConsole.Progress().AutoClear(true).StartAsync(async ctx =>
+        {
+            var task = ctx.AddTask("Embedding & upserting…", maxValue: documents.Count);
+
+            foreach (var batch in documents.Chunk(BATCHSIZE))
+            {
+                ct.ThrowIfCancellationRequested();
+                await repository.UpsertBatchAsync(batch, ct);
+                task.Increment(batch.Length);
+                ctx.Refresh();
+            }
+        });
     }
 }

@@ -10,6 +10,7 @@
     <Project Path="Ragnar.UnitTests/Ragnar.Tests.csproj" />
   </Folder>
   <Project Path="FileQuestionProvider/FileQuestionProvider.csproj" />
+  <Project Path="Ragnar.Abstractions/Ragnar.Abstractions.csproj" Id="7a9c7217-592e-4f48-98de-f77d5dfed5e9" />
   <Project Path="Ragnar.Core/Ragnar.Core.csproj" />
   <Project Path="Ragnar.Embedding/Ragnar.Embedding.csproj" />
   <Project Path="Ragnar.Plugins/Ragnar.Plugins.shproj" Id="f32e6ba7-7bb4-485e-8ef2-a51bc1c35fd7" />

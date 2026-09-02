@@ -44,5 +44,5 @@ public enum QuestionCategory
     Diagram,
     Uncategorized,
     Summary,
-    XML_SINGLE,
+
 }

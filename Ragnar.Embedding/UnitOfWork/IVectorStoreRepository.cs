@@ -8,8 +8,8 @@ public interface IVectorStoreRepository
     /// <summary>
     /// Inserts or updates embedding records for the given code documents.
     /// </summary>
-    /// <param name="CodeDocuments">Code documents to be embedded.</param>
-    /// <param name="Ct">Cancellation Token.</param>
+    /// <param name="codeDocuments">Code documents to be embedded.</param>
+    /// <param name="cancellationToken">Cancellation Token.</param>
     /// <returns>Upsert results object with operation status and counts.</returns>
     /// <remarks>
     /// Batch processing ensures efficient handling of multiple documents.
@@ -20,5 +20,5 @@ public interface IVectorStoreRepository
     /// var result = await repository.UpsertBatchAsync(codeDocuments, ct);
     /// ]]>
     /// </example>
-    Task<UpdateResult> UpsertBatchAsync(CodeDocument[] CodeDocuments, CancellationToken Ct);
+    Task<UpdateResult> UpsertBatchAsync(CodeDocument[] codeDocuments, CancellationToken cancellationToken);
 }

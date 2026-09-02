@@ -6,13 +6,13 @@
 /// </summary>
 public class ResponseWriterIntegrationTests
 {
-    private string TempDir = "";
-    private ServiceProvider? Services;
+    private string _tempDir = "";
+    private ServiceProvider? _services;
 
     public void Initialize()
     {
-        TempDir = Path.Join(Path.GetTempPath(), $"RagnarResponseTest_{Guid.NewGuid()}");
-        Directory.CreateDirectory(TempDir);
+        _tempDir = Path.Join(Path.GetTempPath(), $"RagnarResponseTest_{Guid.NewGuid()}");
+        Directory.CreateDirectory(_tempDir);
 
         var host = Host.CreateDefaultBuilder()
             .ConfigureServices((ctx, services) =>
@@ -25,13 +25,13 @@ public class ResponseWriterIntegrationTests
             })
             .Build();
 
-        Services = (ServiceProvider?)host.Services;
+        _services = (ServiceProvider?)host.Services;
     }
 
     public void Dispose()
     {
-        if (Directory.Exists(TempDir))
-            Directory.Delete(TempDir, true);
-        Services?.Dispose();
+        if (Directory.Exists(_tempDir))
+            Directory.Delete(_tempDir, true);
+        _services?.Dispose();
     }
 }

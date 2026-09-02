@@ -17,6 +17,11 @@
 		<RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Remove="Models\Enums\**" />
+	  <EmbeddedResource Remove="Models\Enums\**" />
+	  <None Remove="Models\Enums\**" />
+	</ItemGroup>
 
 	<ItemGroup>
     <PackageReference Include="Ardalis.GuardClauses" Version="5.0.0" />
@@ -25,10 +30,18 @@
     <PackageReference Include="FluentValidation" Version="12.1.1" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
     <PackageReference Include="HashDepot" Version="3.2.0" />
-    <PackageReference Include="Microsoft.Agents.AI" Version="1.19.0" />
-    <PackageReference Include="Microsoft.Agents.AI.Abstractions" Version="1.19.0" />
+    <PackageReference Include="Microsoft.Agents.AI" Version="1.20.0" />
+    <PackageReference Include="Microsoft.Agents.AI.Abstractions" Version="1.20.0" />
     <PackageReference Include="Microsoft.CodeAnalysis" Version="5.9.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="5.9.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.9.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.400">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.11" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.11" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.11" />
@@ -106,10 +119,6 @@
 
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\Enums\" />
   </ItemGroup>
 
 </Project>

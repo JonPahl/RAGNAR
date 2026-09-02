@@ -10,7 +10,7 @@ public sealed class StylesTests
 
         // Assert
         Assert.Equal(Color.Green, style.Foreground);
-        style.Decoration.HasFlag(Decoration.SlowBlink).Should().BeTrue();
+        Assert.True(style.Decoration.HasFlag(Decoration.SlowBlink));
     }
 
     [Fact]

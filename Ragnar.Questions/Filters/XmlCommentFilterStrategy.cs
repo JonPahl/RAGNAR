@@ -1,14 +1,44 @@
 ﻿namespace Ragnar.Questions.Filters;
 
-/// <summary>Initializes a new instance of the XML comment filter strategy.</summary>
+/// <summary>Filters XML comments based on size and content rules.</summary>
 public sealed class XmlCommentFilterStrategy
     : IFilterStrategy
 {
     /// <summary>Gets the supported question category for this filtering strategy.</summary>
-    public QuestionCategory SupportedCategory => QuestionCategory.XML_SINGLE;
+    public QuestionCategory SupportedCategory => QuestionCategory.XML;
 
-    /// <summary>Creates a filter to exclude non-empty XML comments.</summary>
-    /// <param name = "Category"> The target question category for filtering.</param>
-    /// <returns>A configured filter object matching empty comment conditions.</returns>
-    public Filter CreateFilter(QuestionCategory Category, int Size) => XmlEmptyCommentFilter.BuildFilter(Category);
+    /// <summary>Creates a filter to exclude non-empty XML comments based on size.</summary>
+    /// <param name="sizeThreshold">The minimum element size threshold.</param>
+    /// <returns>The configured filter instance.</returns>
+    public Filter CreateFilter(int sizeThreshold) => new()
+    {
+        Must =
+        {
+            new Condition
+            {
+                Field = new FieldCondition
+                {
+                    Key = "CommentLength",
+                    Range = new Range
+                    {
+                        Gte = sizeThreshold,
+                    }
+                }
+            },
+            new Condition
+            {
+                Field = new FieldCondition
+                {
+                    Key = "Category",
+                    Match = new Match
+                    {
+                        ExceptKeywords = new RepeatedStrings()
+                        {
+                            Strings = { "Tests" }
+                        }
+                    }
+                }
+            }
+        }
+    };
 }

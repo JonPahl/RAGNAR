@@ -18,7 +18,15 @@
 
   <ItemGroup>
     <PackageReference Include="Ardalis.GuardClauses" Version="5.0.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="5.9.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.9.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.400">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.11" />
     <PackageReference Include="Microsoft.SemanticKernel" Version="1.80.0" />
     <PackageReference Include="OllamaSharp" Version="5.4.30" />
@@ -40,6 +48,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Ragnar.Abstractions\Ragnar.Abstractions.csproj" />
     <ProjectReference Include="..\Ragnar.Core\Ragnar.Core.csproj" />
   </ItemGroup>
 

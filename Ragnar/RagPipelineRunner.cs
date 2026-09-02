@@ -5,18 +5,18 @@
 ///</summary>
 public sealed class RagPipelineRunner(
     [FromKeyedServices("Main"
-    )] IEnumerable<IPipelineStage> Stages)
+    )] IEnumerable<IPipelineStage> stages)
     : IHostedService
 {
-    /// <summary>Starts the RAG pipeline: collection check, embedding, and query processing.
-    /// </summary>
-    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <summary>Starts the RAG pipeline: collection check, embedding, and query processing. </summary>
+    /// <param name="cancellationToken">
+    /// Cancellation token.</param>
     /// <returns>Task representing async operation.</returns>
     /// <example><![CDATA[await host.ExecuteAsync();]]></example>
     [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Base class casing.")]
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        var Pipeline = new Embedding.Pipeline.RagPipelineRunner(Stages);
+        var Pipeline = new Embedding.Pipeline.RagPipelineRunner(stages);
 
         await Pipeline.StartAsync(cancellationToken);
     }

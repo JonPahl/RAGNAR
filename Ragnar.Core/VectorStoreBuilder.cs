@@ -1,50 +1,51 @@
 ﻿namespace Ragnar.Core;
 
 /// <summary>Manages Qdrant vector store collection creation and existence checks.</summary>
-public class VectorStoreBuilder(Serilog.ILogger logger, ulong dimension, string vectorStoreName, IQdrantClient qdrant)
+public sealed class VectorStoreBuilder(
+    Serilog.ILogger logger,
+    ulong dimension,
+    string vectorStoreName,
+    IQdrantClient qdrant)
     : IVectorStoreBuilder
 {
-    public bool IsExisting { get; set; }
-    public string VectorStoreName { get; set; } = vectorStoreName;
+    private bool IsExisting { get; set; }
+    public string VectorStoreName { get; set; } = Guard.Against.NullOrEmpty(vectorStoreName);
     public ulong Dimension { get; set; } = dimension;
-    public Serilog.ILogger Logger { get; set; } = logger;
-    public IQdrantClient QdrantClient { get; set; } = qdrant;
+    public Serilog.ILogger Logger { get; set; } = Guard.Against.Null(logger);
+    public IQdrantClient QdrantClient { get; set; } = Guard.Against.Null(qdrant);
 
-    /// <returns>A task representing the build operation indicating if the collection exists.</returns>
-    /// <example><![CDATA[bool exists = await builder.BuildAsync(ct);]]></example>
-    public async Task<bool> BuildAsync(CancellationToken Ct)
+    /// <summary>
+    /// Ensures the collection exists, creating it if necessary.
+    /// </summary>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns><c>true</c> if the collection is available after the operation.</returns>
+    public async Task<bool> BuildAsync(CancellationToken cancellationToken)
     {
-        await ExistsAsync(Ct).ConfigureAwait(false);
+        await ExistsAsync(cancellationToken);
         if (!IsExisting)
         {
-            await CreateAsync(Ct).ConfigureAwait(false);
+            await CreateAsync(cancellationToken).ConfigureAwait(false);
         }
         return IsExisting;
     }
 
     /// <summary>
-    /// Check if qdrant collection exists.
+    /// Check if Qdrant collection exists.
     /// </summary>
-    /// <param name="Ct">Cancellation token to monitor for aborting the existence check.</param>
+    /// <param name="cancellationToken">Cancellation token to monitor for aborting the existence check.</param>
     /// <returns>A task representing the async operation returning the builder instance.</returns>
     /// <example><![CDATA[var result = await builder.ExistsAsync(ct);]]></example>
-    public async ValueTask<IVectorStoreBuilder> ExistsAsync(CancellationToken Ct)
+    public async Task<IVectorStoreBuilder> ExistsAsync(CancellationToken cancellationToken)
     {
-        IsExisting = await QdrantClient.CollectionExistsAsync(VectorStoreName, Ct);
+        IsExisting = await QdrantClient.CollectionExistsAsync(VectorStoreName, cancellationToken);
 
         return this;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="Ct">Cancellation token to monitor for aborting the creation process.</param>
-    /// <returns>A task representing the async operation returning the builder instance.</returns>
-    /// <example><![CDATA[var result = await builder.CreateAsync(ct);]]></example>
-    public async ValueTask<IVectorStoreBuilder> CreateAsync(CancellationToken Ct)
+    public async Task<IVectorStoreBuilder> CreateAsync(CancellationToken cancellationToken)
     {
         await QdrantClient.CreateCollectionAsync(
-          VectorStoreName, new VectorParams { Size = Dimension, Distance = Distance.Cosine }, cancellationToken: Ct);
+          VectorStoreName, new VectorParams { Size = Dimension, Distance = Distance.Cosine }, cancellationToken: cancellationToken);
 
         Logger.Information("new collection {Name} created.", VectorStoreName);
 
@@ -56,18 +57,21 @@ public class VectorStoreBuilder(Serilog.ILogger logger, ulong dimension, string 
     ///<summary>
     /// Generate Qdrant index.
     ///</summary>
-    /// <param name="IndexName">Name of the payload index to create on the collection.</param>
-    /// <param name="SchemaType">Data type schema for the indexed field in Qdrant.</param>
-    /// <param name="Ct">Cancellation token to monitor for aborting the indexing operation.</param>
+    /// <param name="indexName">Name of the payload index to create on the collection.</param>
+    /// <param name="schemaType">Data type schema for the indexed field in Qdrant.</param>
+    /// <param name="cancellationToken">Cancellation token to monitor for aborting the indexing operation.</param>
     /// <returns>A task representing the async operation returning the builder instance.</returns>
     /// <example><![CDATA[var result = await builder.MakeIndexAsync("field", SchemaType.Keyword, ct);]]></example>
-    public async ValueTask<IVectorStoreBuilder> MakeIndexAsync(string IndexName, PayloadSchemaType SchemaType, CancellationToken Ct)
+    public async Task<IVectorStoreBuilder> MakeIndexAsync(
+        string indexName,
+        PayloadSchemaType schemaType,
+        CancellationToken cancellationToken)
     {
         await QdrantClient.CreatePayloadIndexAsync(
                 VectorStoreName,
-                fieldName: IndexName,
-                schemaType: SchemaType,
-                cancellationToken: Ct);
+                fieldName: indexName,
+                schemaType: schemaType,
+                cancellationToken: cancellationToken);
 
         return this;
     }

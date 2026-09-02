@@ -1,49 +1,78 @@
 ﻿namespace Ragnar.Factory;
 
+public interface IQuestionBuilder
+{
+    QuestionBuilder AsActive();
+
+    QuestionBuilder AsInactive();
+
+    QuestionBuilder WithFileName(string key);
+
+    QuestionBuilder WithText(string text);
+
+    QuestionBuilder SetCategory(QuestionCategory? category);
+
+    Core.Model.Question Build();
+}
+
 /// <summary>Initializes a new instance of the default question factory.</summary>
 public class QuestionBuilder
-    : IQuestionFactory
+    : IQuestionBuilder
 {
-    /// <summary>Creates an active question.</summary>
-    /// <param name="Text">Text of question.</param>
-    /// <param name="Key">Save file name.</param>
-    /// <param name="Category">Question Category.</param>
-    /// <returns>Newly created ACTIVE question.</returns>
-    /// <example>
-    /// <![CDATA[var q = factory.CreateActive("Is this correct?", "correct", QuestionCategory.Refactor);]]>
-    /// </example>
-    public Question CreateActive(string Text, string Key, QuestionCategory Category)
-        => new(true, Validate(Text), Validate(Key), Category);
+    private string? _text;
+    private string? _key;
 
-    /// <summary>Creates an inactive question.</summary>
-    /// <param name="Text">Text of question.</param>
-    /// <param name="Key">Save file name.</param>
-    /// <param name="Category">Question Category.</param>
-    /// <remarks>Allow to turn a question off if not needed for current execution.</remarks>
-    /// <returns>Newly created INACTIVE question that will not be asked.</returns>
-    /// <example><![CDATA[var q = factory.CreateInactive("Future?", "future", QuestionCategory.XML);]]></example>
-    public Question CreateInactive(string Text, string Key, QuestionCategory Category)
-        => new(false, Validate(Text), Validate(Key), Category);
+    private QuestionCategory _category = QuestionCategory.Other;
 
-    /// <summary>Validates and trims a string value for question data.</summary>
-    /// <param name = "Value"> Input string to validate and trim.</param>
-    /// <param name = "ParamName"> Name of the parameter for error reporting.</param>
-    /// <returns>The trimmed, non-empty string value.</returns>
-    private static string Validate(string Value, [CallerArgumentExpression(nameof(Value))] string? ParamName = null)
+    private bool _isEnabled = true;
+
+    public QuestionBuilder WithText(string text)
     {
-        try
-        {
-            Guard.Against.NullOrWhiteSpace(Value, ParamName);
+        _text = text;
+        return this;
+    }
+    public QuestionBuilder WithFileName(string key)
+    {
+        _key = key;
+        return this;
+    }
 
-            var trimmed = Value.AsSpan().Trim();
+    public QuestionBuilder SetCategory(QuestionCategory? category)
+    {
+        if (category is not null)
+            _category = category.Value;
+        return this;
+    }
 
-            return trimmed.Length == 0
-                ? throw new ArgumentException("Value cannot be whitespace-only.", ParamName)
-                : trimmed.ToString();
-        }
-        catch (ArgumentNullException ex)
-        {
-            throw new ArgumentException(ex.Message, ex);
-        }
+    /// <summary>
+    /// Set new question as active.
+    /// </summary>
+    /// <returns></returns>
+    public QuestionBuilder AsActive()
+    {
+        _isEnabled = true;
+        return this;
+    }
+
+    /// <summary>
+    /// Set new question as inActive.
+    /// </summary>
+    /// <returns></returns>
+    public QuestionBuilder AsInactive()
+    {
+        _isEnabled = false;
+        return this;
+    }
+
+    public Core.Model.Question Build()
+    {
+        Guard.Against.NullOrWhiteSpace(_text, nameof(_text));
+        Guard.Against.NullOrWhiteSpace(_key, nameof(_key));
+
+        return new Core.Model.Question(
+            _isEnabled,
+            _text.Trim(),
+            _key,
+            Category: _category);
     }
 }

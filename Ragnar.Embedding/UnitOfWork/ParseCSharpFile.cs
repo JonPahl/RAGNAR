@@ -5,13 +5,13 @@
 /// </summary>
 /// <example><![CDATA[var parser = new ParseCSharpFile();]]>
 /// </example>
-internal class ParseCSharpFile(Serilog.ILogger Logger) : BaseFileParser(Logger)
+internal class ParseCSharpFile(Serilog.ILogger logger) : BaseFileParser(logger)
 {
     protected ChunkBySyntaxTree CodeChunker = new();
 
-    public override async ValueTask<CodeDocument[]> ParseFileAsync(string filePath, CancellationToken ct)
+    public override async ValueTask<CodeDocument[]> ParseFileAsync(string filePath, CancellationToken cancellationToken)
     {
-        var fileContent = await ReadFileAsync(filePath, ct);
+        var fileContent = await ReadFileAsync(filePath, cancellationToken);
 
         var response = CodeChunker.ChunkSourceFile(filePath, fileContent);
 

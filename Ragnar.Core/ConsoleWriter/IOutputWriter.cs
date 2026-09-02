@@ -5,24 +5,24 @@ public interface IOutputWriter
     /// <summary>
     /// Writes formatted markup to console.
     /// </summary>
-    /// <param name="Text">Text to write.</param>
-    /// <param name="Style">Optional style.</param>
-    void Markup(string Text, Style? Style = null);
+    /// <param name="text">text to write.</param>
+    /// <param name="style">Optional style.</param>
+    void Markup(string text, Style? style = null);
 
     /// <summary>
     /// Writes markup line.
     /// </summary>
-    void MarkupLine(string Text, Style? Style = null);
+    void MarkupLine(string text, Style? style = null);
 
     /// <summary>
     /// Writes plain text.
     /// </summary>
-    void Write(string Text, Style? Style = null);
+    void Write(string text, Style? style = null);
 
     /// <summary>
     /// Writes renderable.
     /// </summary>
-    void Write(IRenderable Text);
+    void Write(IRenderable text);
 
     /// <summary>
     /// Writes empty line.
@@ -32,12 +32,12 @@ public interface IOutputWriter
     /// <summary>
     /// Writes line with optional style.
     /// </summary>
-    void WriteLine(string Text, Style? Style = null);
+    void WriteLine(string text, Style? style = null);
 
     /// <summary>
     /// Writes horizontal rule.
     /// </summary>
     void WriteRule();
 
-    void WriteException(Exception Ex);
+    void WriteException(Exception ex);
 }

@@ -1,9 +1,10 @@
 ﻿namespace Ragnar.Questions;
 
+/// <summary>Centralises shared string constants for prompt and response formatting.</summary>
+/// <remarks>Prevents magic strings scattered across writers and parsers.</remarks>
+/// <example><![CDATA[[var label = AppDefaults.ORIGINAL_PROMPT_LABEL;]]></example>
 public static class AppDefaults
 {
-    public const string RESPONSE_DIRECTORYNAME = "Response";
-
     public const string UNCATEGORIZED_CATEGORY = "Uncategorized";
 
     public const string ORIGINAL_PROMPT_LABEL = "[Original Prompt]";
@@ -18,5 +19,7 @@ public static class AppDefaults
 
     public const string FILE_MARKER_START = "[RESPONSE_FILE]";
 
-    public const string FILEMARKEREND = "[/RESPONSE_FILE]";
+    public const string FILE_MARKER_END = "[/RESPONSE_FILE]";
+
+    public const string RESPONSE_DIRECTORYNAME = "Response";
 }

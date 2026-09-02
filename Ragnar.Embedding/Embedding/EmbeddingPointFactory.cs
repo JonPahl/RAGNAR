@@ -1,66 +1,58 @@
 ﻿namespace Ragnar.Embedding.Embedding;
 
-/// <summary>Builds vector points for storage.</summary>
-public class EmbeddingPointFactory
-  : IGeneratorService
+public sealed class EmbeddingGeneratorService(
+    Serilog.ILogger logger,
+    IOptions<RagnarConfig> configuration,
+    IEmbeddingGenerator<string, Embedding<float>> generator)
+    : IEmbeddingService
 {
-    ///<summary>Generates embeddings for text.</summary>
-    ///<param name = "Logger"> Logger instance.</param>
-    ///<param name ="Generator"> Embedding generator.</param>
-    ///<param name ="Text"> Input text to embed.</param>
-    ///<param name ="Ct"> Cancellation token.</param>
-    ///<returns>Generated embeddings.</returns>
-    public async ValueTask<GeneratedEmbeddings<Embedding<float>>> GenerateEmbeddingsAsync(
-        Serilog.ILogger Logger,
-        IOptions<RagnarConfig> Configuration,
-        IEmbeddingGenerator<string, Embedding<float>> Generator,
-        string Text,
-        CancellationToken Ct)
+    public async Task<ReadOnlyMemory<float>> GenerateAsync(string input, CancellationToken ct)
     {
+        var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+        timeoutCts.CancelAfter(configuration.Value.OllamaOptions.Timeout);
+
         try
         {
-            using var TimeoutCts = CancellationTokenSource.CreateLinkedTokenSource(Ct);
-
-            TimeoutCts.CancelAfter(Configuration.Value.OllamaOptions.Timeout);
-
-            return await Generator.GenerateAsync([Text], cancellationToken: TimeoutCts.Token);
+            var result = await generator.GenerateAsync(input, cancellationToken: timeoutCts.Token);
+            return result.Vector.ToArray();
         }
-        catch (OperationCanceledException ex) when (Ct.IsCancellationRequested)
+        catch (OperationCanceledException) when (ct.IsCancellationRequested)
         {
-            Logger.Warning(ex, "Vector generation canceled.");
-            throw new OperationCanceledException("user cancelled", ex);
-        }
-        catch (Exception Ex) when (Ex is TimeoutException or TaskCanceledException)
-        {
-            Logger.Fatal(Ex, "Embedding generation timed out or cancelled.");
             throw;
+        }
+        catch (TimeoutException ex)
+        {
+            logger.Fatal(ex, "Embedding generation timed out.");
+            throw;
+        }
+        finally
+        {
+            timeoutCts.Dispose();
         }
     }
 
-    ///<summary>Creates point structs from vectors.</summary>
-    /// <param name="PointId"> Unique identifier.</param>
-    /// <param name="Embedding"> Vector data.</param>
-    /// <param name="Chunk"> Code snippet text.</param>
-    /// <param name="File"> Source filename.</param>
-    /// <returns>List of point structs.</returns>
-    public List<PointStruct> BuildPointStructs(PointId PointId, float[] Embedding, string Chunk, string File)
+    public async Task<GeneratedEmbeddings<Embedding<float>>> GenerateBatchAsync(IReadOnlyCollection<string> inputs, CancellationToken ct)
     {
-        ArgumentNullException.ThrowIfNull(Chunk);
-        ArgumentNullException.ThrowIfNull(File);
+        var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+        timeoutCts.CancelAfter(configuration.Value.OllamaOptions.Timeout);
 
-        List<PointStruct> Points = [];
-
-        Points.Add(new PointStruct
+        try
         {
-            Id = PointId,
-            Vectors = Embedding,
-            Payload =
-            {
-                ["code_snippet"] = Chunk,
-                ["file_name"] = File,
-            },
-        });
-
-        return Points;
+            var result = await generator.GenerateAsync(inputs, cancellationToken: timeoutCts.Token);
+            return result;
+        }
+        catch (OperationCanceledException) when (ct.IsCancellationRequested)
+        {
+            throw;
+        }
+        catch (TimeoutException ex)
+        {
+            logger.Fatal(ex, "Embedding generation timed out.");
+            throw;
+        }
+        finally
+        {
+            timeoutCts.Dispose();
+        }
     }
 }

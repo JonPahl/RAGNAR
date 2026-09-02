@@ -5,10 +5,11 @@ public static class RagPipelineHostBuilder
     public static IHostBuilder CreateDefaultBuilder(string[] args) =>
         Host
         .CreateDefaultBuilder(args)
-        .ConfigureAppConfiguration((context, config) =>
+        .ConfigureAppConfiguration(config =>
         {
             const string X = "Ragnar";
             // var x = "AspireObit";
+            // const string X = "Shepherd_Api";
 
             config
             .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
@@ -17,7 +18,7 @@ public static class RagPipelineHostBuilder
         .ConfigureServices((context, services) =>
         {
             services
-                .AddSingleton<IQuestionFactory, QuestionBuilder>();
+                .AddSingleton<IQuestionBuilder, QuestionBuilder>();
             services
             .AddSingleton<ConfigToQuestionMapper>()
             .AddScoped<IQuestionEmbedding, QuestionEmbedding>()
@@ -25,16 +26,15 @@ public static class RagPipelineHostBuilder
 
             services
             .AddSingleton<IKnowledgeBaseInitialize, KnowledgeBaseInitialization>()
-            .AddScoped<IAssemblyInfo, AssemblyInfo>()
             .AddSingleton<IApplicationHeader, ApplicationHeader>()
             .AddSingleton<ISummaryService, SummaryService>()
-            .AddScoped<IResponseWriter, ResponseWriter>();
-
+            .AddScoped<IResponseWriter, ResponseWriter>()
+            .AddScoped<IOutputFormatter, ResponseMarkdownFormatter>();
             services.AddSingleton<IRagOrchestrator, RagOrchestrator>();
 
             services.AddScoped<IFileValidator, FileValidator>();
-            services.AddKeyedSingleton<ISystemPromptProvider, SystemPromptProvider>("Common");
-            services.AddKeyedSingleton<ISystemPromptProvider, SummarizePromptProvider>("Summary");
+            services.AddKeyedSingleton<IPromptProvider, PromptTemplateProvider>("Common");
+            services.AddKeyedSingleton<IPromptProvider, SummarizePromptProvider>("Summary");
 
             // Infrastructure
             services.AddSingleton<IQdrantClient>(sp =>
@@ -43,8 +43,12 @@ public static class RagPipelineHostBuilder
 
                 return new QdrantClient(option.Host, option.Port, https: false);
             });
+
+            services
+            .AddSingleton<IOllamaAIClientBuilder, OllamaAIClientBuilder>();
             services.AddSingleton<IOllamaClientFactory, OllamaClientFactory>();
-            services.AddSingleton<IOllamaResponse, OllamaResponse>();
+
+            services.AddSingleton<IOllamaGenerationService, OllamaChatResponse>();
             services.AddSingleton<IProgressReporter, ProgressReporter>();
 
             // Pipeline Stages (Order preserved by registration)
@@ -52,9 +56,13 @@ public static class RagPipelineHostBuilder
 
             services
             .AddKeyedScoped<IPipelineStage, QuestionOneStage>("Questions");
+
             services.AddSingleton<QuestionFactoryDelegate>(_ =>
-             (text, key, category, isActive) => new Question(isActive, text, key, category));
-            services.AddSingleton<IQuestionFactory, QuestionBuilder>();
+             (text, key, category, isActive) => new Core.Model.Question(isActive, text, key, category));
+            services.AddSingleton<IQuestionBuilder, QuestionBuilder>();
+            services.AddSingleton<IOutputFormatter, ResponseMarkdownFormatter>();
+            services.AddSingleton<IPathResolver, PathResolver>();
+            services.AddSingleton<IWriter, FileWriter>();
             services.AddSingleton<ConfigToQuestionMapper>();
             services.AddSingleton<IQdrantClient, QdrantClient>(serviceProvider =>
             {
@@ -66,8 +74,8 @@ public static class RagPipelineHostBuilder
             services.AddSingleton<IOutputWriter, AnsiConsoleOutputWriter>();
 
             // Configuration & Plugins
-            //services.ConfigureApplicationOptions(context);
-            services.RegisterEmbeddingServices(context);
+
+            services.RegisterEmbeddingServices();
             services.RegisterOptions(context);
             services.AddHttpClients();
             services.LoadQuestionPlugins();
@@ -76,16 +84,16 @@ public static class RagPipelineHostBuilder
         })
             .UseSerilog((ctx, config) => config.ReadFrom.Configuration(ctx.Configuration).WriteTo.Console());
 
-    private static void SetupPrimaryPipeline(IServiceCollection Services)
+    private static void SetupPrimaryPipeline(IServiceCollection services)
     {
-        Services
+        services
         .AddKeyedScoped<IPipelineStage, BrandingStage>("Main");
 
-        Services
+        services
         .AddKeyedScoped<IPipelineStage, KnowledgeBasePreparationStage>("Main");
-        Services
+        services
         .AddKeyedScoped<IPipelineStage, QuestionProcessingStage>("Main");
-        Services
+        services
         .AddKeyedScoped<IPipelineStage, SummarizationStage>("Main");
     }
 

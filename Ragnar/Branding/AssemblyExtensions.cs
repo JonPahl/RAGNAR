@@ -8,11 +8,11 @@ public static class AssemblyExtensions
     /// <summary>
     /// Assembly extension method.
     /// </summary>
-    /// <param name="Asm">Assembly Info.</param>
-    extension(IAssemblyInfo Asm)
+    /// <param name="asm">Assembly Info.</param>
+    extension(Assembly asm)
     {
         /// <summary>Retrieves the informational version from an assembly.</summary>
         /// <returns>The informational version string or default fallback.</returns>
-        public string? InformationalVersion => Asm.Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "1.0.0";
+        public string? InformationalVersion => asm.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "1.0.0";
     }
 }

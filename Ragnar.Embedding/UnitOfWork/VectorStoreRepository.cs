@@ -1,94 +1,60 @@
 ﻿namespace Ragnar.Embedding.UnitOfWork;
 
-/// <summary>
-/// Repository for upserting code embeddings into Qdrant vector store.
-/// </summary>
+/// <summary>Initializes a new instance of the VectorStoreRepository class.</summary>
 /// <remarks>
 /// Initializes a new instance of the <see cref="VectorStoreRepository"/> class.
 /// </remarks>
-public class VectorStoreRepository
-    : IVectorStoreRepository
+public sealed class VectorStoreRepository(
+    Serilog.ILogger logger,
+    IEmbeddingService embeddingService,
+    IQdrantClient qdrantClient,
+    IGeneratorService generatorService,
+    IOptions<RagnarConfig> config) : IVectorStoreRepository
 {
-    private readonly IOllamaApiClient _embeddingClient;
 
-    private readonly ApplicationOptions _applicationOption;
+    private readonly ApplicationOptions _appOptions = config.Value.ApplicationOptions;
 
-    private readonly IEmbeddingGenerator<string, Embedding<float>> _generator;
-
-    private readonly IQdrantClient _qdrantClient;
-
-    private readonly Serilog.ILogger _logger;
-
-    public VectorStoreRepository(
-        Serilog.ILogger Logger,
-        IOllamaClientFactory ClientFactory, IQdrantClient QdrantClient, IOptions<RagnarConfig> RagnarOptions)
+    public async Task<UpdateResult> UpsertBatchAsync(
+        CodeDocument[] codeDocuments,
+        CancellationToken cancellationToken)
     {
-        _embeddingClient = ClientFactory.FindClient(OllamaServiceType.Embedding);
+        cancellationToken.ThrowIfCancellationRequested();
 
-        this._qdrantClient = QdrantClient;
-        this._logger = Logger;
-
-        _applicationOption = RagnarOptions.Value.ApplicationOptions;
-
-        _generator = _embeddingClient.AsEmbeddingGenerator();
-    }
-
-    /// <summary>
-    /// Generates embeddings for code documents and upserts them to Qdrant.
-    /// </summary>
-    /// <param name="CodeDocuments">Array of code documents to embed and store.</param>
-    /// <param name="Ct">Cancellation token.</param>
-    /// <returns>Result of the upsert operation.</returns>
-    /// <example>
-    /// <code><![CDATA[
-    /// var codeDocuments = new[] {
-    /// new CodeDocument { FileName = "Program.cs", ElementName = "Main", Code = "void Main() {}" }};
-    /// var result = await repository.UpsertBatchAsync(codeDocuments, CancellationToken.None); ]]></code>
-    /// </example>
-    public async Task<UpdateResult> UpsertBatchAsync(CodeDocument[] CodeDocuments, CancellationToken Ct)
-    {
-        Ct.ThrowIfCancellationRequested();
-
-        var embeddingGroup = new List<PointStruct>();
-
-        foreach (var codeDoc in CodeDocuments)
+        foreach (var doc in codeDocuments)
         {
-            var textToEmbed = $"Context: {codeDoc.ElementName}\nCode:\n{codeDoc.Code}";
+            var text = $"Context: {doc.ElementName}\nCode:\n{doc.Code}";
+            var vector = await embeddingService.GenerateAsync(text, cancellationToken);
 
-            var vector = await GenerateEmbeddingAsync(textToEmbed, Ct);
+            var points = generatorService.BuildPointStructs(doc.AsPoint(), vector.ToArray(), doc);
 
-            var point = new PointStruct
+            try
             {
-                Id = codeDoc.AsPoint(),
-                Vectors = vector,
-                Payload = { codeDoc.Dictionary }
-            };
+                await qdrantClient.UpsertAsync(_appOptions.VectorStoreName, points, cancellationToken: cancellationToken);
 
-            embeddingGroup.Add(point);
+                //points.Count > 0
+                //? await qdrantClient.UpsertAsync(_appOptions.VectorStoreName, points, cancellationToken: cancellationToken)
+                //: new UpdateResult { Status = UpdateStatus.UnknownUpdateStatus };
+            }
+            catch (Exception ex) when (ex is not OperationCanceledException)
+            {
+                logger.Fatal(ex, "Failed to upsert embeddings to Qdrant.");
+                return new UpdateResult { Status = UpdateStatus.UnknownUpdateStatus };
+            }
         }
-
-        try
-        {
-            return embeddingGroup.Count != 0
-                ? await _qdrantClient.UpsertAsync(_applicationOption.VectorStoreName, embeddingGroup, cancellationToken: Ct)
-                : new UpdateResult();
-        }
-        catch (Exception ex)
-        {
-            _logger.Fatal(ex, ex.Message);
-            return new UpdateResult() { Status = UpdateStatus.UnknownUpdateStatus };
-        }
+        return new UpdateResult { Status = UpdateStatus.Completed };
     }
+}
 
-    /// <summary>
-    /// Generates a vector embedding for the given text chunk.
-    /// </summary>
-    /// <param name="Chunk">Text to embed.</param>
-    /// <param name="Ct">Cancellation token.</param>
-    /// <returns>Float array representing the embedding vector.</returns>
-    private async Task<float[]> GenerateEmbeddingAsync(string Chunk, CancellationToken Ct)
+
+public class PointStructFactory : IGeneratorService
+{
+    public List<PointStruct> BuildPointStructs(PointId pointId, float[] embedding, CodeDocument document)
     {
-        var embedding = await _generator.GenerateAsync(Chunk, cancellationToken: Ct).ConfigureAwait(false);
-        return embedding.Vector.ToArray();
+        return [new PointStruct
+        {
+            Id = pointId,
+            Vectors = embedding,
+            Payload = { document.Dictionary }
+        }];
     }
 }

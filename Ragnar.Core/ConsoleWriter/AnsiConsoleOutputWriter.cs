@@ -8,42 +8,46 @@ public class AnsiConsoleOutputWriter
 {
 
     /// <inheritdoc/>
-    public void Markup(string Text, Style? Style = null) => AnsiConsole.Markup(Spectre.Console.Markup.Escape(Text), Style.GetStyle);
+    public void Markup(string text, Style? style = null) => AnsiConsole.Markup(text, style.EnsureValidStyle());
 
     /// <inheritdoc/>
-    public void MarkupLine(string Text, Style? Style = null) => AnsiConsole.MarkupLine(Text, Style.GetStyle);
+    public void MarkupLine(string text, Style? style = null) => AnsiConsole.MarkupLine(text, style.EnsureValidStyle());
 
     /// <inheritdoc/>
-    public void Write(string Text, Style? Style = null) => AnsiConsole.Write(Text, Style.GetStyle);
+    public void Write(string text, Style? style = null) => AnsiConsole.Write(text, style.EnsureValidStyle());
 
-    /// <inheritdoc/>
-    public void Write(IRenderable Text) => AnsiConsole.Write(Text);
 
-    public void WriteException(Exception Ex)
-        => AnsiConsole.WriteException(Ex);
+    public void Write(IRenderable text) => AnsiConsole.Write(text);
 
-    /// <inheritdoc/>
+    public void WriteException(Exception ex)
+        => AnsiConsole.WriteException(ex);
+
     public void WriteLine() => AnsiConsole.WriteLine();
 
-    /// <inheritdoc/>
-    public void WriteLine(string Text, Style? Style = null) => AnsiConsole.WriteLine(Text, Style.GetStyle);
+
+    public void WriteLine(string text, Style? style = null) => AnsiConsole.WriteLine(text, style.EnsureValidStyle());
 
     /// <inheritdoc/>
     public void WriteRule() => AnsiConsole.Write(new Rule());
 }
 
 /// <summary>Extends Spectre.Console style handling with null-safe fallback.</summary>
+/// <remarks>Helper extension for safe console styling and rendering operations.</remarks>
 public static class StylesExtensions
 {
-    /// <summary>Ensures a valid style is returned, defaulting to plain if null.</summary>
-    /// <param name="Style"> Optional Spectre.Console style instance.</param>
-    /// <returns>A valid Style instance, never null.</returns>
-    /// <example><![CDATA[var s = myStyle?.GetStyle;]]></example>
-    extension(Style? Style)
+    /// <summary>Returns provided style or plain default if null.</summary>
+    /// <param name="style">Optional Spectre.Console style instance to validate.</param>
+    /// <remarks>Prevents null reference exceptions during console rendering pipelines.</remarks>
+    /// <example><![CDATA[var s = myStyle?.EnsureValidStyle;]]></example>
+    /// <returns>A valid Style instance, guaranteed never to be null.</returns>
+    extension(Style? style)
     {
         /// <summary>Ensures a valid style is returned, defaulting to plain if null.</summary>
         /// <returns>Valid style instance.</returns>
-        /// <example><![CDATA[var style = myStyle?.GetStyle();]]></example>
-        public Style GetStyle => Style ?? Spectre.Console.Style.Plain;
+        /// <example><![CDATA[var style = myStyle?.EnsureValidStyle();]]></example>
+        public Style EnsureValidStyle()
+        {
+            return style ?? Spectre.Console.Style.Plain;
+        }
     }
 }

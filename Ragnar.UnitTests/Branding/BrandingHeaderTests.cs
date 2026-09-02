@@ -6,10 +6,8 @@ public sealed class BrandingHeaderTests
     public void Display_WritesExpectedOutput_WithVersion()
     {
         // Arrange
-        var assemblyMock = new Mock<IAssemblyInfo>();
-        assemblyMock.Setup(a => a.Assembly).Returns(Assembly.GetExecutingAssembly());
         var writerMock = new Mock<IOutputWriter>();
-        var display = new ApplicationHeader(writerMock.Object, assemblyMock.Object);
+        var display = new ApplicationHeader(writerMock.Object);
 
         // Act
         display.RenderBranding();

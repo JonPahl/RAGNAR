@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Ragnar.Embedding")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6195b1e13705685ccec386d2c08908723737d0b5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+da30d3b9713ac4b1ac83fce844979085962d2d35")]
 [assembly: System.Reflection.AssemblyProductAttribute("Ragnar.Embedding")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Ragnar.Embedding")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

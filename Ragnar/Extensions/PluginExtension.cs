@@ -5,20 +5,19 @@
 /// </summary>
 public static class PluginExtension
 {
-    extension(List<QuestionConfiguration> configs)
+    extension(List<Plugins.Question> configs)
     {
         /// <summary>
         /// Loads questions from a plugin configuration file.
         /// </summary>
         /// <param name="name">File name to read.</param>
         /// <param name="provider">Plugin configuration.</param>
-        /// <param name="ct">Cancellation Token.</param>
+        /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns>Loaded question configurations.</returns>
-        /// <example><![CDATA[List<QuestionConfiguration> configs = await LoadPluginQuestionsAsync("General.csv", provider, ct);]]></example>
-        public async Task<List<QuestionConfiguration>> LoadPluginQuestionsAsync(string name, IQuestionProvider provider, CancellationToken ct)
+        /// <example><![CDATA[List<Question> configs = await LoadPluginQuestionsAsync("General.csv", provider, ct);]]></example>
+        public async Task<List<Plugins.Question>> LoadPluginQuestionsAsync(string name, IQuestionProvider provider, CancellationToken cancellationToken)
         {
-            provider.SetFileName(name);
-            var questions = await provider.LoadQuestionAsync(ct);
+            var questions = await provider.LoadQuestionsAsync(name, cancellationToken);
             configs.AddRange(questions);
             return configs;
         }
