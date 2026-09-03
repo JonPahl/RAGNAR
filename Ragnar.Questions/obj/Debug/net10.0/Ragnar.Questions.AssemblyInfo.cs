@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Ragnar.Questions")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+da30d3b9713ac4b1ac83fce844979085962d2d35")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f858c51713346c38062960984ab5267b5b9e4349")]
 [assembly: System.Reflection.AssemblyProductAttribute("Ragnar.Questions")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Ragnar.Questions")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
