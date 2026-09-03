@@ -9,7 +9,7 @@ public interface IFileValidator
     /// Checks if provided file meets file loading options.
     /// </summary>
     /// <param name="file">Path to file to check.</param>
-    /// <param name="filter">Options to determine if file should be used or not.</param>
+    /// <param name="fileLoadOptions">Options to determine if file should be used or not.</param>
     /// <returns>true if file should be used. if false the file is ignored. </returns>
-    bool IsValid(FileInfo file, in FileLoadOptions filter);
+    bool IsValid(FileInfo file, in FileLoadOptions fileLoadOptions);
 }

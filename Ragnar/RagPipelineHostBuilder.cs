@@ -1,4 +1,6 @@
-﻿namespace Ragnar;
+﻿using Ragnar.Questions.Interface;
+
+namespace Ragnar;
 
 public static class RagPipelineHostBuilder
 {
@@ -35,6 +37,9 @@ public static class RagPipelineHostBuilder
             services.AddScoped<IFileValidator, FileValidator>();
             services.AddKeyedSingleton<IPromptProvider, PromptTemplateProvider>("Common");
             services.AddKeyedSingleton<IPromptProvider, SummarizePromptProvider>("Summary");
+
+            services.AddSingleton<IQuestionCatalogLoader, DefaultQuestionCatalogLoader>();
+            services.AddSingleton<IQuestionCombineBuilder, QuestionCombineBuilder>();
 
             // Infrastructure
             services.AddSingleton<IQdrantClient>(sp =>
@@ -96,5 +101,4 @@ public static class RagPipelineHostBuilder
         services
         .AddKeyedScoped<IPipelineStage, SummarizationStage>("Main");
     }
-
 }

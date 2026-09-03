@@ -1,6 +1,8 @@
 ﻿namespace Ragnar.Extensions;
 
-/// <summary> Provides extension methods for <see cref="FileSystemEntry"/>.</summary>
+/// <summary>Provides extension methods for FileSystemEntry filtering operations.</summary>
+/// <remarks>Helper for checking file extensions against allowed collections.</remarks>
+/// <example><![CDATA[bool ok = entry.HasAllowedExtension([[".cs", ".json"]]);]]></example>
 public static class FileSystemEntryExtensions
 {
     /// <summary>

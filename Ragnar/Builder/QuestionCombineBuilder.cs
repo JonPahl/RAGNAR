@@ -1,11 +1,13 @@
 ﻿namespace Ragnar.Builder;
 
 /// <summary>Aggregates questions from categories, file configs, and CSV plugins.</summary>
+/// <param name="questionLoader">Loader that reads enabled question definitions.</param>
+/// <param name="options">Ragnar config providing category and path settings.</param>
 /// <remarks>Chainable; call Build() to obtain the final filtered list.</remarks>
-/// <example><![CDATA[var q = new QB(loader, opts).GetCsvFileAsync("plugins").Build();]]></example>
+/// <example><![CDATA[var q = new QB(loader, opts).GetCsvFilesAsync("plugins").Build();]]></example>
 public class QuestionCombineBuilder(
-    DefaultQuestionCatalogLoader questionLoader,
-    IOptions<RagnarConfig> options)
+    IQuestionCatalogLoader questionLoader,
+    IOptions<RagnarConfig> options) : IQuestionCombineBuilder
 {
     private List<Core.Model.Question> Questions { get; } = [];
 
@@ -15,7 +17,7 @@ public class QuestionCombineBuilder(
     /// <returns>The builder instance for chaining.</returns>
     public QuestionCombineBuilder GetCategories()
     {
-        var categories = questionLoader.ParseCategoriesOrDefault(options.Value.ApplicationOptions.CategoriesToProcess);
+        var categories = options.Value.ApplicationOptions.CategoriesToProcess.ToHashSet();
 
         Questions.AddRange(questionLoader.LoadQuestions(true, categories));
 
@@ -50,9 +52,9 @@ public class QuestionCombineBuilder(
     /// <param name="pluginDir">Directory containing *.csv question files.</param>
     /// <param name="cancellationToken">Token to cancel the async load.</param>
     /// <remarks>Skips silently if the directory does not exist.</remarks>
-    /// <example><![CDATA[await builder.GetCsvFileAsync(dir, ct);]]></example>
+    /// <example><![CDATA[await builder.GetCsvFilesAsync(dir, ct);]]></example>
     /// <returns>The builder instance for chaining.</returns>
-    public async Task<QuestionCombineBuilder> GetCsvFileAsync(string pluginDir, CancellationToken cancellationToken)
+    public async Task<QuestionCombineBuilder> GetCsvFilesAsync(string pluginDir, CancellationToken cancellationToken)
     {
         var csvParser = new CsvRecordParser();
 
@@ -62,6 +64,10 @@ public class QuestionCombineBuilder(
         {
             foreach (var csvFile in Directory.EnumerateFiles(pluginDir, "*.csv", SearchOption.AllDirectories))
             {
+                if (csvFile.Contains("Summary.csv", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue; // Skip summary files
+                }
                 var csvConfigs = await provider.LoadQuestionsAsync(csvFile, cancellationToken);
 
                 var questionBuilder = new QuestionBuilder();
@@ -81,6 +87,40 @@ public class QuestionCombineBuilder(
         return this;
     }
 
+
+    /// <summary>Asynchronously loads questions from CSV files in the plugin directory.</summary>
+    /// <param name="csvFile">*.csv file containing question definitions.</param>
+    /// <param name="cancellationToken">Token to cancel the async load.</param>
+    /// <remarks>Skips silently if the directory does not exist.</remarks>
+    /// <example><![CDATA[await builder.GetCsvFilesAsync(dir, ct);]]></example>
+    /// <returns>The builder instance for chaining.</returns>
+    public async Task<QuestionCombineBuilder> GetCsvFileAsync(string csvFile, CancellationToken cancellationToken)
+    {
+        var csvParser = new CsvRecordParser();
+
+        var provider = new CsvFileQuestionProvider(csvParser);
+
+        if (File.Exists(csvFile))
+        {
+            var csvConfigs = await provider.LoadQuestionsAsync(csvFile, cancellationToken);
+
+            var questionBuilder = new QuestionBuilder();
+
+            foreach (var csv in csvConfigs)
+            {
+                questionBuilder
+                    .WithText(csv.Text)
+                    .WithFileName(csv.FileName)
+                    .SetCategory(csv.Category)
+                    .SetActive(csv.IsActive);
+
+                Questions.Add(questionBuilder.Build());
+            }
+        }
+
+        return this;
+    }
+
     /// <summary>Returns the final, sorted, enabled question collection.</summary>
     /// <remarks>Orders by category then filename; filters disabled entries.</remarks>
     /// <example><![CDATA[var list = builder.Build();]]></example>
@@ -96,10 +136,10 @@ public class QuestionCombineBuilder(
     }
 
     /// <summary>Filters the question list to a specific set of categories.</summary>
-    /// <param name="applicationOptions">Options carrying the category filter.</param>
     /// <remarks>Clears prior entries and replaces with the filtered set.</remarks>
     /// <example><![CDATA[builder.WithCategoryFilter(opts);]]></example>
     /// <returns>The builder instance for chaining.</returns>
+    /// <example><![CDATA[builder.WithCategoryFilter();]]></example>
     public QuestionCombineBuilder WithCategoryFilter()
     {
         var categories = options.Value.ApplicationOptions.CategoriesToProcess;
@@ -116,23 +156,6 @@ public class QuestionCombineBuilder(
         Questions.Clear();
         Questions.AddRange(filtered);
         return this;
-
-
-        //if (options.Value.ApplicationOptions.CategoriesToProcess is null)
-        //{
-        //    return this;
-        //}
-
-        ////todo: rework to pull from options.
-        //HashSet<QuestionCategory> categories = [];
-
-        //var filtered = Questions.WithCategory(categories);
-
-        //Questions.Clear();
-
-        //Questions.AddRange(filtered);
-
-        //return this;
     }
 }
 

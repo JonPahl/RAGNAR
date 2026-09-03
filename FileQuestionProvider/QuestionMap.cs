@@ -5,6 +5,7 @@ public sealed class QuestionMap
     : ClassMap<QuestionRecord>
 {
     /// <summary>Configures column mappings, boolean parsing, and enum conversion for categories.</summary>
+    /// <example><![CDATA[csv.Context.RegisterClassMap<QuestionMap>();]]></example>
     public QuestionMap()
     {
         Map(m => m.IsEnabled).Name("IsEnabled")

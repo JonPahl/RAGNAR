@@ -68,3 +68,4 @@ global using Spectre.Console;
 global using OllamaSharp.Models.Chat;
 global using System.Collections.Concurrent;
 global using Ragnar.Embedding.Pipeline.Services;
+global using Ragnar.Questions.Interface;

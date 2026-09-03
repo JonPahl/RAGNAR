@@ -1,9 +1,12 @@
 ﻿namespace Ragnar.Embedding.UnitOfWork;
 
-/// <summary>Initializes a new instance of the VectorStoreRepository class.</summary>
-/// <remarks>
-/// Initializes a new instance of the <see cref="VectorStoreRepository"/> class.
-/// </remarks>
+/// <summary>Persists embedding vectors to Qdrant in configured batches.</summary>
+/// <param name="logger">Serilog logger for fatal upsert-error tracking.</param>
+/// <param name="embeddingService">Service that generates float vectors from text.</param>
+/// <param name="qdrantClient">Qdrant gRPC client for collection operations.</param>
+/// <param name="generatorService">Builder for Qdrant point structures.</param>
+/// <param name="config">Application-wide Ragnar configuration wrapper.</param>
+/// <remarks>Initializes with the resolved ApplicationOptions for store name.</remarks>
 public sealed class VectorStoreRepository(
     Serilog.ILogger logger,
     IEmbeddingService embeddingService,
@@ -14,6 +17,12 @@ public sealed class VectorStoreRepository(
 
     private readonly ApplicationOptions _appOptions = config.Value.ApplicationOptions;
 
+
+    /// <summary>Generates embeddings for each document and upserts them into the Qdrant collection.</summary>
+    /// <param name="codeDocuments">Array of code elements to embed and persist.</param>
+    /// <param name="cancellationToken">Token to cancel embedding or upsert operations.</param>
+    /// <returns>An <see cref="UpdateResult"/> indicating success or failure.</returns>
+    /// <example><![CDATA[var r = await repo.UpsertBatchAsync(docs, ct);]]></example>
     public async Task<UpdateResult> UpsertBatchAsync(
         CodeDocument[] codeDocuments,
         CancellationToken cancellationToken)
@@ -30,10 +39,6 @@ public sealed class VectorStoreRepository(
             try
             {
                 await qdrantClient.UpsertAsync(_appOptions.VectorStoreName, points, cancellationToken: cancellationToken);
-
-                //points.Count > 0
-                //? await qdrantClient.UpsertAsync(_appOptions.VectorStoreName, points, cancellationToken: cancellationToken)
-                //: new UpdateResult { Status = UpdateStatus.UnknownUpdateStatus };
             }
             catch (Exception ex) when (ex is not OperationCanceledException)
             {

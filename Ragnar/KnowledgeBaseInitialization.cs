@@ -85,7 +85,7 @@ public sealed class KnowledgeBaseInitialization(
             .GetFileConfig();
 
         var pluginDir = Path.Join(AppContext.BaseDirectory, "Plugins");
-        await builder.GetCsvFileAsync(pluginDir, cancellationToken);
+        await builder.GetCsvFilesAsync(pluginDir, cancellationToken);
 
         builder.WithCategoryFilter();
         var sorted = builder.Build();

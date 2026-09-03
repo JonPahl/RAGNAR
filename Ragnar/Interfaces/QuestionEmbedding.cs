@@ -49,10 +49,10 @@ public class QuestionEmbedding(
     private static async Task<string> StreamContextAsync(List<RetrievedPoint> value)
     {
         const string FILE_NAME = "file_name";
-        const string ELEMENT_NAME = nameof(CodeDocument.ElementName);
+        //const string ELEMENT_NAME = nameof(CodeDocument.ElementName);
         const string COMMENT = nameof(CodeDocument.Comment);
         const string CODE = nameof(CodeDocument.Code);
-        const string ELEMENT_TYPE = nameof(CodeDocument.ElementType);
+        //const string ELEMENT_TYPE = nameof(CodeDocument.ElementType);
 
         var sb = new StringBuilder();
 
@@ -60,15 +60,17 @@ public class QuestionEmbedding(
         {
             var fileName = match.TryGetValue(FILE_NAME, out var fn) ? fn.StringValue ?? string.Empty : string.Empty;
 
-            var elementName = match.TryGetValue(ELEMENT_NAME, out var en) ? en.StringValue ?? string.Empty : string.Empty;
+            //var elementName = match.TryGetValue(ELEMENT_NAME, out var en) ? en.StringValue ?? string.Empty : string.Empty;
 
             var comment = match.TryGetValue(COMMENT, out var cmt) ? cmt.StringValue ?? string.Empty : string.Empty;
 
             var code = match.TryGetValue(CODE, out var cd) ? cd.StringValue ?? string.Empty : string.Empty;
 
-            var elementType = match.TryGetValue(ELEMENT_TYPE, out var et) ? et.StringValue ?? string.Empty : string.Empty;
+            //var elementType = match.TryGetValue(ELEMENT_TYPE, out var et) ? et.StringValue ?? string.Empty : string.Empty;
 
-            sb.AppendLine($"File Name: {fileName.Trim()} Type: {elementType.Trim()} Element Name: {elementName.Trim()} Description: {comment.Trim()} Code: {code.Trim()}");
+            //sb.AppendLine($"File Name: {fileName.Trim()} Type: {elementType.Trim()} Element Name: {elementName.Trim()} Description: {comment.Trim()} Code: {code.Trim()}");
+
+            sb.AppendLine($"File Name: {fileName.Trim()}  Description: {comment.Trim()} Code: {Environment.NewLine} {code.Trim()}");
         }
 
         return sb.ToString();

@@ -1,10 +1,11 @@
 ﻿namespace Ragnar.Stages;
 
 /// <summary>Orchestrates summarisation of all response folders via SummaryService.</summary>
+/// <param name="summaryService">Service that generates combined markdown summaries.</param>
+/// <param name="writer">Console writer for status rules and completion text.</param>
 /// <remarks>Runs after question processing; writes combined markdown summaries.</remarks>
 /// <example><![CDATA[await stage.ExecuteAsync(ct);]]></example>
-public class SummarizationStage(ISummaryService summaryService, IOutputWriter writer)
-    : IPipelineStage
+public class SummarizationStage(ISummaryService summaryService, IOutputWriter writer) : IPipelineStage
 {
 
     /// <summary>Invokes the summary service and prints completion markers.</summary>

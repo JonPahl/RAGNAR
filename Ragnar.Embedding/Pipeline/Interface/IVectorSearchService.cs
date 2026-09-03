@@ -2,5 +2,5 @@
 
 public interface IVectorSearchService
 {
-    Task<string> RetrieveContextAsync(string CollectionName, ReadOnlyMemory<float> Vector, Filter? Filter, CancellationToken cancellationToken);
+    Task<string> RetrieveContextAsync(string collectionName, ReadOnlyMemory<float> vector, Filter? filter, CancellationToken cancellationToken);
 }

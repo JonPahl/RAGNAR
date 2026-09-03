@@ -1,4 +1,4 @@
-IsEnabled,Text,FileName,Category
+﻿IsEnabled,Text,FileName,Category
 "1","Please recommend improved class, method, and variable names to make this application easier to understand.","Rename","Refactor"
 "1","Can you identify any code smells in the project and suggest how to fix them?","Code_smell","Refactor"
 "1","Are there any other comments or suggestions for this code base? Please generate a **PR-ready refactored version** of the *entire project* with these fixes applied!", "AdditionalQuestions","Refactor"
@@ -14,7 +14,7 @@ IsEnabled,Text,FileName,Category
 "0","How can we better utilize qdrant collection to ask questions against a single file? Are there other uses of qdrant to help improve this application?","Future", "Refactor"
 "0","Can you generate a list of .editorconfig to make rules to enforce C# common naming and formatting conventions.", "Naming_Editor", "Editor"
 "1","Are there other questions I should ask to analyze this code base?", "other_qu", "Other"
-"1","Can you provide a list of all classes and methods missing XML documentation comments (i.e., Summary, Param, Example, and Return)? Please generate the missing comment, make each XML value comment less than 120 characters for each class or method where it is missing. Create this information for each class and method as needed.", "XML_2", "XML"
+"1","Can you provide a list of all classes or interfaces and methods missing XML documentation comments (i.e., Summary, Param, Example, and Return)? Please generate the missing comment, make each XML value comment less than 120 characters for each class or method where it is missing. Create this information for each class and method as needed.", "XML_2", "XML"
 "0","Is the Qdrant search using optimal vector dimensionality and filtering (e.g., by category payload index)?", "VectorSearch", "Performance"
 "1","Can you create a Readme.md file designed to be used with GitHub?", "Readme", "General"
 "0","Can you generate a combined version of .editorconfig .roslynatorconfig and into a single file with the most common settings, along with keeping the rules consistent between each different analyzer. i.e., naming, spacing, and document format.","One","Editor"

@@ -50,11 +50,11 @@ public class ChunkBySyntaxTree
         return CreateCodeDocument(filename, classDefine, classDefine.Kind().ToString(), classDefine?.Identifier.ValueText ?? UNKNOWN_ELEMENT_NAME, classDefine?.GetLeadingTrivia(), category);
     }
 
-    private string InferCategoryFromPath(string fileName)
+    private static string InferCategoryFromPath(string fileName)
     => Path.GetFileNameWithoutExtension(fileName)
         .ToLowerInvariant() switch
     {
-        var _ when fileName.Contains("test", StringComparison.OrdinalIgnoreCase) => "Testing",
+        var _ when fileName.ToLowerInvariant().Contains("test", StringComparison.OrdinalIgnoreCase) => "Testing",
         var _ when fileName.Contains("plugin", StringComparison.OrdinalIgnoreCase) => "Plugin",
         var _ when fileName.Contains("embedding", StringComparison.OrdinalIgnoreCase) => "Embedding",
         var _ when fileName.Contains("core", StringComparison.OrdinalIgnoreCase) => "Core",

@@ -3,6 +3,7 @@
 /// <summary>
 /// Read and parse over file to be embedded.
 /// </summary>
+/// <param name="logger">Serilog logger for read-error diagnostics.</param>
 public abstract class BaseFileParser(Serilog.ILogger logger)
     : IFileParser
 {

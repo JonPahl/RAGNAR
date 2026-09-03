@@ -1,5 +1,9 @@
 ﻿namespace Ragnar.Embedding.Pipeline;
 
+
+/// <summary>Provides extension methods for DI service registration.</summary>
+/// <remarks>Encapsulates embedding and plugin discovery registrations.</remarks>
+/// <example><![CDATA[services.RegisterEmbeddingServices().LoadQuestionPlugins();]]></example>
 public static class ApplicationConfigurationExtensions
 {
     extension(IServiceCollection services)

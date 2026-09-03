@@ -5,8 +5,7 @@
 /// ParseAsync file processing.
 /// </summary>
 /// <param name="configWrapper">Wrapped configuration objects.</param>
-public sealed class FileParser(IOptions<RagnarConfig> configWrapper, Serilog.ILogger logger)
-    : BaseFileParser(logger)
+public sealed class FileParser(IOptions<RagnarConfig> configWrapper, Serilog.ILogger logger) : BaseFileParser(logger)
 {
     private EmbeddingOptions EmbeddingOption => configWrapper.Value.EmbeddingOptions;
 

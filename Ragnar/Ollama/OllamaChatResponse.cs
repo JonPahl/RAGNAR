@@ -2,13 +2,9 @@
 
 namespace Ragnar.Ollama;
 
-/// <summary>Initializes the response handler with writer and client factory.</summary>
-/// <param name="clientFactory">Factory for creating Ollama clients.</param>
-/// <remarks>Applies token limits, temperature, and live console updates.</remarks>
-///<example> <![CDATA[var text = await response.GenerateResponse(request, ct);]]>
-///</example>
-/// <returns>Complete text content of the generated AI response.
-/// </returns>
+/// <summary>Streams Ollama chat responses with live console rendering.</summary>
+/// <remarks>Applies token limits, temperature, and real-time panel updates.</remarks>
+/// <example><![CDATA[var text = await response.GenerateResponse(req, ct);]]></example>
 public class OllamaChatResponse(
     Serilog.ILogger logger,
     IOllamaClientFactory clientFactory)
@@ -25,9 +21,8 @@ public class OllamaChatResponse(
         RequestOptions requestOptions = new()
         {
             NumPredict = 8192,
-            //NumCtx = 16384,
-            NumCtx = 4096,
-            NumThread = 4,
+            NumCtx = 16384,
+            NumThread = 8,
             Temperature = 0.2f,
             RepeatPenalty = 1.02f,
         };

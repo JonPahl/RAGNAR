@@ -1,8 +1,10 @@
 ﻿namespace Ragnar.Stages;
 
 /// <summary>Renders Ragnar branding, tagline, and version to the console.</summary>
+/// <param name="header">Application header service that draws the banner.</param>
 /// <remarks>First pipeline stage executed at application startup.</remarks>
 /// <example><![CDATA[await stage.ExecuteAsync(ct);]]></example>
+
 public class BrandingStage(IApplicationHeader header)
     : IPipelineStage
 {

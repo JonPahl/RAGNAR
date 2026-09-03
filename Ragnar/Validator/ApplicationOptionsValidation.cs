@@ -7,6 +7,8 @@
 public sealed class ApplicationOptionsValidation
     : AbstractValidator<ApplicationOptions>
 {
+
+    /// <summary>Initializes FluentValidation rules for application options.</summary>
     public ApplicationOptionsValidation()
     {
         RuleFor(x => x.VectorStoreName)

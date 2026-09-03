@@ -42,6 +42,10 @@ public sealed class VectorStoreBuilder(
         return this;
     }
 
+    /// <summary>Creates the Qdrant collection with cosine distance and the configured dimension.</summary>
+    /// <param name="cancellationToken">Token to abort the creation call.</param>
+    /// <returns>The builder instance with <c>IsExisting</c> set to <c>true</c>.</returns>
+    /// <example><![CDATA[await builder.CreateAsync(ct);]]></example>
     public async Task<IVectorStoreBuilder> CreateAsync(CancellationToken cancellationToken)
     {
         await QdrantClient.CreateCollectionAsync(

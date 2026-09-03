@@ -16,7 +16,7 @@ public class SummaryService(
     [FromKeyedServices("Summary")] IPromptProvider summaryPrompt,
     IOllamaGenerationService ollamaClientProvider,
     IOptions<RagnarConfig> configWrapper,
-    IQuestionProvider csvProvider,
+    IQuestionCombineBuilder questionBuilder,
     IResponseWriter responseWriter)
     : ISummaryService
 {
@@ -33,6 +33,7 @@ public class SummaryService(
     /// </summary>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Return Value task.</returns>
+    /// <example><![CDATA[await summaryService.SummarizeAllResponsesAsync(ct);]]></example>
     public async ValueTask SummarizeAllResponsesAsync(CancellationToken cancellationToken)
     {
         var sourceDir = _configWrapper.Value.ApplicationOptions.SourceDirectory;
@@ -67,24 +68,31 @@ public class SummaryService(
         }
     }
 
+    /// <summary>Loads and filters enabled questions from a plugin CSV file.</summary>
+    /// <param name="fileName">The CSV file name to load (default "Summary.csv").</param>
+    /// <param name="cancellationToken">Token to cancel the asynchronous read.</param>
+    /// <returns>A list of enabled question objects for summarization.</returns>
+    /// <example><![CDATA[var qs = await svc.LoadQuestionsAsync();]]></example>
     private async Task<List<Core.Model.Question>> LoadQuestionsAsync(string fileName = "Summary.csv", CancellationToken cancellationToken = default)
     {
-        var csvFile = Path.Join(AppContext.BaseDirectory, "Questions", "Plugins", fileName);
+        var csvFile = Path.Join(AppContext.BaseDirectory, "Plugins", fileName);
         if (!File.Exists(csvFile))
         {
-            writer.MarkupLine("Summary CSV not found: " + csvFile, Styles.Yellow);
+            Log.Warning("Summary CSV not found: {CsvFile}", csvFile);
             throw new FileNotFoundException("File not found", csvFile);
         }
 
-        var questions = (await csvProvider.LoadQuestionsAsync(csvFile, cancellationToken))
-            .Where(q => q.IsActive)
+        await questionBuilder.GetCsvFileAsync(csvFile, cancellationToken);
+
+        var questions = questionBuilder.Build().ToList()
+            .Where(q => q.IsEnabled)
             .ToList();
 
         var summaryQuestions = new List<Core.Model.Question>();
 
         foreach (var question in questions)
         {
-            summaryQuestions.Add(new Core.Model.Question(question.IsActive, question.Text, question.FileName, question.Category, null));
+            summaryQuestions.Add(new Core.Model.Question(question.IsEnabled, question.Text, question.Filename, question.Category, null));
         }
 
         return summaryQuestions;
@@ -97,6 +105,7 @@ public class SummaryService(
     /// <param name="question">The question to ask the agent.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Summarized contents.</returns>
+    /// <example><![CDATA[var text = await AskAgentAsync("src", question, ct);]]></example>
     private async Task<string> AskAgentAsync(
         string folder,
         Core.Model.Question question,
@@ -110,6 +119,15 @@ public class SummaryService(
         return await agent.AskAgent(folder, question.Text, cancellationToken);
     }
 
+
+    /// <summary>Persists a generated summary to disk and logs the output path.</summary>
+    /// <param name="summary">The markdown summary text to save.</param>
+    /// <param name="saveFolder">Root directory for response output.</param>
+    /// <param name="folder">Sub-folder identifier within the response directory.</param>
+    /// <param name="fileName">The file name (without extension) for the output.</param>
+    /// <param name="cancellationToken">Token to cancel the async write operation.</param>
+    /// <returns>A task representing the asynchronous save operation.</returns>
+    /// <example><![CDATA[await svc.SaveResponseAsync(text, dir, "summary", "f.md", ct);]]></example>
     private async Task SaveResponseAsync(string summary, string saveFolder, string folder, string fileName, CancellationToken cancellationToken)
     {
         try
