@@ -1,0 +1,35 @@
+2026-08-21T14:46:44.5599124+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 2.3.3+44aa76e6a61d4908f06dfd77a51d4b7e3e7ce40f
+2026-08-21T14:46:44.5730789+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-08-21T14:46:44.5742780+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-08-21T14:46:44.5742874+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 14:46:44.523
+2026-08-21T14:46:44.5743891+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 45660
+2026-08-21T14:46:44.5744184+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.11
+2026-08-21T14:46:44.5744433+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.11\System.Private.CoreLib.dll
+2026-08-21T14:46:44.5744555+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-08-21T14:46:44.5745535+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Ragnar.UnitTests.dll
+2026-08-21T14:46:44.5747185+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\TestResults --client-port 58276'
+2026-08-21T14:46:44.5757159+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-08-21T14:46:44.6358141+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-08-21T14:46:44.6476603+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-08-21T14:46:46.0579261+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '4.0.0' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-08-21T14:46:46.0734458+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v4.0.0+8bf043c053 (64-bit .NET 10.0.11)
+2026-08-21T14:46:46.7351242+00:00 xUnit.net INFORMATION   Discovering: Ragnar.UnitTests
+2026-08-21T14:46:48.0375563+00:00 xUnit.net INFORMATION   Discovered:  Ragnar.UnitTests
+2026-08-21T14:46:48.0556283+00:00 xUnit.net INFORMATION   Starting:    Ragnar.UnitTests
+2026-08-21T14:46:50.3546121+00:00 xUnit.net ERROR     Ragnar.UnitTests.ConfigurationValidatorTests.Validate_ValidOptions_ReturnsNoErrors [FAIL]
+2026-08-21T14:46:50.3551721+00:00 xUnit.net INFORMATION       Expected result.IsValid to be True, but found False.
+2026-08-21T14:46:50.3557793+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-21T14:46:50.3563681+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.BooleanAssertions`1.BeTrue(String because, Object[] becauseArgs)
+2026-08-21T14:46:50.3564120+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\ConfigurationValidatorTests.cs(19,0): at Ragnar.UnitTests.ConfigurationValidatorTests.Validate_ValidOptions_ReturnsNoErrors()
+2026-08-21T14:46:50.3564237+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-21T14:46:50.3564315+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-21T14:46:50.3743182+00:00 xUnit.net ERROR     Ragnar.UnitTests.ConfigurationValidatorTests.Validate_InvalidOptions_ReturnsErrors [FAIL]
+2026-08-21T14:46:50.3743438+00:00 xUnit.net INFORMATION       Expected result.Errors.First().PropertyName to be "Host", but "Port" differs near "Por" (index 0).
+2026-08-21T14:46:50.3743587+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-21T14:46:50.3743764+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+2026-08-21T14:46:50.3743895+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\ConfigurationValidatorTests.cs(31,0): at Ragnar.UnitTests.ConfigurationValidatorTests.Validate_InvalidOptions_ReturnsErrors()
+2026-08-21T14:46:50.3743961+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-21T14:46:50.3744019+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-21T14:46:50.3913118+00:00 xUnit.net INFORMATION   Finished:    Ragnar.UnitTests (ID = 'f098f31f0eacc0ee01d83fd63129e4523264605bb0c54dec59a352b1acd06c48')
+2026-08-21T14:46:50.3968845+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-08-21T14:46:50.4025234+00:00 xUnit.net INFORMATION    Ragnar.UnitTests  Total: 2, Errors: 0, Failed: 2, Skipped: 0, Not Run: 0, Time: 2.338s

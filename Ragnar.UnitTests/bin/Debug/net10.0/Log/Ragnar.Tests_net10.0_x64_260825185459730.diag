@@ -1,0 +1,27 @@
+2026-08-25T18:54:59.8363271+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 2.3.3+44aa76e6a61d4908f06dfd77a51d4b7e3e7ce40f
+2026-08-25T18:54:59.8475751+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-08-25T18:54:59.8487416+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-08-25T18:54:59.8487540+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 18:54:59.666
+2026-08-25T18:54:59.8488708+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 43036
+2026-08-25T18:54:59.8489023+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.11
+2026-08-25T18:54:59.8489281+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.11\System.Private.CoreLib.dll
+2026-08-25T18:54:59.8489421+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-08-25T18:54:59.8490423+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Ragnar.Tests.dll
+2026-08-25T18:54:59.8492280+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\fine-code-coverage\coverage-tool-output --client-port 60837'
+2026-08-25T18:54:59.8525064+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-08-25T18:54:59.9995894+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-08-25T18:55:00.0238053+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-08-25T18:55:00.7574636+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '4.0.0' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-08-25T18:55:00.8055550+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v4.0.0+8bf043c053 (64-bit .NET 10.0.11)
+2026-08-25T18:55:01.0239494+00:00 xUnit.net INFORMATION   Discovering: Ragnar.Tests
+2026-08-25T18:55:01.5083072+00:00 xUnit.net INFORMATION   Discovered:  Ragnar.Tests
+2026-08-25T18:55:01.5594261+00:00 xUnit.net INFORMATION   Starting:    Ragnar.Tests
+2026-08-25T18:55:27.9126745+00:00 xUnit.net ERROR     Ragnar.Tests.Core.ResponseWriterTests.WriteResponseAsync_CreatesFileWithCorrectStructure [FAIL]
+2026-08-25T18:55:27.9132972+00:00 xUnit.net INFORMATION       Expected path to end with ".md", but "C:\Users\jp325\AppData\Local\Temp\RagnarTest\62d927f5-df8d-4b54-a71c-7a74e4c38588\Response\Refactor\test_file.cs_20260825_135525." differs near "C:\" (index 0).
+2026-08-25T18:55:27.9137797+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-25T18:55:27.9143459+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.StringAssertions`1.EndWith(String expected, String because, Object[] becauseArgs)
+2026-08-25T18:55:27.9143798+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Core\ResponseWriterTests.cs(35,0): at Ragnar.Tests.Core.ResponseWriterTests.WriteResponseAsync_CreatesFileWithCorrectStructure()
+2026-08-25T18:55:27.9143828+00:00 xUnit.net INFORMATION         --- End of stack trace from previous location ---
+2026-08-25T18:56:30.1793146+00:00 xUnit.net INFORMATION   Finished:    Ragnar.Tests (ID = 'f938faec33fe5f71c53c157942770d0eda0a74427521894987d80f15ac52b3a0')
+2026-08-25T18:56:30.1859419+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-08-25T18:56:30.1921374+00:00 xUnit.net INFORMATION    Ragnar.Tests  Total: 120, Errors: 0, Failed: 1, Skipped: 0, Not Run: 0, Time: 88.630s

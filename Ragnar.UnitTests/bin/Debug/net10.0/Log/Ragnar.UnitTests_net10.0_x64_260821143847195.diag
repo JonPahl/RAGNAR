@@ -1,0 +1,81 @@
+2026-08-21T14:38:47.2170051+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 2.3.3+44aa76e6a61d4908f06dfd77a51d4b7e3e7ce40f
+2026-08-21T14:38:47.2342850+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-08-21T14:38:47.2363613+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-08-21T14:38:47.2363837+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 14:38:47.164
+2026-08-21T14:38:47.2364982+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 55208
+2026-08-21T14:38:47.2365304+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.11
+2026-08-21T14:38:47.2365506+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.11\System.Private.CoreLib.dll
+2026-08-21T14:38:47.2365679+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-08-21T14:38:47.2366601+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Ragnar.UnitTests.dll
+2026-08-21T14:38:47.2368340+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\TestResults --client-port 58495'
+2026-08-21T14:38:47.2383762+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-08-21T14:38:47.3086676+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-08-21T14:38:47.3260001+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-08-21T14:38:47.9909558+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '4.0.0' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-08-21T14:38:48.2322555+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v4.0.0+8bf043c053 (64-bit .NET 10.0.11)
+2026-08-21T14:38:48.5641629+00:00 xUnit.net INFORMATION   Discovering: Ragnar.UnitTests
+2026-08-21T14:38:48.7604462+00:00 xUnit.net INFORMATION   Discovered:  Ragnar.UnitTests
+2026-08-21T14:38:48.8334304+00:00 xUnit.net INFORMATION   Starting:    Ragnar.UnitTests
+2026-08-21T14:38:59.2196580+00:00 xUnit.net ERROR     Ragnar.UnitTests.Embedding.PointTests.FromFilePathAndIndex_GeneratesDeterministicId [FAIL]
+2026-08-21T14:38:59.2249523+00:00 xUnit.net INFORMATION       System.NotSupportedException : Equals is not part of Fluent Assertions. Did you mean Be() instead?
+2026-08-21T14:38:59.2259617+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-21T14:38:59.2267168+00:00 xUnit.net INFORMATION            at FluentAssertions.Numeric.NumericAssertionsBase`3.Equals(Object obj)
+2026-08-21T14:38:59.2267594+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Embedding\PointTests.cs(22,0): at Ragnar.UnitTests.Embedding.PointTests.FromFilePathAndIndex_GeneratesDeterministicId()
+2026-08-21T14:38:59.2267665+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-21T14:38:59.2267743+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-21T14:38:59.3119797+00:00 xUnit.net ERROR     Ragnar.UnitTests.UtilsTests.ExpandDirectory_Returns_FullPath_When_Directory_Exists [FAIL]
+2026-08-21T14:38:59.3120165+00:00 xUnit.net INFORMATION       Expected result to be "C:\Users\jp325\AppData\Local\Temp\" with a length of 34, but "C:\Users\jp325\AppData\Local\Temp" has a length of 33, differs near "p" (index 32).
+2026-08-21T14:38:59.3120422+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-21T14:38:59.3120581+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+2026-08-21T14:38:59.3132960+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\UtilsTests.cs(26,0): at Ragnar.UnitTests.UtilsTests.ExpandDirectory_Returns_FullPath_When_Directory_Exists()
+2026-08-21T14:38:59.3135485+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-21T14:38:59.3135772+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-21T14:38:59.3925921+00:00 xUnit.net ERROR     Ragnar.UnitTests.Extensions.StopwatchExtensionsTests.ElapsedTimeString_Returns_MM_SS_Format [FAIL]
+2026-08-21T14:38:59.3926332+00:00 xUnit.net INFORMATION       Expected result to be "02:35", but "00:00" differs near "0:0" (index 1).
+2026-08-21T14:38:59.3926405+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-21T14:38:59.3926570+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+2026-08-21T14:38:59.3926784+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Extensions\StopwatchExtensionsTests.cs(38,0): at Ragnar.UnitTests.Extensions.StopwatchExtensionsTests.ElapsedTimeString_Returns_MM_SS_Format()
+2026-08-21T14:38:59.3926845+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-21T14:38:59.3926916+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-21T14:38:59.3972440+00:00 xUnit.net ERROR     Ragnar.UnitTests.ConfigurationValidatorTests.Validate_ValidOptions_ReturnsNoErrors [FAIL]
+2026-08-21T14:38:59.3972578+00:00 xUnit.net INFORMATION       Expected result.IsValid to be True, but found False.
+2026-08-21T14:38:59.3972626+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-21T14:38:59.3972702+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.BooleanAssertions`1.BeTrue(String because, Object[] becauseArgs)
+2026-08-21T14:38:59.3972820+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\ConfigurationValidatorTests.cs(19,0): at Ragnar.UnitTests.ConfigurationValidatorTests.Validate_ValidOptions_ReturnsNoErrors()
+2026-08-21T14:38:59.3972869+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-21T14:38:59.3972933+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-21T14:38:59.4186643+00:00 xUnit.net ERROR     Ragnar.UnitTests.ConfigurationValidatorTests.Validate_InvalidOptions_ReturnsErrors [FAIL]
+2026-08-21T14:38:59.4187235+00:00 xUnit.net INFORMATION       Expected result.Errors to contain 3 item(s), but found 4: {Host is required., Port must be between 1 and 65535., Timeout must be greater than zero., LLM model is required.}.
+2026-08-21T14:38:59.4187414+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-21T14:38:59.4187533+00:00 xUnit.net INFORMATION            at FluentAssertions.Collections.GenericCollectionAssertions`3.HaveCount(Int32 expected, String because, Object[] becauseArgs)
+2026-08-21T14:38:59.4187682+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\ConfigurationValidatorTests.cs(29,0): at Ragnar.UnitTests.ConfigurationValidatorTests.Validate_InvalidOptions_ReturnsErrors()
+2026-08-21T14:38:59.4187742+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-21T14:38:59.4187821+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-21T14:38:59.4912791+00:00 xUnit.net ERROR     Ragnar.UnitTests.ResponseWriterTests.WriteResponseAsync_Throws_If_Category_Dir_Missing [FAIL]
+2026-08-21T14:38:59.4913072+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: No exception was thrown
+2026-08-21T14:38:59.4913085+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentException)
+2026-08-21T14:38:59.4913140+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-21T14:38:59.4913395+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\ResponseWriterTests.cs(74,0): at Ragnar.UnitTests.ResponseWriterTests.WriteResponseAsync_Throws_If_Category_Dir_Missing()
+2026-08-21T14:38:59.4913419+00:00 xUnit.net INFORMATION         --- End of stack trace from previous location ---
+2026-08-21T14:39:00.5383044+00:00 xUnit.net ERROR     Ragnar.UnitTests.ResponseWriterTests.WriteResponseAsync_Creates_Directory_If_Missing [FAIL]
+2026-08-21T14:39:00.5383324+00:00 xUnit.net INFORMATION       Expected path to start with "C:\src\Response\Refactor\", but "Response\Refactor\test_20260821_093900.md" differs near "Res" (index 0).
+2026-08-21T14:39:00.5383399+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-21T14:39:00.5383528+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.StringAssertions`1.StartWith(String expected, String because, Object[] becauseArgs)
+2026-08-21T14:39:00.5383673+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\ResponseWriterTests.cs(40,0): at Ragnar.UnitTests.ResponseWriterTests.WriteResponseAsync_Creates_Directory_If_Missing()
+2026-08-21T14:39:00.5383687+00:00 xUnit.net INFORMATION         --- End of stack trace from previous location ---
+2026-08-21T14:39:02.2491955+00:00 xUnit.net ERROR     Ragnar.UnitTests.FileParseFactoryTests.ParseAsync_Throws_For_Unsupported_Extension [FAIL]
+2026-08-21T14:39:02.2492421+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: Exception type was not an exact match
+2026-08-21T14:39:02.2492441+00:00 xUnit.net INFORMATION       Expected: typeof(System.NotSupportedException)
+2026-08-21T14:39:02.2492450+00:00 xUnit.net INFORMATION       Actual:   typeof(System.NullReferenceException)
+2026-08-21T14:39:02.2492460+00:00 xUnit.net INFORMATION       ---- System.NullReferenceException : Object reference not set to an instance of an object.
+2026-08-21T14:39:02.2492686+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-21T14:39:02.2492962+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\FileParseFactoryTests.cs(37,0): at Ragnar.UnitTests.FileParseFactoryTests.ParseAsync_Throws_For_Unsupported_Extension()
+2026-08-21T14:39:02.2492989+00:00 xUnit.net INFORMATION         --- End of stack trace from previous location ---
+2026-08-21T14:39:02.2493001+00:00 xUnit.net INFORMATION         ----- Inner Stack Trace -----
+2026-08-21T14:39:02.2493086+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.Embedding\UnitOfWork\FileParser.cs(11,0): at Ragnar.Embedding.UnitOfWork.FileParser.get_EmbeddingOption()
+2026-08-21T14:39:02.2493172+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.Embedding\UnitOfWork\FileParser.cs(23,0): at Ragnar.Embedding.UnitOfWork.FileParser.ParseFileAsync(String filePath, CancellationToken Ct)
+2026-08-21T14:39:02.2493252+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.Embedding\Factory\FileParseFactory.cs(30,0): at Ragnar.Embedding.Factory.FileParseFactory.ParseFile(String File, CancellationToken Ct)
+2026-08-21T14:39:02.2493353+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.Embedding\Factory\FileParseFactory.cs(25,0): at Ragnar.Embedding.Factory.FileParseFactory.ParseAsync(String File, CancellationToken Ct)
+2026-08-21T14:40:06.3631203+00:00 xUnit.net INFORMATION   Finished:    Ragnar.UnitTests (ID = 'f098f31f0eacc0ee01d83fd63129e4523264605bb0c54dec59a352b1acd06c48')
+2026-08-21T14:40:06.3658330+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-08-21T14:40:06.3690563+00:00 xUnit.net INFORMATION    Ragnar.UnitTests  Total: 100, Errors: 0, Failed: 8, Skipped: 0, Not Run: 0, Time: 77.560s

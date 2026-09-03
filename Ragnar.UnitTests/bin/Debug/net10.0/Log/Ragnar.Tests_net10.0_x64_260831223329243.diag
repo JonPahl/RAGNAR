@@ -1,0 +1,204 @@
+2026-08-31T22:33:29.2545305+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 2.3.3+44aa76e6a61d4908f06dfd77a51d4b7e3e7ce40f
+2026-08-31T22:33:29.2664861+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-08-31T22:33:29.2676422+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-08-31T22:33:29.2676503+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 22:33:29.222
+2026-08-31T22:33:29.2677522+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 475352
+2026-08-31T22:33:29.2677813+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.11
+2026-08-31T22:33:29.2678150+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.11\System.Private.CoreLib.dll
+2026-08-31T22:33:29.2678295+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-08-31T22:33:29.2679158+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Ragnar.Tests.dll
+2026-08-31T22:33:29.2680813+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\fine-code-coverage\coverage-tool-output --client-port 65086'
+2026-08-31T22:33:29.2693865+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-08-31T22:33:29.3178989+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-08-31T22:33:29.3288686+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-08-31T22:33:29.6564909+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '4.0.0' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-08-31T22:33:29.6681753+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v4.0.0+8bf043c053 (64-bit .NET 10.0.11)
+2026-08-31T22:33:29.7507985+00:00 xUnit.net INFORMATION   Discovering: Ragnar.Tests
+2026-08-31T22:33:29.8752563+00:00 xUnit.net INFORMATION   Discovered:  Ragnar.Tests
+2026-08-31T22:33:29.8995646+00:00 xUnit.net INFORMATION   Starting:    Ragnar.Tests
+2026-08-31T22:33:34.8133003+00:00 xUnit.net ERROR     Ragnar.Tests.FileValidatorTests.IsValid_IsCaseInsensitive_WhenCheckingExtensions [FAIL]
+2026-08-31T22:33:34.8137984+00:00 xUnit.net INFORMATION       System.ArgumentNullException : Value cannot be null. (Parameter 'source')
+2026-08-31T22:33:34.8142662+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-31T22:33:34.8152115+00:00 xUnit.net INFORMATION            at System.Linq.ThrowHelper.ThrowArgumentNullException(ExceptionArgument argument)
+2026-08-31T22:33:34.8152354+00:00 xUnit.net INFORMATION            at System.Linq.Enumerable.ToHashSet[TSource](IEnumerable`1 source, IEqualityComparer`1 comparer)
+2026-08-31T22:33:34.8152577+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\FileValidatorTests.cs(17,0): at Ragnar.Tests.FileValidatorTests.CreateOptions(String[] allowedExtensions, String[] excludedFiles, String[] excludedDirs)
+2026-08-31T22:33:34.8152679+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\FileValidatorTests.cs(9,0): at Ragnar.Tests.FileValidatorTests..ctor()
+2026-08-31T22:33:34.8152742+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Constructor(Object obj, IntPtr* args)
+2026-08-31T22:33:34.8152794+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-31T22:33:34.8164013+00:00 xUnit.net ERROR     Ragnar.Tests.FileValidatorTests.IsValid_ReturnsFalse_WhenDirStartsWithExcludedDir [FAIL]
+2026-08-31T22:33:34.8164189+00:00 xUnit.net INFORMATION       System.ArgumentNullException : Value cannot be null. (Parameter 'source')
+2026-08-31T22:33:34.8164363+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-31T22:33:34.8164446+00:00 xUnit.net INFORMATION            at System.Linq.ThrowHelper.ThrowArgumentNullException(ExceptionArgument argument)
+2026-08-31T22:33:34.8164496+00:00 xUnit.net INFORMATION            at System.Linq.Enumerable.ToHashSet[TSource](IEnumerable`1 source, IEqualityComparer`1 comparer)
+2026-08-31T22:33:34.8164742+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\FileValidatorTests.cs(17,0): at Ragnar.Tests.FileValidatorTests.CreateOptions(String[] allowedExtensions, String[] excludedFiles, String[] excludedDirs)
+2026-08-31T22:33:34.8164817+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\FileValidatorTests.cs(9,0): at Ragnar.Tests.FileValidatorTests..ctor()
+2026-08-31T22:33:34.8164887+00:00 xUnit.net INFORMATION            at InvokeStub_FileValidatorTests..ctor(Object, Object, IntPtr*)
+2026-08-31T22:33:34.8164939+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-31T22:33:34.8166234+00:00 xUnit.net ERROR     Ragnar.Tests.FileValidatorTests.IsValid_ReturnsFalse_WhenDirectoryIsExcluded [FAIL]
+2026-08-31T22:33:34.8166336+00:00 xUnit.net INFORMATION       System.ArgumentNullException : Value cannot be null. (Parameter 'source')
+2026-08-31T22:33:34.8166434+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-31T22:33:34.8166510+00:00 xUnit.net INFORMATION            at System.Linq.ThrowHelper.ThrowArgumentNullException(ExceptionArgument argument)
+2026-08-31T22:33:34.8166578+00:00 xUnit.net INFORMATION            at System.Linq.Enumerable.ToHashSet[TSource](IEnumerable`1 source, IEqualityComparer`1 comparer)
+2026-08-31T22:33:34.8166663+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\FileValidatorTests.cs(17,0): at Ragnar.Tests.FileValidatorTests.CreateOptions(String[] allowedExtensions, String[] excludedFiles, String[] excludedDirs)
+2026-08-31T22:33:34.8166768+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\FileValidatorTests.cs(9,0): at Ragnar.Tests.FileValidatorTests..ctor()
+2026-08-31T22:33:34.8166807+00:00 xUnit.net INFORMATION            at InvokeStub_FileValidatorTests..ctor(Object, Object, IntPtr*)
+2026-08-31T22:33:34.8166857+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-31T22:33:34.8168520+00:00 xUnit.net ERROR     Ragnar.Tests.FileValidatorTests.IsValid_ReturnsFalse_WhenExtensionNotAllowed [FAIL]
+2026-08-31T22:33:34.8168628+00:00 xUnit.net INFORMATION       System.ArgumentNullException : Value cannot be null. (Parameter 'source')
+2026-08-31T22:33:34.8168768+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-31T22:33:34.8169090+00:00 xUnit.net INFORMATION            at System.Linq.ThrowHelper.ThrowArgumentNullException(ExceptionArgument argument)
+2026-08-31T22:33:34.8169148+00:00 xUnit.net INFORMATION            at System.Linq.Enumerable.ToHashSet[TSource](IEnumerable`1 source, IEqualityComparer`1 comparer)
+2026-08-31T22:33:34.8169272+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\FileValidatorTests.cs(17,0): at Ragnar.Tests.FileValidatorTests.CreateOptions(String[] allowedExtensions, String[] excludedFiles, String[] excludedDirs)
+2026-08-31T22:33:34.8169346+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\FileValidatorTests.cs(9,0): at Ragnar.Tests.FileValidatorTests..ctor()
+2026-08-31T22:33:34.8169384+00:00 xUnit.net INFORMATION            at InvokeStub_FileValidatorTests..ctor(Object, Object, IntPtr*)
+2026-08-31T22:33:34.8169431+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-31T22:33:34.8170580+00:00 xUnit.net ERROR     Ragnar.Tests.FileValidatorTests.IsValid_ReturnsFalse_WhenFileIsExcluded [FAIL]
+2026-08-31T22:33:34.8170609+00:00 xUnit.net INFORMATION       System.ArgumentNullException : Value cannot be null. (Parameter 'source')
+2026-08-31T22:33:34.8170715+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-31T22:33:34.8170789+00:00 xUnit.net INFORMATION            at System.Linq.ThrowHelper.ThrowArgumentNullException(ExceptionArgument argument)
+2026-08-31T22:33:34.8170840+00:00 xUnit.net INFORMATION            at System.Linq.Enumerable.ToHashSet[TSource](IEnumerable`1 source, IEqualityComparer`1 comparer)
+2026-08-31T22:33:34.8170954+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\FileValidatorTests.cs(17,0): at Ragnar.Tests.FileValidatorTests.CreateOptions(String[] allowedExtensions, String[] excludedFiles, String[] excludedDirs)
+2026-08-31T22:33:34.8171055+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\FileValidatorTests.cs(9,0): at Ragnar.Tests.FileValidatorTests..ctor()
+2026-08-31T22:33:34.8171096+00:00 xUnit.net INFORMATION            at InvokeStub_FileValidatorTests..ctor(Object, Object, IntPtr*)
+2026-08-31T22:33:34.8171145+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-31T22:33:34.8172224+00:00 xUnit.net ERROR     Ragnar.Tests.FileValidatorTests.IsValid_ReturnsTrue_WhenAllowedExtensionAndNotExcluded [FAIL]
+2026-08-31T22:33:34.8172319+00:00 xUnit.net INFORMATION       System.ArgumentNullException : Value cannot be null. (Parameter 'source')
+2026-08-31T22:33:34.8172373+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-31T22:33:34.8172499+00:00 xUnit.net INFORMATION            at System.Linq.ThrowHelper.ThrowArgumentNullException(ExceptionArgument argument)
+2026-08-31T22:33:34.8172552+00:00 xUnit.net INFORMATION            at System.Linq.Enumerable.ToHashSet[TSource](IEnumerable`1 source, IEqualityComparer`1 comparer)
+2026-08-31T22:33:34.8172633+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\FileValidatorTests.cs(17,0): at Ragnar.Tests.FileValidatorTests.CreateOptions(String[] allowedExtensions, String[] excludedFiles, String[] excludedDirs)
+2026-08-31T22:33:34.8172702+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\FileValidatorTests.cs(9,0): at Ragnar.Tests.FileValidatorTests..ctor()
+2026-08-31T22:33:34.8172741+00:00 xUnit.net INFORMATION            at InvokeStub_FileValidatorTests..ctor(Object, Object, IntPtr*)
+2026-08-31T22:33:34.8172802+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-31T22:33:35.7995083+00:00 xUnit.net ERROR     Ragnar.Tests.SystemPromptProviderTests.Content_DefaultsToEmptyString [FAIL]
+2026-08-31T22:33:35.7995544+00:00 xUnit.net INFORMATION       Expected provider.System to be a match with the expectation, but it differs at index 0:
+2026-08-31T22:33:35.7995566+00:00 xUnit.net INFORMATION          ↓ (actual)
+2026-08-31T22:33:35.7995573+00:00 xUnit.net INFORMATION         "Act as an expert senior .NET 10 developer and a highly optimized Qwen coding AI…"
+2026-08-31T22:33:35.7995592+00:00 xUnit.net INFORMATION         ""
+2026-08-31T22:33:35.7995599+00:00 xUnit.net INFORMATION          ↑ (expected)
+2026-08-31T22:33:35.7995605+00:00 xUnit.net INFORMATION       
+2026-08-31T22:33:35.7995612+00:00 xUnit.net INFORMATION       Full expectation:
+2026-08-31T22:33:35.7995618+00:00 xUnit.net INFORMATION       
+2026-08-31T22:33:35.7995638+00:00 xUnit.net INFORMATION           "",
+2026-08-31T22:33:35.7995644+00:00 xUnit.net INFORMATION       
+2026-08-31T22:33:35.7995650+00:00 xUnit.net INFORMATION       Full subject:
+2026-08-31T22:33:35.7995655+00:00 xUnit.net INFORMATION       
+2026-08-31T22:33:35.7995661+00:00 xUnit.net INFORMATION           "Act as an expert senior .NET 10 developer and a highly optimized Qwen coding AI agent.
+2026-08-31T22:33:35.7995694+00:00 xUnit.net INFORMATION           I am building an application targeting .NET 10 and C# 14. My development environment is Visual Studio 2026. Generate clean, highly efficient C# 14 code following these requirements:
+2026-08-31T22:33:35.7995712+00:00 xUnit.net INFORMATION           1. Utilize the new C# 14 Extension Members (extension properties and type extensions) for cleaner domain modeling.
+2026-08-31T22:33:35.7995719+00:00 xUnit.net INFORMATION           2. Use simple lambda parameter modifiers (e.g., ref, in, out) where applicable.
+2026-08-31T22:33:35.7995726+00:00 xUnit.net INFORMATION           3. Output standard, production-ready C# 14 code."
+2026-08-31T22:33:35.7995732+00:00 xUnit.net INFORMATION       
+2026-08-31T22:33:35.7995788+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-31T22:33:35.7995892+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+2026-08-31T22:33:35.7996075+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\SystemPromptProviderTests.cs(19,0): at Ragnar.Tests.SystemPromptProviderTests.Content_DefaultsToEmptyString()
+2026-08-31T22:33:35.7996131+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-31T22:33:35.7996185+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-31T22:33:35.8045728+00:00 xUnit.net ERROR     Ragnar.Tests.StringExtensionsTests.CharacterCount_ExcludesTagsAndSlashes(input: "plain text", expected: 10) [FAIL]
+2026-08-31T22:33:35.8045884+00:00 xUnit.net INFORMATION       Expected count to be 10, but found 9 (difference of -1).
+2026-08-31T22:33:35.8045979+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-31T22:33:35.8046098+00:00 xUnit.net INFORMATION            at FluentAssertions.Numeric.NumericAssertionsBase`3.Be(T expected, String because, Object[] becauseArgs)
+2026-08-31T22:33:35.8046248+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\StringExtensionsTests.cs(14,0): at Ragnar.Tests.StringExtensionsTests.CharacterCount_ExcludesTagsAndSlashes(String input, Int32 expected)
+2026-08-31T22:33:35.8046333+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-31T22:33:35.8046422+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+2026-08-31T22:33:35.8678353+00:00 xUnit.net ERROR     Ragnar.Tests.QuestionCombineBuilderTests.Build_ReturnsOnlyEnabledQuestions [FAIL]
+2026-08-31T22:33:35.8678543+00:00 xUnit.net INFORMATION       System.ArgumentException : Can not instantiate proxy of class: Ragnar.Questions.Questions.DefaultQuestionCatalogLoader.
+2026-08-31T22:33:35.8678555+00:00 xUnit.net INFORMATION       Could not find a parameterless constructor. (Parameter 'constructorArguments')
+2026-08-31T22:33:35.8678562+00:00 xUnit.net INFORMATION       ---- System.MissingMethodException : Constructor on type 'Castle.Proxies.DefaultQuestionCatalogLoaderProxy' not found.
+2026-08-31T22:33:35.8679159+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-31T22:33:35.8679387+00:00 xUnit.net INFORMATION            at Castle.DynamicProxy.ProxyGenerator.CreateClassProxyInstance(Type proxyType, List`1 proxyArguments, Type classToProxy, Object[] constructorArguments)
+2026-08-31T22:33:35.8679488+00:00 xUnit.net INFORMATION            at Castle.DynamicProxy.ProxyGenerator.CreateClassProxy(Type classToProxy, Type[] additionalInterfacesToProxy, ProxyGenerationOptions options, Object[] constructorArguments, IInterceptor[] interceptors)
+2026-08-31T22:33:35.8679597+00:00 xUnit.net INFORMATION         /_/src/Moq/Interception/CastleProxyFactory.cs(62,0): at Moq.CastleProxyFactory.CreateProxy(Type mockType, IInterceptor interceptor, Type[] interfaces, Object[] arguments)
+2026-08-31T22:33:35.8679653+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(309,0): at Moq.Mock`1.InitializeInstance()
+2026-08-31T22:33:35.8679732+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(323,0): at Moq.Mock`1.OnGetObject()
+2026-08-31T22:33:35.8679796+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(181,0): at Moq.Mock.get_Object()
+2026-08-31T22:33:35.8679834+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(281,0): at Moq.Mock`1.get_Object()
+2026-08-31T22:33:35.8679944+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\QuestionCombineBuilderTests.cs(17,0): at Ragnar.Tests.QuestionCombineBuilderTests..ctor()
+2026-08-31T22:33:35.8680021+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Constructor(Object obj, IntPtr* args)
+2026-08-31T22:33:35.8680081+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-31T22:33:35.8680095+00:00 xUnit.net INFORMATION         ----- Inner Stack Trace -----
+2026-08-31T22:33:35.8680151+00:00 xUnit.net INFORMATION            at System.RuntimeType.CreateInstanceImpl(BindingFlags bindingAttr, Binder binder, Object[] args, CultureInfo culture)
+2026-08-31T22:33:35.8680219+00:00 xUnit.net INFORMATION            at Castle.DynamicProxy.ProxyGenerator.CreateClassProxyInstance(Type proxyType, List`1 proxyArguments, Type classToProxy, Object[] constructorArguments)
+2026-08-31T22:33:35.8691730+00:00 xUnit.net ERROR     Ragnar.Tests.QuestionCombineBuilderTests.Build_ReturnsEmptySet_WhenNoQuestionsAdded [FAIL]
+2026-08-31T22:33:35.8691869+00:00 xUnit.net INFORMATION       System.ArgumentException : Can not instantiate proxy of class: Ragnar.Questions.Questions.DefaultQuestionCatalogLoader.
+2026-08-31T22:33:35.8691882+00:00 xUnit.net INFORMATION       Could not find a parameterless constructor. (Parameter 'constructorArguments')
+2026-08-31T22:33:35.8691888+00:00 xUnit.net INFORMATION       ---- System.MissingMethodException : Constructor on type 'Castle.Proxies.DefaultQuestionCatalogLoaderProxy' not found.
+2026-08-31T22:33:35.8691981+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-31T22:33:35.8692120+00:00 xUnit.net INFORMATION            at Castle.DynamicProxy.ProxyGenerator.CreateClassProxyInstance(Type proxyType, List`1 proxyArguments, Type classToProxy, Object[] constructorArguments)
+2026-08-31T22:33:35.8692210+00:00 xUnit.net INFORMATION            at Castle.DynamicProxy.ProxyGenerator.CreateClassProxy(Type classToProxy, Type[] additionalInterfacesToProxy, ProxyGenerationOptions options, Object[] constructorArguments, IInterceptor[] interceptors)
+2026-08-31T22:33:35.8692293+00:00 xUnit.net INFORMATION         /_/src/Moq/Interception/CastleProxyFactory.cs(62,0): at Moq.CastleProxyFactory.CreateProxy(Type mockType, IInterceptor interceptor, Type[] interfaces, Object[] arguments)
+2026-08-31T22:33:35.8692336+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(309,0): at Moq.Mock`1.InitializeInstance()
+2026-08-31T22:33:35.8692405+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(323,0): at Moq.Mock`1.OnGetObject()
+2026-08-31T22:33:35.8692646+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(181,0): at Moq.Mock.get_Object()
+2026-08-31T22:33:35.8692800+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(281,0): at Moq.Mock`1.get_Object()
+2026-08-31T22:33:35.8692924+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\QuestionCombineBuilderTests.cs(17,0): at Ragnar.Tests.QuestionCombineBuilderTests..ctor()
+2026-08-31T22:33:35.8693002+00:00 xUnit.net INFORMATION            at InvokeStub_QuestionCombineBuilderTests..ctor(Object, Object, IntPtr*)
+2026-08-31T22:33:35.8693051+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-31T22:33:35.8693061+00:00 xUnit.net INFORMATION         ----- Inner Stack Trace -----
+2026-08-31T22:33:35.8693118+00:00 xUnit.net INFORMATION            at System.RuntimeType.CreateInstanceImpl(BindingFlags bindingAttr, Binder binder, Object[] args, CultureInfo culture)
+2026-08-31T22:33:35.8693202+00:00 xUnit.net INFORMATION            at Castle.DynamicProxy.ProxyGenerator.CreateClassProxyInstance(Type proxyType, List`1 proxyArguments, Type classToProxy, Object[] constructorArguments)
+2026-08-31T22:33:35.8701192+00:00 xUnit.net ERROR     Ragnar.Tests.QuestionCombineBuilderTests.WithCategoryFilter_ReturnsSelf_WhenCategoriesNull [FAIL]
+2026-08-31T22:33:35.8701296+00:00 xUnit.net INFORMATION       System.ArgumentException : Can not instantiate proxy of class: Ragnar.Questions.Questions.DefaultQuestionCatalogLoader.
+2026-08-31T22:33:35.8701309+00:00 xUnit.net INFORMATION       Could not find a parameterless constructor. (Parameter 'constructorArguments')
+2026-08-31T22:33:35.8701317+00:00 xUnit.net INFORMATION       ---- System.MissingMethodException : Constructor on type 'Castle.Proxies.DefaultQuestionCatalogLoaderProxy' not found.
+2026-08-31T22:33:35.8701455+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-31T22:33:35.8701590+00:00 xUnit.net INFORMATION            at Castle.DynamicProxy.ProxyGenerator.CreateClassProxyInstance(Type proxyType, List`1 proxyArguments, Type classToProxy, Object[] constructorArguments)
+2026-08-31T22:33:35.8701700+00:00 xUnit.net INFORMATION            at Castle.DynamicProxy.ProxyGenerator.CreateClassProxy(Type classToProxy, Type[] additionalInterfacesToProxy, ProxyGenerationOptions options, Object[] constructorArguments, IInterceptor[] interceptors)
+2026-08-31T22:33:35.8701788+00:00 xUnit.net INFORMATION         /_/src/Moq/Interception/CastleProxyFactory.cs(62,0): at Moq.CastleProxyFactory.CreateProxy(Type mockType, IInterceptor interceptor, Type[] interfaces, Object[] arguments)
+2026-08-31T22:33:35.8701835+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(309,0): at Moq.Mock`1.InitializeInstance()
+2026-08-31T22:33:35.8701890+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(323,0): at Moq.Mock`1.OnGetObject()
+2026-08-31T22:33:35.8701937+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(181,0): at Moq.Mock.get_Object()
+2026-08-31T22:33:35.8701976+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(281,0): at Moq.Mock`1.get_Object()
+2026-08-31T22:33:35.8702054+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\QuestionCombineBuilderTests.cs(17,0): at Ragnar.Tests.QuestionCombineBuilderTests..ctor()
+2026-08-31T22:33:35.8702104+00:00 xUnit.net INFORMATION            at InvokeStub_QuestionCombineBuilderTests..ctor(Object, Object, IntPtr*)
+2026-08-31T22:33:35.8702165+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-31T22:33:35.8702175+00:00 xUnit.net INFORMATION         ----- Inner Stack Trace -----
+2026-08-31T22:33:35.8702261+00:00 xUnit.net INFORMATION            at System.RuntimeType.CreateInstanceImpl(BindingFlags bindingAttr, Binder binder, Object[] args, CultureInfo culture)
+2026-08-31T22:33:35.8702367+00:00 xUnit.net INFORMATION            at Castle.DynamicProxy.ProxyGenerator.CreateClassProxyInstance(Type proxyType, List`1 proxyArguments, Type classToProxy, Object[] constructorArguments)
+2026-08-31T22:33:35.9160056+00:00 xUnit.net ERROR     Ragnar.Tests.EmbeddingPointFactoryTests.BuildPointStructs_ReturnsSinglePoint_WhenInputsValid [FAIL]
+2026-08-31T22:33:35.9160310+00:00 xUnit.net INFORMATION       Expected points[0].Id to be {00000000-0000-0000-0000-000000000000}, but found { "uuid": "00000000-0000-0000-0000-000000000000" }.
+2026-08-31T22:33:35.9160357+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-31T22:33:35.9160452+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.ObjectAssertions`2.Be(TSubject expected, String because, Object[] becauseArgs)
+2026-08-31T22:33:35.9160576+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\EmbeddingPointFactoryTests.cs(36,0): at Ragnar.Tests.EmbeddingPointFactoryTests.BuildPointStructs_ReturnsSinglePoint_WhenInputsValid()
+2026-08-31T22:33:35.9160634+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-31T22:33:35.9160701+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-31T22:33:35.9326850+00:00 xUnit.net ERROR     Ragnar.Tests.ApplicationConfigurationExtensionsTests.RegisterEmbeddingServices_RegistersIEmbeddingService [FAIL]
+2026-08-31T22:33:35.9327066+00:00 xUnit.net INFORMATION       System.ArgumentException : Cannot instantiate implementation type 'Serilog.ILogger' for service type 'Serilog.ILogger'.
+2026-08-31T22:33:35.9327147+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-31T22:33:35.9327245+00:00 xUnit.net INFORMATION            at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory.Populate()
+2026-08-31T22:33:35.9327315+00:00 xUnit.net INFORMATION            at Microsoft.Extensions.DependencyInjection.ServiceProvider..ctor(ICollection`1 serviceDescriptors, ServiceProviderOptions options)
+2026-08-31T22:33:35.9327391+00:00 xUnit.net INFORMATION            at Microsoft.Extensions.DependencyInjection.ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(IServiceCollection services, ServiceProviderOptions options)
+2026-08-31T22:33:35.9327563+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\ApplicationConfigurationExtensionsTests.cs(23,0): at Ragnar.Tests.ApplicationConfigurationExtensionsTests.RegisterEmbeddingServices_RegistersIEmbeddingService()
+2026-08-31T22:33:35.9327658+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-31T22:33:35.9327715+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-31T22:33:35.9329824+00:00 xUnit.net ERROR     Ragnar.Tests.VectorStoreRepositoryTests.UpsertBatchAsync_ReturnsEmptyResult_WhenNoDocuments [FAIL]
+2026-08-31T22:33:35.9329928+00:00 xUnit.net INFORMATION       System.ArgumentException : Can not instantiate proxy of class: OllamaSharp.OllamaApiClient.
+2026-08-31T22:33:35.9329941+00:00 xUnit.net INFORMATION       Could not find a parameterless constructor. (Parameter 'constructorArguments')
+2026-08-31T22:33:35.9329949+00:00 xUnit.net INFORMATION       ---- System.MissingMethodException : Constructor on type 'Castle.Proxies.OllamaApiClientProxy' not found.
+2026-08-31T22:33:35.9330034+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-31T22:33:35.9330193+00:00 xUnit.net INFORMATION            at Castle.DynamicProxy.ProxyGenerator.CreateClassProxyInstance(Type proxyType, List`1 proxyArguments, Type classToProxy, Object[] constructorArguments)
+2026-08-31T22:33:35.9330317+00:00 xUnit.net INFORMATION            at Castle.DynamicProxy.ProxyGenerator.CreateClassProxy(Type classToProxy, Type[] additionalInterfacesToProxy, ProxyGenerationOptions options, Object[] constructorArguments, IInterceptor[] interceptors)
+2026-08-31T22:33:35.9330414+00:00 xUnit.net INFORMATION         /_/src/Moq/Interception/CastleProxyFactory.cs(62,0): at Moq.CastleProxyFactory.CreateProxy(Type mockType, IInterceptor interceptor, Type[] interfaces, Object[] arguments)
+2026-08-31T22:33:35.9330475+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(309,0): at Moq.Mock`1.InitializeInstance()
+2026-08-31T22:33:35.9330524+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(323,0): at Moq.Mock`1.OnGetObject()
+2026-08-31T22:33:35.9330574+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(181,0): at Moq.Mock.get_Object()
+2026-08-31T22:33:35.9330628+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(281,0): at Moq.Mock`1.get_Object()
+2026-08-31T22:33:35.9330704+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\VectorStoreRepositoryTests.cs(17,0): at Ragnar.Tests.VectorStoreRepositoryTests..ctor()
+2026-08-31T22:33:35.9330771+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Constructor(Object obj, IntPtr* args)
+2026-08-31T22:33:35.9330832+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-31T22:33:35.9330843+00:00 xUnit.net INFORMATION         ----- Inner Stack Trace -----
+2026-08-31T22:33:35.9330913+00:00 xUnit.net INFORMATION            at System.RuntimeType.CreateInstanceImpl(BindingFlags bindingAttr, Binder binder, Object[] args, CultureInfo culture)
+2026-08-31T22:33:35.9331027+00:00 xUnit.net INFORMATION            at Castle.DynamicProxy.ProxyGenerator.CreateClassProxyInstance(Type proxyType, List`1 proxyArguments, Type classToProxy, Object[] constructorArguments)
+2026-08-31T22:33:36.1987666+00:00 xUnit.net ERROR     Ragnar.Tests.SummaryServiceTests.SummarizeAllResponsesAsync_CreatesSummaryFiles_WhenFoldersExist [FAIL]
+2026-08-31T22:33:36.1988029+00:00 xUnit.net INFORMATION       System.NullReferenceException : Object reference not set to an instance of an object.
+2026-08-31T22:33:36.1988182+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-31T22:33:36.1988748+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar\OutputResponse\ContentSummarizerAgent.cs(41,0): at Ragnar.OutputResponse.ContentSummarizerAgent.SetupAgent(IOllamaAIClientBuilder ollamaAIClientBuilder)
+2026-08-31T22:33:36.1992717+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar\OutputResponse\ContentSummarizerAgent.cs(37,0): at Ragnar.OutputResponse.ContentSummarizerAgent.get_AiAgent()
+2026-08-31T22:33:36.1992919+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar\OutputResponse\ContentSummarizerAgent.cs(59,0): at Ragnar.OutputResponse.ContentSummarizerAgent.AskAgent(String folder, String question, CancellationToken ct)
+2026-08-31T22:33:36.1993033+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar\OutputResponse\SummaryService.cs(100,0): at Ragnar.OutputResponse.SummaryService.AskAgentAsync(String folder, Question question, CancellationToken ct)
+2026-08-31T22:33:36.1993111+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar\OutputResponse\SummaryService.cs(61,0): at Ragnar.OutputResponse.SummaryService.SummarizeAllResponsesAsync(CancellationToken ct)
+2026-08-31T22:33:36.1993187+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\SummaryServiceTests.cs(89,0): at Ragnar.Tests.SummaryServiceTests.SummarizeAllResponsesAsync_CreatesSummaryFiles_WhenFoldersExist()
+2026-08-31T22:33:36.1993199+00:00 xUnit.net INFORMATION         --- End of stack trace from previous location ---
+2026-08-31T22:34:42.3822330+00:00 xUnit.net INFORMATION   Finished:    Ragnar.Tests (ID = 'f938faec33fe5f71c53c157942770d0eda0a74427521894987d80f15ac52b3a0')
+2026-08-31T22:34:42.3850712+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-08-31T22:34:42.3882343+00:00 xUnit.net INFORMATION    Ragnar.Tests  Total: 134, Errors: 0, Failed: 15, Skipped: 0, Not Run: 0, Time: 72.486s

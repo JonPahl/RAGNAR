@@ -1,0 +1,54 @@
+2026-08-24T14:18:54.4881400+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 2.3.3+44aa76e6a61d4908f06dfd77a51d4b7e3e7ce40f
+2026-08-24T14:18:54.5011108+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-08-24T14:18:54.5026391+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-08-24T14:18:54.5026595+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 14:18:54.442
+2026-08-24T14:18:54.5028337+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 109096
+2026-08-24T14:18:54.5028895+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.11
+2026-08-24T14:18:54.5029314+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.11\System.Private.CoreLib.dll
+2026-08-24T14:18:54.5029500+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-08-24T14:18:54.5030688+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Ragnar.Tests.dll
+2026-08-24T14:18:54.5033311+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\TestResults --client-port 65299'
+2026-08-24T14:18:54.5045278+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-08-24T14:18:54.5679745+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-08-24T14:18:54.5812769+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-08-24T14:18:54.9949170+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '4.0.0' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-08-24T14:18:55.0162448+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v4.0.0+8bf043c053 (64-bit .NET 10.0.11)
+2026-08-24T14:18:55.1081196+00:00 xUnit.net INFORMATION   Discovering: Ragnar.Tests
+2026-08-24T14:18:55.2500371+00:00 xUnit.net INFORMATION   Discovered:  Ragnar.Tests
+2026-08-24T14:18:55.2792595+00:00 xUnit.net INFORMATION   Starting:    Ragnar.Tests
+2026-08-24T14:19:36.2660186+00:00 xUnit.net ERROR     Ragnar.Tests.ExtensionMethodTests.InformationalVersion_ReturnsFallback_WhenAttributeMissing [FAIL]
+2026-08-24T14:19:36.2666287+00:00 xUnit.net INFORMATION       System.NotSupportedException : Unsupported expression: ... => ....GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+2026-08-24T14:19:36.2666375+00:00 xUnit.net INFORMATION       Extension methods (here: CustomAttributeExtensions.GetCustomAttribute) may not be used in setup / verification expressions.
+2026-08-24T14:19:36.2670968+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-24T14:19:36.2693179+00:00 xUnit.net INFORMATION         /_/src/Moq/Guard.cs(87,0): at Moq.Guard.IsOverridable(MethodInfo method, Expression expression)
+2026-08-24T14:19:36.2693541+00:00 xUnit.net INFORMATION         /_/src/Moq/MethodExpectation.cs(87,0): at Moq.MethodExpectation..ctor(LambdaExpression expression, MethodInfo method, IReadOnlyList`1 arguments, Boolean exactGenericTypeArguments, Boolean skipMatcherInitialization, Boolean allowNonOverridable)
+2026-08-24T14:19:36.2694415+00:00 xUnit.net INFORMATION         /_/src/Moq/ExpressionExtensions.cs(235,0): at Moq.ExpressionExtensions.<Split>g__Split|5_0(Expression e, Expression& r, MethodExpectation& p, Boolean assignment, Boolean allowNonOverridableLastProperty)
+2026-08-24T14:19:36.2694520+00:00 xUnit.net INFORMATION         /_/src/Moq/ExpressionExtensions.cs(149,0): at Moq.ExpressionExtensions.Split(LambdaExpression expression, Boolean allowNonOverridableLastProperty)
+2026-08-24T14:19:36.2694589+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(645,0): at Moq.Mock.SetupRecursive[TSetup](Mock mock, LambdaExpression expression, Func`4 setupLast, Boolean allowNonOverridableLastProperty)
+2026-08-24T14:19:36.2694660+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(500,0): at Moq.Mock.Setup(Mock mock, LambdaExpression expression, Condition condition)
+2026-08-24T14:19:36.2695439+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(452,0): at Moq.Mock`1.Setup[TResult](Expression`1 expression)
+2026-08-24T14:19:36.2695850+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\ExtensionMethodTests.cs(38,0): at Ragnar.Tests.ExtensionMethodTests.InformationalVersion_ReturnsFallback_WhenAttributeMissing()
+2026-08-24T14:19:36.2695910+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-24T14:19:36.2695962+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-24T14:19:36.3136106+00:00 xUnit.net ERROR     Ragnar.Tests.ResponseWriterTests.BuildDirectory_CreatesCategorySubFolder [FAIL]
+2026-08-24T14:19:36.3136498+00:00 xUnit.net INFORMATION       Expected Directory.Exists(expected) to be True, but found False.
+2026-08-24T14:19:36.3136696+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-24T14:19:36.3136821+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.BooleanAssertions`1.BeTrue(String because, Object[] becauseArgs)
+2026-08-24T14:19:36.3136966+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\ResponseWriterTests.cs(55,0): at Ragnar.Tests.ResponseWriterTests.BuildDirectory_CreatesCategorySubFolder()
+2026-08-24T14:19:36.3137050+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-24T14:19:36.3137115+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-24T14:19:36.3333521+00:00 xUnit.net ERROR     Ragnar.Tests.ApplicationHeaderTests.RenderBranding_WritesExpectedSequence [FAIL]
+2026-08-24T14:19:36.3333846+00:00 xUnit.net INFORMATION       System.ArgumentNullException : Value cannot be null. (Parameter 'element')
+2026-08-24T14:19:36.3333955+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-24T14:19:36.3334053+00:00 xUnit.net INFORMATION            at System.ArgumentNullException.Throw(String paramName)
+2026-08-24T14:19:36.3334106+00:00 xUnit.net INFORMATION            at System.Attribute.GetCustomAttributes(Assembly element, Type attributeType, Boolean inherit)
+2026-08-24T14:19:36.3334162+00:00 xUnit.net INFORMATION            at System.Attribute.GetCustomAttribute(Assembly element, Type attributeType, Boolean inherit)
+2026-08-24T14:19:36.3334216+00:00 xUnit.net INFORMATION            at System.Reflection.CustomAttributeExtensions.GetCustomAttribute[T](Assembly element)
+2026-08-24T14:19:36.3334340+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar\Branding\AssemblyExtensions.cs(16,0): at Ragnar.Branding.AssemblyExtensions.get_InformationalVersion(IAssemblyInfo Asm)
+2026-08-24T14:19:36.3334471+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar\Branding\ApplicationHeader.cs(11,0): at Ragnar.Branding.ApplicationHeader..ctor(IOutputWriter Writer, IAssemblyInfo AssemblyInfo)
+2026-08-24T14:19:36.3334585+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\ApplicationHeaderTests.cs(12,0): at Ragnar.Tests.ApplicationHeaderTests.RenderBranding_WritesExpectedSequence()
+2026-08-24T14:19:36.3334645+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-24T14:19:36.3334709+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-24T14:20:42.9857496+00:00 xUnit.net INFORMATION   Finished:    Ragnar.Tests (ID = 'f938faec33fe5f71c53c157942770d0eda0a74427521894987d80f15ac52b3a0')
+2026-08-24T14:20:42.9890752+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-08-24T14:20:42.9946413+00:00 xUnit.net INFORMATION    Ragnar.Tests  Total: 124, Errors: 0, Failed: 3, Skipped: 0, Not Run: 0, Time: 107.714s

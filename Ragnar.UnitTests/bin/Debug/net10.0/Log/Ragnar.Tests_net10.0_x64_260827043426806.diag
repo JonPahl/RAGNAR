@@ -1,0 +1,33 @@
+2026-08-27T04:34:27.4349615+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 2.3.3+44aa76e6a61d4908f06dfd77a51d4b7e3e7ce40f
+2026-08-27T04:34:27.4528173+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-08-27T04:34:27.4576044+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-08-27T04:34:27.4576186+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 04:34:26.700
+2026-08-27T04:34:27.4577615+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 312616
+2026-08-27T04:34:27.4579398+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.11
+2026-08-27T04:34:27.4579796+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.11\System.Private.CoreLib.dll
+2026-08-27T04:34:27.4580059+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-08-27T04:34:27.4581328+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Ragnar.Tests.dll
+2026-08-27T04:34:27.4584214+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\TestResults --client-port 51752'
+2026-08-27T04:34:27.4617844+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-08-27T04:34:27.5622816+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-08-27T04:34:27.6242355+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-08-27T04:34:28.3100759+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '4.0.0' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-08-27T04:34:28.3329921+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v4.0.0+8bf043c053 (64-bit .NET 10.0.11)
+2026-08-27T04:34:28.4705418+00:00 xUnit.net INFORMATION   Discovering: Ragnar.Tests
+2026-08-27T04:34:28.9073748+00:00 xUnit.net INFORMATION   Discovered:  Ragnar.Tests
+2026-08-27T04:34:29.0118715+00:00 xUnit.net INFORMATION   Starting:    Ragnar.Tests
+2026-08-27T04:34:41.7005243+00:00 xUnit.net ERROR     Ragnar.Tests.Core.ResponseWriterTests.WriteResponseAsync_CreatesFileWithCorrectStructure [FAIL]
+2026-08-27T04:34:41.7008799+00:00 xUnit.net INFORMATION       System.IO.FileNotFoundException : Could not find file 'C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\test_file.cs_20260826_233441.md'.
+2026-08-27T04:34:41.7011839+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-27T04:34:41.7018496+00:00 xUnit.net INFORMATION            at Microsoft.Win32.SafeHandles.SafeFileHandle.CreateFile(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options)
+2026-08-27T04:34:41.7018711+00:00 xUnit.net INFORMATION            at Microsoft.Win32.SafeHandles.SafeFileHandle.Open(String fullPath, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+2026-08-27T04:34:41.7018785+00:00 xUnit.net INFORMATION            at System.IO.Strategies.OSFileStreamStrategy..ctor(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+2026-08-27T04:34:41.7018850+00:00 xUnit.net INFORMATION            at System.IO.Strategies.FileStreamHelpers.ChooseStrategyCore(String path, FileMode mode, FileAccess access, FileShare share, FileOptions options, Int64 preallocationSize, Nullable`1 unixCreateMode)
+2026-08-27T04:34:41.7018897+00:00 xUnit.net INFORMATION            at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, Int64 preallocationSize)
+2026-08-27T04:34:41.7018919+00:00 xUnit.net INFORMATION            at System.IO.File.AsyncStreamReader(String path, Encoding encoding)
+2026-08-27T04:34:41.7018952+00:00 xUnit.net INFORMATION            at System.IO.File.InternalReadAllTextAsync(String path, Encoding encoding, CancellationToken cancellationToken)
+2026-08-27T04:34:41.7019167+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Core\ResponseWriterTests.cs(44,0): at Ragnar.Tests.Core.ResponseWriterTests.WriteResponseAsync_CreatesFileWithCorrectStructure()
+2026-08-27T04:34:41.7019196+00:00 xUnit.net INFORMATION         --- End of stack trace from previous location ---
+2026-08-27T04:35:46.4213317+00:00 xUnit.net INFORMATION   Finished:    Ragnar.Tests (ID = 'f938faec33fe5f71c53c157942770d0eda0a74427521894987d80f15ac52b3a0')
+2026-08-27T04:35:46.4293412+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-08-27T04:35:46.4366306+00:00 xUnit.net INFORMATION    Ragnar.Tests  Total: 89, Errors: 0, Failed: 1, Skipped: 0, Not Run: 0, Time: 77.431s

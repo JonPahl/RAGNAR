@@ -1,0 +1,710 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Ragnar</name>
+    </assembly>
+    <members>
+        <member name="T:Ragnar.Branding.ApplicationHeader">
+            <summary>Initializes a new instance of the application header.</summary>
+            <param name = "Writer"> Console output writer for branding display.</param>
+            <param name = "AssemblyInfo"> Assembly information provider.</param>
+        </member>
+        <member name="M:Ragnar.Branding.ApplicationHeader.#ctor(Ragnar.Core.ConsoleWriter.IOutputWriter,Ragnar.Branding.IAssemblyInfo)">
+            <summary>Initializes a new instance of the application header.</summary>
+            <param name = "Writer"> Console output writer for branding display.</param>
+            <param name = "AssemblyInfo"> Assembly information provider.</param>
+        </member>
+        <member name="F:Ragnar.Branding.ApplicationHeader._versionNumber">
+            <summary>Caches the current assembly informational version string.</summary>
+        </member>
+        <member name="M:Ragnar.Branding.ApplicationHeader.RenderBranding">
+            <summary>Renders application branding and version info to the console output.</summary>
+            <returns>Nothing. Outputs directly to the configured writer instance.</returns>
+            <example><![CDATA[header.RenderBranding();]]></example>
+        </member>
+        <member name="T:Ragnar.Branding.AssemblyExtensions">
+            <summary>
+            Gets the informational version of an assembly.
+            </summary>
+        </member>
+        <member name="M:Ragnar.Branding.AssemblyExtensions.get_InformationalVersion(Ragnar.Branding.IAssemblyInfo)">
+            <inheritdoc cref="P:Ragnar.Branding.AssemblyExtensions.&lt;G&gt;$2502F5AC365BF16280B15DAE6E8CECAF.InformationalVersion"/>
+        </member>
+        <member name="T:Ragnar.Branding.AssemblyExtensions.&lt;G&gt;$2502F5AC365BF16280B15DAE6E8CECAF.&lt;M&gt;$1E45B03F09191EC4D3134D01B4593D91">
+            <summary>
+            Assembly extension method.
+            </summary>
+            <param name="Asm">Assembly Info.</param>
+        </member>
+        <member name="P:Ragnar.Branding.AssemblyExtensions.&lt;G&gt;$2502F5AC365BF16280B15DAE6E8CECAF.InformationalVersion">
+            <summary>Retrieves the informational version from an assembly.</summary>
+            <returns>The informational version string or default fallback.</returns>
+        </member>
+        <member name="T:Ragnar.Branding.AssemblyInfo">
+            <summary>
+            Provides assembly information.
+            </summary>
+        </member>
+        <member name="P:Ragnar.Branding.AssemblyInfo.Assembly">
+            <summary>
+            Gets the current assembly.
+            </summary>
+        </member>
+        <member name="T:Ragnar.Branding.IAssemblyInfo">
+            <summary>Provides assembly information.</summary>
+        </member>
+        <member name="P:Ragnar.Branding.IAssemblyInfo.Assembly">
+            <summary>Gets the current assembly.</summary>
+        </member>
+        <member name="T:Ragnar.Contracts.IApplicationHeader">
+            <summary>
+            Displays branding information.
+            </summary>
+        </member>
+        <member name="M:Ragnar.Contracts.IApplicationHeader.RenderBranding">
+            <summary>
+            Displays branding banner to console.
+            </summary>
+            <example><![CDATA[branding.RenderBranding();]]></example>
+        </member>
+        <member name="T:Ragnar.Extensions.EmbeddingSetupExtension">
+            <summary>Registers embedding-related services and pipelines in the dependency injection container.</summary>
+        </member>
+        <member name="T:Ragnar.Extensions.FileSystemEntryExtensions">
+            <summary> Provides extension methods for <see cref="T:System.IO.Enumeration.FileSystemEntry"/>.</summary>
+        </member>
+        <member name="M:Ragnar.Extensions.FileSystemEntryExtensions.HasAllowedExtension(System.IO.Enumeration.FileSystemEntry,System.Collections.Generic.IReadOnlyCollection{System.String})">
+            <summary>
+            Determines whether the file has one of the allowed extensions (case-insensitive).
+            </summary>
+            <param name="Entry">The file system entry.</param>
+            <param name="AllowedExtensions">The collection of allowed file extensions.</param>
+            <returns><c>true</c> if the extension is allowed; otherwise, <c>false</c>.</returns>
+            <example>
+            <![CDATA[
+            var entry = new FileSystemEntry(new FileInfo("document.pdf"));
+            bool isAllowed = entry.HasAllowedExtension([".pdf", ".docx"]);
+            ]]>
+            </example>
+        </member>
+        <member name="T:Ragnar.Extensions.OutputPathHelper">
+            <summary>
+            Extension methods for saving file.
+            </summary>
+        </member>
+        <member name="M:Ragnar.Extensions.OutputPathHelper.GetResponseDirectory(System.String)">
+            <summary>Gets full path to response directory.</summary>
+            <param name="BaseDir">Base directory.</param>
+            <returns>Response subdirectory path.</returns>
+            <example><![CDATA[string path = dir.GetResponseDirectory();]]></example>
+        </member>
+        <member name="M:Ragnar.Extensions.OutputPathHelper.GetResponseDirectory(System.Collections.Generic.IEnumerable{System.String},System.String)">
+            <summary>Aggregates path segments into response directory path.</summary>
+            <param name="Folders">Path segments.</param>
+            <param name="BaseDir">Optional root directory.</param>
+            <returns>Combined path.</returns>
+            <example><![CDATA[string path = folders.GetResponseDirectory("/base");]]></example>
+        </member>
+        <member name="M:Ragnar.Extensions.OutputPathHelper.ShowPrompt(System.String)">
+            <summary>Wraps a prompt string in markdown fence markers for display.</summary>
+            <param name="Prompt">The prompt to format.</param>
+            <returns>Prompt wrapped in `***[Original Prompt]...***`.</returns>
+            <example><![CDATA[string formatted = prompt.ShowPrompt();]]></example>
+        </member>
+        <member name="T:Ragnar.Extensions.PluginExtension">
+            <summary>
+            Extension methods for plugin-related operations.
+            </summary>
+        </member>
+        <member name="M:Ragnar.Extensions.PluginExtension.LoadPluginQuestionsAsync(System.Collections.Generic.List{Ragnar.Plugins.Question},System.String,Ragnar.Plugins.IQuestionProvider,System.Threading.CancellationToken)">
+            <inheritdoc cref="M:Ragnar.Extensions.PluginExtension.&lt;G&gt;$9ED135EAD599D87CAA176BA1FECEE235.LoadPluginQuestionsAsync(System.String,Ragnar.Plugins.IQuestionProvider,System.Threading.CancellationToken)"/>
+        </member>
+        <member name="M:Ragnar.Extensions.PluginExtension.&lt;G&gt;$9ED135EAD599D87CAA176BA1FECEE235.LoadPluginQuestionsAsync(System.String,Ragnar.Plugins.IQuestionProvider,System.Threading.CancellationToken)">
+            <summary>
+            Loads questions from a plugin configuration file.
+            </summary>
+            <param name="Name">File name to read.</param>
+            <param name="Provider">Plugin configuration.</param>
+            <param name="Ct">Cancellation Token.</param>
+            <returns>Loaded question configurations.</returns>
+            <example><![CDATA[List<Question> configs = await LoadPluginQuestionsAsync("General.csv", provider, ct);]]></example>
+        </member>
+        <member name="M:Ragnar.Extensions.RagPipelineExtensions.RegisterOptions(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Hosting.HostBuilderContext)">
+            <inheritdoc cref="M:Ragnar.Extensions.RagPipelineExtensions.&lt;G&gt;$7B30185E57B8298C6754F16C0BCF4773.RegisterOptions(Microsoft.Extensions.Hosting.HostBuilderContext)"/>
+        </member>
+        <member name="M:Ragnar.Extensions.RagPipelineExtensions.&lt;G&gt;$7B30185E57B8298C6754F16C0BCF4773.RegisterOptions(Microsoft.Extensions.Hosting.HostBuilderContext)">
+            <summary>Registers configuration binding and validation for all ollamaOption.</summary>
+            <param name="Context">Host <paramref name="Context"/>.</param>
+            <returns>Updated service collection.</returns>
+        </member>
+        <member name="T:Ragnar.Extensions.StopwatchExtensions">
+            <summary>
+            Extension methods for formatting Stopwatch elapsed time.
+            </summary>
+        </member>
+        <member name="M:Ragnar.Extensions.StopwatchExtensions.ElapsedTimeString(System.Diagnostics.Stopwatch)">
+            <summary>
+            Formats elapsed time as mm:ss.
+            </summary>
+            <param name="Sw">Stopwatch instance.</param>
+            <returns>Elapsed time string (e.g., "02:35").</returns>
+            <example><![CDATA[string time = sw.ElapsedTimeString();]]></example>
+        </member>
+        <member name="T:Ragnar.Extensions.StringExtensions">
+            <summary>Extends <see cref="T:System.String"/> with utility methods for comment processing.</summary>
+        </member>
+        <member name="M:Ragnar.Extensions.StringExtensions.CharacterCount(System.ReadOnlySpan{System.Char})">
+            <inheritdoc cref="M:Ragnar.Extensions.StringExtensions.&lt;G&gt;$7E0B8C73485617FC5155886DD83A182C.CharacterCount"/>
+        </member>
+        <member name="M:Ragnar.Extensions.StringExtensions.get_LastFolder(System.ReadOnlySpan{System.Char})">
+            <inheritdoc cref="P:Ragnar.Extensions.StringExtensions.&lt;G&gt;$7E0B8C73485617FC5155886DD83A182C.LastFolder"/>
+        </member>
+        <member name="M:Ragnar.Extensions.StringExtensions.IsExcluded(System.ReadOnlySpan{System.Char},System.Collections.Generic.IReadOnlyCollection{System.String}@)">
+            <inheritdoc cref="M:Ragnar.Extensions.StringExtensions.&lt;G&gt;$7E0B8C73485617FC5155886DD83A182C.IsExcluded(System.Collections.Generic.IReadOnlyCollection{System.String}@)"/>
+        </member>
+        <member name="M:Ragnar.Extensions.StringExtensions.&lt;G&gt;$7E0B8C73485617FC5155886DD83A182C.CharacterCount">
+            <summary>
+            Counts non-tag, non-comment characters in an XML comment.
+            </summary>
+            <returns>The count of non-tag, non-comment characters.</returns>
+        </member>
+        <member name="P:Ragnar.Extensions.StringExtensions.&lt;G&gt;$7E0B8C73485617FC5155886DD83A182C.LastFolder">
+            <summary>
+            Retrieves the last folder from a given path.
+            </summary>
+            <returns>The span of characters representing the last folder in the path.</returns>
+        </member>
+        <member name="M:Ragnar.Extensions.StringExtensions.&lt;G&gt;$7E0B8C73485617FC5155886DD83A182C.IsExcluded(System.Collections.Generic.IReadOnlyCollection{System.String}@)">
+            <summary>Checks if a filename is in the exclusion list (case-insensitive).</summary>
+            <param name="Exclusions">Set of excluded filenames.</param>
+            <returns><c>true</c> if excluded; otherwise <c>false</c>.</returns>
+        </member>
+        <member name="T:Ragnar.Factory.OllamaClientFactory">
+            <summary>
+            Creates Ollama API clients based on type (Ollama or Embedding).
+            </summary>
+        </member>
+        <member name="M:Ragnar.Factory.OllamaClientFactory.#ctor(System.Net.Http.IHttpClientFactory,Microsoft.Extensions.Options.IOptions{Ragnar.Core.Options.RagnarConfig})">
+            <summary>
+            Creates Ollama API clients based on type (Ollama or Embedding).
+            </summary>
+        </member>
+        <member name="M:Ragnar.Factory.OllamaClientFactory.FindClient(Ragnar.Core.Enums.OllamaServiceType)">
+            <summary>
+            Finds and returns an appropriate Ollama API client based on the specified type.
+            </summary>
+            <param name="Type">The type of client to create (Ollama or Embedding).</param>
+            <returns>An implementation of <see cref="T:OllamaSharp.OllamaApiClient"/>.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown when an unsupported OllamaServiceType is provided.</exception>
+            <example>
+            <![CDATA[ var client = factory.FindClient(OllamaServiceType.Ollama); ]]>
+            </example>
+        </member>
+        <member name="M:Ragnar.Factory.OllamaClientFactory.BuildOllamaClient">
+            <summary>
+            Builds an Ollama LLM API client using configured options.
+            </summary>
+            <returns>A configured <see cref="T:OllamaSharp.OllamaApiClient"/> for LLM tasks.</returns>
+        </member>
+        <member name="M:Ragnar.Factory.OllamaClientFactory.GetClient(Ragnar.Core.Enums.OllamaServiceType)">
+            <summary>
+            Creates and configures an HttpClient for the specified Ollama type.
+            </summary>
+            <param name="Ollama">The Ollama type to configure (Ollama or Embedding).</param>
+            <returns>A configured <see cref="T:System.Net.Http.HttpClient"/>.</returns>
+        </member>
+        <member name="M:Ragnar.Factory.OllamaClientFactory.GetBuildEmbeddingClient">
+            <summary>
+            Gets builds an Embedding API client using configured options.
+            </summary>
+            <returns>A configured <see cref="T:OllamaSharp.OllamaApiClient"/> for embedding tasks.</returns>
+        </member>
+        <member name="M:Ragnar.Factory.OllamaClientFactory.ValidateHost(System.String)">
+            <summary>
+            Validates and returns the host string; throws if null/empty or invalid URI.
+            </summary>
+            <param name="Host">The host to validate.</param>
+            <returns>The validated host.</returns>
+            <example>
+            <![CDATA[
+            var validHost = ClientFactory.ValidateHost("localhost");
+            ]]>
+            </example>
+        </member>
+        <member name="M:Ragnar.Factory.OllamaClientFactory.ValidatePort(System.Int32)">
+            <summary>
+            Validates that the port is within the valid TCP range (1-65535).
+            </summary>
+            <param name="Port">The port number to validate.</param>
+            <returns>The validated port.</returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">Thrown if port is out of range.</exception>
+            <example>
+            <![CDATA[ var validPort = ClientFactory.ValidatePort(8080); ]]>
+            </example>
+        </member>
+        <member name="T:Ragnar.Factory.QuestionBuilder">
+            <summary>Initializes a new instance of the default question factory.</summary>
+        </member>
+        <member name="T:Ragnar.Interfaces.IOllamaResponse">
+            <summary>
+            Call Ollama to generate a response to asked question.
+            </summary>
+        </member>
+        <member name="M:Ragnar.Interfaces.IOllamaResponse.GenerateResponse(OllamaSharp.Models.GenerateRequest,System.Threading.CancellationToken)">
+            <summary>Streams and collects full LLM response into a string.</summary>
+            <param name="Request">Generation request with prompt/options.</param>
+            <param name="Ct">Cancellation token.</param>
+            <returns>Full generated text.</returns>
+            <example><![CDATA[string answer = await provider.GenerateResponse(request, Ct);]]></example>
+        </member>
+        <member name="T:Ragnar.Interfaces.QuestionEmbedding">
+            <summary>Generates and retrieves embeddings for questions.</summary>
+            <param name="Logger"> Logger instance.</param>
+            <param name="RagnarConfig"> App config wrapper.</param>
+            <param name="EmbeddingService"> Embedding service.</param>
+            <param name="QdrantClient"> Qdrant client.</param>
+            <param name="ClientFactory"> Ollama client factory.</param>
+            <returns>Question embedding instance.</returns>
+        </member>
+        <member name="M:Ragnar.Interfaces.QuestionEmbedding.#ctor(Serilog.ILogger,Microsoft.Extensions.Options.IOptions{Ragnar.Core.Options.RagnarConfig},Ragnar.Core.Interface.IGeneratorService,Qdrant.Client.IQdrantClient,Ragnar.Core.Interface.IOllamaClientFactory)">
+            <summary>Generates and retrieves embeddings for questions.</summary>
+            <param name="Logger"> Logger instance.</param>
+            <param name="RagnarConfig"> App config wrapper.</param>
+            <param name="EmbeddingService"> Embedding service.</param>
+            <param name="QdrantClient"> Qdrant client.</param>
+            <param name="ClientFactory"> Ollama client factory.</param>
+            <returns>Question embedding instance.</returns>
+        </member>
+        <member name="M:Ragnar.Interfaces.QuestionEmbedding.GetContext(System.String,System.Threading.CancellationToken,Qdrant.Client.Grpc.Filter)">
+            <summary>
+            Retrieves top-k context from qdrantClient using embedding query vector.
+            </summary>
+            <param name="VectorStoreName">qdrantClient collection name.</param>
+            <param name="Ct">Cancellation token.</param>
+            <param name="Filter">Optional qdrant filter.</param>
+            <returns>Aggregated context strings.</returns>
+            <example><![CDATA[string ctx = await GetContext("docs", qVec, ct);]]></example>
+        </member>
+        <member name="M:Ragnar.Interfaces.QuestionEmbedding.GenerateEmbeddingAsync(System.String,System.Threading.CancellationToken)">
+            <summary>
+            Generates embedding vector for given text using configured model.
+            </summary>
+            <param name="UserQuestion">Input text to embed.</param>
+            <param name="Ct">Cancellation token.</param>
+            <returns>Embedding vector as ReadOnlyMemory&lt;float&gt;.</returns>
+            <example><![CDATA[var vec = await GenerateEmbeddingAsync(ollama, "Query?", ct);]]></example>
+        </member>
+        <member name="T:Ragnar.KnowledgeBaseInitialization">
+            <summary>Initializes a new instance of the embedding pipeline.</summary>
+            <param name="RagnarConfig"> Application configuration options wrapper.</param>
+            <param name = "Writer"> Output writer for displaying console messages.</param>
+            <param name = "Logger"> Logger for recording operational events.</param>
+            <param name = "QdrantClient"> Qdrant client for vector database operations.</param>
+            <return>A task representing the initialization operation.
+            </return>
+        </member>
+        <member name="M:Ragnar.KnowledgeBaseInitialization.#ctor(Ragnar.Core.Interface.IRagOrchestrator,Microsoft.Extensions.Options.IOptions{Ragnar.Core.Options.RagnarConfig},Ragnar.Core.ConsoleWriter.IOutputWriter,Ragnar.Core.Interface.IEmbedTextPipeline,Ragnar.Core.Interface.IQuestionEmbedding,Serilog.ILogger,Qdrant.Client.IQdrantClient,Ragnar.Questions.Questions.ConfigToQuestionMapper)">
+            <summary>Initializes a new instance of the embedding pipeline.</summary>
+            <param name="RagnarConfig"> Application configuration options wrapper.</param>
+            <param name = "Writer"> Output writer for displaying console messages.</param>
+            <param name = "Logger"> Logger for recording operational events.</param>
+            <param name = "QdrantClient"> Qdrant client for vector database operations.</param>
+            <return>A task representing the initialization operation.
+            </return>
+        </member>
+        <member name="M:Ragnar.KnowledgeBaseInitialization.InitializeVectorStoreAsync(System.Threading.CancellationToken)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Ragnar.KnowledgeBaseInitialization.RunEmbeddingPipelineAsync(System.Threading.CancellationToken)">
+             <summary>
+             Populates the knowledge base asynchronously.
+             </summary>
+             <param name="Ct">Cancellation token.</param>
+            <returns>A task representing the population operation.</returns>
+            <example><![CDATA[await RunEmbeddingPipelineAsync(ct);]]></example>
+        </member>
+        <member name="M:Ragnar.KnowledgeBaseInitialization.AskQuestionsAsync(System.Threading.CancellationToken)">
+            <summary>
+            Asks questions asynchronously.
+            </summary>
+            <param name="Ct">The cancellation token.</param>
+        </member>
+        <member name="T:Ragnar.Models.EmbeddingData">
+            <summary>List of qdrantClient point embeddings.
+            </summary>
+            <example><![CDATA[new EmbeddingData(pointsList);]]></example>
+        </member>
+        <member name="M:Ragnar.Models.EmbeddingData.#ctor(System.Collections.Generic.List{Qdrant.Client.Grpc.PointStruct})">
+            <summary>List of qdrantClient point embeddings.
+            </summary>
+            <example><![CDATA[new EmbeddingData(pointsList);]]></example>
+        </member>
+        <member name="T:Ragnar.Models.SaveDetails">
+            <summary>
+            Save file object.
+            </summary>
+            <param name="Question">Asked question.</param>
+            <param name="Response">Question response.</param>
+            <param name="Duration">question duration.</param>
+        </member>
+        <member name="M:Ragnar.Models.SaveDetails.#ctor(Ragnar.Core.Model.Question,System.String,System.String)">
+            <summary>
+            Save file object.
+            </summary>
+            <param name="Question">Asked question.</param>
+            <param name="Response">Question response.</param>
+            <param name="Duration">question duration.</param>
+        </member>
+        <member name="P:Ragnar.Models.SaveDetails.Question">
+            <summary>Asked question.</summary>
+        </member>
+        <member name="P:Ragnar.Models.SaveDetails.Response">
+            <summary>Question response.</summary>
+        </member>
+        <member name="P:Ragnar.Models.SaveDetails.Duration">
+            <summary>question duration.</summary>
+        </member>
+        <member name="T:Ragnar.Ollama.OllamaResponse">
+            <summary>
+            Configures and caches OllamaOptions clients per model.
+            </summary>
+            <example><![CDATA[var provider = new OllamaResponse(opts);]]></example>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Ragnar.Ollama.OllamaResponse"/> class.
+            Template Ollama api call.
+            </remarks>
+            <param name="ClientFactory">Ollama setup factory.</param>
+        </member>
+        <member name="M:Ragnar.Ollama.OllamaResponse.#ctor(Ragnar.Core.Interface.IOllamaClientFactory,Microsoft.Extensions.Options.IOptions{Ragnar.Core.Options.RagnarConfig})">
+            <summary>
+            Configures and caches OllamaOptions clients per model.
+            </summary>
+            <example><![CDATA[var provider = new OllamaResponse(opts);]]></example>
+            <remarks>
+            Initializes a new instance of the <see cref="T:Ragnar.Ollama.OllamaResponse"/> class.
+            Template Ollama api call.
+            </remarks>
+            <param name="ClientFactory">Ollama setup factory.</param>
+        </member>
+        <member name="M:Ragnar.Ollama.OllamaResponse.GenerateResponse(OllamaSharp.Models.GenerateRequest,System.Threading.CancellationToken)">
+            <summary>Streams and collects full LLM response into a string.</summary>
+            <param name="Request">Generation request with prompt/options.</param>
+            <param name="Ct">Cancellation token.</param>
+            <returns>Full generated text.</returns>
+            <example><![CDATA[string answer = await provider.GenerateResponse(request, ct);]]></example>
+        </member>
+        <member name="T:Ragnar.OutputResponse.SummaryAgent">
+            <summary>Initializes a new instance of the SummaryAgent orchestrator.</summary>
+            <param name ="ClientFactory"> Ollama client factory.</param>
+            <param name ="OllamaClientProvider"> Client provider used for LLM response generation.</param>
+            <param name ="SummaryPrompt"> System prompt template used for content summaries.</param>
+        </member>
+        <member name="M:Ragnar.OutputResponse.SummaryAgent.#ctor(Ragnar.Core.Interface.IOllamaClientFactory,Ragnar.Interfaces.IOllamaResponse,Ragnar.Core.Interface.IPromptProvider)">
+            <summary>Initializes a new instance of the SummaryAgent orchestrator.</summary>
+            <param name ="ClientFactory"> Ollama client factory.</param>
+            <param name ="OllamaClientProvider"> Client provider used for LLM response generation.</param>
+            <param name ="SummaryPrompt"> System prompt template used for content summaries.</param>
+        </member>
+        <member name="F:Ragnar.OutputResponse.SummaryAgent._agentChatClient">
+            <summary>
+            Holds the underlying chat client instance for LLM communication.
+            </summary>
+        </member>
+        <member name="M:Ragnar.OutputResponse.SummaryAgent.SummarizeContent(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>Generates a high-level summary of files in a directory.</summary>
+            <param name ="Folder"> Directory path to analyze and summarize.</param>
+            <param name ="Question"> Inquiry context for the AI agent.</param>
+            <param name ="Ct"> Cancellation Token to abort processing.</param>
+            <returns>A concise textual summary of key insights found.</returns>
+            <example><![CDATA[var sum = await agent.SummarizeContent(path, q, ct);]]></example>
+        </member>
+        <member name="M:Ragnar.OutputResponse.SummaryAgent.AskAgent(System.String,System.String,System.Threading.CancellationToken)">
+            <summary>Executes an interactive AI query against directory files.</summary>
+            <param name = "Folder"> Directory path containing target files.</param>
+            <param name = "Question"> Specific inquiry for the agent to answer.</param>
+            <param name = "Ct"> Cancellation Token to abort processing.</param>
+            <returns>AI-generated response text addressing the question.</returns>
+            <example><![CDATA[var resp = await agent.AskAgent(path, q, ct);]]></example>
+        </member>
+        <member name="M:Ragnar.OutputResponse.SummaryAgent.LoadFolderContentsAsync(System.String,System.Threading.CancellationToken)">
+            <summary>Reads and concatenates all files in a target directory.</summary>
+            <param name = "Folder"> Directory path to read files from.</param>
+            <param name = "Ct"> Cancellation Token to abort reading.</param>
+            <returns>A combined string of all file contents.</returns>
+            <example><![CDATA[var txt = await agent.LoadFolderContentsAsync(path, ct);]]></example>
+        </member>
+        <member name="T:Ragnar.OutputResponse.ISummaryService">
+            <summary>
+            Provides a service to summarize all responses.
+            </summary>
+        </member>
+        <member name="M:Ragnar.OutputResponse.ISummaryService.SummarizeAllResponsesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously summarizes all responses.
+            </summary>
+            <param name="Ct">The cancellation token.</param>
+            <returns>A task containing the summarized responses.</returns>
+        </member>
+        <member name="T:Ragnar.OutputResponse.SummaryService">
+            <summary>
+            Summary each response into a single file.
+            </summary>
+            <param name="Logger">Seri.logger.</param>
+            <param name="Writer">Console writer.</param>
+            <param name="Factory">Ollama Client factory.</param>
+            <param name="SummaryPrompt">System prompt.</param>
+            <param name="OllamaClientProvider">Ollama option lookup.
+            </param>
+            <param name="ConfigWrapper">Wrapper for all configuration.</param>
+        </member>
+        <member name="M:Ragnar.OutputResponse.SummaryService.#ctor(Serilog.ILogger,Ragnar.Core.ConsoleWriter.IOutputWriter,Ragnar.Core.Interface.IOllamaClientFactory,Ragnar.Core.Interface.IPromptProvider,Ragnar.Interfaces.IOllamaResponse,Microsoft.Extensions.Options.IOptions{Ragnar.Core.Options.RagnarConfig})">
+            <summary>
+            Summary each response into a single file.
+            </summary>
+            <param name="Logger">Seri.logger.</param>
+            <param name="Writer">Console writer.</param>
+            <param name="Factory">Ollama Client factory.</param>
+            <param name="SummaryPrompt">System prompt.</param>
+            <param name="OllamaClientProvider">Ollama option lookup.
+            </param>
+            <param name="ConfigWrapper">Wrapper for all configuration.</param>
+        </member>
+        <member name="M:Ragnar.OutputResponse.SummaryService.SummarizeAllResponsesAsync(System.Threading.CancellationToken)">
+            <summary>
+            Summarizes all .md responses in the Response/ directory into one markdown summary.
+            </summary>
+            <param name="Ct">Cancellation token.</param>
+            <returns>Return Value task.</returns>
+        </member>
+        <member name="M:Ragnar.OutputResponse.SummaryService.AskAgentAsync(System.String,Ragnar.Core.Model.Question,System.Threading.CancellationToken)">
+            <summary>
+            Ask LLM agent to summarize information.
+            </summary>
+            <param name="Folder">The directory path to analyze.</param>
+            <param name="Question">The question to ask the agent.</param>
+            <param name="Ct">Cancellation token.</param>
+            <returns>Summarized contents.</returns>
+        </member>
+        <member name="T:Ragnar.Output.FileWriter">
+            <summary>Handles file writing operations.</summary>
+        </member>
+        <member name="M:Ragnar.Output.FileWriter.WriteAsync(System.String,System.String,System.Threading.CancellationToken)">
+            /// <summary>Handles asynchronous file writing operations across the application.</summary>
+            <param name="FullPath">Absolute path where the content will be saved.</param>
+            <param name="Content">Text data to write to the target file.</param>
+            <param name="Ct">Token to monitor for cancellation requests during I/O.</param>
+            <remarks>Ensures thread-safe writes using standard .NET async file APIs.</remarks>
+            <example><![CDATA[await writer.WriteAsync("output.txt", "data", ct);]]></example>
+            <returns>A task representing the asynchronous write operation.</returns>
+        </member>
+        <member name="T:Ragnar.Output.IOutputFormatter">
+            <summary>Interface for formatting Markdown.</summary>
+        </member>
+        <member name="P:Ragnar.Output.IOutputFormatter.FileExtension">
+            <summary>Gets or sets the file extension used by this formatter.</summary>
+        </member>
+        <member name="M:Ragnar.Output.IOutputFormatter.Format(Ragnar.Models.SaveDetails)">
+            <summary>Formats Markdown based on provided details.</summary>
+            <param name ="Details">Save details to use for formatting.</param>
+        </member>
+        <member name="T:Ragnar.Output.IResponseWriter">
+            <summary>
+            Writes out response from question to either disk or in future other location.
+            </summary>
+        </member>
+        <member name="M:Ragnar.Output.IResponseWriter.WriteResponseAsync(Ragnar.Models.SaveDetails,System.Threading.CancellationToken)">
+            <summary>Generates and writes a markdown file from save details; returns the full file path.</summary>
+            <param name="Details">Contains question metadata and content to write.</param>
+            <param name="Ct">Cancellation token for async operation.</param>
+            <returns>The absolute path to the created markdown file.</returns>
+            <example><![CDATA[string path = await writer.WriteResponseAsync(details, ct);]]></example>
+        </member>
+        <member name="T:Ragnar.Output.PathResolver">
+            <summary>Initializes a new instance of the PathResolver class.</summary>
+        </member>
+        <member name="M:Ragnar.Output.PathResolver.ResolveResponseDirectory(System.String,System.Nullable{Ragnar.Plugins.QuestionCategory})">
+            <summary>Resolves the target directory path based on source and category.</summary>
+            <param name="SourceDir">The base application directory.</param>
+            <param name="Category">The question category for subfolder selection.</param>
+            <returns>The resolved target directory path.</returns>
+        </member>
+        <member name="T:Ragnar.Output.ResponseWriter">
+            <summary>Initializes a new instance of the Response writer.</summary>
+            <param name = "Config"> Application configuration options.</param>
+        </member>
+        <member name="M:Ragnar.Output.ResponseWriter.#ctor(Microsoft.Extensions.Options.IOptions{Ragnar.Core.Options.RagnarConfig},Ragnar.Output.IOutputFormatter,Ragnar.Output.IPathResolver,Ragnar.Output.IWriter)">
+            <summary>Initializes a new instance of the Response writer.</summary>
+            <param name = "Config"> Application configuration options.</param>
+        </member>
+        <member name="M:Ragnar.Output.ResponseWriter.WriteResponseAsync(Ragnar.Models.SaveDetails,System.Threading.CancellationToken)">
+            <summary>Generates and writes a markdown file from save Details; returns the full file path.</summary>
+            <param name="Details">Contains question metadata and content to write.</param>
+            <param name="Ct">Cancellation token for async operation.</param>
+            <returns>The absolute path to the created markdown file.</returns>
+            <example>
+            <![CDATA[ var writer = new ResponseWriter(configWrapper);
+            string path = await writer.WriteResponseAsync(Details, CancellationToken.None); ]]>
+            </example>
+        </member>
+        <member name="T:Ragnar.RagPipelineRunner">
+            <summary>
+             Hosted service responsible for running the RAG pipeline.
+            </summary>
+        </member>
+        <member name="M:Ragnar.RagPipelineRunner.#ctor(System.Collections.Generic.IEnumerable{Ragnar.Core.Interface.IPipelineStage})">
+            <summary>
+             Hosted service responsible for running the RAG pipeline.
+            </summary>
+        </member>
+        <member name="M:Ragnar.RagPipelineRunner.StartAsync(System.Threading.CancellationToken)">
+            <summary>Starts the RAG pipeline: collection check, embedding, and query processing.
+            </summary>
+            <param name="cancellationToken">Cancellation token.</param>
+            <returns>Task representing async operation.</returns>
+            <example><![CDATA[await host.ExecuteAsync();]]></example>
+        </member>
+        <member name="M:Ragnar.RagPipelineRunner.StopAsync(System.Threading.CancellationToken)">
+            <summary>Stops the hosted service (no-op).</summary>
+            <param name="cancellationToken">Cancellation token.</param>
+            <returns>Completed task.</returns>
+            <example><![CDATA[await host.StopAsync(ct);]]></example>
+        </member>
+        <member name="T:Ragnar.RagPipeline.RagOrchestrator">
+            <summary>Executes RAG pipeline: embeds question → retrieve → generate answer.</summary>
+            <param name="Writer">Custom console writer.</param>
+            <param name="ConfigWrapper">Wraps all options.</param>
+            <param name="PromptTemplateProvider">System prompt provider.</param>
+            <param name="SaveService">Response writer service.</param>
+            <param name="OllamaClientFactory">OllamaOptions client factory.</param>
+            <param name="OllamaProvider">Ollama question calling operations.</param>
+            <example><![CDATA[await new RagPipeline().ExecuteAsync(q, ctx, ct);]]></example>
+        </member>
+        <member name="M:Ragnar.RagPipeline.RagOrchestrator.#ctor(Ragnar.Core.ConsoleWriter.IOutputWriter,Microsoft.Extensions.Options.IOptions{Ragnar.Core.Options.RagnarConfig},Ragnar.Core.Interface.IPromptProvider,Ragnar.Output.IResponseWriter,Ragnar.Core.Interface.IOllamaClientFactory,Ragnar.Interfaces.IOllamaResponse)">
+            <summary>Executes RAG pipeline: embeds question → retrieve → generate answer.</summary>
+            <param name="Writer">Custom console writer.</param>
+            <param name="ConfigWrapper">Wraps all options.</param>
+            <param name="PromptTemplateProvider">System prompt provider.</param>
+            <param name="SaveService">Response writer service.</param>
+            <param name="OllamaClientFactory">OllamaOptions client factory.</param>
+            <param name="OllamaProvider">Ollama question calling operations.</param>
+            <example><![CDATA[await new RagPipeline().ExecuteAsync(q, ctx, ct);]]></example>
+        </member>
+        <member name="M:Ragnar.RagPipeline.RagOrchestrator.ExecuteAsync(Ragnar.Core.Model.Question,System.String,System.Threading.CancellationToken)">
+            <summary>Runs full RAG pipeline for a question using context.</summary>
+            <param name="Question">User question.</param>
+            <param name="ContextText">Retrieved code context.</param>
+            <param name="Ct">Cancellation token.</param>
+            <example><![CDATA[await pipeline.ExecuteAsync(question, ctx, ct);]]></example>
+            <returns>Returns a task.</returns>
+        </member>
+        <member name="M:Ragnar.RagPipeline.RagOrchestrator.SaveResponseAsync(Ragnar.Models.SaveDetails,System.Threading.CancellationToken)">
+            <summary>Saves generation response to disk and prints path.</summary>
+            <param name="Details">Response details to save.</param>
+            <param name="Ct">Cancellation token.</param>
+            <example><![CDATA[await SaveResponseAsync(new SaveDetails(...), ct);]]></example>
+        </member>
+        <member name="M:Ragnar.RagPipeline.RagOrchestrator.GenerateAsync(OllamaSharp.Models.GenerateRequest,System.Threading.CancellationToken)">
+            <summary>Invokes OllamaOptions generation with config.</summary>
+            <param name="Request">LLM prompt request.</param>
+            <param name="Ct">Cancellation token.</param>
+            <example>
+            <![CDATA[string answer = await GenerateAsync(request, ct);]]></example>
+            <returns>Generated text.</returns>
+        </member>
+        <member name="T:Ragnar.Services.PromptTemplateProvider">
+            <summary>Initializes a new instance of the system prompt provider.</summary>
+        </member>
+        <member name="P:Ragnar.Services.PromptTemplateProvider.Content">
+            <summary> Gets the content of the prompt. </summary>
+        </member>
+        <member name="P:Ragnar.Services.PromptTemplateProvider.Template">
+            <summary>Gets the system prompt for .NET 10 code generation.</summary>
+            <returns>The prompt template string for AI agent instructions.</returns>
+            <example><![CDATA[var tmpl = provider.Template;]]></example>
+        </member>
+        <member name="T:Ragnar.Services.SummarizePromptProvider">
+            <summary>Provides templates for summaries.</summary>
+        </member>
+        <member name="T:Ragnar.Utils.FileValidator">
+            <summary>
+            Implements File validation logic based on extension, name, and d filters.
+            </summary>
+        </member>
+        <member name="M:Ragnar.Utils.FileValidator.#ctor(Ragnar.Core.Options.FileLoadOptions)">
+            <summary>
+            Implements File validation logic based on extension, name, and d filters.
+            </summary>
+        </member>
+        <member name="M:Ragnar.Utils.FileValidator.IsValid(System.IO.FileInfo,Ragnar.Core.Options.FileLoadOptions@)">
+            <summary>Checks if File passes all filtering rules.</summary>
+            <param name="File">File to validate.</param>
+            <param name="Filter">BuildFilter criteria.</param>
+            <returns>true if File matches criteria; otherwise false.</returns>
+            <example><![CDATA[bool ok = validator.IsValid(info, opts);]]></example>
+        </member>
+        <member name="T:Ragnar.Utils.Styles">
+            <summary>
+            Custom console style classes.
+            </summary>
+        </member>
+        <member name="P:Ragnar.Utils.Styles.GreenBlink">
+            <summary>
+            Gets green blinking style.
+            </summary>
+        </member>
+        <member name="P:Ragnar.Utils.Styles.Green">
+            <summary>
+            Gets green text style.
+            </summary>
+        </member>
+        <member name="P:Ragnar.Utils.Styles.Yellow">
+            <summary>
+            Gets yellow style.
+            </summary>
+        </member>
+        <member name="P:Ragnar.Utils.Styles.Cyan">
+            <summary>
+            Gets cyan style.
+            </summary>
+        </member>
+        <member name="P:Ragnar.Utils.Styles.Blue">
+            <summary>
+            Gets blue style.
+            </summary>
+        </member>
+        <member name="P:Ragnar.Utils.Styles.BoldBlue">
+            <summary>
+            Gets bold blue style.
+            </summary>
+        </member>
+        <member name="P:Ragnar.Utils.Styles.BoldSteelBlue">
+            <summary>
+            Gets Bold Steel Blue style.
+            </summary>
+        </member>
+        <member name="T:Ragnar.Utils.Utils">
+            <summary>
+            Common Util classes.
+            </summary>
+        </member>
+        <member name="M:Ragnar.Utils.Utils.ExpandDirectory(System.String)">
+            <summary>Expands environment vars and validates existence of directory path.</summary>
+            <param name="Path">Config-based folder path (may contain env vars).</param>
+            <returns>Fully expanded absolute path.</returns>
+            <example><![CDATA[string dir = "MyData"; dir = dir.ExpandDirectory();]]></example>
+        </member>
+        <member name="T:Ragnar.Validator.OllamaOptionsValidator">
+            <summary>
+            Validates configuration settings for Ollama API connections and timeouts.
+            </summary>
+        </member>
+        <member name="M:Ragnar.Validator.OllamaOptionsValidator.#ctor">
+            <summary>Initializes validation rules.</summary>
+        </member>
+        <member name="T:Program">
+            <summary>
+            Auto-generated public partial Program class for top-level statement apps.
+            </summary>
+        </member>
+    </members>
+</doc>

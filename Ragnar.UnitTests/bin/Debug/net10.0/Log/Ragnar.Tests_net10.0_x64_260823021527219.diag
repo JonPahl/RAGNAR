@@ -1,0 +1,21 @@
+2026-08-23T02:15:27.2326606+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 2.3.3+44aa76e6a61d4908f06dfd77a51d4b7e3e7ce40f
+2026-08-23T02:15:27.2481524+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-08-23T02:15:27.2498551+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-08-23T02:15:27.2498918+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 02:15:27.173
+2026-08-23T02:15:27.2500699+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 258840
+2026-08-23T02:15:27.2501052+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.11
+2026-08-23T02:15:27.2501364+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.11\System.Private.CoreLib.dll
+2026-08-23T02:15:27.2501540+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-08-23T02:15:27.2502837+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Ragnar.Tests.dll
+2026-08-23T02:15:27.2505018+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\fine-code-coverage\coverage-tool-output --client-port 49539'
+2026-08-23T02:15:27.2549163+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-08-23T02:15:27.3624406+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-08-23T02:15:27.3765949+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-08-23T02:15:31.6518880+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '4.0.0' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-08-23T02:15:31.6814313+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v4.0.0+8bf043c053 (64-bit .NET 10.0.11)
+2026-08-23T02:15:31.8151477+00:00 xUnit.net INFORMATION   Discovering: Ragnar.Tests
+2026-08-23T02:15:32.4155377+00:00 xUnit.net INFORMATION   Discovered:  Ragnar.Tests
+2026-08-23T02:15:32.4690653+00:00 xUnit.net INFORMATION   Starting:    Ragnar.Tests
+2026-08-23T02:16:42.2537700+00:00 xUnit.net INFORMATION   Finished:    Ragnar.Tests (ID = 'f938faec33fe5f71c53c157942770d0eda0a74427521894987d80f15ac52b3a0')
+2026-08-23T02:16:42.2574184+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-08-23T02:16:42.2623407+00:00 xUnit.net INFORMATION    Ragnar.Tests  Total: 118, Errors: 0, Failed: 0, Skipped: 0, Not Run: 0, Time: 69.796s

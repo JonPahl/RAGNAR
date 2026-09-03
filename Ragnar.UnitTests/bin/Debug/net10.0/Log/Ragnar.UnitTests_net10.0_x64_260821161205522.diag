@@ -1,0 +1,33 @@
+2026-08-21T16:12:05.5303525+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 2.3.3+44aa76e6a61d4908f06dfd77a51d4b7e3e7ce40f
+2026-08-21T16:12:05.5396158+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-08-21T16:12:05.5404063+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-08-21T16:12:05.5404118+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 16:12:05.507
+2026-08-21T16:12:05.5404902+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 379664
+2026-08-21T16:12:05.5405143+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.11
+2026-08-21T16:12:05.5405321+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.11\System.Private.CoreLib.dll
+2026-08-21T16:12:05.5405480+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-08-21T16:12:05.5406188+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Ragnar.UnitTests.dll
+2026-08-21T16:12:05.5407457+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\TestResults --client-port 52663'
+2026-08-21T16:12:05.5415592+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-08-21T16:12:05.5761292+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-08-21T16:12:05.5841648+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-08-21T16:12:05.7936882+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '4.0.0' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-08-21T16:12:05.8026883+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v4.0.0+8bf043c053 (64-bit .NET 10.0.11)
+2026-08-21T16:12:05.8494283+00:00 xUnit.net INFORMATION   Discovering: Ragnar.UnitTests
+2026-08-21T16:12:05.9227378+00:00 xUnit.net INFORMATION   Discovered:  Ragnar.UnitTests
+2026-08-21T16:12:05.9395987+00:00 xUnit.net INFORMATION   Starting:    Ragnar.UnitTests
+2026-08-21T16:12:06.4984918+00:00 xUnit.net ERROR     Ragnar.UnitTests.ResponseWriterTests.WriteResponseAsync_Throws_If_Category_Dir_Missing [FAIL]
+2026-08-21T16:12:06.4989996+00:00 xUnit.net INFORMATION       Assert.Throws() Failure: No exception was thrown
+2026-08-21T16:12:06.4990202+00:00 xUnit.net INFORMATION       Expected: typeof(System.ArgumentException)
+2026-08-21T16:12:06.4995054+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-21T16:12:06.5015837+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\ResponseWriterTests.cs(74,0): at Ragnar.UnitTests.ResponseWriterTests.WriteResponseAsync_Throws_If_Category_Dir_Missing()
+2026-08-21T16:12:06.5016043+00:00 xUnit.net INFORMATION         --- End of stack trace from previous location ---
+2026-08-21T16:12:06.6207411+00:00 xUnit.net ERROR     Ragnar.UnitTests.ResponseWriterTests.WriteResponseAsync_Creates_Directory_If_Missing [FAIL]
+2026-08-21T16:12:06.6207844+00:00 xUnit.net INFORMATION       Expected path to start with "C:\src\Response\Refactor\", but "Response\Refactor\test_20260821_111206.md" differs near "Res" (index 0).
+2026-08-21T16:12:06.6208140+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-21T16:12:06.6208259+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.StringAssertions`1.StartWith(String expected, String because, Object[] becauseArgs)
+2026-08-21T16:12:06.6208384+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\ResponseWriterTests.cs(40,0): at Ragnar.UnitTests.ResponseWriterTests.WriteResponseAsync_Creates_Directory_If_Missing()
+2026-08-21T16:12:06.6208515+00:00 xUnit.net INFORMATION         --- End of stack trace from previous location ---
+2026-08-21T16:12:06.6303223+00:00 xUnit.net INFORMATION   Finished:    Ragnar.UnitTests (ID = 'f098f31f0eacc0ee01d83fd63129e4523264605bb0c54dec59a352b1acd06c48')
+2026-08-21T16:12:06.6362957+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-08-21T16:12:06.6411465+00:00 xUnit.net INFORMATION    Ragnar.UnitTests  Total: 3, Errors: 0, Failed: 2, Skipped: 0, Not Run: 0, Time: 0.691s

@@ -1,0 +1,90 @@
+2026-08-21T20:58:29.9634436+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 2.3.3+44aa76e6a61d4908f06dfd77a51d4b7e3e7ce40f
+2026-08-21T20:58:29.9799097+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-08-21T20:58:29.9824393+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-08-21T20:58:29.9824516+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 20:58:29.917
+2026-08-21T20:58:29.9825965+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 346220
+2026-08-21T20:58:29.9826350+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.11
+2026-08-21T20:58:29.9826660+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.11\System.Private.CoreLib.dll
+2026-08-21T20:58:29.9826806+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-08-21T20:58:29.9828084+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Ragnar.UnitTests.dll
+2026-08-21T20:58:29.9830450+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\TestResults --client-port 60783'
+2026-08-21T20:58:29.9855233+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-08-21T20:58:30.0642247+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-08-21T20:58:30.0845272+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-08-21T20:58:30.6448012+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '4.0.0' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-08-21T20:58:30.6624968+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v4.0.0+8bf043c053 (64-bit .NET 10.0.11)
+2026-08-21T20:58:30.8026874+00:00 xUnit.net INFORMATION   Discovering: Ragnar.UnitTests
+2026-08-21T20:58:31.0705738+00:00 xUnit.net INFORMATION   Discovered:  Ragnar.UnitTests
+2026-08-21T20:58:31.1244574+00:00 xUnit.net INFORMATION   Starting:    Ragnar.UnitTests
+2026-08-21T20:58:58.2618163+00:00 xUnit.net ERROR     Ragnar.UnitTests.Extensions.SavePathExtensionsTests.GetResponseDirectoryWithFolders_ReturnsExpected(folders: [], baseDir: "", expected: "") [FAIL]
+2026-08-21T20:58:58.2624702+00:00 xUnit.net INFORMATION       Expected result.Replace('\\', '/') to be "" with a length of 0, but "Response" has a length of 8, differs near "Res" (index 0).
+2026-08-21T20:58:58.2630652+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-21T20:58:58.2639669+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+2026-08-21T20:58:58.2640244+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Extensions\SavePathExtensionsTests.cs(27,0): at Ragnar.UnitTests.Extensions.SavePathExtensionsTests.GetResponseDirectoryWithFolders_ReturnsExpected(String[] folders, String baseDir, String expected)
+2026-08-21T20:58:58.2640366+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-21T20:58:58.2640456+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+2026-08-21T20:58:58.2664395+00:00 xUnit.net ERROR     Ragnar.UnitTests.Extensions.SavePathExtensionsTests.GetResponseDirectoryWithFolders_ReturnsExpected(folders: ["dir1"], baseDir: "base", expected: "base/Response") [FAIL]
+2026-08-21T20:58:58.2664554+00:00 xUnit.net INFORMATION       Expected result.Replace('\\', '/') to be a match with the expectation, but it differs at index 0:
+2026-08-21T20:58:58.2664576+00:00 xUnit.net INFORMATION          ↓ (actual)
+2026-08-21T20:58:58.2664587+00:00 xUnit.net INFORMATION         "dir1/Response"
+2026-08-21T20:58:58.2664606+00:00 xUnit.net INFORMATION         "base/Response"
+2026-08-21T20:58:58.2664614+00:00 xUnit.net INFORMATION          ↑ (expected)
+2026-08-21T20:58:58.2664767+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-21T20:58:58.2665243+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+2026-08-21T20:58:58.2665423+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Extensions\SavePathExtensionsTests.cs(27,0): at Ragnar.UnitTests.Extensions.SavePathExtensionsTests.GetResponseDirectoryWithFolders_ReturnsExpected(String[] folders, String baseDir, String expected)
+2026-08-21T20:58:58.2665507+00:00 xUnit.net INFORMATION            at InvokeStub_SavePathExtensionsTests.GetResponseDirectoryWithFolders_ReturnsExpected(Object, Span`1)
+2026-08-21T20:58:58.2665604+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-08-21T20:58:58.2683768+00:00 xUnit.net ERROR     Ragnar.UnitTests.Extensions.SavePathExtensionsTests.GetResponseDirectoryWithFolders_ReturnsExpected(folders: [], baseDir: "base", expected: "base") [FAIL]
+2026-08-21T20:58:58.2683935+00:00 xUnit.net INFORMATION       Expected result.Replace('\\', '/') to be a match with the expectation, but it differs at index 4:
+2026-08-21T20:58:58.2683950+00:00 xUnit.net INFORMATION              ↓ (actual)
+2026-08-21T20:58:58.2683961+00:00 xUnit.net INFORMATION         "base/Response"
+2026-08-21T20:58:58.2683974+00:00 xUnit.net INFORMATION         "base"
+2026-08-21T20:58:58.2683984+00:00 xUnit.net INFORMATION              ↑ (expected)
+2026-08-21T20:58:58.2684028+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-21T20:58:58.2684177+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+2026-08-21T20:58:58.2684331+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Extensions\SavePathExtensionsTests.cs(27,0): at Ragnar.UnitTests.Extensions.SavePathExtensionsTests.GetResponseDirectoryWithFolders_ReturnsExpected(String[] folders, String baseDir, String expected)
+2026-08-21T20:58:58.2684409+00:00 xUnit.net INFORMATION            at InvokeStub_SavePathExtensionsTests.GetResponseDirectoryWithFolders_ReturnsExpected(Object, Span`1)
+2026-08-21T20:58:58.2684500+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-08-21T20:58:58.2697427+00:00 xUnit.net ERROR     Ragnar.UnitTests.Extensions.SavePathExtensionsTests.GetResponseDirectoryWithFolders_ReturnsExpected(folders: ["dir1", "dir2"], baseDir: "base", expected: "base/Response") [FAIL]
+2026-08-21T20:58:58.2697703+00:00 xUnit.net INFORMATION       Expected result.Replace('\\', '/') to be a match with the expectation, but it differs at index 0:
+2026-08-21T20:58:58.2697722+00:00 xUnit.net INFORMATION          ↓ (actual)
+2026-08-21T20:58:58.2697733+00:00 xUnit.net INFORMATION         "dir1/dir2/Response"
+2026-08-21T20:58:58.2697751+00:00 xUnit.net INFORMATION         "base/Response"
+2026-08-21T20:58:58.2697761+00:00 xUnit.net INFORMATION          ↑ (expected)
+2026-08-21T20:58:58.2697812+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-21T20:58:58.2698064+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+2026-08-21T20:58:58.2698243+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Extensions\SavePathExtensionsTests.cs(27,0): at Ragnar.UnitTests.Extensions.SavePathExtensionsTests.GetResponseDirectoryWithFolders_ReturnsExpected(String[] folders, String baseDir, String expected)
+2026-08-21T20:58:58.2698323+00:00 xUnit.net INFORMATION            at InvokeStub_SavePathExtensionsTests.GetResponseDirectoryWithFolders_ReturnsExpected(Object, Span`1)
+2026-08-21T20:58:58.2698482+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-08-21T20:58:59.0654440+00:00 xUnit.net ERROR     Ragnar.UnitTests.ExtensionMethodsTests.GetResponseDirectory_Enumerable_ReturnsExpected(Folders: [], BaseDir: "", Expected: "") [FAIL]
+2026-08-21T20:58:59.0654898+00:00 xUnit.net INFORMATION       Expected result.Replace('\\', '/') to be "" with a length of 0, but "Response" has a length of 8, differs near "Res" (index 0).
+2026-08-21T20:58:59.0655012+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-21T20:58:59.0655140+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+2026-08-21T20:58:59.0655283+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\ExtensionMethodsTests.cs(20,0): at Ragnar.UnitTests.ExtensionMethodsTests.GetResponseDirectory_Enumerable_ReturnsExpected(String[] Folders, String BaseDir, String Expected)
+2026-08-21T20:58:59.0655359+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-21T20:58:59.0655436+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+2026-08-21T20:58:59.0716034+00:00 xUnit.net ERROR     Ragnar.UnitTests.ExtensionMethodsTests.GetResponseDirectory_Enumerable_ReturnsExpected(Folders: [], BaseDir: "base", Expected: "base") [FAIL]
+2026-08-21T20:58:59.0717643+00:00 xUnit.net INFORMATION       Expected result.Replace('\\', '/') to be a match with the expectation, but it differs at index 4:
+2026-08-21T20:58:59.0717967+00:00 xUnit.net INFORMATION              ↓ (actual)
+2026-08-21T20:58:59.0717994+00:00 xUnit.net INFORMATION         "base/Response"
+2026-08-21T20:58:59.0718003+00:00 xUnit.net INFORMATION         "base"
+2026-08-21T20:58:59.0718012+00:00 xUnit.net INFORMATION              ↑ (expected)
+2026-08-21T20:58:59.0718118+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-21T20:58:59.0718441+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+2026-08-21T20:58:59.0719450+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\ExtensionMethodsTests.cs(20,0): at Ragnar.UnitTests.ExtensionMethodsTests.GetResponseDirectory_Enumerable_ReturnsExpected(String[] Folders, String BaseDir, String Expected)
+2026-08-21T20:58:59.0720112+00:00 xUnit.net INFORMATION            at InvokeStub_ExtensionMethodsTests.GetResponseDirectory_Enumerable_ReturnsExpected(Object, Span`1)
+2026-08-21T20:58:59.0725754+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-08-21T20:58:59.0902172+00:00 xUnit.net ERROR     Ragnar.UnitTests.ExtensionMethodsTests.GetResponseDirectory_Enumerable_ReturnsExpected(Folders: ["dir1"], BaseDir: "base", Expected: "base/Response") [FAIL]
+2026-08-21T20:58:59.0902441+00:00 xUnit.net INFORMATION       Expected result.Replace('\\', '/') to be a match with the expectation, but it differs at index 0:
+2026-08-21T20:58:59.0902454+00:00 xUnit.net INFORMATION          ↓ (actual)
+2026-08-21T20:58:59.0902467+00:00 xUnit.net INFORMATION         "dir1/Response"
+2026-08-21T20:58:59.0902484+00:00 xUnit.net INFORMATION         "base/Response"
+2026-08-21T20:58:59.0902491+00:00 xUnit.net INFORMATION          ↑ (expected)
+2026-08-21T20:58:59.0902569+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-21T20:58:59.0902671+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+2026-08-21T20:58:59.0902802+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\ExtensionMethodsTests.cs(20,0): at Ragnar.UnitTests.ExtensionMethodsTests.GetResponseDirectory_Enumerable_ReturnsExpected(String[] Folders, String BaseDir, String Expected)
+2026-08-21T20:58:59.0902878+00:00 xUnit.net INFORMATION            at InvokeStub_ExtensionMethodsTests.GetResponseDirectory_Enumerable_ReturnsExpected(Object, Span`1)
+2026-08-21T20:58:59.0902973+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-08-21T21:00:02.9968775+00:00 xUnit.net INFORMATION   Finished:    Ragnar.UnitTests (ID = 'f098f31f0eacc0ee01d83fd63129e4523264605bb0c54dec59a352b1acd06c48')
+2026-08-21T21:00:03.0067974+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-08-21T21:00:03.0170464+00:00 xUnit.net INFORMATION    Ragnar.UnitTests  Total: 97, Errors: 0, Failed: 7, Skipped: 0, Not Run: 0, Time: 91.898s

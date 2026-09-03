@@ -1,0 +1,56 @@
+2026-08-20T17:21:58.1212779+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 2.3.3+44aa76e6a61d4908f06dfd77a51d4b7e3e7ce40f
+2026-08-20T17:21:58.1381077+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-08-20T17:21:58.1393929+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-08-20T17:21:58.1394025+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 17:21:58.010
+2026-08-20T17:21:58.1395603+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 174632
+2026-08-20T17:21:58.1395988+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.11
+2026-08-20T17:21:58.1396260+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.11\System.Private.CoreLib.dll
+2026-08-20T17:21:58.1396394+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-08-20T17:21:58.1398313+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Ragnar.UnitTests.dll
+2026-08-20T17:21:58.1401813+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\fine-code-coverage\coverage-tool-output --client-port 54766'
+2026-08-20T17:21:58.1413424+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-08-20T17:21:58.2407003+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-08-20T17:21:58.2599965+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-08-20T17:21:58.6928157+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '4.0.0' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-08-20T17:21:58.7085870+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v4.0.0+8bf043c053 (64-bit .NET 10.0.11)
+2026-08-20T17:21:58.7883966+00:00 xUnit.net INFORMATION   Discovering: Ragnar.UnitTests
+2026-08-20T17:21:58.9510797+00:00 xUnit.net INFORMATION   Discovered:  Ragnar.UnitTests
+2026-08-20T17:21:58.9827080+00:00 xUnit.net INFORMATION   Starting:    Ragnar.UnitTests
+2026-08-20T17:22:05.5993364+00:00 xUnit.net ERROR     Ragnar.UnitTests.OllamaOptionsValidatorTests.Validate_InvalidPort_ReturnsInvalid(Port: 65536) [FAIL]
+2026-08-20T17:22:05.6000834+00:00 xUnit.net INFORMATION       Expected Result.Errors.Select(E => E.ErrorMessage) {"Port must be between 1 and 65535."} to contain "between 1 and 65535".
+2026-08-20T17:22:05.6006206+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-20T17:22:05.6012820+00:00 xUnit.net INFORMATION            at FluentAssertions.Collections.GenericCollectionAssertions`3.Contain(T expected, String because, Object[] becauseArgs)
+2026-08-20T17:22:05.6013177+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\OllamaOptionsValidatorTests.cs(44,0): at Ragnar.UnitTests.OllamaOptionsValidatorTests.Validate_InvalidPort_ReturnsInvalid(Int32 Port)
+2026-08-20T17:22:05.6013255+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-20T17:22:05.6013322+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+2026-08-20T17:22:05.6023955+00:00 xUnit.net ERROR     Ragnar.UnitTests.OllamaOptionsValidatorTests.Validate_InvalidPort_ReturnsInvalid(Port: 0) [FAIL]
+2026-08-20T17:22:05.6024087+00:00 xUnit.net INFORMATION       Expected Result.Errors.Select(E => E.ErrorMessage) {"Port must be between 1 and 65535."} to contain "between 1 and 65535".
+2026-08-20T17:22:05.6024223+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-20T17:22:05.6024316+00:00 xUnit.net INFORMATION            at FluentAssertions.Collections.GenericCollectionAssertions`3.Contain(T expected, String because, Object[] becauseArgs)
+2026-08-20T17:22:05.6024432+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\OllamaOptionsValidatorTests.cs(44,0): at Ragnar.UnitTests.OllamaOptionsValidatorTests.Validate_InvalidPort_ReturnsInvalid(Int32 Port)
+2026-08-20T17:22:05.6024493+00:00 xUnit.net INFORMATION            at InvokeStub_OllamaOptionsValidatorTests.Validate_InvalidPort_ReturnsInvalid(Object, Span`1)
+2026-08-20T17:22:05.6024582+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-08-20T17:22:05.6035579+00:00 xUnit.net ERROR     Ragnar.UnitTests.OllamaOptionsValidatorTests.Validate_ZeroTimeout_ReturnsInvalid [FAIL]
+2026-08-20T17:22:05.6035752+00:00 xUnit.net INFORMATION       Expected Result.Errors.Select(E => E.ErrorMessage) {"Timeout must be greater than zero."} to contain "greater than zero".
+2026-08-20T17:22:05.6035811+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-20T17:22:05.6035920+00:00 xUnit.net INFORMATION            at FluentAssertions.Collections.GenericCollectionAssertions`3.Contain(T expected, String because, Object[] becauseArgs)
+2026-08-20T17:22:05.6036064+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\OllamaOptionsValidatorTests.cs(54,0): at Ragnar.UnitTests.OllamaOptionsValidatorTests.Validate_ZeroTimeout_ReturnsInvalid()
+2026-08-20T17:22:05.6036155+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-20T17:22:05.6036208+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-20T17:22:05.6068499+00:00 xUnit.net ERROR     Ragnar.UnitTests.OllamaOptionsValidatorTests.Validate_InvalidHost_ReturnsInvalid(Host: "") [FAIL]
+2026-08-20T17:22:05.6068725+00:00 xUnit.net INFORMATION       Expected Result.Errors.Select(E => E.ErrorMessage) {"Host is required."} to contain "Host is required".
+2026-08-20T17:22:05.6068796+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-20T17:22:05.6068925+00:00 xUnit.net INFORMATION            at FluentAssertions.Collections.GenericCollectionAssertions`3.Contain(T expected, String because, Object[] becauseArgs)
+2026-08-20T17:22:05.6069407+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\OllamaOptionsValidatorTests.cs(32,0): at Ragnar.UnitTests.OllamaOptionsValidatorTests.Validate_InvalidHost_ReturnsInvalid(String Host)
+2026-08-20T17:22:05.6069511+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-20T17:22:05.6069634+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+2026-08-20T17:22:05.6086727+00:00 xUnit.net ERROR     Ragnar.UnitTests.OllamaOptionsValidatorTests.Validate_InvalidHost_ReturnsInvalid(Host: null) [FAIL]
+2026-08-20T17:22:05.6086987+00:00 xUnit.net INFORMATION       Expected Result.Errors.Select(E => E.ErrorMessage) {"Host is required."} to contain "Host is required".
+2026-08-20T17:22:05.6087136+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-20T17:22:05.6087275+00:00 xUnit.net INFORMATION            at FluentAssertions.Collections.GenericCollectionAssertions`3.Contain(T expected, String because, Object[] becauseArgs)
+2026-08-20T17:22:05.6087409+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\OllamaOptionsValidatorTests.cs(32,0): at Ragnar.UnitTests.OllamaOptionsValidatorTests.Validate_InvalidHost_ReturnsInvalid(String Host)
+2026-08-20T17:22:05.6087509+00:00 xUnit.net INFORMATION            at InvokeStub_OllamaOptionsValidatorTests.Validate_InvalidHost_ReturnsInvalid(Object, Span`1)
+2026-08-20T17:22:05.6087632+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-08-20T17:23:10.9463197+00:00 xUnit.net INFORMATION   Finished:    Ragnar.UnitTests (ID = 'f098f31f0eacc0ee01d83fd63129e4523264605bb0c54dec59a352b1acd06c48')
+2026-08-20T17:23:10.9493708+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-08-20T17:23:10.9526866+00:00 xUnit.net INFORMATION    Ragnar.UnitTests  Total: 99, Errors: 0, Failed: 5, Skipped: 0, Not Run: 0, Time: 71.974s

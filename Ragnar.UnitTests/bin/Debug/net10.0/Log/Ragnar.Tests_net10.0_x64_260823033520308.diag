@@ -1,0 +1,49 @@
+2026-08-23T03:35:20.3224154+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 2.3.3+44aa76e6a61d4908f06dfd77a51d4b7e3e7ce40f
+2026-08-23T03:35:20.3345783+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-08-23T03:35:20.3358116+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-08-23T03:35:20.3358192+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 03:35:20.285
+2026-08-23T03:35:20.3359351+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 400080
+2026-08-23T03:35:20.3359793+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.11
+2026-08-23T03:35:20.3360189+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.11\System.Private.CoreLib.dll
+2026-08-23T03:35:20.3360389+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-08-23T03:35:20.3361652+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Ragnar.Tests.dll
+2026-08-23T03:35:20.3363651+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\TestResults --client-port 62935'
+2026-08-23T03:35:20.3376408+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-08-23T03:35:20.3924664+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-08-23T03:35:20.4061177+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-08-23T03:35:20.7373334+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '4.0.0' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-08-23T03:35:20.7535690+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v4.0.0+8bf043c053 (64-bit .NET 10.0.11)
+2026-08-23T03:35:20.8475432+00:00 xUnit.net INFORMATION   Discovering: Ragnar.Tests
+2026-08-23T03:35:21.0310541+00:00 xUnit.net INFORMATION   Discovered:  Ragnar.Tests
+2026-08-23T03:35:21.0586856+00:00 xUnit.net INFORMATION   Starting:    Ragnar.Tests
+2026-08-23T03:35:27.7915861+00:00 xUnit.net ERROR     Ragnar.Tests.Extensions.SavePathExtensionsTests.ShowPrompt_WrapsTextInMarkdownFences(Prompt: "Explain dependency injection", ExpectedMarker: "***", ExpectedLabel: "[Original Prompt]", ExpectedContent: "Explain dependency injection") [FAIL]
+2026-08-23T03:35:27.7921326+00:00 xUnit.net INFORMATION       Expected result to end with "
+***", but "
+
+***
+[Original Prompt]
+Explain dependency injection[/Original Prompt]***" differs near "
+
+*" (index 0).
+2026-08-23T03:35:27.7925723+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-23T03:35:27.7931615+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.StringAssertions`1.EndWith(String expected, String because, Object[] becauseArgs)
+2026-08-23T03:35:27.7931911+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Extensions\SavePathExtensionsTests.cs(16,0): at Ragnar.Tests.Extensions.SavePathExtensionsTests.ShowPrompt_WrapsTextInMarkdownFences(String Prompt, String ExpectedMarker, String ExpectedLabel, String ExpectedContent)
+2026-08-23T03:35:27.7932059+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-23T03:35:27.7932144+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+2026-08-23T03:35:27.8016053+00:00 xUnit.net ERROR     Ragnar.Tests.Extensions.SavePathExtensionsTests.ShowPrompt_WrapsTextInMarkdownFences(Prompt: "SELECT * FROM Users", ExpectedMarker: "***", ExpectedLabel: "[Original Prompt]", ExpectedContent: "SELECT * FROM Users") [FAIL]
+2026-08-23T03:35:27.8016302+00:00 xUnit.net INFORMATION       Expected result to end with "
+***", but "
+
+***
+[Original Prompt]
+SELECT * FROM Users[/Original Prompt]***" differs near "
+
+*" (index 0).
+2026-08-23T03:35:27.8016544+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-23T03:35:27.8016672+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.StringAssertions`1.EndWith(String expected, String because, Object[] becauseArgs)
+2026-08-23T03:35:27.8016829+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Extensions\SavePathExtensionsTests.cs(16,0): at Ragnar.Tests.Extensions.SavePathExtensionsTests.ShowPrompt_WrapsTextInMarkdownFences(String Prompt, String ExpectedMarker, String ExpectedLabel, String ExpectedContent)
+2026-08-23T03:35:27.8016969+00:00 xUnit.net INFORMATION            at InvokeStub_SavePathExtensionsTests.ShowPrompt_WrapsTextInMarkdownFences(Object, Span`1)
+2026-08-23T03:35:27.8017083+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithFewArgs(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-08-23T03:35:27.8253664+00:00 xUnit.net INFORMATION   Finished:    Ragnar.Tests (ID = 'f938faec33fe5f71c53c157942770d0eda0a74427521894987d80f15ac52b3a0')
+2026-08-23T03:35:27.8319781+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-08-23T03:35:27.8404591+00:00 xUnit.net INFORMATION    Ragnar.Tests  Total: 2, Errors: 0, Failed: 2, Skipped: 0, Not Run: 0, Time: 6.770s

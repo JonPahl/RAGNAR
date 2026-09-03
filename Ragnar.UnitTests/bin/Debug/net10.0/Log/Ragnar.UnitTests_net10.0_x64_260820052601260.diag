@@ -1,0 +1,98 @@
+2026-08-20T05:26:01.2729939+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 2.3.3+44aa76e6a61d4908f06dfd77a51d4b7e3e7ce40f
+2026-08-20T05:26:01.2868259+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-08-20T05:26:01.2881365+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-08-20T05:26:01.2881562+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 05:26:01.240
+2026-08-20T05:26:01.2882666+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 19160
+2026-08-20T05:26:01.2883005+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.11
+2026-08-20T05:26:01.2883220+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.11\System.Private.CoreLib.dll
+2026-08-20T05:26:01.2883349+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-08-20T05:26:01.2884275+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Ragnar.UnitTests.dll
+2026-08-20T05:26:01.2885965+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\TestResults --client-port 51511'
+2026-08-20T05:26:01.2896725+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-08-20T05:26:01.3406343+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-08-20T05:26:01.3525205+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-08-20T05:26:01.6862817+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '4.0.0' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-08-20T05:26:01.6997417+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v4.0.0+8bf043c053 (64-bit .NET 10.0.11)
+2026-08-20T05:26:01.7648319+00:00 xUnit.net INFORMATION   Discovering: Ragnar.UnitTests
+2026-08-20T05:26:01.8672333+00:00 xUnit.net INFORMATION   Discovered:  Ragnar.UnitTests
+2026-08-20T05:26:01.8866526+00:00 xUnit.net INFORMATION   Starting:    Ragnar.UnitTests
+2026-08-20T05:26:07.6751330+00:00 xUnit.net ERROR     Ragnar.UnitTests.OllamaOptionsValidatorTests.Validate_InvalidPort_ReturnsInvalid(port: 65536) [FAIL]
+2026-08-20T05:26:07.6756426+00:00 xUnit.net INFORMATION       Assert.Contains() Failure: Item not found in collection
+2026-08-20T05:26:07.6756597+00:00 xUnit.net INFORMATION       Collection: ["Port must be between 1 and 65535."]
+2026-08-20T05:26:07.6756613+00:00 xUnit.net INFORMATION       Not found:  "between 1 and 65535"
+2026-08-20T05:26:07.6761111+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-20T05:26:07.6771699+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\OllamaOptionsValidatorTests.cs(46,0): at Ragnar.UnitTests.OllamaOptionsValidatorTests.Validate_InvalidPort_ReturnsInvalid(Int32 port)
+2026-08-20T05:26:07.6772007+00:00 xUnit.net INFORMATION            at System.RuntimeMethodHandle.InvokeMethod(ObjectHandleOnStack target, Void** arguments, ObjectHandleOnStack sig, BOOL isConstructor, ObjectHandleOnStack result)
+2026-08-20T05:26:07.6772149+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-20T05:26:07.6772255+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+2026-08-20T05:26:07.6784623+00:00 xUnit.net ERROR     Ragnar.UnitTests.ResponseWriterTests.WriteResponseAsync_CreatesFileAndReturnsPath [FAIL]
+2026-08-20T05:26:07.6784859+00:00 xUnit.net INFORMATION       System.NotSupportedException : Unsupported expression: ... => ....SourceDirectory
+2026-08-20T05:26:07.6784888+00:00 xUnit.net INFORMATION       Non-overridable members (here: ApplicationOptions.get_SourceDirectory) may not be used in setup / verification expressions.
+2026-08-20T05:26:07.6785118+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-20T05:26:07.6785332+00:00 xUnit.net INFORMATION         /_/src/Moq/Guard.cs(99,0): at Moq.Guard.IsOverridable(MethodInfo method, Expression expression)
+2026-08-20T05:26:07.6785599+00:00 xUnit.net INFORMATION         /_/src/Moq/MethodExpectation.cs(87,0): at Moq.MethodExpectation..ctor(LambdaExpression expression, MethodInfo method, IReadOnlyList`1 arguments, Boolean exactGenericTypeArguments, Boolean skipMatcherInitialization, Boolean allowNonOverridable)
+2026-08-20T05:26:07.6785686+00:00 xUnit.net INFORMATION         /_/src/Moq/ExpressionExtensions.cs(326,0): at Moq.ExpressionExtensions.<Split>g__Split|5_0(Expression e, Expression& r, MethodExpectation& p, Boolean assignment, Boolean allowNonOverridableLastProperty)
+2026-08-20T05:26:07.6785764+00:00 xUnit.net INFORMATION         /_/src/Moq/ExpressionExtensions.cs(149,0): at Moq.ExpressionExtensions.Split(LambdaExpression expression, Boolean allowNonOverridableLastProperty)
+2026-08-20T05:26:07.6785818+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(645,0): at Moq.Mock.SetupRecursive[TSetup](Mock mock, LambdaExpression expression, Func`4 setupLast, Boolean allowNonOverridableLastProperty)
+2026-08-20T05:26:07.6785875+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(500,0): at Moq.Mock.Setup(Mock mock, LambdaExpression expression, Condition condition)
+2026-08-20T05:26:07.6785929+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(452,0): at Moq.Mock`1.Setup[TResult](Expression`1 expression)
+2026-08-20T05:26:07.6786012+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\ResponseWriterTests.cs(15,0): at Ragnar.UnitTests.ResponseWriterTests.InitializeAsync()
+2026-08-20T05:26:07.6788863+00:00 xUnit.net ERROR     Ragnar.UnitTests.OllamaOptionsValidatorTests.Validate_InvalidPort_ReturnsInvalid(port: 0) [FAIL]
+2026-08-20T05:26:07.6789075+00:00 xUnit.net INFORMATION       Assert.Contains() Failure: Item not found in collection
+2026-08-20T05:26:07.6789105+00:00 xUnit.net INFORMATION       Collection: ["Port must be between 1 and 65535."]
+2026-08-20T05:26:07.6789116+00:00 xUnit.net INFORMATION       Not found:  "between 1 and 65535"
+2026-08-20T05:26:07.6789180+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-20T05:26:07.6789363+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\OllamaOptionsValidatorTests.cs(46,0): at Ragnar.UnitTests.OllamaOptionsValidatorTests.Validate_InvalidPort_ReturnsInvalid(Int32 port)
+2026-08-20T05:26:07.6789427+00:00 xUnit.net INFORMATION            at InvokeStub_OllamaOptionsValidatorTests.Validate_InvalidPort_ReturnsInvalid(Object, Span`1)
+2026-08-20T05:26:07.6789502+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-08-20T05:26:07.6790547+00:00 xUnit.net ERROR     Ragnar.UnitTests.ResponseWriterTests.WriteResponseAsync_CreatesCategoryDirectory_WhenMissing [FAIL]
+2026-08-20T05:26:07.6790684+00:00 xUnit.net INFORMATION       System.NotSupportedException : Unsupported expression: ... => ....SourceDirectory
+2026-08-20T05:26:07.6790697+00:00 xUnit.net INFORMATION       Non-overridable members (here: ApplicationOptions.get_SourceDirectory) may not be used in setup / verification expressions.
+2026-08-20T05:26:07.6790761+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-20T05:26:07.6790920+00:00 xUnit.net INFORMATION         /_/src/Moq/Guard.cs(99,0): at Moq.Guard.IsOverridable(MethodInfo method, Expression expression)
+2026-08-20T05:26:07.6790984+00:00 xUnit.net INFORMATION         /_/src/Moq/MethodExpectation.cs(87,0): at Moq.MethodExpectation..ctor(LambdaExpression expression, MethodInfo method, IReadOnlyList`1 arguments, Boolean exactGenericTypeArguments, Boolean skipMatcherInitialization, Boolean allowNonOverridable)
+2026-08-20T05:26:07.6791046+00:00 xUnit.net INFORMATION         /_/src/Moq/ExpressionExtensions.cs(326,0): at Moq.ExpressionExtensions.<Split>g__Split|5_0(Expression e, Expression& r, MethodExpectation& p, Boolean assignment, Boolean allowNonOverridableLastProperty)
+2026-08-20T05:26:07.6791123+00:00 xUnit.net INFORMATION         /_/src/Moq/ExpressionExtensions.cs(149,0): at Moq.ExpressionExtensions.Split(LambdaExpression expression, Boolean allowNonOverridableLastProperty)
+2026-08-20T05:26:07.6791203+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(645,0): at Moq.Mock.SetupRecursive[TSetup](Mock mock, LambdaExpression expression, Func`4 setupLast, Boolean allowNonOverridableLastProperty)
+2026-08-20T05:26:07.6791261+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(500,0): at Moq.Mock.Setup(Mock mock, LambdaExpression expression, Condition condition)
+2026-08-20T05:26:07.6791306+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(452,0): at Moq.Mock`1.Setup[TResult](Expression`1 expression)
+2026-08-20T05:26:07.6791370+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\ResponseWriterTests.cs(15,0): at Ragnar.UnitTests.ResponseWriterTests.InitializeAsync()
+2026-08-20T05:26:07.6791995+00:00 xUnit.net ERROR     Ragnar.UnitTests.OllamaOptionsValidatorTests.Validate_ZeroTimeout_ReturnsInvalid [FAIL]
+2026-08-20T05:26:07.6792108+00:00 xUnit.net INFORMATION       Assert.Contains() Failure: Item not found in collection
+2026-08-20T05:26:07.6792119+00:00 xUnit.net INFORMATION       Collection: ["Timeout must be greater than zero."]
+2026-08-20T05:26:07.6792128+00:00 xUnit.net INFORMATION       Not found:  "greater than zero"
+2026-08-20T05:26:07.6792174+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-20T05:26:07.6792310+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\OllamaOptionsValidatorTests.cs(56,0): at Ragnar.UnitTests.OllamaOptionsValidatorTests.Validate_ZeroTimeout_ReturnsInvalid()
+2026-08-20T05:26:07.6792408+00:00 xUnit.net INFORMATION            at System.RuntimeMethodHandle.InvokeMethod(ObjectHandleOnStack target, Void** arguments, ObjectHandleOnStack sig, BOOL isConstructor, ObjectHandleOnStack result)
+2026-08-20T05:26:07.6792455+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-20T05:26:07.6792536+00:00 xUnit.net INFORMATION            at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-08-20T05:26:07.6793620+00:00 xUnit.net ERROR     Ragnar.UnitTests.ResponseWriterTests.WriteResponseAsync_HandlesNullCategory_AsUncategorized [FAIL]
+2026-08-20T05:26:07.6793697+00:00 xUnit.net INFORMATION       System.NotSupportedException : Unsupported expression: ... => ....SourceDirectory
+2026-08-20T05:26:07.6793709+00:00 xUnit.net INFORMATION       Non-overridable members (here: ApplicationOptions.get_SourceDirectory) may not be used in setup / verification expressions.
+2026-08-20T05:26:07.6793775+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-20T05:26:07.6793859+00:00 xUnit.net INFORMATION         /_/src/Moq/Guard.cs(99,0): at Moq.Guard.IsOverridable(MethodInfo method, Expression expression)
+2026-08-20T05:26:07.6793927+00:00 xUnit.net INFORMATION         /_/src/Moq/MethodExpectation.cs(87,0): at Moq.MethodExpectation..ctor(LambdaExpression expression, MethodInfo method, IReadOnlyList`1 arguments, Boolean exactGenericTypeArguments, Boolean skipMatcherInitialization, Boolean allowNonOverridable)
+2026-08-20T05:26:07.6794044+00:00 xUnit.net INFORMATION         /_/src/Moq/ExpressionExtensions.cs(326,0): at Moq.ExpressionExtensions.<Split>g__Split|5_0(Expression e, Expression& r, MethodExpectation& p, Boolean assignment, Boolean allowNonOverridableLastProperty)
+2026-08-20T05:26:07.6794120+00:00 xUnit.net INFORMATION         /_/src/Moq/ExpressionExtensions.cs(149,0): at Moq.ExpressionExtensions.Split(LambdaExpression expression, Boolean allowNonOverridableLastProperty)
+2026-08-20T05:26:07.6794173+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(645,0): at Moq.Mock.SetupRecursive[TSetup](Mock mock, LambdaExpression expression, Func`4 setupLast, Boolean allowNonOverridableLastProperty)
+2026-08-20T05:26:07.6794245+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(500,0): at Moq.Mock.Setup(Mock mock, LambdaExpression expression, Condition condition)
+2026-08-20T05:26:07.6794319+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(452,0): at Moq.Mock`1.Setup[TResult](Expression`1 expression)
+2026-08-20T05:26:07.6794390+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\ResponseWriterTests.cs(15,0): at Ragnar.UnitTests.ResponseWriterTests.InitializeAsync()
+2026-08-20T05:26:07.7262379+00:00 xUnit.net ERROR     Ragnar.UnitTests.OllamaOptionsValidatorTests.Validate_InvalidHost_ReturnsInvalid(host: "") [FAIL]
+2026-08-20T05:26:07.7262743+00:00 xUnit.net INFORMATION       Expected result.Errors.Select(e => e.ErrorMessage) {"Host is required."} to contain "Host is required".
+2026-08-20T05:26:07.7262837+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-20T05:26:07.7262966+00:00 xUnit.net INFORMATION            at FluentAssertions.Collections.GenericCollectionAssertions`3.Contain(T expected, String because, Object[] becauseArgs)
+2026-08-20T05:26:07.7263101+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\OllamaOptionsValidatorTests.cs(34,0): at Ragnar.UnitTests.OllamaOptionsValidatorTests.Validate_InvalidHost_ReturnsInvalid(String host)
+2026-08-20T05:26:07.7263185+00:00 xUnit.net INFORMATION            at System.RuntimeMethodHandle.InvokeMethod(ObjectHandleOnStack target, Void** arguments, ObjectHandleOnStack sig, BOOL isConstructor, ObjectHandleOnStack result)
+2026-08-20T05:26:07.7263245+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-20T05:26:07.7263309+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+2026-08-20T05:26:07.7289351+00:00 xUnit.net ERROR     Ragnar.UnitTests.OllamaOptionsValidatorTests.Validate_InvalidHost_ReturnsInvalid(host: null) [FAIL]
+2026-08-20T05:26:07.7289564+00:00 xUnit.net INFORMATION       Expected result.Errors.Select(e => e.ErrorMessage) {"Host is required."} to contain "Host is required".
+2026-08-20T05:26:07.7289643+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-20T05:26:07.7289741+00:00 xUnit.net INFORMATION            at FluentAssertions.Collections.GenericCollectionAssertions`3.Contain(T expected, String because, Object[] becauseArgs)
+2026-08-20T05:26:07.7289867+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\OllamaOptionsValidatorTests.cs(34,0): at Ragnar.UnitTests.OllamaOptionsValidatorTests.Validate_InvalidHost_ReturnsInvalid(String host)
+2026-08-20T05:26:07.7289921+00:00 xUnit.net INFORMATION            at InvokeStub_OllamaOptionsValidatorTests.Validate_InvalidHost_ReturnsInvalid(Object, Span`1)
+2026-08-20T05:26:07.7289995+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithOneArg(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+2026-08-20T05:27:13.0600761+00:00 xUnit.net INFORMATION   Finished:    Ragnar.UnitTests (ID = 'f098f31f0eacc0ee01d83fd63129e4523264605bb0c54dec59a352b1acd06c48')
+2026-08-20T05:27:13.0663233+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-08-20T05:27:13.0735532+00:00 xUnit.net INFORMATION    Ragnar.UnitTests  Total: 102, Errors: 0, Failed: 8, Skipped: 0, Not Run: 0, Time: 71.176s

@@ -1,0 +1,93 @@
+2026-08-27T17:10:28.9115259+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Version: 2.3.3+44aa76e6a61d4908f06dfd77a51d4b7e3e7ce40f
+2026-08-27T17:10:28.9254358+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging mode: asynchronous
+2026-08-27T17:10:28.9266611+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Logging level: Information
+2026-08-27T17:10:28.9266798+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION CreateBuilderAsync entry time: 17:10:28.385
+2026-08-27T17:10:28.9268468+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION PID: 375756
+2026-08-27T17:10:28.9269034+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime information: win-x64 - .NET 10.0.11
+2026-08-27T17:10:28.9269733+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Runtime location: C:\Program Files\dotnet\shared\Microsoft.NETCore.App\10.0.11\System.Private.CoreLib.dll
+2026-08-27T17:10:28.9269941+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION IsDynamicCodeSupported: True
+2026-08-27T17:10:28.9271383+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Test module: C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Ragnar.Tests.dll
+2026-08-27T17:10:28.9273087+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION Command line arguments: '--server --diagnostic --diagnostic-verbosity Information --diagnostic-output-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Log --results-directory C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\fine-code-coverage\coverage-tool-output --client-port 63936'
+2026-08-27T17:10:28.9281340+00:00 Microsoft.Testing.Platform.Builder.TestApplication INFORMATION TESTINGPLATFORM_DEFAULT_HANG_TIMEOUT: ''
+2026-08-27T17:10:28.9906091+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting RegisterEnvironmentVariablesConfigurationSource: 'True'
+2026-08-27T17:10:29.0066641+00:00 Microsoft.Testing.Platform.Hosts.TestHostBuilder INFORMATION Setting PlatformExitProcessOnUnhandledException: 'False', config file: False environment variable: 
+2026-08-27T17:10:29.6693024+00:00 Microsoft.Testing.Platform.Requests.TestHostTestFrameworkInvoker INFORMATION Test framework UID: '30ea7c6e-dd24-4152-a360-1387158cd41d' Version: '4.0.0' DisplayName: 'xUnit.net v3 Microsoft.Testing.Platform test framework' Description: 'xUnit.net v3 Microsoft.Testing.Platform test framework'
+2026-08-27T17:10:29.7301295+00:00 xUnit.net INFORMATION xUnit.net v3 In-Process Runner v4.0.0+8bf043c053 (64-bit .NET 10.0.11)
+2026-08-27T17:10:29.8587254+00:00 xUnit.net INFORMATION   Discovering: Ragnar.Tests
+2026-08-27T17:10:30.0688829+00:00 xUnit.net INFORMATION   Discovered:  Ragnar.Tests
+2026-08-27T17:10:30.1189800+00:00 xUnit.net INFORMATION   Starting:    Ragnar.Tests
+2026-08-27T17:10:34.1097246+00:00 xUnit.net ERROR     Ragnar.Tests.Core.ResponseWriterTests.WriteResponseAsync_WritesFileAndReturnsPath [FAIL]
+2026-08-27T17:10:34.1102129+00:00 xUnit.net INFORMATION       System.NotSupportedException : Unsupported expression: ... => ....SourceDirectory
+2026-08-27T17:10:34.1102294+00:00 xUnit.net INFORMATION       Non-overridable members (here: ApplicationOptions.get_SourceDirectory) may not be used in setup / verification expressions.
+2026-08-27T17:10:34.1106339+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-27T17:10:34.1111029+00:00 xUnit.net INFORMATION         /_/src/Moq/Guard.cs(99,0): at Moq.Guard.IsOverridable(MethodInfo method, Expression expression)
+2026-08-27T17:10:34.1111234+00:00 xUnit.net INFORMATION         /_/src/Moq/MethodExpectation.cs(87,0): at Moq.MethodExpectation..ctor(LambdaExpression expression, MethodInfo method, IReadOnlyList`1 arguments, Boolean exactGenericTypeArguments, Boolean skipMatcherInitialization, Boolean allowNonOverridable)
+2026-08-27T17:10:34.1111299+00:00 xUnit.net INFORMATION         /_/src/Moq/ExpressionExtensions.cs(326,0): at Moq.ExpressionExtensions.<Split>g__Split|5_0(Expression e, Expression& r, MethodExpectation& p, Boolean assignment, Boolean allowNonOverridableLastProperty)
+2026-08-27T17:10:34.1111350+00:00 xUnit.net INFORMATION         /_/src/Moq/ExpressionExtensions.cs(149,0): at Moq.ExpressionExtensions.Split(LambdaExpression expression, Boolean allowNonOverridableLastProperty)
+2026-08-27T17:10:34.1111383+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(645,0): at Moq.Mock.SetupRecursive[TSetup](Mock mock, LambdaExpression expression, Func`4 setupLast, Boolean allowNonOverridableLastProperty)
+2026-08-27T17:10:34.1111408+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(500,0): at Moq.Mock.Setup(Mock mock, LambdaExpression expression, Condition condition)
+2026-08-27T17:10:34.1111433+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(452,0): at Moq.Mock`1.Setup[TResult](Expression`1 expression)
+2026-08-27T17:10:34.1111527+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Core\ResponseWriterTests.cs(11,0): at Ragnar.Tests.Core.ResponseWriterTests.WriteResponseAsync_WritesFileAndReturnsPath()
+2026-08-27T17:10:34.1111538+00:00 xUnit.net INFORMATION         --- End of stack trace from previous location ---
+2026-08-27T17:10:34.1120981+00:00 xUnit.net ERROR     Ragnar.Tests.Core.ResponseWriterTests.WriteResponseAsync_UsesUncategorized_ForNullCategory [FAIL]
+2026-08-27T17:10:34.1121244+00:00 xUnit.net INFORMATION       System.NotSupportedException : Unsupported expression: ... => ....SourceDirectory
+2026-08-27T17:10:34.1121269+00:00 xUnit.net INFORMATION       Non-overridable members (here: ApplicationOptions.get_SourceDirectory) may not be used in setup / verification expressions.
+2026-08-27T17:10:34.1121468+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-27T17:10:34.1121594+00:00 xUnit.net INFORMATION         /_/src/Moq/Guard.cs(99,0): at Moq.Guard.IsOverridable(MethodInfo method, Expression expression)
+2026-08-27T17:10:34.1121656+00:00 xUnit.net INFORMATION         /_/src/Moq/MethodExpectation.cs(87,0): at Moq.MethodExpectation..ctor(LambdaExpression expression, MethodInfo method, IReadOnlyList`1 arguments, Boolean exactGenericTypeArguments, Boolean skipMatcherInitialization, Boolean allowNonOverridable)
+2026-08-27T17:10:34.1121716+00:00 xUnit.net INFORMATION         /_/src/Moq/ExpressionExtensions.cs(326,0): at Moq.ExpressionExtensions.<Split>g__Split|5_0(Expression e, Expression& r, MethodExpectation& p, Boolean assignment, Boolean allowNonOverridableLastProperty)
+2026-08-27T17:10:34.1121763+00:00 xUnit.net INFORMATION         /_/src/Moq/ExpressionExtensions.cs(149,0): at Moq.ExpressionExtensions.Split(LambdaExpression expression, Boolean allowNonOverridableLastProperty)
+2026-08-27T17:10:34.1121819+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(645,0): at Moq.Mock.SetupRecursive[TSetup](Mock mock, LambdaExpression expression, Func`4 setupLast, Boolean allowNonOverridableLastProperty)
+2026-08-27T17:10:34.1121898+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(500,0): at Moq.Mock.Setup(Mock mock, LambdaExpression expression, Condition condition)
+2026-08-27T17:10:34.1121948+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(452,0): at Moq.Mock`1.Setup[TResult](Expression`1 expression)
+2026-08-27T17:10:34.1122016+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\Core\ResponseWriterTests.cs(49,0): at Ragnar.Tests.Core.ResponseWriterTests.WriteResponseAsync_UsesUncategorized_ForNullCategory()
+2026-08-27T17:10:34.1122027+00:00 xUnit.net INFORMATION         --- End of stack trace from previous location ---
+2026-08-27T17:10:34.1207695+00:00 xUnit.net ERROR     Ragnar.Tests.PathResolverAndFilterTests.ResolveResponseDirectory_CreatesAndReturnsPath [FAIL]
+2026-08-27T17:10:34.1207878+00:00 xUnit.net INFORMATION       Expected result to be a match with the expectation, but it differs at index 80:
+2026-08-27T17:10:34.1207896+00:00 xUnit.net INFORMATION                     ↓ (actual)
+2026-08-27T17:10:34.1207943+00:00 xUnit.net INFORMATION         "…\Response\Other"
+2026-08-27T17:10:34.1207992+00:00 xUnit.net INFORMATION         "…\Response\CS"
+2026-08-27T17:10:34.1207998+00:00 xUnit.net INFORMATION                     ↑ (expected)
+2026-08-27T17:10:34.1208044+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-27T17:10:34.1208107+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.StringAssertions`1.Be(String expected, String because, Object[] becauseArgs)
+2026-08-27T17:10:34.1208179+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\PathResolverAndFilterTests.cs(18,0): at Ragnar.Tests.PathResolverAndFilterTests.ResolveResponseDirectory_CreatesAndReturnsPath()
+2026-08-27T17:10:34.1208237+00:00 xUnit.net INFORMATION            at System.RuntimeMethodHandle.InvokeMethod(ObjectHandleOnStack target, Void** arguments, ObjectHandleOnStack sig, BOOL isConstructor, ObjectHandleOnStack result)
+2026-08-27T17:10:34.1208263+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-27T17:10:34.1208288+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-27T17:10:34.1308939+00:00 xUnit.net ERROR     Ragnar.Tests.PathResolverAndFilterTests.ResolveResponseDirectory_HandlesNullCategory [FAIL]
+2026-08-27T17:10:34.1309196+00:00 xUnit.net INFORMATION       Expected result "C:\Users\jp325\AppData\Local\Temp\1fe1456c-7dca-4ef6-8f6f-286ec4de1cce\Response\Performance" to contain "Uncategorized".
+2026-08-27T17:10:34.1309242+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-27T17:10:34.1309314+00:00 xUnit.net INFORMATION            at FluentAssertions.Primitives.StringAssertions`1.Contain(String expected, String because, Object[] becauseArgs)
+2026-08-27T17:10:34.1309388+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\PathResolverAndFilterTests.cs(36,0): at Ragnar.Tests.PathResolverAndFilterTests.ResolveResponseDirectory_HandlesNullCategory()
+2026-08-27T17:10:34.1309453+00:00 xUnit.net INFORMATION            at System.RuntimeMethodHandle.InvokeMethod(ObjectHandleOnStack target, Void** arguments, ObjectHandleOnStack sig, BOOL isConstructor, ObjectHandleOnStack result)
+2026-08-27T17:10:34.1309492+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InterpretedInvoke_Method(Object obj, IntPtr* args)
+2026-08-27T17:10:34.1309562+00:00 xUnit.net INFORMATION            at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
+2026-08-27T17:10:34.2037136+00:00 xUnit.net ERROR     Ragnar.Tests.EmbeddingPipelineTests.EnsureCollectionExistsAsync_CreatesAndLogsWhenMissing [FAIL]
+2026-08-27T17:10:34.2037374+00:00 xUnit.net INFORMATION       System.NotSupportedException : Unsupported expression: ... => ....Dimension
+2026-08-27T17:10:34.2037393+00:00 xUnit.net INFORMATION       Non-overridable members (here: EmbeddingOptions.get_Dimension) may not be used in setup / verification expressions.
+2026-08-27T17:10:34.2037460+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-27T17:10:34.2037559+00:00 xUnit.net INFORMATION         /_/src/Moq/Guard.cs(99,0): at Moq.Guard.IsOverridable(MethodInfo method, Expression expression)
+2026-08-27T17:10:34.2037627+00:00 xUnit.net INFORMATION         /_/src/Moq/MethodExpectation.cs(87,0): at Moq.MethodExpectation..ctor(LambdaExpression expression, MethodInfo method, IReadOnlyList`1 arguments, Boolean exactGenericTypeArguments, Boolean skipMatcherInitialization, Boolean allowNonOverridable)
+2026-08-27T17:10:34.2037681+00:00 xUnit.net INFORMATION         /_/src/Moq/ExpressionExtensions.cs(326,0): at Moq.ExpressionExtensions.<Split>g__Split|5_0(Expression e, Expression& r, MethodExpectation& p, Boolean assignment, Boolean allowNonOverridableLastProperty)
+2026-08-27T17:10:34.2037709+00:00 xUnit.net INFORMATION         /_/src/Moq/ExpressionExtensions.cs(149,0): at Moq.ExpressionExtensions.Split(LambdaExpression expression, Boolean allowNonOverridableLastProperty)
+2026-08-27T17:10:34.2037734+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(645,0): at Moq.Mock.SetupRecursive[TSetup](Mock mock, LambdaExpression expression, Func`4 setupLast, Boolean allowNonOverridableLastProperty)
+2026-08-27T17:10:34.2037765+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(500,0): at Moq.Mock.Setup(Mock mock, LambdaExpression expression, Condition condition)
+2026-08-27T17:10:34.2037790+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(452,0): at Moq.Mock`1.Setup[TResult](Expression`1 expression)
+2026-08-27T17:10:34.2037831+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\EmbeddingPipelineTests.cs(32,0): at Ragnar.Tests.EmbeddingPipelineTests.EnsureCollectionExistsAsync_CreatesAndLogsWhenMissing()
+2026-08-27T17:10:34.2037840+00:00 xUnit.net INFORMATION         --- End of stack trace from previous location ---
+2026-08-27T17:10:34.2050037+00:00 xUnit.net ERROR     Ragnar.Tests.EmbeddingPipelineTests.EnsureCollectionExistsAsync_DoesNotCreateWhenExisting [FAIL]
+2026-08-27T17:10:34.2050189+00:00 xUnit.net INFORMATION       System.NotSupportedException : Unsupported expression: ... => ....Dimension
+2026-08-27T17:10:34.2050207+00:00 xUnit.net INFORMATION       Non-overridable members (here: EmbeddingOptions.get_Dimension) may not be used in setup / verification expressions.
+2026-08-27T17:10:34.2050264+00:00 xUnit.net INFORMATION       Stack Trace:
+2026-08-27T17:10:34.2050353+00:00 xUnit.net INFORMATION         /_/src/Moq/Guard.cs(99,0): at Moq.Guard.IsOverridable(MethodInfo method, Expression expression)
+2026-08-27T17:10:34.2050400+00:00 xUnit.net INFORMATION         /_/src/Moq/MethodExpectation.cs(87,0): at Moq.MethodExpectation..ctor(LambdaExpression expression, MethodInfo method, IReadOnlyList`1 arguments, Boolean exactGenericTypeArguments, Boolean skipMatcherInitialization, Boolean allowNonOverridable)
+2026-08-27T17:10:34.2050437+00:00 xUnit.net INFORMATION         /_/src/Moq/ExpressionExtensions.cs(326,0): at Moq.ExpressionExtensions.<Split>g__Split|5_0(Expression e, Expression& r, MethodExpectation& p, Boolean assignment, Boolean allowNonOverridableLastProperty)
+2026-08-27T17:10:34.2050476+00:00 xUnit.net INFORMATION         /_/src/Moq/ExpressionExtensions.cs(149,0): at Moq.ExpressionExtensions.Split(LambdaExpression expression, Boolean allowNonOverridableLastProperty)
+2026-08-27T17:10:34.2050505+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(645,0): at Moq.Mock.SetupRecursive[TSetup](Mock mock, LambdaExpression expression, Func`4 setupLast, Boolean allowNonOverridableLastProperty)
+2026-08-27T17:10:34.2050529+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock.cs(500,0): at Moq.Mock.Setup(Mock mock, LambdaExpression expression, Condition condition)
+2026-08-27T17:10:34.2050553+00:00 xUnit.net INFORMATION         /_/src/Moq/Mock`1.cs(452,0): at Moq.Mock`1.Setup[TResult](Expression`1 expression)
+2026-08-27T17:10:34.2050593+00:00 xUnit.net INFORMATION         C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\EmbeddingPipelineTests.cs(59,0): at Ragnar.Tests.EmbeddingPipelineTests.EnsureCollectionExistsAsync_DoesNotCreateWhenExisting()
+2026-08-27T17:10:34.2050602+00:00 xUnit.net INFORMATION         --- End of stack trace from previous location ---
+2026-08-27T17:11:41.0493487+00:00 xUnit.net INFORMATION   Finished:    Ragnar.Tests (ID = 'f938faec33fe5f71c53c157942770d0eda0a74427521894987d80f15ac52b3a0')
+2026-08-27T17:11:41.0556086+00:00 xUnit.net INFORMATION === TEST EXECUTION SUMMARY ===
+2026-08-27T17:11:41.0694224+00:00 xUnit.net INFORMATION    Ragnar.Tests  Total: 107, Errors: 0, Failed: 6, Skipped: 0, Not Run: 0, Time: 70.945s

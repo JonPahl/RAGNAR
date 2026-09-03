@@ -1,0 +1,7 @@
+IsEnabled,Text,FileName,Category
+"1","Please create unit tests using (xunit and moq) and FluentValidation for all public methods where applicable.","UnitTestCreate","Testing"
+"1","Please modify existing unit tests using xunit and moq for all public methods where applicable.","UnitTestModify","Testing"
+"1","Please suggest any exiting unit tests that should either merged or removed if duplicated.", "UnitTestRemove", "Testing"
+"0","Please list all integration test that are not needed based on previous questions.","IntegrationTestRemove","Testing"
+"0","Please modify existing integration tests using xunit and moq for all public methods where applicable.", "IntegrationTestModify", "Testing"
+"0","Please create integration tests using (xunit and moq) and FluentValidation for all public methods where applicable.","IntegrationTestCreate","Testing"
