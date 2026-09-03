@@ -1,8 +1,4 @@
-﻿using Qdrant.Client.Grpc;
-
-using Ragnar.Core.Utils;
-
-namespace Ragnar.Core.Model;
+﻿namespace Ragnar.Core.Model;
 
 /// <summary>Represents a code document with source, metadata, and comments.</summary>
 public sealed record CodeDocument

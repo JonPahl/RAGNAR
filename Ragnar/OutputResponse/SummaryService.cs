@@ -1,49 +1,48 @@
-﻿using System.Text;
+﻿namespace Ragnar.OutputResponse;
 
-namespace Ragnar.OutputResponse;
 /// <summary>
-/// Summary each response into a single file.
+/// summary each response into a single file.
 /// </summary>
 /// <param name="logger">Seri.logger.</param>
-/// <param name="_writer">Console writer.</param>
-/// <param name="factory">Ollama Client factory.</param>
-/// <param name="SummaryPrompt">System prompt.</param>
+/// <param name="writer">Console writer.</param>
+/// <param name="summaryPrompt">System prompt.</param>
 /// <param name="ollamaClientProvider">Ollama option lookup.
 /// </param>
 /// <param name="configWrapper">Wrapper for all configuration.</param>
 public class SummaryService(
     Serilog.ILogger logger,
-    IOutputWriter _writer,
-    IOllamaClientProvider factory,
-    [FromKeyedServices("Summary")] ISystemPromptProvider SummaryPrompt,
-    IOllamaResponse ollamaClientProvider,
-    IOptions<ApplicationConfiguration> configWrapper)
+    IOutputWriter writer,
+    IOllamaAIClientBuilder ollamaAIClientBuilder,
+    [FromKeyedServices("Summary")] IPromptProvider summaryPrompt,
+    IOllamaGenerationService ollamaClientProvider,
+    IOptions<RagnarConfig> configWrapper,
+    IQuestionProvider csvProvider,
+    IResponseWriter responseWriter)
     : ISummaryService
 {
-    private readonly OllamaApiClient ollamaClient = factory.FindClient(OllamaType.Ollama);
+    private readonly ILogger _logger = logger;
+    private readonly IOutputWriter _writer = writer;
+    private readonly IOllamaAIClientBuilder _ollamaAIClient = ollamaAIClientBuilder;
+    private readonly IPromptProvider _summaryPrompt = summaryPrompt;
+    private readonly IOllamaGenerationService _ollamaClientProvider = ollamaClientProvider;
+    private readonly IOptions<RagnarConfig> _configWrapper = configWrapper;
 
-    private readonly EmbeddingOptions embeddingOptions = configWrapper.Value.EmbeddingOptions;
-
-    private readonly OllamaOptions ollamaOptions = configWrapper.Value.OllamaOptions;
-
-    private readonly ApplicationOptions applicationOptions = configWrapper.Value.ApplicationOptions;
 
     /// <summary>
     /// Summarizes all .md responses in the Response/ directory into one markdown summary.
     /// </summary>
-    /// <param name="ct">Cancellation token.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Return Value task.</returns>
-    public async ValueTask SummarizeAllResponsesAsync(CancellationToken ct)
+    public async ValueTask SummarizeAllResponsesAsync(CancellationToken cancellationToken)
     {
-        ollamaClient.SelectedModel = embeddingOptions.EmbeddingModel;
-
-        var baseDir = applicationOptions.SourceDirectory.ExpandDirectory();
-
-        var responseDir = baseDir.GetResponseDirectory();
+        var sourceDir = _configWrapper.Value.ApplicationOptions.SourceDirectory;
+        var outputDir = _configWrapper.Value.ApplicationOptions.OutputFolder;
+        var responseDir = Path.Join(sourceDir, outputDir);
 
         if (!Directory.Exists(responseDir))
         {
-            _writer.MarkupLine($"[yellow]Response directory not found: {responseDir}[/]");
+            _writer.MarkupLine("Response directory not found:" +
+                $"{responseDir}", Styles.Yellow);
             return;
         }
 
@@ -52,66 +51,90 @@ public class SummaryService(
             RecurseSubdirectories = true
         });
 
+
+        var summaryQuestions = await LoadQuestionsAsync(cancellationToken: cancellationToken);
+
         foreach (var folder in folders)
         {
-            var contents = await LoadFolderContents(folder, ct);
-            var response = await AskQuestionAsync(contents, ct);
-            await SaveResponseAsync(response, responseDir, folder, ct);
+            foreach (var question in summaryQuestions)
+            {
+                var fileName = $"{folder.LastFolder}_{question.Filename}";
+
+                var response = await AskAgentAsync(folder, question, cancellationToken);
+
+                await SaveResponseAsync(response, responseDir, "summary", fileName, cancellationToken);
+            }
         }
     }
 
-    private async Task SaveResponseAsync(string summary, string saveFolder, string folder, CancellationToken ct)
+    private async Task<List<Core.Model.Question>> LoadQuestionsAsync(string fileName = "Summary.csv", CancellationToken cancellationToken = default)
     {
-        //TODO: Move to ISaveResponse implementation..
+        var csvFile = Path.Join(AppContext.BaseDirectory, "Questions", "Plugins", fileName);
+        if (!File.Exists(csvFile))
+        {
+            writer.MarkupLine("Summary CSV not found: " + csvFile, Styles.Yellow);
+            throw new FileNotFoundException("File not found", csvFile);
+        }
+
+        var questions = (await csvProvider.LoadQuestionsAsync(csvFile, cancellationToken))
+            .Where(q => q.IsActive)
+            .ToList();
+
+        var summaryQuestions = new List<Core.Model.Question>();
+
+        foreach (var question in questions)
+        {
+            summaryQuestions.Add(new Core.Model.Question(question.IsActive, question.Text, question.FileName, question.Category, null));
+        }
+
+        return summaryQuestions;
+    }
+
+    /// <summary>
+    /// Ask LLM agent to summarize information.
+    /// </summary>
+    /// <param name="folder">The directory path to analyze.</param>
+    /// <param name="question">The question to ask the agent.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Summarized contents.</returns>
+    private async Task<string> AskAgentAsync(
+        string folder,
+        Core.Model.Question question,
+        CancellationToken cancellationToken)
+    {
+        var agent = new ContentSummarizerAgent(
+            _ollamaAIClient,
+            _ollamaClientProvider,
+            _summaryPrompt);
+
+        return await agent.AskAgent(folder, question.Text, cancellationToken);
+    }
+
+    private async Task SaveResponseAsync(string summary, string saveFolder, string folder, string fileName, CancellationToken cancellationToken)
+    {
         try
         {
-            var summaryPath = Path.Combine(saveFolder, $"{folder}_summary_{DateTime.UtcNow:yyyy_MM_dd_HHmmss}.md");
+            //var path = Path.Join(saveFolder, folder);
 
-            await File.WriteAllTextAsync(summaryPath, $"# RAG Response Summary\n\n{summary}\n\nGenerated: {DateTime.UtcNow:O}", ct);
+            //if (!Directory.Exists(path))
+            //{
+            //    Directory.CreateDirectory(path);
+            //}
 
-            _writer.MarkupLine($"[green]Summary saved: {summaryPath}[/]");
+            //var summaryPath = Path.Combine(path, $"{fileName}_{DateTime.Now:yyyy_MM_dd_HHmmss}.md");
+
+            //await File.WriteAllTextAsync(summaryPath, $"# RAG Response summary\n\n{summary}\n\nGenerated: {DateTime.Now:O}", cancellationToken);
+
+            var details = SaveDetails.FromSummary(summary, fileName, QuestionCategory.Summary);
+            var path = await responseWriter.WriteResponseAsync(details, cancellationToken);
+
+            _writer.WriteRule();
+            _writer.MarkupLine($"summary saved: {path}", Styles.Cyan);
+            _writer.WriteRule();
         }
         catch (Exception ex)
         {
-            AnsiConsole.WriteException(ex);
+            _logger.Error(ex, ex.Message);
         }
-    }
-
-    private async Task<string> AskQuestionAsync(string contents, CancellationToken ct)
-    {
-        SummaryPrompt.Content = contents;
-
-        var summaryRequest = new GenerateRequest
-        {
-            Model = ollamaOptions.LlmModel,
-            Prompt = SummaryPrompt.Template,
-            System = SummaryPrompt.Template + "\n\nYou are a helpful, concise summarizer.",
-        };
-
-        try
-        {
-            return await ollamaClientProvider.GenerateResponse(summaryRequest, ct);
-        }
-        catch (Exception ex)
-        {
-            logger.Warning("Summary response ex: {Message}, {Ex}", ex.Message, ex);
-            return ex.Message;
-        }
-    }
-
-    private static async Task<string> LoadFolderContents(string folder, CancellationToken ct)
-    {
-        var sanitizedCombined = new StringBuilder();
-
-        foreach (var file in Directory.GetFiles(folder))
-        {
-            var text = await File.ReadAllTextAsync(file, ct) ?? string.Empty;
-
-            sanitizedCombined.AppendLine($"---\n[RESPONSE_FILE]{Path.GetFileName(file)}[/RESPONSE_FILE]\n---\n");
-
-            sanitizedCombined.AppendLine(text);
-            sanitizedCombined.AppendLine();
-        }
-        return sanitizedCombined.ToString();
     }
 }

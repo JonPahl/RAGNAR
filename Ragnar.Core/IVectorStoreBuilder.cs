@@ -1,36 +1,34 @@
-﻿using Qdrant.Client.Grpc;
-
-namespace Ragnar.Core;
+﻿namespace Ragnar.Core;
 
 public interface IVectorStoreBuilder
 {
     /// <summary>
     /// Checks if the vector store exists.
     /// </summary>
-    /// <param name="ct">Cancellation token.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    ValueTask<IVectorStoreBuilder> ExistsAsync(CancellationToken ct);
+    Task<IVectorStoreBuilder> ExistsAsync(CancellationToken cancellationToken);
 
     /// <summary>
     /// Creates a new vector store.
     /// </summary>
-    /// <param name="ct">Cancellation token.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    ValueTask<IVectorStoreBuilder> CreateAsync(CancellationToken ct);
+    Task<IVectorStoreBuilder> CreateAsync(CancellationToken cancellationToken);
 
     /// <summary>
     /// Makes an index in the vector store.
     /// </summary>
     /// <param name="indexName">Index name.</param>
     /// <param name="schemaType">Payload schema type.</param>
-    /// <param name="ct">Cancellation token.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>A task representing the asynchronous operation.</returns>
-    ValueTask<IVectorStoreBuilder> MakeIndexAsync(string indexName, PayloadSchemaType schemaType, CancellationToken ct);
+    Task<IVectorStoreBuilder> MakeIndexAsync(string indexName, PayloadSchemaType schemaType, CancellationToken cancellationToken);
 
     /// <summary>
     /// Builds the vector store.
     /// </summary>
-    /// <param name="ct">Cancellation token.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>A boolean indicating success or failure.</returns>
-    Task<bool> BuildAsync(CancellationToken ct);
+    Task<bool> BuildAsync(CancellationToken cancellationToken);
 }

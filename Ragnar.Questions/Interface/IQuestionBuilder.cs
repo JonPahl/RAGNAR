@@ -1,0 +1,21 @@
+﻿//namespace Ragnar.Questions.Interface;
+///// <summary>
+///// A factory for creating Question instances.
+///// </summary>
+//public interface IQuestionBuilder
+//{
+//    /// <summary>Creates an active question.</summary>
+//    /// <param name="Text">Text of question.</param>
+//    /// <param name="Key">Save file name.</param>
+//    /// <param name="Category">Question Category.</param>
+//    /// <returns>newly created ACTIVE question.</returns>
+//    Question CreateActive(string Text, string Key, QuestionCategory Category);
+
+//    /// <summary>Creates an inactive question.</summary>
+//    /// <param name="Text">Text of question.</param>
+//    /// <param name="Key">Save file name.</param>
+//    /// <param name="Category">Question Category.</param>
+//    /// <remarks>Allow to turn a question off if not needed for current execution.</remarks>
+//    /// <returns>newly created INACTIVE question that will not be asked.</returns>
+//    Question CreateInactive(string Text, string Key, QuestionCategory Category);
+//}

@@ -1,18 +1,12 @@
-﻿
-using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
+﻿namespace Ragnar.Embedding.Chunker;
 
-using Ragnar.Core.Model;
-
-namespace Ragnar.Embedding.Chunker;
 /// <summary>
 /// Parses C# syntax trees into CodeDocument chunks for embedding.
 /// </summary>
 /// <example><![CDATA[var docs = new ChunkBySyntaxTree().ChunkSourceFile("Program.cs", code);]]></example>
 public class ChunkBySyntaxTree
 {
-    private const string _unknownElementName = "UNKNOWN";
+    private const string UNKNOWN_ELEMENT_NAME = "UNKNOWN";
 
     /// <summary>
     /// Parses C# syntax trees into CodeDocument chunks for embedding.
@@ -33,10 +27,6 @@ public class ChunkBySyntaxTree
 
         foreach (var node in root.DescendantNodes())
         {
-            //if (node is MethodDeclarationSyntax method)
-            //{
-            // response.Add(LoadMethod(filename, method));
-            //}
             if (node is ClassDeclarationSyntax classDeclaration)
             {
                 response.Add(LoadClass(filename, classDeclaration));
@@ -56,24 +46,18 @@ public class ChunkBySyntaxTree
     private CodeDocument LoadClass(string filename, ClassDeclarationSyntax classDefine)
     {
         var category = InferCategoryFromPath(filename);
-        return CreateCodeDocument(filename, classDefine, classDefine.Kind().ToString(), classDefine?.Identifier.ValueText ?? _unknownElementName, classDefine?.GetLeadingTrivia(), category);
+
+        return CreateCodeDocument(filename, classDefine, classDefine.Kind().ToString(), classDefine?.Identifier.ValueText ?? UNKNOWN_ELEMENT_NAME, classDefine?.GetLeadingTrivia(), category);
     }
 
-
-    private CodeDocument LoadMethod(string filename, MethodDeclarationSyntax method)
-    {
-        var category = InferCategoryFromPath(filename);
-        return CreateCodeDocument(filename, method, method.Kind().ToString(), method?.Identifier.ValueText ?? _unknownElementName, method?.GetLeadingTrivia(), category);
-    }
-
-    private string InferCategoryFromPath(string path)
-    => Path.GetFileNameWithoutExtension(path)
+    private string InferCategoryFromPath(string fileName)
+    => Path.GetFileNameWithoutExtension(fileName)
         .ToLowerInvariant() switch
     {
-        var _ when path.Contains("test", StringComparison.OrdinalIgnoreCase) => "Testing",
-        var _ when path.Contains("plugin", StringComparison.OrdinalIgnoreCase) => "Plugin",
-        var _ when path.Contains("embedding", StringComparison.OrdinalIgnoreCase) => "Embedding",
-        var _ when path.Contains("core", StringComparison.OrdinalIgnoreCase) => "Core",
+        var _ when fileName.Contains("test", StringComparison.OrdinalIgnoreCase) => "Testing",
+        var _ when fileName.Contains("plugin", StringComparison.OrdinalIgnoreCase) => "Plugin",
+        var _ when fileName.Contains("embedding", StringComparison.OrdinalIgnoreCase) => "Embedding",
+        var _ when fileName.Contains("core", StringComparison.OrdinalIgnoreCase) => "Core",
         _ => "Refactor"
     };
 

@@ -1,7 +1,5 @@
-﻿
-using System.IO.Enumeration;
+﻿namespace Ragnar.Extensions;
 
-namespace Ragnar.Extensions;
 /// <summary> Provides extension methods for <see cref="FileSystemEntry"/>.</summary>
 public static class FileSystemEntryExtensions
 {
@@ -20,5 +18,14 @@ public static class FileSystemEntryExtensions
     public static bool HasAllowedExtension(
         this FileSystemEntry entry,
         IReadOnlyCollection<string> allowedExtensions)
-        => !entry.IsDirectory && allowedExtensions.Contains(Path.GetExtension(entry.FileName.ToString()), StringComparer.OrdinalIgnoreCase);
+    {
+        Guard.Against.Null(allowedExtensions);
+
+        if (entry.IsDirectory)
+            return false;
+
+        var extension = Path.GetExtension(entry.FileName.ToString());
+
+        return allowedExtensions.Contains(extension, StringComparer.OrdinalIgnoreCase);
+    }
 }

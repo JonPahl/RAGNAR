@@ -1,10 +1,5 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿namespace Ragnar.Core.Options;
 
-namespace Ragnar.Core.Options;
-/// <summary>
-/// Ollama setup options.
-/// </summary>
 public record OllamaOptions
 {
     /// <summary>

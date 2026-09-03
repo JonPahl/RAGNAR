@@ -1,25 +1,17 @@
-﻿
-using Ardalis.GuardClauses;
+﻿namespace Ragnar.Core.Model;
 
-using Qdrant.Client.Grpc;
-
-using Ragnar.Plugins;
-
-using System.Diagnostics.CodeAnalysis;
-
-namespace Ragnar.Core.Model;
 /// <summary>
-/// Question to ask AI service against stored text.
+/// question to ask AI service against stored text.
 /// </summary>
-/// <param name="IsEnabled">Bool should load Question.</param>
-/// <param name="Text">Question text.</param>
+/// <param name="IsEnabled">Bool should load question.</param>
+/// <param name="Text">question text.</param>
 /// <param name="Filename">Save filename.</param>
 /// <param name="Category">QuestionCategory to group questions together. </param>
 public sealed record class Question(
     bool IsEnabled,
     [NotNull] string Text,
     [NotNull] string Filename,
-    QuestionCategory Category = QuestionCategory.Other,
+    QuestionCategory? Category = QuestionCategory.Other,
     Filter? Filter = null)
 {
     /// <summary>
@@ -34,6 +26,11 @@ public sealed record class Question(
     /// <returns>A new active question instance.</returns>
     public static Question IsActive(string text, string key, QuestionCategory category)
     {
+        //TODO: Call question AbstractValidation.
+
+        Guard.Against.NullOrWhiteSpace(text);
+        Guard.Against.NullOrWhiteSpace(key);
+
         Question question = new(true, text, key, category);
         return question.ValidateQuestion();
     }
@@ -66,6 +63,8 @@ public static class QuestionExtensions
 
         public Question ValidateQuestion()
         {
+            //TODO: Replace with call to AbstractValidation.
+
             foreach (var prop in question.GetType().GetProperties())
             {
                 Guard.Against.Null(prop);

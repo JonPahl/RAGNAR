@@ -1,6 +1,4 @@
-﻿using Ragnar.Core.Model;
-
-namespace Ragnar.Embedding.Factory;
+﻿namespace Ragnar.Embedding.Factory;
 
 public interface IFileParseFactory
 {
@@ -8,8 +6,8 @@ public interface IFileParseFactory
     /// Parses file using correct _parser based on extension.
     /// </summary>
     /// <param name="file">File path.</param>
-    /// <param name="ct">Cancellation token.</param>
+    /// <param name="Ct">Cancellation token.</param>
     /// <returns>Parsed documents.</returns>
     /// <example><![CDATA[var docs = await factory.ParseAsync("Program.cs", ct);]]></example>
-    Task<CodeDocument[]> ParseAsync(string file, CancellationToken ct);
+    Task<CodeDocument[]> ParseAsync(string file, CancellationToken cancellationToken);
 }

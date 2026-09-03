@@ -76,7 +76,7 @@
             <example><![CDATA[var list = builder.Build();]]></example>
             <returns>Read-only list of enabled questions.</returns>
         </member>
-        <member name="M:Ragnar.Builder.QuestionCombineBuilder.WithCategoryFilter(Ragnar.Core.Options.ApplicationOptions)">
+        <member name="M:Ragnar.Builder.QuestionCombineBuilder.WithCategoryFilter">
             <summary>Filters the question list to a specific set of categories.</summary>
             <param name="applicationOptions">Options carrying the category filter.</param>
             <remarks>Clears prior entries and replaces with the filtered set.</remarks>
@@ -322,25 +322,28 @@
             Save file object.
             </summary>
             <param name="Question">Asked question.</param>
-            <param name="Response">Question response.</param>
-            <param name="Duration">question duration.</param>
+            <param name="Content">Question response.</param>
+            <param name="ElapsedTime">question duration.</param>
         </member>
         <member name="M:Ragnar.Models.SaveDetails.#ctor(Ragnar.Core.Model.Question,System.String,System.String)">
             <summary>
             Save file object.
             </summary>
             <param name="Question">Asked question.</param>
-            <param name="Response">Question response.</param>
-            <param name="Duration">question duration.</param>
+            <param name="Content">Question response.</param>
+            <param name="ElapsedTime">question duration.</param>
         </member>
         <member name="P:Ragnar.Models.SaveDetails.Question">
             <summary>Asked question.</summary>
         </member>
-        <member name="P:Ragnar.Models.SaveDetails.Response">
+        <member name="P:Ragnar.Models.SaveDetails.Content">
             <summary>Question response.</summary>
         </member>
-        <member name="P:Ragnar.Models.SaveDetails.Duration">
+        <member name="P:Ragnar.Models.SaveDetails.ElapsedTime">
             <summary>question duration.</summary>
+        </member>
+        <member name="M:Ragnar.Models.SaveDetails.FromSummary(System.String,System.String,Ragnar.Plugins.QuestionCategory)">
+            <summary>Creates a SaveDetails from a free-form summary (no question needed).</summary>
         </member>
         <member name="T:Ragnar.Ollama.OllamaChatResponse">
              <summary>Initializes the response handler with writer and client factory.</summary>
@@ -451,7 +454,7 @@
             </param>
             <param name="configWrapper">Wrapper for all configuration.</param>
         </member>
-        <member name="M:Ragnar.OutputResponse.SummaryService.#ctor(Serilog.ILogger,Ragnar.Core.ConsoleWriter.IOutputWriter,Ragnar.Builder.IOllamaAIClientBuilder,Ragnar.Abstractions.IPromptProvider,Ragnar.Abstractions.IOllamaGenerationService,Microsoft.Extensions.Options.IOptions{Ragnar.Core.Options.RagnarConfig})">
+        <member name="M:Ragnar.OutputResponse.SummaryService.#ctor(Serilog.ILogger,Ragnar.Core.ConsoleWriter.IOutputWriter,Ragnar.Builder.IOllamaAIClientBuilder,Ragnar.Abstractions.IPromptProvider,Ragnar.Abstractions.IOllamaGenerationService,Microsoft.Extensions.Options.IOptions{Ragnar.Core.Options.RagnarConfig},Ragnar.Plugins.IQuestionProvider,Ragnar.Output.IResponseWriter)">
             <summary>
             summary each response into a single file.
             </summary>

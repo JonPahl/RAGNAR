@@ -13,7 +13,7 @@ public interface IConfigurationLoader
     /// var loader = new IConfigurationLoader();
     /// loader.LoadQuestions(); ]]>
     /// </example>
-    /// <returns>Collection of QuestionConfiguration objects.
+    /// <returns>Collection of Question objects.
     /// </returns>
-    IEnumerable<QuestionConfiguration> LoadQuestions();
+    IEnumerable<Plugins.Question> LoadQuestions();
 }

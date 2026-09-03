@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Ragnar.IntegrationTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f858c51713346c38062960984ab5267b5b9e4349")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7db2c35fa19eff1b9acb7dab837ee5d27fe9f1e5")]
 [assembly: System.Reflection.AssemblyProductAttribute("Ragnar.IntegrationTests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Ragnar.IntegrationTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
