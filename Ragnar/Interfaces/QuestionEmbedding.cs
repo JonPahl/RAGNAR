@@ -1,86 +1,62 @@
-﻿using System.Text;
+﻿namespace Ragnar.Interfaces;
 
-using Microsoft.SemanticKernel.Embeddings;
-
-namespace RAGNAR.Interfaces;
-
-public class QuestionEmbedding(Serilog.ILogger logger, IOptions<ApplicationConfiguration> configWrapper, IGeneratorService embeddingService, IQdrantClient qdrantClient, IOllamaClientProvider clientFactory) : IQuestionEmbedding
+/// <summary>Generates and retrieves embeddings for questions.</summary>
+/// <param name="logger"> Logger instance.</param>
+/// <param name="embeddingService"> Embedding service.</param>
+/// <param name="qdrantClient"> Qdrant client.</param>
+/// <returns>Question embedding instance.</returns>
+public class QuestionEmbedding(
+    Serilog.ILogger logger,
+    IEmbeddingService embeddingService,
+    IQdrantClient qdrantClient)
+    : IQuestionEmbedding
 {
-    private readonly IEmbeddingGenerator<string, Embedding<float>> generator = clientFactory.FindClient(OllamaType.Embedding).AsEmbeddingGenerator();
-
     /// <summary>
     /// Retrieves top-k context from qdrantClient using embedding query vector.
     /// </summary>
-    /// <param name="VectorStoreName">qdrantClient collection name.</param>
-    /// <param name="QuestionEmbeddingVector">Embedding vector of user query.</param>
-    /// <param name="ct">Cancellation token.</param>
+    /// <param name="vectorStoreName">qdrantClient collection name.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
     /// <param name="filter">Optional qdrant filter.</param>
     /// <returns>Aggregated context strings.</returns>
     /// <example><![CDATA[string ctx = await GetContext("docs", qVec, ct);]]></example>
     public async Task<string> GetContext(
-        string VectorStoreName,
-        ReadOnlyMemory<float> QuestionEmbeddingVector,
-        CancellationToken ct, Filter? filter = null)
+        string vectorStoreName,
+        CancellationToken cancellationToken, Filter? filter = null)
     {
-        var expectedDim = configWrapper.Value.EmbeddingOptions.Dimension;
-        if (Convert.ToUInt64(QuestionEmbeddingVector.Length) != expectedDim)
+        List<RetrievedPoint> allPoints = [];
+        PointId? nextOffset = null;
+        uint batchSize = 1000;
+
+        do
         {
-            throw new ArgumentException($"Query vector dimension {QuestionEmbeddingVector.Length} ≠ expected {expectedDim}", nameof(QuestionEmbeddingVector));
+            var scrollResponse = await qdrantClient.ScrollAsync(
+                collectionName: vectorStoreName,
+                limit: batchSize,
+                offset: nextOffset,
+                payloadSelector: true,
+                vectorsSelector: true,
+                cancellationToken: cancellationToken
+            );
+
+            allPoints.AddRange(scrollResponse.Result);
+            nextOffset = scrollResponse.NextPageOffset;
         }
+        while (nextOffset != null);
 
-        /* TODO: Can I make a filter object be an expression tree? Example of expression. var emptyOrNullFilter = new Filter { Should = {
-        new Condition {
-        Field = new FieldCondition {
-        Key = "Comment",Match = new Match { Text = "" }}},
-        new Condition { IsEmpty = new IsEmptyCondition {Key = "Comment"}}}}; */
-
-        // TODO: Make filter configurable and able to be added to exiting Question object.
-
-        var searchResult = await qdrantClient.SearchAsync(
-            collectionName: VectorStoreName,
-            vector: QuestionEmbeddingVector,
-            // filter: filter,
-            limit: 100,
-            cancellationToken: ct);
-
-        return await StreamContextAsync([.. searchResult]);
+        return await StreamContextAsync([.. allPoints]);
     }
 
-    /// <summary>
-    /// Generates embedding vector for given text using configured model.
-    /// </summary>
-    /// <param name="userQuestion">Input text to embed.</param>
-    /// <param name="ct">Cancellation token.</param>
-    /// <returns>Embedding vector as ReadOnlyMemory&lt;float&gt;.</returns>
-    /// <example><![CDATA[var vec = await GenerateEmbeddingAsync(ollama, "Query?", ct);]]></example>
-    public async Task<ReadOnlyMemory<float>> GenerateEmbeddingAsync(
-        string userQuestion,
-        CancellationToken ct)
+    private static async Task<string> StreamContextAsync(List<RetrievedPoint> value)
     {
-        var qv = await embeddingService.GenerateEmbeddingsAsync(logger, generator, userQuestion, ct);
-
-        return qv[0].Vector;
-    }
-
-    /// <summary>
-    /// Aggregates qdrantClient search payloads into a context string.
-    /// </summary>
-    /// <param name="searchResult">qdrantClient search results.</param>
-    /// <returns>Concatenated code context with [CONTEXT CODE] tags.</returns>
-    /// <example><![CDATA[string ctx = await StreamContextAsync(results);]]></example>
-    private static async Task<string> StreamContextAsync(IReadOnlyList<ScoredPoint> searchResult)
-    {
-        var sb = new StringBuilder();
-
-        sb.AppendLine("[CONTEXT CODE]");
-
         const string FILE_NAME = "file_name";
         const string ELEMENT_NAME = nameof(CodeDocument.ElementName);
         const string COMMENT = nameof(CodeDocument.Comment);
         const string CODE = nameof(CodeDocument.Code);
         const string ELEMENT_TYPE = nameof(CodeDocument.ElementType);
 
-        foreach (var match in searchResult.Select(p => p.Payload))
+        var sb = new StringBuilder();
+
+        foreach (var match in value.Select(p => p.Payload))
         {
             var fileName = match.TryGetValue(FILE_NAME, out var fn) ? fn.StringValue ?? string.Empty : string.Empty;
 
@@ -92,10 +68,20 @@ public class QuestionEmbedding(Serilog.ILogger logger, IOptions<ApplicationConfi
 
             var elementType = match.TryGetValue(ELEMENT_TYPE, out var et) ? et.StringValue ?? string.Empty : string.Empty;
 
-            sb.AppendLine($"File Name: {fileName} Type: {elementType} Element Name: {elementName} Description: {comment} Code: {code}");
+            sb.AppendLine($"File Name: {fileName.Trim()} Type: {elementType.Trim()} Element Name: {elementName.Trim()} Description: {comment.Trim()} Code: {code.Trim()}");
         }
 
-        sb.AppendLine("[/CONTEXT CODE]");
         return sb.ToString();
     }
+
+    /// <summary>
+    /// Generates embedding vector for given text using configured model.
+    /// </summary>
+    /// <param name="userQuestion">Input text to embed.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
+    /// <returns>Embedding vector as ReadOnlyMemory&lt;float&gt;.</returns>
+    /// <example><![CDATA[var vec = await GenerateEmbeddingAsync(ollama, "Query?", ct);]]></example>
+    public async Task<ReadOnlyMemory<float>> GenerateEmbeddingAsync(
+        string userQuestion,
+        CancellationToken cancellationToken) => await embeddingService.GenerateAsync(userQuestion, cancellationToken);
 }

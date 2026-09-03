@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Ragnar.UnitTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f1a27da6882fc8229f6e462ddb80d0c85589471e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7b7b943041514fd97495fad6f410556926eecc72")]
 [assembly: System.Reflection.AssemblyProductAttribute("Ragnar.UnitTests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Ragnar.UnitTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

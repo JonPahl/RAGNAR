@@ -1,4 +1,4 @@
-﻿namespace RAGNAR.OutputResponse;
+﻿namespace Ragnar.OutputResponse;
 
 /// <summary>
 /// Provides a service to summarize all responses.
@@ -8,7 +8,7 @@ public interface ISummaryService
     /// <summary>
     /// Asynchronously summarizes all responses.
     /// </summary>
-    /// <param name="ct">The cancellation token.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A task containing the summarized responses.</returns>
-    ValueTask SummarizeAllResponsesAsync(CancellationToken ct);
+    ValueTask SummarizeAllResponsesAsync(CancellationToken cancellationToken);
 }

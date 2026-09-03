@@ -1,56 +1,37 @@
-﻿using System.Collections.Immutable;
+﻿namespace Ragnar;
 
-using FileQuestionProvider;
-
-using Ragnar.Questions.Questions;
-
-namespace Ragnar;
-
-/// <summary>
-/// Initializes the knowledge base.
-/// </summary>
-/// <param name="DefaultRagPipeline"> The default rag
-/// pipeline.</param>
-/// <param name ="options"> Application options.</param>
-/// <param name="writer"> Output writer.</param>
-/// <param name="EmbeddingPipeline"> Embedding pipeline.
-/// </param>
-/// <param name="questionEmbedding"> Question embedding.</param>
-/// <param name="logger"> Logger.</param>
-/// <param name="qdrantClient">Qdrant client.</param>
-/// <param name="configQuestionLoader"> Config question loader.</param>
+/// <summary>Initializes a new instance of the embedding pipeline.</summary>
+/// <param name="ragnarConfig"> Application configuration options wrapper.</param>
+/// <param name = "writer"> Output writer for displaying console messages.</param>
+/// <param name = "logger"> logger for recording operational events.</param>
+/// <param name = "qdrantClient"> Qdrant client for vector database operations.</param>
 /// <return>A task representing the initialization operation.
 /// </return>
 public sealed class KnowledgeBaseInitialization(
-    IRagOrchestrator DefaultRagPipeline,
-    IOptions<ApplicationConfiguration> options,
+    IRagOrchestrator defaultRagPipeline,
+    IOptions<RagnarConfig> ragnarConfig,
     IOutputWriter writer,
-    IEmbedTextPipeline EmbeddingPipeline,
+    IEmbedTextPipeline embeddingPipeline,
     IQuestionEmbedding questionEmbedding,
     Serilog.ILogger logger,
-    IQdrantClient qdrantClient,
-    ConfigurationBasedQuestionLoader configQuestionLoader)
+    IQdrantClient qdrantClient)
     : IKnowledgeBaseInitialize
 {
-    private readonly string collectionName = options.Value.ApplicationOptions.VectorStoreName;
+    private readonly string _collectionName = ragnarConfig.Value.ApplicationOptions.VectorStoreName;
 
-    private readonly DefaultQuestionCatalogLoader questionLoader = new(logger, writer);
+    private readonly DefaultQuestionCatalogLoader _questionLoader = new(logger, writer);
 
     /// <inheritdoc/>
-    public async ValueTask EnsureCollectionExistsAsync(CancellationToken ct)
+    public async ValueTask InitializeVectorStoreAsync(CancellationToken cancellationToken)
     {
+        var dimension = ragnarConfig.Value.EmbeddingOptions.Dimension;
 
-        var dimension = options.Value.EmbeddingOptions.Dimension;
+        var vectorBuilder = new Core.VectorStoreBuilder(logger, dimension, _collectionName, qdrantClient);
 
-        var vectorBuilder = new Core.VectorStoreBuilder(logger, dimension, collectionName, qdrantClient);
+        var exists = await vectorBuilder.BuildAsync(cancellationToken).ConfigureAwait(false);
 
-        var exists = await vectorBuilder.BuildAsync(ct).ConfigureAwait(false);
-
-
-        //var exists = await vectorService.DoesCollectionExistAsync(ct);
         if (!exists)
         {
-            // await vectorService.CreateCollectionIfNotExistsAsync(ct);
             writer.MarkupLine("[green] ☑ Collection Created [/]");
         }
 
@@ -60,23 +41,25 @@ public sealed class KnowledgeBaseInitialization(
     /// <summary>
     /// Populates the knowledge base asynchronously.
     /// </summary>
-    /// <param name="ct">Cancellation token.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
     ///<returns>A task representing the population operation.</returns>
-    ///<example><![CDATA[await PopulateAsync(ct);]]></example>
-    public async Task PopulateAsync(CancellationToken ct) => await EmbeddingPipeline.RunAsync(ct);
+    ///<example><![CDATA[await RunEmbeddingPipelineAsync(ct);]]></example>
+    public async Task RunEmbeddingPipelineAsync(CancellationToken cancellationToken) => await embeddingPipeline.RunAsync(cancellationToken);
 
     /// <summary>
     /// Asks questions asynchronously.
     /// </summary>
-    /// <param name="ct">The cancellation token.</param>
-    public async Task AskQuestionsAsync(CancellationToken ct)
+    /// <param name="cancellationToken">The cancellation token.</param>
+    public async Task AskQuestionsAsync(CancellationToken cancellationToken)
     {
-        var questions = await LoadQuestionsAsync(ct);
+        var questions = await LoadQuestionsAsync(cancellationToken);
 
         var processedCount = 0;
         var total = questions.Count;
 
-        foreach (Question question in questions)
+        var contextText = await questionEmbedding.GetContext(_collectionName, cancellationToken);
+
+        foreach (var question in questions)
         {
             writer.WriteRule();
             writer.WriteLine();
@@ -84,62 +67,28 @@ public sealed class KnowledgeBaseInitialization(
             writer.WriteLine();
             writer.Write(new Rule());
 
-            var questionVector = await questionEmbedding.GenerateEmbeddingAsync(question.Text, ct);
+            logger.Information("Processing question [{QuestionId}] from user [{UserId}] with {ContextLength} chars", question.Text, Environment.UserName, contextText.Length.ToString("N0"));
 
-            var contextText = await questionEmbedding.GetContext(collectionName, questionVector, ct);
-
-            logger.Information("Processing question [{QuestionId}] from user [{UserId}] with {ContextLength} chars", question.Text, Environment.UserName, contextText.Length);
-
-            await DefaultRagPipeline.RunAsync(question, contextText, ct);
+            await defaultRagPipeline.ExecuteAsync(question, contextText, cancellationToken).ConfigureAwait(false);
             processedCount++;
 
             writer.MarkupLine($"{processedCount} of {total}", Styles.Cyan);
         }
     }
 
-    private async Task<ImmutableHashSet<Question>> LoadQuestionsAsync(CancellationToken ct)
+    private async Task<ImmutableHashSet<Core.Model.Question>> LoadQuestionsAsync(CancellationToken cancellationToken)
     {
+        var builder = new QuestionCombineBuilder(_questionLoader, ragnarConfig);
 
-        //todo: Build interface and move this method to ragnar.questions project. Please rework to use the builder pattern when helping to load Questions from multiple sources.
+        builder
+            .GetCategories()
+            .GetFileConfig();
 
-        var questions = new HashSet<Question>();
+        var pluginDir = Path.Join(AppContext.BaseDirectory, "Plugins");
+        await builder.GetCsvFileAsync(pluginDir, cancellationToken);
 
-        var categories = questionLoader.ParseCategoriesOrDefault(options.Value.ApplicationOptions.CategoriesToProcess);
-
-        foreach (var question in questionLoader.LoadQuestions(true, categories))
-        {
-            questions.Add(question);
-        }
-
-        var fcl = new FileConfigLoader();
-        var configs = new List<QuestionConfiguration>();
-        configs.AddRange(fcl.LoadQuestions());
-
-        foreach (var item in configQuestionLoader.LoadFromConfig(configs))
-        {
-            questions.Add(item);
-        }
-
-        var config = new List<QuestionConfiguration>();
-        var provider = new CsvFileQuestionProvider();
-
-        //TODO: Rework to make changing path easier.
-        var pluginDir = Path.Combine(AppContext.BaseDirectory, "Plugins");
-        if (Directory.Exists(pluginDir))
-        {
-            foreach (var csvFile in Directory.EnumerateFiles(pluginDir, "*.csv", SearchOption.AllDirectories))
-            {
-                provider.SetFileName(csvFile);
-                var csvConfigs = await provider.LoadQuestionAsync(ct);
-                questions.UnionWith(csvConfigs.Select(c => new Question(c.IsActive, c.Text, c.FileName, c.Category)));
-            }
-        }
-
-        foreach (var question in config.Select(c => new Question(c.IsActive, c.Text, c.FileName, c.Category)))
-        {
-            questions.Add(question);
-        }
-
-        return [.. questions.ToList().ActiveOnly];
+        builder.WithCategoryFilter();
+        var sorted = builder.Build();
+        return [.. sorted];
     }
 }

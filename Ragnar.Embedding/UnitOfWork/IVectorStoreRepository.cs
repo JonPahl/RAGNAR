@@ -1,6 +1,4 @@
-﻿using Ragnar.Core.Model;
-
-namespace Ragnar.Embedding.UnitOfWork;
+﻿namespace Ragnar.Embedding.UnitOfWork;
 
 /// <summary>
 /// Build text encoding to and insert/update to Qdrant database.
@@ -11,7 +9,7 @@ public interface IVectorStoreRepository
     /// Inserts or updates embedding records for the given code documents.
     /// </summary>
     /// <param name="codeDocuments">Code documents to be embedded.</param>
-    /// <param name="ct">Cancellation Token.</param>
+    /// <param name="cancellationToken">Cancellation Token.</param>
     /// <returns>Upsert results object with operation status and counts.</returns>
     /// <remarks>
     /// Batch processing ensures efficient handling of multiple documents.
@@ -22,5 +20,5 @@ public interface IVectorStoreRepository
     /// var result = await repository.UpsertBatchAsync(codeDocuments, ct);
     /// ]]>
     /// </example>
-    Task<UpdateResult> UpsertBatchAsync(CodeDocument[] codeDocuments, CancellationToken ct);
+    Task<UpdateResult> UpsertBatchAsync(CodeDocument[] codeDocuments, CancellationToken cancellationToken);
 }

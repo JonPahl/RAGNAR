@@ -4,9 +4,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Ragnar.UnitTests
+namespace Ragnar.Tests
 {
     [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [global::Microsoft.CodeAnalysis.Embedded]
     internal static class SelfRegisteredExtensions
     {
         public static void AddSelfRegisteredExtensions(this global::Microsoft.Testing.Platform.Builder.ITestApplicationBuilder builder, string[] args)
@@ -14,5 +15,12 @@ namespace Ragnar.UnitTests
             global::Microsoft.Testing.Platform.MSBuild.TestingPlatformBuilderHook.AddExtensions(builder, args);
         global::Microsoft.Testing.Extensions.Telemetry.TestingPlatformBuilderHook.AddExtensions(builder, args);
         }
+    }
+}
+
+namespace Microsoft.CodeAnalysis
+{
+    internal sealed partial class EmbeddedAttribute : global::System.Attribute
+    {
     }
 }

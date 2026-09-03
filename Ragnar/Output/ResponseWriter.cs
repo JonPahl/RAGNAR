@@ -1,88 +1,35 @@
-﻿
-using System.Text;
+﻿namespace Ragnar.Output;
 
-namespace Ragnar.Output;
-/// <summary>Writes response content to a markdown file.</summary>
-public sealed class ResponseWriter(IOptions<ApplicationConfiguration> configWrapper)
-        : IResponseWriter
+/// <summary>Initializes the writer with configuration and services.</summary>
+/// <param name="formatter">Formatter for output content.</param>
+/// <param name="pathResolver">Resolver for directory paths.</param>
+/// <param name="fileWriter">Service for writing files.</param>
+public sealed class ResponseWriter(
+    IOutputFormatter formatter,
+    IPathResolver pathResolver,
+    IWriter fileWriter)
+    : IResponseWriter
 {
-    /// <summary>Generates and writes a markdown file from save details; returns the full file path.</summary>
+    /// <summary>Saves question metadata to a timestamped markdown file.</summary>
     /// <param name="details">Contains question metadata and content to write.</param>
-    /// <param name="ct">Cancellation token for async operation.</param>
-    /// <returns>The absolute path to the created markdown file.</returns>
-    /// <example>
-    /// <![CDATA[ var writer = new ResponseWriter(configWrapper);
-    /// string path = await writer.WriteResponseAsync(details, CancellationToken.None); ]]>
-    /// </example>
-    public async Task<string> WriteResponseAsync(SaveDetails details, CancellationToken ct)
+    /// <param name="cancellationToken">Token to cancel the asynchronous file write operation.</param>
+    /// <remarks>Creates category subdirectories if they do not already exist.</remarks>
+    /// <example><![CDATA[var path = await writer.WriteResponseAsync(details, ct);]]></example>
+    /// <returns>Absolute path to the created markdown file.</returns>
+    public async Task<string> WriteResponseAsync(SaveDetails details, CancellationToken cancellationToken)
     {
-        var sourceDirectory = configWrapper.Value.ApplicationOptions.SourceDirectory;
+        var directory = pathResolver
+            .ResolveResponseDirectory(details.Question.Category);
 
-        var fileNow = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+        Directory.CreateDirectory(directory);
 
-        var path = BuildDirectory(sourceDirectory, details.Question.Category.ToString());
+        var fileName = $"{details.Question.Filename}_{DateTime.Now:yyyyMMdd_HHmmss}.{formatter.FileExtension}";
 
-        if (!Directory.Exists(path))
-        {
-            throw new ArgumentException($"Save path: {path} does not exist");
-        }
+        var fullPath = Path.Join(directory, fileName);
 
-        var filePath = Path.Combine(path, $"{details.Question.Filename}_{fileNow}.md");
+        var content = formatter.Format(details);
 
-        var content = FormatFile(details);
-
-        await File.WriteAllTextAsync(filePath, content, ct);
-
-        return filePath;
-    }
-
-    /// <summary>Builds and ensures the target directory path exists; returns the full directory path.</summary>
-    /// <param name="sourceDirectory">Base application source directory.</param>
-    /// <param name="category">Question category (defaults to "Uncategorized").</param>
-    /// <returns>The absolute path to the category subdirectory.</returns>
-    /// <example>
-    /// <![CDATA[
-    /// string dir = ResponseWriter.BuildDirectory("/src/data", "Math");
-    /// ]]>
-    /// </example>
-    private static string BuildDirectory(string sourceDirectory, string? category)
-    {
-        if (string.IsNullOrWhiteSpace(category))
-        {
-            category = "Uncategorized";
-        }
-
-        var directory = sourceDirectory.GetResponseDirectory();
-
-        directory = Path.Combine(directory, category);
-
-        if (!Directory.Exists(directory))
-        {
-            Directory.CreateDirectory(directory);
-        }
-
-        return directory;
-    }
-
-    /// <summary>Formats a response into markdown with question metadata.</summary>
-    /// <param name="detail">Response details including question and response text.</param>
-    /// <returns>Formatted markdown string.</returns>
-    /// <example><![CDATA[string md = ResponseWriter.FormatFile(details);]]></example>
-    private static string FormatFile(SaveDetails detail)
-    {
-        var response = new StringBuilder();
-
-        response.AppendLine($"{detail.Question.MarkdownHeader}");
-
-        response.AppendLine($"> **Date Generated**: {DateTime.Now.ToString("G")}");
-
-        response.AppendLine("> ## Question: ");
-        response.AppendLine($"> {detail.Question.Text}");
-        response.Append($"> **Method Call Duration**: {detail.Duration}");
-        response.AppendLine();
-        response.AppendLine(" ## Response: ");
-        response.AppendLine(detail.Response);
-
-        return response.ToString();
+        await fileWriter.WriteAsync(fullPath, content, cancellationToken);
+        return fullPath;
     }
 }

@@ -1,15 +1,11 @@
-﻿
-using Spectre.Console;
-using Spectre.Console.Rendering;
-
-namespace Ragnar.Core.ConsoleWriter;
+﻿namespace Ragnar.Core.ConsoleWriter;
 
 public interface IOutputWriter
 {
     /// <summary>
     /// Writes formatted markup to console.
     /// </summary>
-    /// <param name="text">Text to write.</param>
+    /// <param name="text">text to write.</param>
     /// <param name="style">Optional style.</param>
     void Markup(string text, Style? style = null);
 
@@ -42,4 +38,6 @@ public interface IOutputWriter
     /// Writes horizontal rule.
     /// </summary>
     void WriteRule();
+
+    void WriteException(Exception ex);
 }

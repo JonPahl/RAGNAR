@@ -1,6 +1,4 @@
-﻿using Qdrant.Client.Grpc;
-
-namespace Ragnar.Core.Model;
+﻿namespace Ragnar.Core.Model;
 
 public static class CodeDocumentExtensions
 {

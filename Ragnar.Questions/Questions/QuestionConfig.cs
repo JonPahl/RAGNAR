@@ -1,4 +1,4 @@
-﻿using Ragnar.Questions.Interface;
+﻿
 
 namespace Ragnar.Questions.Questions;
 /// <summary>
@@ -7,4 +7,4 @@ namespace Ragnar.Questions.Questions;
 /// <param name="Source">The source of questions.</param>
 /// <param name="DataLoader">List of question loaders. </param>
 /// <returns>A function that loads questions from a config loader.</returns>
-public record QuestionConfig(string Source, Func<IConfigurationLoader, IEnumerable<Question>> DataLoader);
+public record QuestionConfig(string Source, Func<IConfigurationLoader, IEnumerable<Ragnar.Core.Model.Question>> DataLoader);

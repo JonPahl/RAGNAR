@@ -32,5 +32,17 @@ public enum QuestionCategory
 
     /// <summary>Relates to modernizing legacy code patterns.</summary>
     Modernization,
+
+    /// <summary>
+    /// Plugin related questions.
+    /// </summary>
     Plugin,
+
+    /// <summary>
+    /// Diagram based elements.
+    /// </summary>
+    Diagram,
+    Uncategorized,
+    Summary,
+
 }

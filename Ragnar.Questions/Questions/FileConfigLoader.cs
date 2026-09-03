@@ -1,4 +1,4 @@
-﻿using Ragnar.Questions.Interface;
+﻿
 
 namespace Ragnar.Questions.Questions;
 
@@ -7,7 +7,7 @@ public sealed class FileConfigLoader
     : IConfigurationLoader
 {
     /// <summary>Loads predefined question configurations for code analysis and modernization.</summary>
-    /// <returns>A sequence of QuestionConfiguration instances with embedded questions.</returns>
+    /// <returns>A sequence of Question instances with embedded questions.</returns>
     /// <remarks>Currently returns hardcoded examples. </remarks>
     /// <example>
     /// <![CDATA[
@@ -16,7 +16,7 @@ public sealed class FileConfigLoader
     ///     Console.WriteLine($"[{config.Category}] {config.Question}");
     /// ]]>
     /// </example>
-    public IEnumerable<QuestionConfiguration> LoadQuestions()
+    public IEnumerable<Plugins.Question> LoadQuestions()
     {
         return
         [
