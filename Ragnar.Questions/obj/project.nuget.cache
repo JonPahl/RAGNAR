@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Y3upI1jAnqg=",
+  "dgSpecHash": "x2kxmQT/jUY=",
   "success": true,
   "projectFilePath": "C:\\Users\\jp325\\source\\Ragnar\\Ragnar.Questions\\Ragnar.Questions.csproj",
   "expectedPackageFiles": [
@@ -14,7 +14,7 @@
     "C:\\Users\\jp325\\.nuget\\packages\\grpc.net.common\\2.71.0\\grpc.net.common.2.71.0.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\hashdepot\\3.2.0\\hashdepot.3.2.0.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\5.9.0\\microsoft.codeanalysis.analyzers.5.9.0.nupkg.sha512",
-    "C:\\Users\\jp325\\.nuget\\packages\\microsoft.codeanalysis.netanalyzers\\10.0.400\\microsoft.codeanalysis.netanalyzers.10.0.400.nupkg.sha512",
+    "C:\\Users\\jp325\\.nuget\\packages\\microsoft.codeanalysis.netanalyzers\\10.0.401\\microsoft.codeanalysis.netanalyzers.10.0.401.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\microsoft.extensions.ai\\10.8.0\\microsoft.extensions.ai.10.8.0.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\microsoft.extensions.ai.abstractions\\10.8.0\\microsoft.extensions.ai.abstractions.10.8.0.nupkg.sha512",
     "C:\\Users\\jp325\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\10.0.10\\microsoft.extensions.caching.abstractions.10.0.10.nupkg.sha512",

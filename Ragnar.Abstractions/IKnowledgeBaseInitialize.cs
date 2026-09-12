@@ -1,25 +1,24 @@
 ﻿namespace Ragnar.Abstractions;
 
-/// <summary>
-/// Interface for private initializing the knowledge base.
-/// </summary>
+/// <summary>Interface for initializing and populating the vector knowledge base.</summary>
+/// <example><![CDATA[await kb.InitializeVectorStoreAsync(ct);]]></example>
 public interface IKnowledgeBaseInitialize
 {
-    /// <summary> Ensures a collection exists asynchronously. </summary>
-    /// <param name="cancellationToken">A cancellation token that can be used to cancel this operation.</param>
-    /// <returns>Returns task.</returns>
+    /// <summary>Ensures the target vector store collection exists.</summary>
+    /// <param name="cancellationToken">Token to cancel the initialization operation.</param>
+    /// <returns>A task representing the asynchronous initialization result.</returns>
+    /// <example><![CDATA[await kb.InitializeVectorStoreAsync(ct);]]></example>
     ValueTask InitializeVectorStoreAsync(CancellationToken cancellationToken);
 
-    /// <summary>
-    /// Populates the knowledge base asynchronously. </summary>
-    /// <param name="cancellationToken">A cancellation token that can be used to cancel this operation.</param>
-    /// <returns>Returns task.</returns>
+    /// <summary>Runs the full embedding pipeline to populate the knowledge base.</summary>
+    /// <param name="cancellationToken">Token to cancel the pipeline execution.</param>
+    /// <returns>A task representing the async pipeline completion.</returns>
+    /// <example><![CDATA[await kb.RunEmbeddingPipelineAsync(ct);]]></example>
     Task RunEmbeddingPipelineAsync(CancellationToken cancellationToken);
 
-    /// <summary>
-    /// Processes questions asynchronously.
-    /// </summary>
-    /// <param name="cancellationToken">The ct parameter.</param>
-    /// <returns>Returns task.</returns>
+    /// <summary>Processes the loaded questions against the vector store.</summary>
+    /// <param name="cancellationToken">Token to cancel the question processing.</param>
+    /// <returns>A task representing the async question answering result.</returns>
+    /// <example><![CDATA[await kb.AskQuestionsAsync(ct);]]></example>
     Task AskQuestionsAsync(CancellationToken cancellationToken);
 }

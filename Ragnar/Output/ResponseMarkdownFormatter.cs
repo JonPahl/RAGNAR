@@ -1,7 +1,6 @@
 ﻿namespace Ragnar.Output;
 
-public class ResponseMarkdownFormatter
-    : IOutputFormatter
+public class ResponseMarkdownFormatter : IOutputFormatter
 {
     public string FileExtension { get; set; } = "md";
 

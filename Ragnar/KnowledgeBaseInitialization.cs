@@ -14,21 +14,23 @@ public sealed class KnowledgeBaseInitialization(
     IEmbedTextPipeline embeddingPipeline,
     IQuestionEmbedding questionEmbedding,
     Serilog.ILogger logger,
+    IQuestionCombineBuilder builder,
+    IVectorStoreBuilder vectorStoreBuilder,
     IQdrantClient qdrantClient)
     : IKnowledgeBaseInitialize
 {
+    //TODO: Split class into IPipelineStage, i.e. LoadQuestionsStage, AskQuestionStage, with shared context.
+
+
     private readonly string _collectionName = ragnarConfig.Value.ApplicationOptions.VectorStoreName;
 
     private readonly DefaultQuestionCatalogLoader _questionLoader = new(logger, writer);
 
-    /// <inheritdoc/>
     public async ValueTask InitializeVectorStoreAsync(CancellationToken cancellationToken)
     {
         var dimension = ragnarConfig.Value.EmbeddingOptions.Dimension;
 
-        var vectorBuilder = new Core.VectorStoreBuilder(logger, dimension, _collectionName, qdrantClient);
-
-        var exists = await vectorBuilder.BuildAsync(cancellationToken).ConfigureAwait(false);
+        var exists = await vectorStoreBuilder.BuildAsync(cancellationToken).ConfigureAwait(false);
 
         if (!exists)
         {
@@ -44,7 +46,7 @@ public sealed class KnowledgeBaseInitialization(
     /// <param name="cancellationToken">Cancellation token.</param>
     ///<returns>A task representing the population operation.</returns>
     ///<example><![CDATA[await RunEmbeddingPipelineAsync(ct);]]></example>
-    public async Task RunEmbeddingPipelineAsync(CancellationToken cancellationToken) => await embeddingPipeline.RunAsync(cancellationToken);
+    public async Task RunEmbeddingPipelineAsync(CancellationToken cancellationToken) => await embeddingPipeline.RunAsync(cancellationToken).ConfigureAwait(false);
 
     /// <summary>
     /// Asks questions asynchronously.
@@ -52,12 +54,12 @@ public sealed class KnowledgeBaseInitialization(
     /// <param name="cancellationToken">The cancellation token.</param>
     public async Task AskQuestionsAsync(CancellationToken cancellationToken)
     {
-        var questions = await LoadQuestionsAsync(cancellationToken);
+        var questions = await LoadQuestionsAsync(cancellationToken).ConfigureAwait(false);
 
         var processedCount = 0;
         var total = questions.Count;
 
-        var contextText = await questionEmbedding.GetContext(_collectionName, cancellationToken);
+        var contextText = await questionEmbedding.GetContext(_collectionName, cancellationToken).ConfigureAwait(false);
 
         foreach (var question in questions)
         {
@@ -76,19 +78,52 @@ public sealed class KnowledgeBaseInitialization(
         }
     }
 
-    private async Task<ImmutableHashSet<Core.Model.Question>> LoadQuestionsAsync(CancellationToken cancellationToken)
+    private async Task<IReadOnlyList<Core.Model.Question>> LoadQuestionsAsync(CancellationToken cancellationToken)
     {
-        var builder = new QuestionCombineBuilder(_questionLoader, ragnarConfig);
-
-        builder
-            .GetCategories()
-            .GetFileConfig();
+        builder.GetCategories().GetFileConfig();
 
         var pluginDir = Path.Join(AppContext.BaseDirectory, "Plugins");
-        await builder.GetCsvFilesAsync(pluginDir, cancellationToken);
+        await builder.GetCsvFilesAsync(pluginDir, cancellationToken).ConfigureAwait(false);
 
         builder.WithCategoryFilter();
         var sorted = builder.Build();
+
+        ShowTable(sorted);
+
         return [.. sorted];
+    }
+
+    /// <summary>Renders a Spectre.Console table of discovered source file paths.</summary>
+    /// <param name="questions">List of fully-qualified file paths to display.</param>
+    /// <example><![CDATA[pipeline.ShowTable(files);]]></example>
+    private void ShowTable(IReadOnlyList<Core.Model.Question> questions)
+    {
+        //TODO: Make show table a decorator pattern to reuse.
+
+        var table = new Table()
+            .ShowRowSeparators()
+            .Expand()
+            .BorderStyle(Styles.Green)
+            .AddColumns("cnt", "Category", "Path");
+
+        AnsiConsole.Live(table).Start(ctx =>
+        {
+            var cnt = 0;
+            foreach (var question in questions)
+            {
+                try
+                {
+                    table.AddRow(cnt.ToString(), question.Category.ToString(), Markup.Escape(question.Text));
+                    logger.Information("Loaded question [{QuestionText}]",
+                    question.Text);
+                    cnt++;
+                    ctx.Refresh();
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex, "Error adding question [{QuestionText}] to table", question.Text);
+                }
+            }
+        });
     }
 }

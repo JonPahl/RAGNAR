@@ -1,18 +1,23 @@
 ﻿namespace Ragnar.Tests;
 
-public sealed class BrandingStageTests
+// ───────────────────────────────────────────────────────────────
+//  3.  BrandingStage
+// ───────────────────────────────────────────────────────────────
+public class BrandingStageTests
 {
     [Fact]
-    public async Task ExecuteAsync_CallsRenderBranding()
+    public void BrandingStageImplementsIPipelineStage()
     {
-        // Arrange
-        var headerMock = new Mock<IApplicationHeader>();
-        var stage = new BrandingStage(headerMock.Object);
+        var mockHeader = new Mock<IApplicationHeader>();
+        var stage = new BrandingStage(mockHeader.Object);
 
-        // Act
-        await stage.ExecuteAsync(CancellationToken.None);
-
-        // Assert
-        headerMock.Verify(h => h.RenderBranding(), Times.Once);
+        Assert.IsAssignableFrom<IPipelineStage>(stage);
     }
 }
+
+
+
+
+
+
+

@@ -9,6 +9,7 @@ public static class StringExtensions
         /// Counts non-tag, non-comment characters in an XML comment.
         /// </summary>
         /// <returns>The count of non-tag, non-comment characters.</returns>
+        /// <example><![CDATA[var count = "<c>code</c>".CharacterCount();]]></example>
         public int CharacterCount()
         {
             var count = 0;
@@ -24,16 +25,16 @@ public static class StringExtensions
             return count;
         }
 
-        /// <summary>
-        /// Retrieves the last folder from a given path.
-        /// </summary>
-        /// <returns>The span of characters representing the last folder in the path.</returns>
+        /// <summary>Retrieves the last folder segment from a file-system path.</summary>
+        /// <returns>The last folder name extracted from the path.</returns>
+        /// <example><![CDATA[var f = @"C:\src\proj\app".LastFolder(); // "app"]]></example>
         public string LastFolder => Path.GetFileName(value.ToString().TrimEnd('/', '\\'));
 
 
-        /// <summary>Checks if a filename is in the exclusion list (case-insensitive).</summary>
-        /// <param name="exclusions">Set of excluded filenames.</param>
-        /// <returns><c>true</c> if excluded; otherwise <c>false</c>.</returns>
+        /// <summary>Checks whether the filename appears in the exclusion list.</summary>
+        /// <param name="exclusions">Set of filenames to exclude (case-insensitive).</param>
+        /// <returns><c>true</c> if the filename is excluded; otherwise <c>false</c>.</returns>
+        /// <example><![CDATA[bool ok = "docker-compose.yml".IsExcluded(exclList);]]></example>
         public bool IsExcluded(in IReadOnlyCollection<string> exclusions)
             => exclusions.Contains(value.ToString(), StringComparer.OrdinalIgnoreCase);
     }

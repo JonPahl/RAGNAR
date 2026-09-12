@@ -11,8 +11,7 @@
 /// var questions = loader.LoadQuestions(true, categories);
 /// </code>
 /// </example>
-public class DefaultQuestionCatalogLoader(Serilog.ILogger logger, IOutputWriter writer)
-    : IQuestionCatalogLoader
+public class DefaultQuestionCatalogLoader(Serilog.ILogger logger, IOutputWriter writer) : IQuestionCatalogLoader
 {
 
     private HashSet<QuestionCategory>? _categories = [];
@@ -30,7 +29,7 @@ public class DefaultQuestionCatalogLoader(Serilog.ILogger logger, IOutputWriter 
 
         var questions = GetDefaultQuestions();
 
-        if (categories is not null)
+        if (categories is not null || categories.Any())
         {
             var category = questions.WithCategory(categories).ToList();
 
@@ -49,22 +48,13 @@ public class DefaultQuestionCatalogLoader(Serilog.ILogger logger, IOutputWriter 
     public HashSet<QuestionCategory>? ParseCategoriesOrDefault(QuestionCategory[]? categoryFilter)
     {
         if (categoryFilter is null or [])
-        {
             return LoadQuestionCategories.All();
-        }
 
-        //foreach (var category in categoryFilter)
-        //{
-        //    if (Enum.TryParse(category, ignoreCase: true, out QuestionCategory categoryCategory))
-        //    {
-        //        _categories.Add(categoryCategory);
-        //    }
-        //    else
-        //    {
-        //        logger.Error("Could not parse: {Category}. Please check name", category);
-        //        writer.MarkupLine($"[red]⚠ Could not parse: {category}. Please check name.[/]");
-        //    }
-        //}
+        //foreach (var category in categoryFilter) {
+        // if (Enum.TryParse(category, ignoreCase: true, out QuestionCategory categoryCategory)) {
+        // _categories.Add(categoryCategory); } else {
+        // logger.Error("Could not parse: {Category}. Please check name", category);
+        // writer.MarkupLine($"[red]⚠ Could not parse: {category}. Please check name.[/]"); }}
 
         if (_categories.Count == 0)
         {
@@ -87,7 +77,7 @@ public class DefaultQuestionCatalogLoader(Serilog.ILogger logger, IOutputWriter 
     {
         return
         [
-            new Core.Model.Question(true, "Generate concise XML comments (Summary, Param, Remarks, Example wrapped in <![CDATA[ ]]>, Return) only for undocumented class, interface or public methods. Keep under 120 characters each. Please provide an example for each class and method, When writing the summary focus on what the method does, including the filename and method name, before the new or updated XML comments.", "XML", QuestionCategory.XML),
+            new Core.Model.Question(false, "Generate concise XML comments (Summary, Param, Remarks, Example wrapped in <![CDATA[ ]]>, Return) only for undocumented class, interface or public methods. Keep under 120 characters each. Please provide an example for each class and method, When writing the summary focus on what the method does, including the filename and method name, before the new or updated XML comments.", "XML", QuestionCategory.XML),
             //Question.IsActive("Please recommend improved class, method, and variable names to make this application easier to understand.", "Rename", QuestionCategory.Refactor),
         ];
     }

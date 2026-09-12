@@ -2,7 +2,7 @@
 
 public record ApplicationOptions
 {
-    public bool IncludeOriginalPrompt { get; init; } = false;
+    public bool IncludeOriginalPrompt { get; init; }
 
     /// <summary>
     /// Gets or sets the directory containing source files to process.

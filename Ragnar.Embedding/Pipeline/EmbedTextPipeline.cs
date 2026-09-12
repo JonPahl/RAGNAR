@@ -15,9 +15,9 @@ public class EmbedTextPipeline(
         : IEmbedTextPipeline
 {
 
-    //TODO: Rewrite this class to use IPipelineStage logic.
+    //TODO: Rewrite this class to use IPipelineStage logic and a shared context.
 
-    private const int BATCHSIZE = 1;
+    private const int BATCHSIZE = 32;
 
     /// <summary>Executes the full embed-and-upsert pipeline for source files.</summary>
     /// <param name="cancellationToken">Token to abort the pipeline in flight.</param>
@@ -33,15 +33,15 @@ public class EmbedTextPipeline(
             return;
         }
 
-        var files = await DiscoverSourceFilesAsync(cancellationToken);
+        var files = await DiscoverSourceFilesAsync(cancellationToken).ConfigureAwait(false);
         if (files.Count == 0)
         {
             logger.Information("No source files discovered. Nothing to embed.");
             return;
         }
 
-        var documents = await ParseDocumentsAsync(files, cancellationToken);
-        await UpsertInBatchesAsync(documents, cancellationToken);
+        var documents = await ParseDocumentsAsync(files, cancellationToken).ConfigureAwait(false);
+        await UpsertInBatchesAsync(documents, cancellationToken).ConfigureAwait(false);
     }
 
 
@@ -51,10 +51,39 @@ public class EmbedTextPipeline(
     /// <example><![CDATA[var files = await p.DiscoverSourceFilesAsync(ct);]]></example>
     private async Task<IReadOnlyList<string>> DiscoverSourceFilesAsync(CancellationToken cancellationToken)
     {
-        return await LoadCustomFiles.GetFilesAsync(
+        var files = await
+            LoadCustomFiles.GetFilesAsync(
             options.Value.ApplicationOptions.SourceDirectory,
             options.Value.FileLoadOptions,
-            cancellationToken).ToListAsync(cancellationToken);
+            cancellationToken).ToListAsync(cancellationToken).ConfigureAwait(false);
+
+        ShowTable(files);
+
+        return files;
+    }
+
+    /// <summary>Renders discovered file paths in a Spectre.Console live table.</summary>
+    /// <param name="files">List of file paths to display in the table.</param>
+    /// <example><![CDATA[pipeline.ShowTable(fileList);]]></example>
+    private void ShowTable(List<string> files)
+    {
+        //TODO: Make show table a decorator pattern to reuse.
+
+        var table = new Table()
+            .ShowRowSeparators()
+            .Expand()
+            .AddColumns("cnt", "Path");
+
+        AnsiConsole.Live(table).Start(ctx =>
+        {
+            var cnt = 0;
+            foreach (var file in files)
+            {
+                table.AddRow(cnt.ToString(), file);
+                cnt++;
+                ctx.Refresh();
+            }
+        });
     }
 
 
@@ -80,14 +109,14 @@ public class EmbedTextPipeline(
                 },
                 async (filePath, token) =>
                 {
-                    var elements = await parseFactory.ParseAsync(filePath, token);
+                    var elements = await parseFactory.ParseAsync(filePath, token).ConfigureAwait(false);
 
                     foreach (var element in elements)
                         documents.Add(element);
 
                     task.Increment(1);
-                });
-        });
+                }).ConfigureAwait(false);
+        }).ConfigureAwait(false);
 
         return [.. documents];
     }
@@ -101,17 +130,26 @@ public class EmbedTextPipeline(
     {
         if (documents.Count == 0) return;
 
-        await AnsiConsole.Progress().AutoClear(true).StartAsync(async ctx =>
+        await AnsiConsole
+            .Progress()
+            .AutoClear(true)
+            .StartAsync(async ctx =>
         {
             var task = ctx.AddTask("Embedding & upserting…", maxValue: documents.Count);
 
             foreach (var batch in documents.Chunk(BATCHSIZE))
             {
                 ct.ThrowIfCancellationRequested();
-                await repository.UpsertBatchAsync(batch, ct);
+                var results = await repository.UpsertBatchAsync(batch, ct).ConfigureAwait(false);
+
+                if (results.Status != UpdateStatus.Completed)
+                {
+                    Console.WriteLine("Upsert failed for batch: {results.Status}");
+                }
+
                 task.Increment(batch.Length);
                 ctx.Refresh();
             }
-        });
+        }).ConfigureAwait(false);
     }
 }

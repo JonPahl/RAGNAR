@@ -1,10 +1,7 @@
-﻿
-
-namespace Ragnar.Questions.Questions;
+﻿namespace Ragnar.Questions.Questions;
 
 /// <summary>Loads question configurations from embedded resources or files.</summary>
-public sealed class FileConfigLoader
-    : IConfigurationLoader
+public sealed class FileConfigLoader : IConfigurationLoader
 {
     /// <summary>Loads predefined question configurations for code analysis and modernization.</summary>
     /// <returns>A sequence of Question instances with embedded questions.</returns>

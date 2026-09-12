@@ -311,7 +311,7 @@
           }
         }
       },
-      "Microsoft.CodeAnalysis.NetAnalyzers/10.0.400": {
+      "Microsoft.CodeAnalysis.NetAnalyzers/10.0.401": {
         "type": "package"
       },
       "Microsoft.Extensions.AI/10.8.0": {
@@ -461,7 +461,7 @@
           "buildTransitive/net8.0/_._": {}
         }
       },
-      "Microsoft.Extensions.DependencyInjection.Abstractions/10.0.11": {
+      "Microsoft.Extensions.DependencyInjection.Abstractions/10.0.12": {
         "type": "package",
         "compile": {
           "lib/net10.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
@@ -595,11 +595,11 @@
           "buildTransitive/net8.0/Microsoft.Extensions.Logging.Abstractions.targets": {}
         }
       },
-      "Microsoft.Extensions.Options/10.0.11": {
+      "Microsoft.Extensions.Options/10.0.12": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.11",
-          "Microsoft.Extensions.Primitives": "10.0.11"
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.12",
+          "Microsoft.Extensions.Primitives": "10.0.12"
         },
         "compile": {
           "lib/net10.0/Microsoft.Extensions.Options.dll": {
@@ -615,7 +615,7 @@
           "buildTransitive/net8.0/Microsoft.Extensions.Options.targets": {}
         }
       },
-      "Microsoft.Extensions.Primitives/10.0.11": {
+      "Microsoft.Extensions.Primitives/10.0.12": {
         "type": "package",
         "compile": {
           "lib/net10.0/Microsoft.Extensions.Primitives.dll": {
@@ -647,11 +647,11 @@
           }
         }
       },
-      "Microsoft.SemanticKernel/1.80.0": {
+      "Microsoft.SemanticKernel/1.80.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.SemanticKernel.Connectors.AzureOpenAI": "1.80.0",
-          "Microsoft.SemanticKernel.Core": "1.80.0"
+          "Microsoft.SemanticKernel.Connectors.AzureOpenAI": "1.80.1",
+          "Microsoft.SemanticKernel.Core": "1.80.1"
         },
         "compile": {
           "lib/net10.0/Microsoft.SemanticKernel.dll": {
@@ -664,7 +664,7 @@
           }
         }
       },
-      "Microsoft.SemanticKernel.Abstractions/1.80.0": {
+      "Microsoft.SemanticKernel.Abstractions/1.80.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Bcl.HashCode": "1.1.1",
@@ -682,12 +682,12 @@
           }
         }
       },
-      "Microsoft.SemanticKernel.Connectors.AzureOpenAI/1.80.0": {
+      "Microsoft.SemanticKernel.Connectors.AzureOpenAI/1.80.1": {
         "type": "package",
         "dependencies": {
           "Azure.AI.OpenAI": "2.9.0-beta.1",
-          "Microsoft.SemanticKernel.Connectors.OpenAI": "1.80.0",
-          "Microsoft.SemanticKernel.Core": "1.80.0"
+          "Microsoft.SemanticKernel.Connectors.OpenAI": "1.80.1",
+          "Microsoft.SemanticKernel.Core": "1.80.1"
         },
         "compile": {
           "lib/net10.0/Microsoft.SemanticKernel.Connectors.AzureOpenAI.dll": {
@@ -700,11 +700,11 @@
           }
         }
       },
-      "Microsoft.SemanticKernel.Connectors.OpenAI/1.80.0": {
+      "Microsoft.SemanticKernel.Connectors.OpenAI/1.80.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.AI.OpenAI": "10.5.0",
-          "Microsoft.SemanticKernel.Core": "1.80.0",
+          "Microsoft.SemanticKernel.Core": "1.80.1",
           "OpenAI": "2.10.0"
         },
         "compile": {
@@ -718,11 +718,11 @@
           }
         }
       },
-      "Microsoft.SemanticKernel.Core/1.80.0": {
+      "Microsoft.SemanticKernel.Core/1.80.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection": "10.0.2",
-          "Microsoft.SemanticKernel.Abstractions": "1.80.0",
+          "Microsoft.SemanticKernel.Abstractions": "1.80.1",
           "System.Numerics.Tensors": "10.0.10"
         },
         "compile": {
@@ -1060,7 +1060,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
-          "Microsoft.Extensions.Options": "10.0.11",
+          "Microsoft.Extensions.Options": "10.0.12",
           "Ragnar.Core": "1.0.0"
         },
         "compile": {
@@ -1581,10 +1581,10 @@
         "microsoft.codeanalysis.csharp.nuspec"
       ]
     },
-    "Microsoft.CodeAnalysis.NetAnalyzers/10.0.400": {
-      "sha512": "Uogs/xCuSxYuEYAU7oUPddK3MFcT3A+FkrBcx/wVse6P4joptMAfh/H9jtIhl9IkHARCvJHFjL3jhKFs9YMktA==",
+    "Microsoft.CodeAnalysis.NetAnalyzers/10.0.401": {
+      "sha512": "qGPLk4hknvVp6j9Lowa0qykw1cK7CyEyyy2aVs4dkOGroOMHJLRsMpUT53IKvYT6q78jxv96FZhzy3BrKCPgmA==",
       "type": "package",
-      "path": "microsoft.codeanalysis.netanalyzers/10.0.400",
+      "path": "microsoft.codeanalysis.netanalyzers/10.0.401",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -1629,7 +1629,7 @@
         "documentation/Microsoft.CodeAnalysis.NetAnalyzers.md",
         "documentation/Microsoft.CodeAnalysis.NetAnalyzers.sarif",
         "documentation/README.md",
-        "microsoft.codeanalysis.netanalyzers.10.0.400.nupkg.sha512",
+        "microsoft.codeanalysis.netanalyzers.10.0.401.nupkg.sha512",
         "microsoft.codeanalysis.netanalyzers.nuspec",
         "tools/install.ps1",
         "tools/uninstall.ps1"
@@ -1862,10 +1862,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Microsoft.Extensions.DependencyInjection.Abstractions/10.0.11": {
-      "sha512": "/a1aJz4m7ylhEDf25ugQChLQoN5XwoGjWw/BoR/ZWWKsO1v4DdJElS1uyngahz4B/eOzjFk1KNTkarRLE5wsIg==",
+    "Microsoft.Extensions.DependencyInjection.Abstractions/10.0.12": {
+      "sha512": "9/qymSh7hVDMGTGwrLz8MRp5zRyXy9adGDOs4HwRdnLil3oZGYuWeZjbmHgCQ9BL1qBroVfgUK3U/nb61617Cw==",
       "type": "package",
-      "path": "microsoft.extensions.dependencyinjection.abstractions/10.0.11",
+      "path": "microsoft.extensions.dependencyinjection.abstractions/10.0.12",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1888,7 +1888,7 @@
         "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
         "lib/netstandard2.1/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
         "lib/netstandard2.1/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
-        "microsoft.extensions.dependencyinjection.abstractions.10.0.11.nupkg.sha512",
+        "microsoft.extensions.dependencyinjection.abstractions.10.0.12.nupkg.sha512",
         "microsoft.extensions.dependencyinjection.abstractions.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -2113,10 +2113,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "Microsoft.Extensions.Options/10.0.11": {
-      "sha512": "eY1GAKcTfD2maP27J84X9IovT3yjHJ2dVDzPmDg6/XqYvt3jMzJhtfQCLjG9pVsZGAd+8DQ2QrjaDcs2+VQLGw==",
+    "Microsoft.Extensions.Options/10.0.12": {
+      "sha512": "TDYD33TSRpXKZWlmTXNlj5kCihxatmv2Ec1u6C+bMYLphCS7PoSLE9Pjd/nunDoE7yETk+LLKjVJX78HYtWjpA==",
       "type": "package",
-      "path": "microsoft.extensions.options/10.0.11",
+      "path": "microsoft.extensions.options/10.0.12",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2154,15 +2154,15 @@
         "lib/netstandard2.0/Microsoft.Extensions.Options.xml",
         "lib/netstandard2.1/Microsoft.Extensions.Options.dll",
         "lib/netstandard2.1/Microsoft.Extensions.Options.xml",
-        "microsoft.extensions.options.10.0.11.nupkg.sha512",
+        "microsoft.extensions.options.10.0.12.nupkg.sha512",
         "microsoft.extensions.options.nuspec",
         "useSharedDesignerContext.txt"
       ]
     },
-    "Microsoft.Extensions.Primitives/10.0.11": {
-      "sha512": "SXcz+kF+4Oo9b1+55zntpJFYfwb1jw66ioxptyNOOTDc8g2FHnBFWjZpsWfCvZIhzr0x+4e2trVTs4OKwQfBtw==",
+    "Microsoft.Extensions.Primitives/10.0.12": {
+      "sha512": "dYfCLR52UA+3DL7C4I/pvSaRPkNqxrUAQmbFL2u0zvYKKzqgrFCJl08Df+F1aYc8leu9JvpC9bsURUdpExcBXQ==",
       "type": "package",
-      "path": "microsoft.extensions.primitives/10.0.11",
+      "path": "microsoft.extensions.primitives/10.0.12",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2183,7 +2183,7 @@
         "lib/net9.0/Microsoft.Extensions.Primitives.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Primitives.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Primitives.xml",
-        "microsoft.extensions.primitives.10.0.11.nupkg.sha512",
+        "microsoft.extensions.primitives.10.0.12.nupkg.sha512",
         "microsoft.extensions.primitives.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -2209,10 +2209,10 @@
         "microsoft.extensions.vectordata.abstractions.nuspec"
       ]
     },
-    "Microsoft.SemanticKernel/1.80.0": {
-      "sha512": "KasYhur11+rrmwrOOnT0+fAFrf59xa3ykpXf7rzl8Nc2DfeFKYh1aRjReXtxVpzFMnlkpH8ZptAyTN5WAmwGMg==",
+    "Microsoft.SemanticKernel/1.80.1": {
+      "sha512": "xJztzrcryFBiz89N84Wp5sUvNMoVcb8twYzSVmLulL8FHcmaIPCG71xu5GXgVAccVgPyp0kgiTQLXbHPKfR+WQ==",
       "type": "package",
-      "path": "microsoft.semantickernel/1.80.0",
+      "path": "microsoft.semantickernel/1.80.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2224,14 +2224,14 @@
         "lib/net8.0/Microsoft.SemanticKernel.xml",
         "lib/netstandard2.0/Microsoft.SemanticKernel.dll",
         "lib/netstandard2.0/Microsoft.SemanticKernel.xml",
-        "microsoft.semantickernel.1.80.0.nupkg.sha512",
+        "microsoft.semantickernel.1.80.1.nupkg.sha512",
         "microsoft.semantickernel.nuspec"
       ]
     },
-    "Microsoft.SemanticKernel.Abstractions/1.80.0": {
-      "sha512": "l0MnUvjXGYWEUEbJ+pD9796+p4lGWDhe787WhNaP7mcG4d9z6apNuSZQEI0WrI9aiWgee6tPngBwRrP7In40xg==",
+    "Microsoft.SemanticKernel.Abstractions/1.80.1": {
+      "sha512": "GFyw6aBon1kMNXsoSouGocD344EBpq7VoAtgLOxRWFhY/4i6JQ5+dcGMaJMR89BO0OrNOdDm+gLMkMYPg71crQ==",
       "type": "package",
-      "path": "microsoft.semantickernel.abstractions/1.80.0",
+      "path": "microsoft.semantickernel.abstractions/1.80.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2243,14 +2243,14 @@
         "lib/net8.0/Microsoft.SemanticKernel.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.SemanticKernel.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.SemanticKernel.Abstractions.xml",
-        "microsoft.semantickernel.abstractions.1.80.0.nupkg.sha512",
+        "microsoft.semantickernel.abstractions.1.80.1.nupkg.sha512",
         "microsoft.semantickernel.abstractions.nuspec"
       ]
     },
-    "Microsoft.SemanticKernel.Connectors.AzureOpenAI/1.80.0": {
-      "sha512": "D1o3ukNykxfi+3KfAELkuqQACyoSEX7cvNDoAW3b3858+zwBbQT1FSjFnQWHpl/cMEHdu/DQMCMA57boC+/s/g==",
+    "Microsoft.SemanticKernel.Connectors.AzureOpenAI/1.80.1": {
+      "sha512": "QspXOz8OUhRjF//Q4SyWi+4bnJKTjKS3wiIuMLsyYCblItq0bJgszZUZvxgLVrznl1yLkmQuO40osSz8HaEznQ==",
       "type": "package",
-      "path": "microsoft.semantickernel.connectors.azureopenai/1.80.0",
+      "path": "microsoft.semantickernel.connectors.azureopenai/1.80.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2262,14 +2262,14 @@
         "lib/net8.0/Microsoft.SemanticKernel.Connectors.AzureOpenAI.xml",
         "lib/netstandard2.0/Microsoft.SemanticKernel.Connectors.AzureOpenAI.dll",
         "lib/netstandard2.0/Microsoft.SemanticKernel.Connectors.AzureOpenAI.xml",
-        "microsoft.semantickernel.connectors.azureopenai.1.80.0.nupkg.sha512",
+        "microsoft.semantickernel.connectors.azureopenai.1.80.1.nupkg.sha512",
         "microsoft.semantickernel.connectors.azureopenai.nuspec"
       ]
     },
-    "Microsoft.SemanticKernel.Connectors.OpenAI/1.80.0": {
-      "sha512": "+CD4MswCUJ6poywp5jWuK9nbbDHEP3V07AkX/LCZr0uDTHwo5Ke+o/5+2DPGzwvFiQF90a02Y4gNnvBtfws0Jw==",
+    "Microsoft.SemanticKernel.Connectors.OpenAI/1.80.1": {
+      "sha512": "kyLdviV92zoffOUE26+9bHx/MraLVCvwRe8OPCeNHfCe0jBIa35qxQRnZMs+AnhhrO4XOuwgsnd3oyC3lWNi6Q==",
       "type": "package",
-      "path": "microsoft.semantickernel.connectors.openai/1.80.0",
+      "path": "microsoft.semantickernel.connectors.openai/1.80.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2281,14 +2281,14 @@
         "lib/net8.0/Microsoft.SemanticKernel.Connectors.OpenAI.xml",
         "lib/netstandard2.0/Microsoft.SemanticKernel.Connectors.OpenAI.dll",
         "lib/netstandard2.0/Microsoft.SemanticKernel.Connectors.OpenAI.xml",
-        "microsoft.semantickernel.connectors.openai.1.80.0.nupkg.sha512",
+        "microsoft.semantickernel.connectors.openai.1.80.1.nupkg.sha512",
         "microsoft.semantickernel.connectors.openai.nuspec"
       ]
     },
-    "Microsoft.SemanticKernel.Core/1.80.0": {
-      "sha512": "7zEOHLi5dnNTnXXVQ8btNXQ84nU1Cw1MBGQi0W0VSEaZjZKGZFHOU+9+Yvac20JS0Kc+S95nxhd4DbCbey351w==",
+    "Microsoft.SemanticKernel.Core/1.80.1": {
+      "sha512": "ehU6pzYTnR1XwavA1VDZiVjD+uFyAwsPA7y7+WO4gnwsYi+T+ehhZLeO9ahzwv7ABGU87AGCL2xKA9WXCUQsiw==",
       "type": "package",
-      "path": "microsoft.semantickernel.core/1.80.0",
+      "path": "microsoft.semantickernel.core/1.80.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2300,7 +2300,7 @@
         "lib/net8.0/Microsoft.SemanticKernel.Core.xml",
         "lib/netstandard2.0/Microsoft.SemanticKernel.Core.dll",
         "lib/netstandard2.0/Microsoft.SemanticKernel.Core.xml",
-        "microsoft.semantickernel.core.1.80.0.nupkg.sha512",
+        "microsoft.semantickernel.core.1.80.1.nupkg.sha512",
         "microsoft.semantickernel.core.nuspec"
       ]
     },
@@ -2864,9 +2864,9 @@
       "Ardalis.GuardClauses >= 5.0.0",
       "Microsoft.CodeAnalysis.Analyzers >= 5.9.0",
       "Microsoft.CodeAnalysis.CSharp >= 5.9.0",
-      "Microsoft.CodeAnalysis.NetAnalyzers >= 10.0.400",
-      "Microsoft.Extensions.Options >= 10.0.11",
-      "Microsoft.SemanticKernel >= 1.80.0",
+      "Microsoft.CodeAnalysis.NetAnalyzers >= 10.0.401",
+      "Microsoft.Extensions.Options >= 10.0.12",
+      "Microsoft.SemanticKernel >= 1.80.1",
       "OllamaSharp >= 5.4.30",
       "Qdrant.Client >= 1.19.0",
       "Ragnar.Abstractions >= 1.0.0",
@@ -2956,15 +2956,15 @@
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
             "target": "Package",
-            "version": "[10.0.400, )"
+            "version": "[10.0.401, )"
           },
           "Microsoft.Extensions.Options": {
             "target": "Package",
-            "version": "[10.0.11, )"
+            "version": "[10.0.12, )"
           },
           "Microsoft.SemanticKernel": {
             "target": "Package",
-            "version": "[1.80.0, )"
+            "version": "[1.80.1, )"
           },
           "OllamaSharp": {
             "target": "Package",
@@ -3017,7 +3017,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.400/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

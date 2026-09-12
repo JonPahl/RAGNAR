@@ -17,7 +17,7 @@ public static class PluginExtension
         /// <example><![CDATA[List<Question> configs = await LoadPluginQuestionsAsync("General.csv", provider, ct);]]></example>
         public async Task<List<Plugins.Question>> LoadPluginQuestionsAsync(string name, IQuestionProvider provider, CancellationToken cancellationToken)
         {
-            var questions = await provider.LoadQuestionsAsync(name, cancellationToken);
+            var questions = await provider.LoadQuestionsAsync(name, cancellationToken).ConfigureAwait(false);
             configs.AddRange(questions);
             return configs;
         }

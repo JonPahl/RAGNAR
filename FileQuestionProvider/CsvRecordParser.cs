@@ -3,8 +3,7 @@
 /// <summary>Parses a CSV file into QuestionRecord entities via CsvHelper.</summary>
 /// <remarks>Registers QuestionMap for column and enum conversions.</remarks>
 /// <example><![CDATA[var records = await parser.ParseAsync("q.csv", ct);]]></example>
-public sealed class CsvRecordParser
-    : IRecordParser<QuestionRecord>
+public sealed class CsvRecordParser : IRecordParser<QuestionRecord>
 {
 
     /// <summary>Reads and deserialises a CSV file into a list of QuestionRecords.</summary>

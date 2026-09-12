@@ -3,7 +3,7 @@
 public sealed class StylesTests
 {
     [Fact]
-    public void GreenBlink_HasCorrectColorAndDecoration()
+    public void GreenBlinkHasCorrectColorAndDecoration()
     {
         // Act
         var style = Styles.GreenBlink;
@@ -14,7 +14,7 @@ public sealed class StylesTests
     }
 
     [Fact]
-    public void Yellow_HasCorrectColor()
+    public void YellowHasCorrectColor()
     {
         // Act
         var style = Styles.Yellow;
@@ -26,7 +26,7 @@ public sealed class StylesTests
 
     [Theory]
     [InlineData("", new[] { "file.txt" }, false)]
-    public void IsExcluded_EdgeCases(string fileName, string[] exclusions, bool expected)
+    public void IsExcludedEdgeCases(string fileName, string[] exclusions, bool expected)
     {
         var result = fileName.AsSpan().IsExcluded(exclusions);
         Assert.Equal(expected, result);

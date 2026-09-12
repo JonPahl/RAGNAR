@@ -3,4 +3,4 @@
 /// <summary>List of qdrantClient point embeddings.
 /// </summary>
 /// <example><![CDATA[new EmbeddingData(pointsList);]]></example>
-public record struct EmbeddingData(List<PointStruct> Points);
+public record struct EmbeddingData(ReadOnlyCollection<PointStruct> Points);

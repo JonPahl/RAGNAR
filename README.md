@@ -85,7 +85,7 @@ Add a `appsettings.json` (or `appsettings.Development.json`) with:
   "OllamaOptions": {
     "Host": "localhost",
     "Port": 11434,
-    "TimeoutMinutes": 20
+    "TimeoutMinutes": 30
   },
   "FileLoadOptions": {
     "IncludePatterns": [ "*.cs" ],

@@ -4,47 +4,47 @@ public sealed class PointTests
 {
 
     [Fact]
-    public void FromFilePathAndIndex_Throws_WhenPathIsNull()
+    public void FromFilePathAndIndexThrowsWhenPathIsNull()
     {
         // Act & Assert
         Assert.Throws<ArgumentException>(() => Point.FromFilePathAndIndex(default!, "5".AsSpan()));
     }
 
     [Fact]
-    public void FromFilePathAndIndex_GeneratesDeterministicId()
+    public void FromFilePathAndIndexGeneratesDeterministicId()
     {
-        const string PATH = "test.cs";
-        const string INDEX = "5";
+        const string path = "test.cs";
+        const string index = "5";
 
-        var id1 = Point.FromFilePathAndIndex(PATH.AsSpan(), INDEX.AsSpan());
-        var id2 = Point.FromFilePathAndIndex(PATH.AsSpan(), INDEX.AsSpan());
+        var id1 = Point.FromFilePathAndIndex(path.AsSpan(), index.AsSpan());
+        var id2 = Point.FromFilePathAndIndex(path.AsSpan(), index.AsSpan());
 
         Assert.Equal(id1, id2);
         Assert.NotEqual(0UL, id1);
     }
 
     [Fact]
-    public void FromFilePathAndIndex_HandlesLongPaths()
+    public void FromFilePathAndIndexHandlesLongPaths()
     {
-        const string PATH = "very/long/path/to/a/file/with/many/directories/Program.cs";
-        const string INDEX = "42";
+        const string path = "very/long/path/to/a/file/with/many/directories/Program.cs";
+        const string index = "42";
 
-        var id = Point.FromFilePathAndIndex(PATH.AsSpan(), INDEX.AsSpan());
+        var id = Point.FromFilePathAndIndex(path.AsSpan(), index.AsSpan());
 
         Assert.NotEqual(0UL, id);
     }
 
     [Fact]
-    public void FromFilePathAndIndex_Throws_WhenIndexIsNull()
+    public void FromFilePathAndIndexThrowsWhenIndexIsNull()
     {
-        const string? INDEX = null;
-        Assert.Throws<ArgumentException>(() => Point.FromFilePathAndIndex("test.cs".AsSpan(), INDEX!.AsSpan()));
+        const string? index = null;
+        Assert.Throws<ArgumentException>(() => Point.FromFilePathAndIndex("test.cs".AsSpan(), index!.AsSpan()));
     }
 
     [Fact]
-    public void FromFilePathAndIndex_Throws_WhenIndexIsWhitespace()
+    public void FromFilePathAndIndexThrowsWhenIndexIsWhitespace()
     {
-        const string INDEX = "   ";
-        Assert.Throws<ArgumentException>(() => Point.FromFilePathAndIndex("test.cs".AsSpan(), INDEX.AsSpan()));
+        const string index = "   ";
+        Assert.Throws<ArgumentException>(() => Point.FromFilePathAndIndex("test.cs".AsSpan(), index.AsSpan()));
     }
 }

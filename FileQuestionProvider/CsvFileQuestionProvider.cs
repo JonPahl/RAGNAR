@@ -6,6 +6,9 @@
 /// <example><![CDATA[var provider = new CsvFileQuestionProvider(parser);]]></example>
 public sealed class CsvFileQuestionProvider(IRecordParser<QuestionRecord> csvParser) : IQuestionProvider
 {
+
+    /// <summary>Gets the display name identifying this question provider.</summary>
+    /// <example><![CDATA[string n = provider.ProviderName;]]></example>
     public string ProviderName => "CSV File";
 
     /// <summary>Parses CSV and maps to Question objects.</summary>
@@ -16,7 +19,7 @@ public sealed class CsvFileQuestionProvider(IRecordParser<QuestionRecord> csvPar
     /// <returns>Collection of loaded Question objects from the CSV file.</returns>
     public async Task<IEnumerable<Question>> LoadQuestionsAsync(string fileName, CancellationToken cancellationToken)
     {
-        var records = await csvParser.ParseAsync(fileName, cancellationToken);
+        var records = await csvParser.ParseAsync(fileName, cancellationToken).ConfigureAwait(false);
 
         return records.Select(r => new Question(
             IsActive: r.IsEnabled, Text: r.Text, FileName: r.FileName, Category: r.Category));

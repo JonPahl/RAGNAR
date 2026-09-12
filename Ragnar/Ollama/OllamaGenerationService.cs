@@ -55,7 +55,7 @@ public class OllamaGenerationService(IOllamaClientFactory clientFactory)
                 ctx.UpdateTarget(panel);
                 ctx.Refresh();
 
-                await foreach (var stream in _ollamaClient.GenerateAsync(request, cancellationToken))
+                await foreach (var stream in _ollamaClient.GenerateAsync(request, cancellationToken).ConfigureAwait(false))
                 {
                     if (stream is null)
                         throw new InvalidOperationException("Stream returned null response.");
@@ -72,7 +72,7 @@ public class OllamaGenerationService(IOllamaClientFactory clientFactory)
                     ctx.UpdateTarget(panelText);
                     ctx.Refresh();
                 }
-            });
+            }).ConfigureAwait(false);
 
             return sb.ToString();
         }

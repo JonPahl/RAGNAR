@@ -27,13 +27,23 @@ public class ChunkBySyntaxTree
 
         foreach (var node in root.DescendantNodes())
         {
-            if (node is ClassDeclarationSyntax classDeclaration)
+            switch (node)
             {
-                response.Add(LoadClass(filename, classDeclaration));
+                case ClassDeclarationSyntax classDeclaration:
+                    {
+                        response.Add(LoadClass(filename, classDeclaration));
+                        break;
+                    }
+                case InterfaceDeclarationSyntax interfaceDeclaration:
+                    {
+                        response.Add(LoadInterface(filename, interfaceDeclaration));
+                        break;
+                    }
             }
         }
 
         return response;
+        // Handle other top-level declarations if needed
     }
 
     /// <summary>
@@ -43,12 +53,20 @@ public class ChunkBySyntaxTree
     /// <param name="classDefine">Class syntax node.</param>
     /// <returns>Initialized CodeDocument.</returns>
     /// <example><![CDATA[var doc = chunker.LoadClass("Program.cs", node);]]></example>
-    private CodeDocument LoadClass(string filename, ClassDeclarationSyntax classDefine)
+    private static CodeDocument LoadClass(string filename, ClassDeclarationSyntax classDefine)
     {
         var category = InferCategoryFromPath(filename);
 
         return CreateCodeDocument(filename, classDefine, classDefine.Kind().ToString(), classDefine?.Identifier.ValueText ?? UNKNOWN_ELEMENT_NAME, classDefine?.GetLeadingTrivia(), category);
     }
+
+    private static CodeDocument LoadInterface(string filename, InterfaceDeclarationSyntax interfaceDefine)
+    {
+        var category = InferCategoryFromPath(filename);
+
+        return CreateCodeDocument(filename, interfaceDefine, interfaceDefine.Kind().ToString(), interfaceDefine?.Identifier.ValueText ?? UNKNOWN_ELEMENT_NAME, interfaceDefine?.GetLeadingTrivia(), category);
+    }
+
 
     private static string InferCategoryFromPath(string fileName)
     => Path.GetFileNameWithoutExtension(fileName)
@@ -72,7 +90,7 @@ public class ChunkBySyntaxTree
     /// <param name="category">Category inferred from path.</param>
     /// <returns>Initialized CodeDocument.</returns>
     /// <example><![CDATA[var doc = chunker.CreateCodeDocument("Program.cs", node, "Class", "Program", trivia, "Core");]]></example>
-    private CodeDocument CreateCodeDocument(string fileName, SyntaxNode node, string elementType, string elementName, SyntaxTriviaList? leadingTrivia, string category)
+    private static CodeDocument CreateCodeDocument(string fileName, SyntaxNode node, string elementType, string elementName, SyntaxTriviaList? leadingTrivia, string category)
     {
         var comments = LocateComments(leadingTrivia);
 

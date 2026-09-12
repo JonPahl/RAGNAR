@@ -1,9 +1,9 @@
 ﻿namespace Ragnar.Embedding.UnitOfWork;
 
 /// <summary>Validates files against the provided load options.</summary>
-/// <example><![CDATA[bool ok = validator.IsValid(fileInfo, loadOpts);]]></example>
-internal class FileValidator
-    : IFileValidator
+/// <example>
+/// <![CDATA[bool ok = validator.IsValid(fileInfo, loadOptions);]]></example>
+internal sealed class FileValidator : IFileValidator
 {
     /// <summary>Determines whether a file passes extension and exclusion rules.</summary>
     /// <param name="file">The file system entry to validate.</param>

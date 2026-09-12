@@ -14,9 +14,9 @@ public static class OutputPathHelper
         var parts = folders as IReadOnlyCollection<string> ?? [.. folders];
 
         if (parts.Count == 0)
-            return string.IsNullOrEmpty(baseDir) ? AppDefaults.RESPONSE_DIRECTORYNAME : Path.Join(baseDir, AppDefaults.RESPONSE_DIRECTORYNAME);
+            return string.IsNullOrEmpty(baseDir) ? AppDefaults.ResponseDirectoryName : Path.Join(baseDir, AppDefaults.ResponseDirectoryName);
 
-        return Path.Join(parts.Append(AppDefaults.RESPONSE_DIRECTORYNAME).ToArray());
+        return Path.Join(parts.Append(AppDefaults.ResponseDirectoryName).ToArray());
     }
 
     /// <summary>Wraps a prompt string in markdown fence markers for display.</summary>

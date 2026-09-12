@@ -1,20 +1,19 @@
 ﻿namespace Ragnar.Validator;
 
-/// <summary>
-/// Validates <see cref="ApplicationOptions"/> for structural correctness only.
-/// Directory existence checks belong in the service layer, not in a validator.
-/// </summary>
+/// <summary>Validates ApplicationOptions for structural correctness.</summary>
+/// <example><![CDATA[var validator = new ApplicationOptionsValidation();]]>
+/// </example>
 public sealed class ApplicationOptionsValidation
     : AbstractValidator<ApplicationOptions>
 {
 
     /// <summary>Initializes FluentValidation rules for application options.</summary>
+    /// <example><![CDATA[var v = new ApplicationOptionsValidation();]]></example>
     public ApplicationOptionsValidation()
     {
         RuleFor(x => x.VectorStoreName)
             .NotEmpty().WithMessage("Qdrant Vector Store Name is required.")
             .MaximumLength(128).WithMessage("VectorStoreName must not exceed 128 characters.");
-
 
         RuleFor(x => x.SourceDirectory)
             .NotEmpty().WithMessage("SourceDirectory is required.")
@@ -25,4 +24,3 @@ public sealed class ApplicationOptionsValidation
 
     }
 }
-

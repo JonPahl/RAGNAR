@@ -26,7 +26,6 @@ global using Ragnar.Core.Options;
 global using Ragnar.Core.Utils;
 global using Ragnar.Embedding.Chunker;
 global using Ragnar.Embedding.Factory;
-global using Ragnar.Embedding.Pipeline.Interface;
 global using Ragnar.Embedding.Pipeline.Services;
 global using Ragnar.Embedding.UnitOfWork;
 global using Ragnar.Plugins;

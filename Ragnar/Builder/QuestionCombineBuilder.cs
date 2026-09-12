@@ -6,7 +6,10 @@
 /// <remarks>Chainable; call Build() to obtain the final filtered list.</remarks>
 /// <example><![CDATA[var q = new QB(loader, opts).GetCsvFilesAsync("plugins").Build();]]></example>
 public class QuestionCombineBuilder(
+    IQuestionProvider questionProvider,
     IQuestionCatalogLoader questionLoader,
+    IConfigurationLoader configurationLoader,
+    IQuestionBuilder questionBuilder,
     IOptions<RagnarConfig> options) : IQuestionCombineBuilder
 {
     private List<Core.Model.Question> Questions { get; } = [];
@@ -15,7 +18,7 @@ public class QuestionCombineBuilder(
     /// <remarks>Appends to the internal question list; order is preserved.</remarks>
     /// <example><![CDATA[builder.GetCategories();]]></example>
     /// <returns>The builder instance for chaining.</returns>
-    public QuestionCombineBuilder GetCategories()
+    public IQuestionCombineBuilder GetCategories()
     {
         var categories = options.Value.ApplicationOptions.CategoriesToProcess.ToHashSet();
 
@@ -28,15 +31,13 @@ public class QuestionCombineBuilder(
     /// <remarks>Uses FileConfigLoader to read per-file question settings.</remarks>
     /// <example><![CDATA[builder.GetFileConfig();]]></example>
     /// <returns>The builder instance for chaining.</returns>
-    public QuestionCombineBuilder GetFileConfig()
+    public IQuestionCombineBuilder GetFileConfig()
     {
         var fcl = new FileConfigLoader();
 
-        var builder = new QuestionBuilder();
-
         foreach (var config in fcl.LoadQuestions())
         {
-            var item = builder
+            var item = questionBuilder
                 .WithText(config.Text)
                 .WithFileName(config.FileName)
                 .SetCategory(config.Category)
@@ -54,12 +55,8 @@ public class QuestionCombineBuilder(
     /// <remarks>Skips silently if the directory does not exist.</remarks>
     /// <example><![CDATA[await builder.GetCsvFilesAsync(dir, ct);]]></example>
     /// <returns>The builder instance for chaining.</returns>
-    public async Task<QuestionCombineBuilder> GetCsvFilesAsync(string pluginDir, CancellationToken cancellationToken)
+    public async Task<IQuestionCombineBuilder> GetCsvFilesAsync(string pluginDir, CancellationToken cancellationToken)
     {
-        var csvParser = new CsvRecordParser();
-
-        var provider = new CsvFileQuestionProvider(csvParser);
-
         if (Directory.Exists(pluginDir))
         {
             foreach (var csvFile in Directory.EnumerateFiles(pluginDir, "*.csv", SearchOption.AllDirectories))
@@ -68,9 +65,7 @@ public class QuestionCombineBuilder(
                 {
                     continue; // Skip summary files
                 }
-                var csvConfigs = await provider.LoadQuestionsAsync(csvFile, cancellationToken);
-
-                var questionBuilder = new QuestionBuilder();
+                var csvConfigs = await questionProvider.LoadQuestionsAsync(csvFile, cancellationToken).ConfigureAwait(false);
 
                 foreach (var csv in csvConfigs)
                 {
@@ -87,24 +82,17 @@ public class QuestionCombineBuilder(
         return this;
     }
 
-
     /// <summary>Asynchronously loads questions from CSV files in the plugin directory.</summary>
     /// <param name="csvFile">*.csv file containing question definitions.</param>
     /// <param name="cancellationToken">Token to cancel the async load.</param>
     /// <remarks>Skips silently if the directory does not exist.</remarks>
     /// <example><![CDATA[await builder.GetCsvFilesAsync(dir, ct);]]></example>
     /// <returns>The builder instance for chaining.</returns>
-    public async Task<QuestionCombineBuilder> GetCsvFileAsync(string csvFile, CancellationToken cancellationToken)
+    public async Task<IQuestionCombineBuilder> GetCsvFileAsync(string csvFile, CancellationToken cancellationToken)
     {
-        var csvParser = new CsvRecordParser();
-
-        var provider = new CsvFileQuestionProvider(csvParser);
-
         if (File.Exists(csvFile))
         {
-            var csvConfigs = await provider.LoadQuestionsAsync(csvFile, cancellationToken);
-
-            var questionBuilder = new QuestionBuilder();
+            var csvConfigs = await questionProvider.LoadQuestionsAsync(csvFile, cancellationToken).ConfigureAwait(false);
 
             foreach (var csv in csvConfigs)
             {
@@ -127,12 +115,13 @@ public class QuestionCombineBuilder(
     /// <returns>Read-only list of enabled questions.</returns>
     public IReadOnlyList<Core.Model.Question> Build()
     {
-        return Questions
+        var question = Questions
             .Where(q => q.IsEnabled)
             .OrderBy(q => q.Category.ToString())
             .ThenBy(q => q.Filename)
             .ToList()
             .AsReadOnly();
+        return question;
     }
 
     /// <summary>Filters the question list to a specific set of categories.</summary>
@@ -140,12 +129,12 @@ public class QuestionCombineBuilder(
     /// <example><![CDATA[builder.WithCategoryFilter(opts);]]></example>
     /// <returns>The builder instance for chaining.</returns>
     /// <example><![CDATA[builder.WithCategoryFilter();]]></example>
-    public QuestionCombineBuilder WithCategoryFilter()
+    public IQuestionCombineBuilder WithCategoryFilter()
     {
         var categories = options.Value.ApplicationOptions.CategoriesToProcess;
 
         // If the list is null or empty, keep everything (no filter).
-        if (categories is null)
+        if (categories is null || !categories.Any())
             return this;
 
         var hash = categories.ToHashSet();
@@ -156,31 +145,5 @@ public class QuestionCombineBuilder(
         Questions.Clear();
         Questions.AddRange(filtered);
         return this;
-    }
-}
-
-
-public static class QuestionCombineBuilderExtensions
-{
-
-    /// <summary>Registers embedding and question-plugin services into the DI container.</summary>
-    /// <remarks>Loads plugin DLLs at runtime from the Questions/Plugins folder.</remarks>
-    /// <example><![CDATA[services.RegisterEmbeddingServices().LoadQuestionPlugins();]]></example>
-
-    extension(QuestionBuilder builder)
-    {
-        public QuestionBuilder SetActive(bool active)
-        {
-            if (active)
-            {
-                builder.AsActive();
-            }
-            else
-            {
-                builder.AsInactive();
-            }
-
-            return builder;
-        }
     }
 }

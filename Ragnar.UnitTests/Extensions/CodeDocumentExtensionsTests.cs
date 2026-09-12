@@ -3,7 +3,7 @@
 public sealed class CodeDocumentExtensionsTests
 {
     [Fact]
-    public void Dictionary_ReturnsNonEmptyDictionary()
+    public void DictionaryReturnsNonEmptyDictionary()
     {
         // Arrange
         var doc = new CodeDocument

@@ -3,7 +3,7 @@
 public sealed class BrandingHeaderTests
 {
     [Fact]
-    public void Display_WritesExpectedOutput_WithVersion()
+    public void DisplayWritesExpectedOutputWithVersion()
     {
         // Arrange
         var writerMock = new Mock<IOutputWriter>();
