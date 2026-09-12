@@ -15,7 +15,7 @@ public sealed class FileParser(IOptions<RagnarConfig> configWrapper, Serilog.ILo
     /// <param name="filePath">The path to the file to parse.</param>
     /// <param name="cancellationToken">A cancellation token that can be used to cancel this operation.</param>
     /// <returns>A task representing the asynchronous operation. The result is an array of parsed objects of type T.</returns>
-    public override async ValueTask<CodeDocument[]> ParseFileAsync(string filePath, CancellationToken cancellationToken)
+    public override async Task<IEnumerable<CodeDocument>> ParseAsync(string filePath, CancellationToken cancellationToken = default)
     {
         var fileContent = await ReadFileAsync(filePath, cancellationToken);
 

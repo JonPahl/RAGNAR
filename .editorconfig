@@ -49,25 +49,23 @@ csharp_prefer_braces = when_multiline:suggestion
 dotnet_naming_symbols.parameter_symbols.applicable_kinds = parameter
 dotnet_naming_symbols.parameter_symbols.applicable_accessibilities = *
 
-# 2. Define the naming style for camelCase
-dotnet_naming_style.camel_case_style.capitalization = camel_case
-
 # 3. Create the rule linking symbols and style
 dotnet_naming_rule.parameters_should_be_camel_case.symbols = parameter_symbols
 dotnet_naming_rule.parameters_should_be_camel_case.style = camel_case_style
 dotnet_naming_rule.parameters_should_be_camel_case.severity = warning
 
-# 1. Define the rule for constants
-dotnet_naming_rule.constants_should_be_all_caps.severity = warning
-dotnet_naming_rule.constants_should_be_all_caps.symbols = constant_symbols
-dotnet_naming_rule.constants_should_be_all_caps.style = all_caps_style
+# 1. Define the Naming Style (PascalCase)
+dotnet_naming_style.pascal_case_style.capitalization = pascal_case
 
-# 2. Match constants (fields and local variables with the const modifier)
-dotnet_naming_symbols.constant_symbols.applicable_kinds = field, local
-dotnet_naming_symbols.constant_symbols.required_modifiers = const
+# 2. Define the Symbol Group (All constant fields)
+dotnet_naming_symbols.constant_fields_group.applicable_kinds = field
+dotnet_naming_symbols.constant_fields_group.applicable_accessibilities = *
+dotnet_naming_symbols.constant_fields_group.required_modifiers = const
 
-# 3. Specify the ALL_CAPS style
-dotnet_naming_style.all_caps_style.capitalization = all_upper
+# 3. Link them together with a Naming Rule
+dotnet_naming_rule.constant_fields_must_be_pascal_case.symbols = constant_fields_group
+dotnet_naming_rule.constant_fields_must_be_pascal_case.style = pascal_case_style
+dotnet_naming_rule.constant_fields_must_be_pascal_case.severity = warning
 
 # 1. Target private fields
 dotnet_naming_symbols.private_fields_group.applicable_kinds = field
@@ -81,7 +79,6 @@ dotnet_naming_style.underscore_camel_case_style.required_prefix = _
 dotnet_naming_rule.private_fields_must_have_underscore.symbols = private_fields_group
 dotnet_naming_rule.private_fields_must_have_underscore.style = underscore_camel_case_style
 dotnet_naming_rule.private_fields_must_have_underscore.severity = warning
-
 
 # Public types & members: PascalCase
 dotnet_naming_rule.public_types_members_pascal.severity = suggestion
@@ -99,10 +96,6 @@ dotnet_naming_style.camel_case_style.capitalization = camel_case
 dotnet_naming_rule.local_variables_should_be_camel_case.symbols = local_variables
 dotnet_naming_rule.local_variables_should_be_camel_case.style = camel_case_style
 dotnet_naming_rule.local_variables_should_be_camel_case.severity = suggestion
-
-# 4. Set the diagnostic severity for IDE1006 (Naming rule violation)
-dotnet_diagnostic.IDE1006.severity = warning
-
 
 # Private fields: _camelCase
 #dotnet_naming_rule.private_fields_underscore_camel.severity = suggestion
@@ -129,9 +122,23 @@ dotnet_naming_style.camel_case.capitalization = camel_case
 dotnet_naming_style.ipascal_case.required_prefix = I
 dotnet_naming_style.ipascal_case.capitalization = pascal_case
 
+
 # ------------------------------------------
 # Project & Config Files
 # ------------------------------------------
+
+# 4. Set the diagnostic severity for IDE1006 (Naming rule violation)
+dotnet_diagnostic.IDE1006.severity = warning
+dotnet_diagnostic.DOC0001.severity = error
+# RCS1110: Declare type in separate file
+dotnet_diagnostic.RCS1110.severity = warning
+dotnet_diagnostic.CA1034.severity = none
+dotnet_diagnostic.CA1515.severity = none
+
+
+## Optional Companion Rule - SA1649: File name should match first type name
+#dotnet_diagnostic.SA1649.severity = error
+
 [{*.csproj,*.props,*.targets}]
 indent_size = 2
 

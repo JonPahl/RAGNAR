@@ -7,7 +7,7 @@ public sealed class StringExtensionsTests
     [InlineData("Hello <!-- comment -->", 5)]
     [InlineData("<summary>Summary text</summary>", 11)]
     [InlineData("", 0)]
-    public void CharacterCount_ExcludesTagsAndSlashes(string xml, int expected)
+    public void CharacterCountExcludesTagsAndSlashes(string xml, int expected)
     {
         // Act
         var count = xml.CharacterCount();

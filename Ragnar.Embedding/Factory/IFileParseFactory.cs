@@ -9,5 +9,5 @@ public interface IFileParseFactory
     /// <param name="Ct">Cancellation token.</param>
     /// <returns>Parsed documents.</returns>
     /// <example><![CDATA[var docs = await factory.ParseAsync("Program.cs", ct);]]></example>
-    Task<CodeDocument[]> ParseAsync(string file, CancellationToken cancellationToken);
+    Task<IEnumerable<CodeDocument>> ParseAsync(string file, CancellationToken cancellationToken);
 }

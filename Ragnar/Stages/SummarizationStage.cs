@@ -22,7 +22,7 @@ public class SummarizationStage(ISummaryService summaryService, IOutputWriter wr
             Style = Style.Parse("cyan")
         });
 
-        await summaryService.SummarizeAllResponsesAsync(cancellationToken);
+        await summaryService.SummarizeAllResponsesAsync(cancellationToken).ConfigureAwait(false);
         writer.WriteRule();
         writer.MarkupLine("[blue bold] Questions Finished[/]");
         writer.WriteRule();

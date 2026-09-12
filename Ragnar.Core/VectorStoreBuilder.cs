@@ -3,25 +3,23 @@
 /// <summary>Manages Qdrant vector store collection creation and existence checks.</summary>
 public sealed class VectorStoreBuilder(
     Serilog.ILogger logger,
-    ulong dimension,
-    string vectorStoreName,
+    IOptions<RagnarConfig> options,
     IQdrantClient qdrant)
     : IVectorStoreBuilder
 {
     private bool IsExisting { get; set; }
-    public string VectorStoreName { get; set; } = Guard.Against.NullOrEmpty(vectorStoreName);
-    public ulong Dimension { get; set; } = dimension;
+    public string VectorStoreName { get; set; } = Guard.Against.NullOrEmpty(options.Value.ApplicationOptions.VectorStoreName);
+    public ulong Dimension { get; set; } = options.Value.EmbeddingOptions.Dimension;
     public Serilog.ILogger Logger { get; set; } = Guard.Against.Null(logger);
     public IQdrantClient QdrantClient { get; set; } = Guard.Against.Null(qdrant);
 
-    /// <summary>
-    /// Ensures the collection exists, creating it if necessary.
-    /// </summary>
+    /// <summary>Ensures the collection exists, creating it if necessary.</summary>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns><c>true</c> if the collection is available after the operation.</returns>
+    /// <example><![CDATA[bool ok = await builder.BuildAsync(ct);]]></example>
     public async Task<bool> BuildAsync(CancellationToken cancellationToken)
     {
-        await ExistsAsync(cancellationToken);
+        await ExistsAsync(cancellationToken).ConfigureAwait(false);
         if (!IsExisting)
         {
             await CreateAsync(cancellationToken).ConfigureAwait(false);
@@ -37,7 +35,7 @@ public sealed class VectorStoreBuilder(
     /// <example><![CDATA[var result = await builder.ExistsAsync(ct);]]></example>
     public async Task<IVectorStoreBuilder> ExistsAsync(CancellationToken cancellationToken)
     {
-        IsExisting = await QdrantClient.CollectionExistsAsync(VectorStoreName, cancellationToken);
+        IsExisting = await QdrantClient.CollectionExistsAsync(VectorStoreName, cancellationToken).ConfigureAwait(false);
 
         return this;
     }
@@ -49,7 +47,7 @@ public sealed class VectorStoreBuilder(
     public async Task<IVectorStoreBuilder> CreateAsync(CancellationToken cancellationToken)
     {
         await QdrantClient.CreateCollectionAsync(
-          VectorStoreName, new VectorParams { Size = Dimension, Distance = Distance.Cosine }, cancellationToken: cancellationToken);
+          VectorStoreName, new VectorParams { Size = Dimension, Distance = Distance.Cosine }, cancellationToken: cancellationToken).ConfigureAwait(false);
 
         Logger.Information("new collection {Name} created.", VectorStoreName);
 
@@ -75,7 +73,7 @@ public sealed class VectorStoreBuilder(
                 VectorStoreName,
                 fieldName: indexName,
                 schemaType: schemaType,
-                cancellationToken: cancellationToken);
+                cancellationToken: cancellationToken).ConfigureAwait(false);
 
         return this;
     }

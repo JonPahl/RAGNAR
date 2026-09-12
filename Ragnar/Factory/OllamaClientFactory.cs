@@ -7,9 +7,7 @@
 /// <param name="ragnarConfig">Ragnar config with host, port, model, and timeout values.</param>
 /// <remarks>Clients are cached per OllamaServiceType to avoid repeated construction.</remarks>
 /// <example><![CDATA[var client = factory.FindClient(OllamaServiceType.Ollama);]]></example>
-
-public class OllamaClientFactory(IHttpClientFactory httpClientFactory, IOptions<RagnarConfig> ragnarConfig)
-    : IOllamaClientFactory
+public class OllamaClientFactory(IHttpClientFactory httpClientFactory, IOptions<RagnarConfig> ragnarConfig) : IOllamaClientFactory
 {
     private readonly ConcurrentDictionary<OllamaServiceType, OllamaApiClient> _cache = new();
     private readonly RagnarConfig _config = ragnarConfig.Value;

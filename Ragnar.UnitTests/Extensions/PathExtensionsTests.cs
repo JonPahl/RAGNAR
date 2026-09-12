@@ -6,7 +6,7 @@ public sealed class PathExtensionsTests
     [InlineData("file.txt", new[] { "FILE.TXT", "other.txt" }, true)]
     [InlineData("file.txt", new[] { "other.txt" }, false)]
     [InlineData("File.TXT", new[] { "file.txt" }, true)]
-    public void IsExcluded_ReturnsExpected(string fileName, string[] exclusions, bool expected)
+    public void IsExcludedReturnsExpected(string fileName, string[] exclusions, bool expected)
     {
         // Act
         var result = fileName.AsSpan().IsExcluded(exclusions);
@@ -16,10 +16,10 @@ public sealed class PathExtensionsTests
     }
 
     [Fact]
-    public void ExpandDirectory_Expands_Env_Var_And_Throws_If_Missing()
+    public void ExpandDirectoryExpandsEnvVarAndThrowsIfMissing()
     {
         // Arrange
-        var path = "%NONEXISTENT_ENV_VAR%\\folder";
+        const string path = "%NONEXISTENT_ENV_VAR%\\folder";
 
         // Act & Assert
         Assert.Throws<DirectoryNotFoundException>(() => path.ExpandDirectory());

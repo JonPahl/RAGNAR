@@ -42,7 +42,7 @@ public sealed class RagOrchestrator(
 
         var sw = Stopwatch.StartNew();
 
-        var response = await GenerateAsync(request, cancellationToken);
+        var response = await GenerateAsync(request, cancellationToken).ConfigureAwait(false);
         sw.Stop();
 
         if (configWrapper.Value.ApplicationOptions.IncludeOriginalPrompt)
@@ -52,7 +52,7 @@ public sealed class RagOrchestrator(
             response += request.System;
         }
 
-        await SaveResponseAsync(new SaveDetails(question, response, sw.ElapsedTimeString()), cancellationToken);
+        await SaveResponseAsync(new SaveDetails(question, response, sw.ElapsedTimeString()), cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>Saves generation response to disk and prints path.</summary>
@@ -61,7 +61,7 @@ public sealed class RagOrchestrator(
     /// <example><![CDATA[await SaveResponseAsync(new SaveDetails(...), ct);]]></example>
     private async Task SaveResponseAsync(SaveDetails details, CancellationToken cancellationToken)
     {
-        var path = await saveService.WriteResponseAsync(details, cancellationToken);
+        var path = await saveService.WriteResponseAsync(details, cancellationToken).ConfigureAwait(false);
         writer.WriteLine();
         writer.MarkupLine($"[red underline]{path}[/]");
     }
@@ -72,5 +72,5 @@ public sealed class RagOrchestrator(
     /// <example>
     /// <![CDATA[string answer = await GenerateAsync(request, ct);]]></example>
     /// <returns>Generated text.</returns>
-    private async ValueTask<string> GenerateAsync(GenerateRequest request, CancellationToken cancellationToken) => await ollamaProvider.GenerateResponse(request, cancellationToken);
+    private async ValueTask<string> GenerateAsync(GenerateRequest request, CancellationToken cancellationToken) => await ollamaProvider.GenerateResponse(request, cancellationToken).ConfigureAwait(false);
 }

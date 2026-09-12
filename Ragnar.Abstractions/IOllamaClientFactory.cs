@@ -1,17 +1,12 @@
 ﻿namespace Ragnar.Abstractions;
 
-/// <summary>
-/// Build Ollama Api client.
-/// </summary>
+/// <summary>Interface for creating and caching Ollama API client instances.</summary>
+/// <example><![CDATA[var c = factory.FindClient(OllamaServiceType.Ollama);]]></example>
 public interface IOllamaClientFactory
 {
-    /// <summary>
-    /// Factory for creating Ollama clients.
-    /// </summary>
-    /// <param name="serviceType"> Type of client to find.
-    /// </param>
-    /// <returns>
-    /// The created IOllamaApiClient instance.
-    /// </returns>
+    /// <summary>Finds or creates an appropriate Ollama client based on the requested type.</summary>
+    /// <param name="serviceType">The type of client to create (Ollama or Embedding).</param>
+    /// <returns>An initialized OllamaApiClient instance for the specified service.</returns>
+    /// <example><![CDATA[var client = factory.FindClient(OllamaServiceType.Ollama);]]></example>
     OllamaApiClient FindClient(OllamaServiceType serviceType);
 }

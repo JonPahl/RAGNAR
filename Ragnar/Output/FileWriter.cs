@@ -11,8 +11,5 @@ public sealed class FileWriter : IWriter
     /// <remarks>Ensures thread-safe writes using File.WriteAllTextAsync internally.</remarks>
     /// <example><![CDATA[await writer.WriteAsync("output.txt", "data", ct);]]></example>
     /// <returns>A task representing the asynchronous write operation.</returns>
-    public async Task WriteAsync(string fullPath, string content, CancellationToken cancellationToken)
-    {
-        await File.WriteAllTextAsync(fullPath, content, cancellationToken);
-    }
+    public async Task WriteAsync(string fullPath, string content, CancellationToken cancellationToken) => await File.WriteAllTextAsync(fullPath, content, cancellationToken).ConfigureAwait(false);
 }

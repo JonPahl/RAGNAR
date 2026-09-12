@@ -1,5 +1,4 @@
-global using Microsoft.Extensions.AI;
-global using Microsoft.Extensions.Options;
+﻿global using Microsoft.Extensions.AI;
 global using Ragnar.Core.Options;
 global using Qdrant.Client.Grpc;
 global using OllamaSharp;

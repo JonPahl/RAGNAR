@@ -9,9 +9,7 @@ public interface IConfigurationLoader
     /// Gets questions from a configuration file.
     /// </summary>
     /// <example>
-    /// <![CDATA[
-    /// var loader = new IConfigurationLoader();
-    /// loader.LoadQuestions(); ]]>
+    /// <![CDATA[loader.LoadQuestions(); ]]>
     /// </example>
     /// <returns>Collection of Question objects.
     /// </returns>

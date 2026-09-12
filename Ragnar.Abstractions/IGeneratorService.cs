@@ -1,22 +1,13 @@
 ﻿namespace Ragnar.Abstractions;
 
-/// <summary>
-/// Interface for embedding generator service functionality.
-/// </summary>
+/// <summary>Interface for generating Qdrant point structures from embeddings.</summary>
 public interface IGeneratorService
 {
-    /// <summary>
-    /// Builds point structs based on the provided point ID, embedding, chunk, and fileName.
-    /// </summary>
-    /// <param name="pointId">The point ID.</param>
-    /// <param name="embedding">The embedding.</param>    
-    /// <returns>A list of point structs.</returns>
-    abstract List<PointStruct> BuildPointStructs(PointId pointId, float[] embedding, CodeDocument document);
-}
-
-public interface IEmbeddingService
-{
-    Task<ReadOnlyMemory<float>> GenerateAsync(string input, CancellationToken ct);
-
-    Task<GeneratedEmbeddings<Embedding<float>>> GenerateBatchAsync(IReadOnlyCollection<string> inputs, CancellationToken ct);
+    /// <summary>Builds Qdrant point structs based on ID, embedding vector, and document.</summary>
+    /// <param name="pointId">The unique identifier for the point.</param>
+    /// <param name="embedding">The float array representing the vector embedding.</param>
+    /// <param name="document">The source CodeDocument containing payload data.</param>
+    /// <returns>A list of PointStruct objects ready for upserting to Qdrant.</returns>
+    /// <example><![CDATA[var pts = gen.BuildPointStructs(id, vec, doc);]]></example>
+    abstract IReadOnlyList<PointStruct> BuildPointStructs(PointId pointId, float[] embedding, CodeDocument document);
 }

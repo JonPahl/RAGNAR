@@ -1,4 +1,4 @@
-﻿using Ragnar.Questions.Interface;
+﻿using Ragnar.Core;
 
 namespace Ragnar;
 
@@ -23,7 +23,7 @@ public static class RagPipelineHostBuilder
                 .AddSingleton<IQuestionBuilder, QuestionBuilder>();
             services
             .AddSingleton<ConfigToQuestionMapper>()
-            .AddScoped<IQuestionEmbedding, QuestionEmbedding>()
+            .AddScoped<Ragnar.Abstractions.IQuestionEmbedding, QuestionEmbedding>()
             .AddSingleton<IOllamaClientFactory, OllamaClientFactory>();
 
             services
@@ -31,8 +31,15 @@ public static class RagPipelineHostBuilder
             .AddSingleton<IApplicationHeader, ApplicationHeader>()
             .AddSingleton<ISummaryService, SummaryService>()
             .AddScoped<IResponseWriter, ResponseWriter>()
+            .AddSingleton<IVectorStoreBuilder, VectorStoreBuilder>()
             .AddScoped<IOutputFormatter, ResponseMarkdownFormatter>();
             services.AddSingleton<IRagOrchestrator, RagOrchestrator>();
+
+            services
+            .AddSingleton<IQuestionCatalogLoader, DefaultQuestionCatalogLoader>()
+            .AddSingleton<IConfigurationLoader, FileConfigLoader>()
+            .AddSingleton<IRecordParser<QuestionRecord>, CsvRecordParser>()
+            .AddSingleton<IQuestionProvider, CsvFileQuestionProvider>();
 
             services.AddScoped<IFileValidator, FileValidator>();
             services.AddKeyedSingleton<IPromptProvider, PromptTemplateProvider>("Common");
@@ -54,7 +61,6 @@ public static class RagPipelineHostBuilder
             services.AddSingleton<IOllamaClientFactory, OllamaClientFactory>();
 
             services.AddSingleton<IOllamaGenerationService, OllamaChatResponse>();
-            services.AddSingleton<IProgressReporter, ProgressReporter>();
 
             // Pipeline Stages (Order preserved by registration)
             SetupPrimaryPipeline(services);

@@ -1,5 +1,6 @@
 ﻿namespace Ragnar.Interfaces;
 
+
 /// <summary>Generates and retrieves embeddings for questions.</summary>
 /// <param name="logger"> Logger instance.</param>
 /// <param name="embeddingService"> Embedding service.</param>
@@ -36,39 +37,31 @@ public class QuestionEmbedding(
                 payloadSelector: true,
                 vectorsSelector: true,
                 cancellationToken: cancellationToken
-            );
+            ).ConfigureAwait(false);
 
             allPoints.AddRange(scrollResponse.Result);
             nextOffset = scrollResponse.NextPageOffset;
         }
         while (nextOffset != null);
 
-        return await StreamContextAsync([.. allPoints]);
+        return await StreamContextAsync([.. allPoints]).ConfigureAwait(false);
     }
 
     private static async Task<string> StreamContextAsync(List<RetrievedPoint> value)
     {
-        const string FILE_NAME = "file_name";
-        //const string ELEMENT_NAME = nameof(CodeDocument.ElementName);
-        const string COMMENT = nameof(CodeDocument.Comment);
-        const string CODE = nameof(CodeDocument.Code);
-        //const string ELEMENT_TYPE = nameof(CodeDocument.ElementType);
+        const string fileName = "file_name";
+        const string comments = nameof(CodeDocument.Comment);
+        const string codes = nameof(CodeDocument.Code);
 
         var sb = new StringBuilder();
 
         foreach (var match in value.Select(p => p.Payload))
         {
-            var fileName = match.TryGetValue(FILE_NAME, out var fn) ? fn.StringValue ?? string.Empty : string.Empty;
+            var filename = match.TryGetValue(fileName, out var fn) ? fn.StringValue ?? string.Empty : string.Empty;
 
-            //var elementName = match.TryGetValue(ELEMENT_NAME, out var en) ? en.StringValue ?? string.Empty : string.Empty;
+            var comment = match.TryGetValue(comments, out var cmt) ? cmt.StringValue ?? string.Empty : string.Empty;
 
-            var comment = match.TryGetValue(COMMENT, out var cmt) ? cmt.StringValue ?? string.Empty : string.Empty;
-
-            var code = match.TryGetValue(CODE, out var cd) ? cd.StringValue ?? string.Empty : string.Empty;
-
-            //var elementType = match.TryGetValue(ELEMENT_TYPE, out var et) ? et.StringValue ?? string.Empty : string.Empty;
-
-            //sb.AppendLine($"File Name: {fileName.Trim()} Type: {elementType.Trim()} Element Name: {elementName.Trim()} Description: {comment.Trim()} Code: {code.Trim()}");
+            var code = match.TryGetValue(codes, out var cd) ? cd.StringValue ?? string.Empty : string.Empty;
 
             sb.AppendLine($"File Name: {fileName.Trim()}  Description: {comment.Trim()} Code: {Environment.NewLine} {code.Trim()}");
         }
@@ -76,14 +69,12 @@ public class QuestionEmbedding(
         return sb.ToString();
     }
 
-    /// <summary>
-    /// Generates embedding vector for given text using configured model.
-    /// </summary>
-    /// <param name="userQuestion">Input text to embed.</param>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>Embedding vector as ReadOnlyMemory&lt;float&gt;.</returns>
-    /// <example><![CDATA[var vec = await GenerateEmbeddingAsync(ollama, "Query?", ct);]]></example>
+    /// <summary>Generates a vector embedding for the user's question text.</summary>
+    /// <param name="userQuestion">The natural-language question to embed.</param>
+    /// <param name="cancellationToken">Token to cancel the embedding request.</param>
+    /// <returns>A read-only memory of floats representing the embedding vector.</returns>
+    /// <example><![CDATA[var v = await svc.GenerateEmbeddingAsync("How do I…", ct);]]></example>
     public async Task<ReadOnlyMemory<float>> GenerateEmbeddingAsync(
         string userQuestion,
-        CancellationToken cancellationToken) => await embeddingService.GenerateAsync(userQuestion, cancellationToken);
+        CancellationToken cancellationToken) => await embeddingService.GenerateAsync(userQuestion, cancellationToken).ConfigureAwait(false);
 }

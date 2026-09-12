@@ -24,11 +24,11 @@ public static class AppDefaults
     public const string CODE_BLOCK_END = "[[/RESPONSE_CODE]]";
 
     /// <summary>Token signalling the start of a file-reference region.</summary>
-    public const string FILE_MARKER_START = "[[RESPONSE_FILE]]";
+    public const string FileMarkerStart = "[[RESPONSE_FILE]]";
 
-    /// <summary>Token signalling the end of a file-reference region.</summary>
-    public const string FILE_MARKER_END = "[[/RESPONSE_FILE]]";
+    /// <summary>Token signaling the end of a file-reference region.</summary>
+    public const string FileMarkerEnd = "[[/RESPONSE_FILE]]";
 
     /// <summary>Default folder name for persisted AI responses.</summary>
-    public const string RESPONSE_DIRECTORYNAME = "Response";
+    public const string ResponseDirectoryName = "Response";
 }

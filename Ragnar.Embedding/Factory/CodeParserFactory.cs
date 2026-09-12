@@ -4,8 +4,7 @@
 /// Represents a factory for parsing files.
 /// </summary>
 /// <param name = "configWrapper" > The configuration wrapper.</param>
-public class CodeParserFactory(IOptions<RagnarConfig> configWrapper, Serilog.ILogger logger)
-    : IFileParseFactory
+public class CodeParserFactory(IOptions<RagnarConfig> configWrapper, Serilog.ILogger logger) : IFileParseFactory
 {
     private readonly ParseCSharpFile _codeParser = new(logger);
 
@@ -17,7 +16,7 @@ public class CodeParserFactory(IOptions<RagnarConfig> configWrapper, Serilog.ILo
     /// <param name="File">File path.</param>
     /// <param name="cancellationToken">Cancellation Token.</param>
     /// <returns>An array of code documents.</returns>
-    public async Task<CodeDocument[]> ParseAsync(string file, CancellationToken cancellationToken)
+    public async Task<IEnumerable<CodeDocument>> ParseAsync(string file, CancellationToken cancellationToken)
     {
         var fileInfo = new FileInfo(file);
         return fileInfo.Extension switch
@@ -27,7 +26,7 @@ public class CodeParserFactory(IOptions<RagnarConfig> configWrapper, Serilog.ILo
         };
     }
 
-    private async Task<CodeDocument[]> ParseFile(string file, CancellationToken cancellationToken) => await _parser.ParseFileAsync(file, cancellationToken);
+    private async Task<IEnumerable<CodeDocument>> ParseFile(string file, CancellationToken cancellationToken) => await _parser.ParseAsync(file, cancellationToken);
 
-    private async Task<CodeDocument[]> GetCodeDocumentsAsync(string file, CancellationToken cancellationToken) => await _codeParser.ParseFileAsync(file, cancellationToken);
+    private async Task<IEnumerable<CodeDocument>> GetCodeDocumentsAsync(string file, CancellationToken cancellationToken) => await _codeParser.ParseAsync(file, cancellationToken);
 }

@@ -9,9 +9,9 @@ public static class ApplicationConfigurationExtensions
     extension(IServiceCollection services)
     {
         /// <summary>Registers the Ollama-based embedding service as a singleton.</summary>
-        /// <remarks>Resolves logger, config, and client factory from the container.</remarks>
-        /// <example><![CDATA[services.RegisterEmbeddingServices();]]></example>
+        /// <remarks>Resolves logger, config, and client factory from the container.</remarks>        
         /// <returns>The service collection for chaining.</returns>
+        /// <example><![CDATA[services.RegisterEmbeddingServices();]]></example>
         public IServiceCollection RegisterEmbeddingServices()
         {
             services.AddSingleton<IEmbeddingService>(sp =>

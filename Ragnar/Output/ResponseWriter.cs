@@ -29,7 +29,7 @@ public sealed class ResponseWriter(
 
         var content = formatter.Format(details);
 
-        await fileWriter.WriteAsync(fullPath, content, cancellationToken);
+        await fileWriter.WriteAsync(fullPath, content, cancellationToken).ConfigureAwait(false);
         return fullPath;
     }
 }

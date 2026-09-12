@@ -3,10 +3,12 @@
 /// <summary>
 /// Validates configuration settings for Ollama API connections and timeouts.
 /// </summary>
-public class OllamaOptionsValidator
-    : AbstractValidator<OllamaOptions>
+/// <example><![CDATA[var validator = new OllamaOptionsValidator();]]></example>
+public class OllamaOptionsValidator : AbstractValidator<OllamaOptions>
 {
     /// <summary>Initializes validation rules.</summary>
+    /// <example><![CDATA[var validator = new OllamaOptionsValidator();]]>
+    /// </example>
     public OllamaOptionsValidator()
     {
         RuleFor(x => x.Host).NotEmpty().WithMessage("Host is required.");

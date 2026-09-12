@@ -1,4 +1,5 @@
 ﻿global using System.Buffers;
+global using System.Collections.Concurrent;
 global using System.Collections.Immutable;
 global using System.ComponentModel;
 global using System.Diagnostics;
@@ -20,10 +21,10 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Hosting;
 global using Microsoft.Extensions.Http.Resilience;
 global using Microsoft.Extensions.Options;
-global using Microsoft.SemanticKernel.Embeddings;
 
 global using OllamaSharp;
 global using OllamaSharp.Models;
+global using OllamaSharp.Models.Chat;
 
 global using Polly;
 
@@ -39,11 +40,9 @@ global using Ragnar.Core.ConsoleWriter;
 global using Ragnar.Core.Enums;
 global using Ragnar.Core.Model;
 global using Ragnar.Core.Options;
-global using Ragnar.Core.Utils;
-global using Ragnar.Embedding.Embedding;
 global using Ragnar.Embedding.Factory;
 global using Ragnar.Embedding.Pipeline;
-global using Ragnar.Embedding.Pipeline.Interface;
+global using Ragnar.Embedding.Pipeline.Services;
 global using Ragnar.Embedding.Pipeline.Stages;
 global using Ragnar.Embedding.UnitOfWork;
 global using Ragnar.Extensions;
@@ -55,6 +54,7 @@ global using Ragnar.Output;
 global using Ragnar.OutputResponse;
 global using Ragnar.Plugins;
 global using Ragnar.Questions;
+global using Ragnar.Questions.Interface;
 global using Ragnar.Questions.Questions;
 global using Ragnar.RagPipeline;
 global using Ragnar.Services;
@@ -65,7 +65,5 @@ global using Ragnar.Utils;
 global using Serilog;
 
 global using Spectre.Console;
-global using OllamaSharp.Models.Chat;
-global using System.Collections.Concurrent;
-global using Ragnar.Embedding.Pipeline.Services;
-global using Ragnar.Questions.Interface;
+global using System.Collections.ObjectModel;
+global using Ragnar.Core;

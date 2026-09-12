@@ -20,7 +20,7 @@ public class ContentSummarizerAgent(
     [Description("The question to be asked.")] string question,
     CancellationToken cancellationToken)
     {
-        var contents = await LoadFolderContentsAsync(folder, cancellationToken);
+        var contents = await LoadFolderContentsAsync(folder, cancellationToken).ConfigureAwait(false);
 
         var request = new GenerateRequest
         {
@@ -31,7 +31,7 @@ public class ContentSummarizerAgent(
         var policy = Policy.Handle<HttpRequestException>()
             .WaitAndRetryAsync(3, retry => TimeSpan.FromSeconds(Math.Pow(2, retry)));
 
-        return await policy.ExecuteAsync(async () => await ollamaClientProvider.GenerateResponse(request, cancellationToken));
+        return await policy.ExecuteAsync(async () => await ollamaClientProvider.GenerateResponse(request, cancellationToken).ConfigureAwait(false)).ConfigureAwait(false);
     }
 
     private AIAgent AiAgent => SetupAgent(ollamaAIClientBuilder);
@@ -57,7 +57,7 @@ public class ContentSummarizerAgent(
     public async Task<string> AskAgent(string folder, string question, CancellationToken cancellationToken)
     {
         var response = await AiAgent
-            .RunAsync($"Read all the files in the directory {folder} and ask the follow question, {question}", cancellationToken: cancellationToken);
+            .RunAsync($"Read all the files in the directory {folder} and ask the follow question, {question}", cancellationToken: cancellationToken).ConfigureAwait(false);
 
         return response.Text;
     }
@@ -79,9 +79,9 @@ public class ContentSummarizerAgent(
         foreach (var file in files)
         {
             using var reader = File.OpenText(file);
-            var text = await reader.ReadToEndAsync(cancellationToken);
+            var text = await reader.ReadToEndAsync(cancellationToken).ConfigureAwait(false);
 
-            builder.AppendLine($"---\n{AppDefaults.FILE_MARKER_START}{Path.GetFileName(file)}{AppDefaults.FILE_MARKER_END}\n{text}\n");
+            builder.AppendLine($"---\n{AppDefaults.FileMarkerStart}{Path.GetFileName(file)}{AppDefaults.FileMarkerEnd}\n{text}\n");
         }
 
         return $"{AppDefaults.CODE_BLOCK_START} {builder} {AppDefaults.CODE_BLOCK_END}";

@@ -25,5 +25,5 @@ public record OllamaOptions
     /// Gets that request timeout duration.
     /// </summary>
     [Required]
-    public required TimeSpan Timeout { get; init; } = TimeSpan.FromMinutes(20);
+    public required TimeSpan Timeout { get; init; } = TimeSpan.FromMinutes(30);
 }

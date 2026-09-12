@@ -4,9 +4,9 @@ public static class StringExtensions
 {
     extension(string xmlComment)
     {
-        /// <summary>Counts non-tag, non-comment characters in XML comment.</summary>
-        /// <returns>Character count excluding XML tags and slashes.</returns>
-        /// <example><![CDATA[int len = comment.CharacterCount();]]></example>
+        /// <summary>Counts non-tag, non-comment characters in an XML comment.</summary>
+        /// <returns>The count of non-tag, non-comment characters.</returns>
+        /// <example><![CDATA[var count = "<c>code</c>".CharacterCount();]]></example>
         public int CharacterCount()
         {
             var count = 0;

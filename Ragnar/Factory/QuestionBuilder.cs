@@ -1,23 +1,7 @@
 ﻿namespace Ragnar.Factory;
 
-public interface IQuestionBuilder
-{
-    QuestionBuilder AsActive();
-
-    QuestionBuilder AsInactive();
-
-    QuestionBuilder WithFileName(string key);
-
-    QuestionBuilder WithText(string text);
-
-    QuestionBuilder SetCategory(QuestionCategory? category);
-
-    Core.Model.Question Build();
-}
-
 /// <summary>Initializes a new instance of the default question factory.</summary>
-public class QuestionBuilder
-    : IQuestionBuilder
+public class QuestionBuilder : IQuestionBuilder
 {
     private string? _text;
     private string? _key;

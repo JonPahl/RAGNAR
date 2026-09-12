@@ -11,7 +11,7 @@ public class QdrantVectorStoreRepository(IQdrantClient qdrantClient, RagnarConfi
         {
             var textToEmbed = $"Context: {doc.ElementName}\nCode:\n{doc.Code}";
             // Note: In production, inject IEmbeddingService instead of calling directly
-            var vector = await GenerateEmbeddingAsync(textToEmbed, cancellationToken);
+            var vector = await GenerateEmbeddingAsync(textToEmbed, cancellationToken).ConfigureAwait(false);
             points.Add(new PointStruct
             {
                 Id = doc.AsPoint(),
@@ -24,10 +24,16 @@ public class QdrantVectorStoreRepository(IQdrantClient qdrantClient, RagnarConfi
             ? await qdrantClient.UpsertAsync(
                 _collectionName,
                 points,
-                cancellationToken: cancellationToken)
+                cancellationToken: cancellationToken).ConfigureAwait(false)
             : new UpdateResult();
     }
 
+
+    /// <summary>Generates a vector embedding for the user's question text.</summary>
+    /// <param name="chunk">The natural-language question to embed.</param>
+    /// <param name="cancellationToken">Token to cancel the embedding request.</param>
+    /// <returns>A read-only memory of floats representing the embedding vector.</returns>
+    /// <example><![CDATA[var v = await svc.GenerateEmbeddingAsync("How do I…", ct);]]></example>
     private async Task<float[]> GenerateEmbeddingAsync(string chunk, CancellationToken cancellationToken) =>
         throw new NotImplementedException("Inject IEmbeddingService in production.");
 }

@@ -1,4 +1,6 @@
-﻿namespace Ragnar.Embedding.Pipeline;
+﻿using Ragnar.Core;
+
+namespace Ragnar.Embedding.Pipeline;
 
 /// <summary>Initializes a new instance of the embedding pipeline.</summary>
 /// <param name = "logger"> Logger for diagnostic messages.</param>
@@ -9,6 +11,7 @@
 public class EmbeddingPipeline(
     ILogger logger,
     IEmbedTextPipeline embedPipeline,
+    IVectorStoreBuilder vectorStoreBuilder,
     IOutputWriter writer,
     IOptions<RagnarConfig> configWrapper,
     IQdrantClient qdrantClient)
@@ -28,12 +31,12 @@ public class EmbeddingPipeline(
     /// <example><![CDATA[await EnsureCollectionExistsAsync(ct);]]></example>
     public async ValueTask EnsureCollectionExistsAsync(CancellationToken cancellationToken)
     {
-        var dimension = configWrapper.Value.EmbeddingOptions.Dimension;
-        var vectorStoreName = configWrapper.Value.ApplicationOptions.VectorStoreName;
+        //var dimension = configWrapper.Value.EmbeddingOptions.Dimension;
+        //var vectorStoreName = configWrapper.Value.ApplicationOptions.VectorStoreName;
 
-        var builder = new Core.VectorStoreBuilder(logger, dimension, vectorStoreName, qdrantClient);
+        //var builder = new Core.VectorStoreBuilder(logger, dimension, vectorStoreName, qdrantClient);
 
-        var collectionExists = await builder.BuildAsync(cancellationToken);
+        var collectionExists = await vectorStoreBuilder.BuildAsync(cancellationToken);
 
         if (!collectionExists)
         {

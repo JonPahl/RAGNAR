@@ -16,12 +16,14 @@ public class OllamaChatResponse(
     /// <param name="request">The generation request containing prompt and system info.</param>
     /// <param name="cancellationToken">Cancellation token to abort the operation.</param>
     /// <returns>The complete generated text response.</returns>
+    /// <example><![CDATA[string txt = await resp.GenerateResponse(req, ct);]]></example>
+
     public async Task<string> GenerateResponse(GenerateRequest request, CancellationToken cancellationToken)
     {
         RequestOptions requestOptions = new()
         {
             NumPredict = 8192,
-            NumCtx = 16384,
+            NumCtx = 32768, // 16384,
             NumThread = 8,
             Temperature = 0.2f,
             RepeatPenalty = 1.02f,
@@ -48,8 +50,7 @@ public class OllamaChatResponse(
             .Padding(1, 1, 1, 1);
 
         // 3. Start Live Render Loop
-        await AnsiConsole.Live(panel)
-            .StartAsync(async ctx =>
+        await AnsiConsole.Live(panel).StartAsync(async ctx =>
         {
             ctx.Refresh();
             try
@@ -75,9 +76,7 @@ public class OllamaChatResponse(
                 // Optionally re-throw or mark the response as degraded
             }
 
-
-            // Await foreach loop running alongside the spinner
-            await foreach (var token in client.SendAsAsync(ChatRole.User, request.Prompt, cancellationToken: cancellationToken))
+            await foreach (var token in client.SendAsAsync(ChatRole.User, request.Prompt, cancellationToken: cancellationToken).ConfigureAwait(false))
             {
                 if (token is null)
                 {
@@ -93,7 +92,7 @@ public class OllamaChatResponse(
                 ctx.UpdateTarget(panelText);
                 ctx.Refresh();
             }
-        });
+        }).ConfigureAwait(false);
 
         return completeText.ToString();
     }

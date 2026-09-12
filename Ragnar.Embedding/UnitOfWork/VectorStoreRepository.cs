@@ -49,17 +49,3 @@ public sealed class VectorStoreRepository(
         return new UpdateResult { Status = UpdateStatus.Completed };
     }
 }
-
-
-public class PointStructFactory : IGeneratorService
-{
-    public List<PointStruct> BuildPointStructs(PointId pointId, float[] embedding, CodeDocument document)
-    {
-        return [new PointStruct
-        {
-            Id = pointId,
-            Vectors = embedding,
-            Payload = { document.Dictionary }
-        }];
-    }
-}

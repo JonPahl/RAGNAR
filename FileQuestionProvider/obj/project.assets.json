@@ -35,7 +35,7 @@
           "buildTransitive/Microsoft.CodeAnalysis.Analyzers.targets": {}
         }
       },
-      "Microsoft.CodeAnalysis.NetAnalyzers/10.0.400": {
+      "Microsoft.CodeAnalysis.NetAnalyzers/10.0.401": {
         "type": "package"
       },
       "Roslynator.Analyzers/5.0.0": {
@@ -216,10 +216,10 @@
         "tools/uninstall.ps1"
       ]
     },
-    "Microsoft.CodeAnalysis.NetAnalyzers/10.0.400": {
-      "sha512": "Uogs/xCuSxYuEYAU7oUPddK3MFcT3A+FkrBcx/wVse6P4joptMAfh/H9jtIhl9IkHARCvJHFjL3jhKFs9YMktA==",
+    "Microsoft.CodeAnalysis.NetAnalyzers/10.0.401": {
+      "sha512": "qGPLk4hknvVp6j9Lowa0qykw1cK7CyEyyy2aVs4dkOGroOMHJLRsMpUT53IKvYT6q78jxv96FZhzy3BrKCPgmA==",
       "type": "package",
-      "path": "microsoft.codeanalysis.netanalyzers/10.0.400",
+      "path": "microsoft.codeanalysis.netanalyzers/10.0.401",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -264,7 +264,7 @@
         "documentation/Microsoft.CodeAnalysis.NetAnalyzers.md",
         "documentation/Microsoft.CodeAnalysis.NetAnalyzers.sarif",
         "documentation/README.md",
-        "microsoft.codeanalysis.netanalyzers.10.0.400.nupkg.sha512",
+        "microsoft.codeanalysis.netanalyzers.10.0.401.nupkg.sha512",
         "microsoft.codeanalysis.netanalyzers.nuspec",
         "tools/install.ps1",
         "tools/uninstall.ps1"
@@ -425,7 +425,7 @@
       "Ardalis.GuardClauses >= 5.0.0",
       "CsvHelper >= 33.1.0",
       "Microsoft.CodeAnalysis.Analyzers >= 5.9.0",
-      "Microsoft.CodeAnalysis.NetAnalyzers >= 10.0.400",
+      "Microsoft.CodeAnalysis.NetAnalyzers >= 10.0.401",
       "Roslynator.Analyzers >= 5.0.0",
       "Roslynator.CodeAnalysis.Analyzers >= 5.0.0",
       "Roslynator.Formatting.Analyzers >= 5.0.0",
@@ -503,7 +503,7 @@
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
             "target": "Package",
-            "version": "[10.0.400, )"
+            "version": "[10.0.401, )"
           },
           "Roslynator.Analyzers": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -544,7 +544,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.400/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

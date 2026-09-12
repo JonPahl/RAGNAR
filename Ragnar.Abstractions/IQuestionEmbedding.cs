@@ -1,26 +1,21 @@
 ﻿namespace Ragnar.Abstractions;
 
-/// <summary>
-/// Interface for question embedding functionality.
-/// </summary>
+/// <summary>Interface for embedding generator service functionality.</summary>
+/// <example><![CDATA[var v = await svc.GenerateEmbeddingAsync("How…", ct);]]></example>
 public interface IQuestionEmbedding
 {
-    /// <summary>
-    /// Gets the context based on the provided vector store name and query vector.
-    /// </summary>
-    /// <param name="vectorStoreName">The name of the vector store.</param>
-    /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
-    /// <returns>A task representing the result, containing a string with the context information.</returns>
-    Task<string> GetContext(
-        string vectorStoreName,
-        CancellationToken cancellationToken,
-        Filter? filter = null);
-
-    /// <summary>
-    /// Generates an embedding for the provided user question.
-    /// </summary>
-    /// <param name="userQuestion">The user's question to generate an embedding for.</param>
-    /// <param name="cancellationToken">A cancellation token to cancel the operation.</param>
-    /// <returns>A task representing the result, containing a read-only memory block with the generated embedding.</returns>
+    /// <summary>Generates a vector embedding for the user's question text.</summary>
+    /// <param name="userQuestion">The natural-language question to embed.</param>
+    /// <param name="cancellationToken">Token to cancel the embedding request.</param>
+    /// <returns>A read-only memory of floats representing the embedding vector.</returns>
+    /// <example><![CDATA[var v = await svc.GenerateEmbeddingAsync("How do I…", ct);]]></example>
     Task<ReadOnlyMemory<float>> GenerateEmbeddingAsync(string userQuestion, CancellationToken cancellationToken);
+
+    /// <summary>Performs a similarity search and returns the top-matched context text.</summary>
+    /// <param name="vectorStoreName">Name of the Qdrant collection to query.</param>
+    /// <param name="cancellationToken">Token to cancel the search operation.</param>
+    /// <param name="filter">Optional Qdrant filter to narrow results (nullable).</param>
+    /// <returns>A string containing the retrieved context for the LLM prompt.</returns>
+    /// <example><![CDATA[var ctx = await svc.GetContext("my_store", ct);]]></example>
+    Task<string> GetContext(string vectorStoreName, CancellationToken cancellationToken, Filter? filter = null);
 }

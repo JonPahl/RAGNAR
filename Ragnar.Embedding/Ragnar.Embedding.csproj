@@ -6,10 +6,11 @@
     <Nullable>enable</Nullable>
 	  <EnableNETAnalyzers>true</EnableNETAnalyzers>	  
   </PropertyGroup>
-	<PropertyGroup>
-		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-		<AnalysisLevel>latest</AnalysisLevel>
-	</PropertyGroup>
+  <PropertyGroup>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+  </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
@@ -23,12 +24,12 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.9.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.400">
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.401">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.11" />
-    <PackageReference Include="Microsoft.SemanticKernel" Version="1.80.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.12" />
+    <PackageReference Include="Microsoft.SemanticKernel" Version="1.80.1" />
     <PackageReference Include="OllamaSharp" Version="5.4.30" />
     <PackageReference Include="Qdrant.Client" Version="1.19.0" />
     <PackageReference Include="Roslynator.Analyzers" Version="5.0.0">
@@ -50,6 +51,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Ragnar.Abstractions\Ragnar.Abstractions.csproj" />
     <ProjectReference Include="..\Ragnar.Core\Ragnar.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pipeline\Interface\" />
   </ItemGroup>
 
 </Project>

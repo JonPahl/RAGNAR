@@ -53,7 +53,7 @@ public class SummaryService(
         });
 
 
-        var summaryQuestions = await LoadQuestionsAsync(cancellationToken: cancellationToken);
+        var summaryQuestions = await LoadQuestionsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
         foreach (var folder in folders)
         {
@@ -61,9 +61,9 @@ public class SummaryService(
             {
                 var fileName = $"{folder.LastFolder}_{question.Filename}";
 
-                var response = await AskAgentAsync(folder, question, cancellationToken);
+                var response = await AskAgentAsync(folder, question, cancellationToken).ConfigureAwait(false);
 
-                await SaveResponseAsync(response, responseDir, "summary", fileName, cancellationToken);
+                await SaveResponseAsync(response, responseDir, "summary", fileName, cancellationToken).ConfigureAwait(false);
             }
         }
     }
@@ -82,9 +82,9 @@ public class SummaryService(
             throw new FileNotFoundException("File not found", csvFile);
         }
 
-        await questionBuilder.GetCsvFileAsync(csvFile, cancellationToken);
+        await questionBuilder.GetCsvFileAsync(csvFile, cancellationToken).ConfigureAwait(false);
 
-        var questions = questionBuilder.Build().ToList()
+        var questions = questionBuilder.Build()
             .Where(q => q.IsEnabled)
             .ToList();
 
@@ -116,7 +116,7 @@ public class SummaryService(
             _ollamaClientProvider,
             _summaryPrompt);
 
-        return await agent.AskAgent(folder, question.Text, cancellationToken);
+        return await agent.AskAgent(folder, question.Text, cancellationToken).ConfigureAwait(false);
     }
 
 
@@ -144,7 +144,7 @@ public class SummaryService(
             //await File.WriteAllTextAsync(summaryPath, $"# RAG Response summary\n\n{summary}\n\nGenerated: {DateTime.Now:O}", cancellationToken);
 
             var details = SaveDetails.FromSummary(summary, fileName, QuestionCategory.Summary);
-            var path = await responseWriter.WriteResponseAsync(details, cancellationToken);
+            var path = await responseWriter.WriteResponseAsync(details, cancellationToken).ConfigureAwait(false);
 
             _writer.WriteRule();
             _writer.MarkupLine($"summary saved: {path}", Styles.Cyan);
