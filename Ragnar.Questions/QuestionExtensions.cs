@@ -5,17 +5,17 @@
 /// </summary>
 public static class QuestionExtensions
 {
-    extension(IReadOnlyList<Ragnar.Core.Model.Question> questions)
+    extension(IReadOnlyList<Core.Model.Question> questions)
     {
         /// <summary>
         /// Load and returns a list of active questions.
         /// </summary>
-        public IReadOnlyList<Ragnar.Core.Model.Question> ActiveOnly => [.. questions.Where(q => q.IsEnabled)];
+        public IReadOnlyList<Core.Model.Question> ActiveOnly => [.. questions.Where(q => q.IsEnabled)];
 
         /// <summary>
         /// Gets load and returns a list of inactive questions.
         /// </summary>
-        public IReadOnlyList<Ragnar.Core.Model.Question> InActiveOnly => [.. questions.Where(q => !q.IsEnabled)];
+        public IReadOnlyList<Core.Model.Question> InActiveOnly => [.. questions.Where(q => !q.IsEnabled)];
 
         /// <summary>Filters questions by specified categories.</summary>
         /// <param name="categories">Categories to include; null returns all.</param>
@@ -23,7 +23,7 @@ public static class QuestionExtensions
         /// <example><![CDATA[var filtered = questions.WithCategory(categories);]]></example>
         public IReadOnlyList<Core.Model.Question> WithCategory(HashSet<QuestionCategory> categories)
         {
-            ArgumentNullException.ThrowIfNull(categories);
+            Guard.Against.Null(categories);
 
             return categories is null or { Count: 0 }
             ? [.. questions]

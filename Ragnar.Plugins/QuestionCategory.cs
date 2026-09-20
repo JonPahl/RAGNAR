@@ -30,6 +30,8 @@ public enum QuestionCategory
     /// <summary>Relates to XML documentation or processing.</summary>
     XML,
 
+    XML_RAW,
+
     /// <summary>Relates to modernizing legacy code patterns.</summary>
     Modernization,
 

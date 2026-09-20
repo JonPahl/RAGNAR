@@ -1,4 +1,5 @@
 ﻿namespace Ragnar.Extensions;
+
 /// <summary>
 /// Extension methods for saving file.
 /// </summary>
@@ -24,5 +25,5 @@ public static class OutputPathHelper
     /// <returns>Prompt wrapped in `***[Original Prompt]...***`.</returns>
     /// <example><![CDATA[string formatted = prompt.ShowPrompt();]]></example>
     public static string ShowPrompt(this string prompt) =>
-    $"\n\n{AppDefaults.MARKDOWN_FENCEMARKER}\n{AppDefaults.ORIGINAL_PROMPT_LABEL}\n{prompt}\n{AppDefaults.ORIGINAL_PROMPT_LABEL_END}{AppDefaults.MARKDOWN_FENCEMARKER}";
+    $"\n\n{AppDefaults.MarkdownFenceMarker}\n{AppDefaults.OriginalPromptLabel}\n{prompt}\n{AppDefaults.OriginalPromptLabelEnd}{AppDefaults.MarkdownFenceMarker}";
 }

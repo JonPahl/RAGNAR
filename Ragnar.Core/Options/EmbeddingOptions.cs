@@ -30,4 +30,8 @@ public record EmbeddingOptions
     [Required]
     [Range(1, 65536)]
     public required ulong Dimension { get; init; } = 768;
+
+    [Required]
+    [Range(1, 512)]
+    public required int BatchSize { get; init; } = 16;
 }

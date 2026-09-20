@@ -1,21 +1,36 @@
 ﻿namespace Ragnar.Embedding.Pipeline.Services;
 
-/// <summary>Generates vector embeddings using the Ollama client factory.</summary>
-/// <param name="logger">Serilog logger for tracking embedding generation errors.</param>
-/// <param name="clientFactory">Factory responsible for creating Ollama embedding clients.</param>
-/// <param name="config">Ragnar config supplying embedding timeout values.</param>
-/// <remarks>Implements IEmbeddingService for text-to-vector conversion operations.</remarks>
-/// <example><![CDATA[var vec = await svc.GenerateAsync("hello", ct);]]></example>
-public class OllamaEmbeddingService(
-    Serilog.ILogger logger,
-    IOllamaClientFactory clientFactory,
-    IOptions<RagnarConfig> config)
-        : IEmbeddingService
+/// <summary>Generates text-to-vector embeddings via Ollama for Qdrant storage.</summary>
+/// <example><![CDATA[var v = await svc.GenerateAsync("hello", ct);]]></example>
+public class OllamaEmbeddingService : IEmbeddingService
 {
+    /// <summary>Wraps Ollama for vector embedding generation.</summary>
+    /// <param name="logger">Serilog logger for tracking embedding generation errors.</param>
+    /// <param name="clientFactory">Factory responsible for creating Ollama embedding clients.</param>
+    /// <param name="config">Ragnar config supplying embedding timeout values.</param>
+    /// <remarks>Implements IEmbeddingService for single and batch text-to-vector ops.</remarks>
+    /// <example><![CDATA[var v = await svc.GenerateAsync("text", ct);]]></example>
+    public OllamaEmbeddingService(
+        ILogger logger,
+        IOllamaClientFactory clientFactory,
+        IOptions<RagnarConfig> config)
+    {
+        _timeoutCts.CancelAfter(config.Value.EmbeddingOptions.Timeout);
+        Logger = logger;
+        ClientFactory = clientFactory;
+        Config = config;
 
-    private readonly IEmbeddingGenerator<string, Embedding<float>> _generator =
-        clientFactory.FindClient(OllamaServiceType.Embedding).AsEmbeddingGenerator();
+        _generator = ClientFactory.ResolveClient(OllamaServiceType.Embedding).AsEmbeddingGenerator();
+    }
 
+    private readonly CancellationTokenSource _timeoutCts = new();
+    private ILogger Logger { get; }
+    private IOllamaClientFactory ClientFactory { get; }
+    private IOptions<RagnarConfig> Config { get; }
+
+    /// <summary>Ollama embedding generator resolved from the client factory.</summary>
+    private readonly IEmbeddingGenerator<string, Embedding<float>>
+        _generator;
 
     /// <summary>Generates a single vector embedding for the given input text via the Ollama model.</summary>
     /// <param name="input">The text to convert into a float vector.</param>
@@ -25,12 +40,15 @@ public class OllamaEmbeddingService(
     public async Task<ReadOnlyMemory<float>> GenerateAsync(string input, CancellationToken ct)
     {
         Guard.Against.NullOrWhiteSpace(input);
-        using var cts = CreateTimeoutCts(ct);
-        var result = await _generator.GenerateAsync(input, cancellationToken: cts.Token);
+        using var linked = CancellationTokenSource.CreateLinkedTokenSource(ct, _timeoutCts.Token);
 
-        return result.Vector;
+        var result = await _generator.GenerateAsync(input, cancellationToken: linked.Token).ConfigureAwait(false);
+        var vector = result.Vector;
+        _timeoutCts.Dispose();
+        return vector;
+
+
     }
-
 
     /// <summary>Generates embeddings for a batch of input strings in a single Ollama call.</summary>
     /// <param name="inputs">Collection of text strings to embed.</param>
@@ -41,18 +59,8 @@ public class OllamaEmbeddingService(
         IReadOnlyCollection<string> inputs, CancellationToken ct)
     {
         Guard.Against.Null(inputs);
-        using var cts = CreateTimeoutCts(ct);
-        return await _generator.GenerateAsync([.. inputs], cancellationToken: cts.Token);
-    }
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(ct, _timeoutCts.Token);
 
-    /// <summary>Creates a linked CTS that cancels after the configured timeout.</summary>
-    /// <param name="parent">The parent cancellation token to link with.</param>
-    /// <returns>A CancellationTokenSource with both parent and timeout triggers.</returns>
-    /// <example><![CDATA[using var cts = svc.CreateTimeoutCts(ct);]]></example>
-    private CancellationTokenSource CreateTimeoutCts(CancellationToken parent)
-    {
-        var cts = CancellationTokenSource.CreateLinkedTokenSource(parent);
-        cts.CancelAfter(config.Value.EmbeddingOptions.Timeout);
-        return cts;
+        return await _generator.GenerateAsync([.. inputs], cancellationToken: cts.Token).ConfigureAwait(false);
     }
 }

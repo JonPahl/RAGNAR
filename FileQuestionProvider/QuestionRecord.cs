@@ -1,6 +1,4 @@
-﻿
-
-namespace FileQuestionProvider;
+﻿namespace FileQuestionProvider;
 
 public sealed record QuestionRecord
 {

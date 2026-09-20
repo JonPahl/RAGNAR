@@ -1,16 +1,11 @@
 ﻿namespace Ragnar.Builder;
 
-/// <summary>Aggregates questions from categories, file configs, and CSV plugins.</summary>
-/// <param name="questionLoader">Loader that reads enabled question definitions.</param>
-/// <param name="options">Ragnar config providing category and path settings.</param>
-/// <remarks>Chainable; call Build() to obtain the final filtered list.</remarks>
-/// <example><![CDATA[var q = new QB(loader, opts).GetCsvFilesAsync("plugins").Build();]]></example>
-public class QuestionCombineBuilder(
+
+public sealed class QuestionCombineBuilder(
     IQuestionProvider questionProvider,
     IQuestionCatalogLoader questionLoader,
-    IConfigurationLoader configurationLoader,
     IQuestionBuilder questionBuilder,
-    IOptions<RagnarConfig> options) : IQuestionCombineBuilder
+    IOptions<RagnarConfig> options) : IQuestionSourceBuilder
 {
     private List<Core.Model.Question> Questions { get; } = [];
 
@@ -18,7 +13,7 @@ public class QuestionCombineBuilder(
     /// <remarks>Appends to the internal question list; order is preserved.</remarks>
     /// <example><![CDATA[builder.GetCategories();]]></example>
     /// <returns>The builder instance for chaining.</returns>
-    public IQuestionCombineBuilder GetCategories()
+    public IQuestionSourceBuilder GetCategories()
     {
         var categories = options.Value.ApplicationOptions.CategoriesToProcess.ToHashSet();
 
@@ -31,7 +26,7 @@ public class QuestionCombineBuilder(
     /// <remarks>Uses FileConfigLoader to read per-file question settings.</remarks>
     /// <example><![CDATA[builder.GetFileConfig();]]></example>
     /// <returns>The builder instance for chaining.</returns>
-    public IQuestionCombineBuilder GetFileConfig()
+    public IQuestionSourceBuilder GetFileConfig()
     {
         var fcl = new FileConfigLoader();
 
@@ -55,7 +50,7 @@ public class QuestionCombineBuilder(
     /// <remarks>Skips silently if the directory does not exist.</remarks>
     /// <example><![CDATA[await builder.GetCsvFilesAsync(dir, ct);]]></example>
     /// <returns>The builder instance for chaining.</returns>
-    public async Task<IQuestionCombineBuilder> GetCsvFilesAsync(string pluginDir, CancellationToken cancellationToken)
+    public async Task<IQuestionSourceBuilder> GetCsvFilesAsync(string pluginDir, CancellationToken cancellationToken)
     {
         if (Directory.Exists(pluginDir))
         {
@@ -88,7 +83,7 @@ public class QuestionCombineBuilder(
     /// <remarks>Skips silently if the directory does not exist.</remarks>
     /// <example><![CDATA[await builder.GetCsvFilesAsync(dir, ct);]]></example>
     /// <returns>The builder instance for chaining.</returns>
-    public async Task<IQuestionCombineBuilder> GetCsvFileAsync(string csvFile, CancellationToken cancellationToken)
+    public async Task<IQuestionSourceBuilder> GetCsvFileAsync(string csvFile, CancellationToken cancellationToken)
     {
         if (File.Exists(csvFile))
         {
@@ -129,12 +124,12 @@ public class QuestionCombineBuilder(
     /// <example><![CDATA[builder.WithCategoryFilter(opts);]]></example>
     /// <returns>The builder instance for chaining.</returns>
     /// <example><![CDATA[builder.WithCategoryFilter();]]></example>
-    public IQuestionCombineBuilder WithCategoryFilter()
+    public IQuestionSourceBuilder WithCategoryFilter()
     {
         var categories = options.Value.ApplicationOptions.CategoriesToProcess;
 
         // If the list is null or empty, keep everything (no filter).
-        if (categories is null || !categories.Any())
+        if (categories?.Any() != true)
             return this;
 
         var hash = categories.ToHashSet();
@@ -145,5 +140,12 @@ public class QuestionCombineBuilder(
         Questions.Clear();
         Questions.AddRange(filtered);
         return this;
+    }
+
+
+    public bool Clear()
+    {
+        Questions.Clear();
+        return Questions.Count != 0;
     }
 }

@@ -17,7 +17,7 @@ public sealed record class Question(
     /// <summary>
     /// Gets built a custom header to be added to the question.
     /// </summary>
-    public string MarkdownHeader => $"### <span style=\"color:darkblue;\">[{Category}]</span> {Text}";
+    public string MarkdownHeader => $"### <span style=\"color:darkblue;\">{Category}</span> {Text}";
 
     /// <summary>Creates an active question.</summary>
     /// <param name="text">The question text.</param>
@@ -26,7 +26,7 @@ public sealed record class Question(
     /// <returns>A new active question instance.</returns>
     public static Question IsActive(string text, string key, QuestionCategory category)
     {
-        //TODO: Call question AbstractValidation.
+        //TODO Call question AbstractValidation.
 
         Guard.Against.NullOrWhiteSpace(text);
         Guard.Against.NullOrWhiteSpace(key);
@@ -44,39 +44,5 @@ public sealed record class Question(
     {
         Question question = new(false, text, key, category);
         return question.ValidateQuestion();
-    }
-}
-
-public static class QuestionExtensions
-{
-    extension(Question question)
-    {
-        public Question SetFilter(Filter? filter)
-        {
-            if (filter is not null)
-            {
-                return new(question.IsEnabled, question.Text, question.Filename, question.Category, question.Filter);
-            }
-
-            return question;
-        }
-
-        public Question ValidateQuestion()
-        {
-            //TODO: Replace with call to AbstractValidation.
-
-            foreach (var prop in question.GetType().GetProperties())
-            {
-                Guard.Against.Null(prop);
-                var value = prop.GetValue(question);
-                if (value is string)
-                {
-                    Guard.Against.Null(value.ToString());
-                    Guard.Against.WhiteSpace(value.ToString(), prop.Name);
-                }
-            }
-
-            return question;
-        }
     }
 }

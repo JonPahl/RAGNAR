@@ -1,29 +1,21 @@
 ﻿namespace Ragnar.OutputResponse;
 
-/// <summary>
-/// summary each response into a single file.
-/// </summary>
-/// <param name="logger">Seri.logger.</param>
-/// <param name="writer">Console writer.</param>
-/// <param name="summaryPrompt">System prompt.</param>
-/// <param name="ollamaClientProvider">Ollama option lookup.
-/// </param>
-/// <param name="configWrapper">Wrapper for all configuration.</param>
+
 public class SummaryService(
-    Serilog.ILogger logger,
+    ILogger logger,
     IOutputWriter writer,
     IOllamaAIClientBuilder ollamaAIClientBuilder,
-    [FromKeyedServices("Summary")] IPromptProvider summaryPrompt,
+    [FromKeyedServices("Summary")] IChatPromptProvider summaryPrompt,
     IOllamaGenerationService ollamaClientProvider,
     IOptions<RagnarConfig> configWrapper,
-    IQuestionCombineBuilder questionBuilder,
+    IQuestionSourceBuilder questionBuilder,
     IResponseWriter responseWriter)
     : ISummaryService
 {
     private readonly ILogger _logger = logger;
     private readonly IOutputWriter _writer = writer;
     private readonly IOllamaAIClientBuilder _ollamaAIClient = ollamaAIClientBuilder;
-    private readonly IPromptProvider _summaryPrompt = summaryPrompt;
+    private readonly IChatPromptProvider _summaryPrompt = summaryPrompt;
     private readonly IOllamaGenerationService _ollamaClientProvider = ollamaClientProvider;
     private readonly IOptions<RagnarConfig> _configWrapper = configWrapper;
 
@@ -34,7 +26,7 @@ public class SummaryService(
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Return Value task.</returns>
     /// <example><![CDATA[await summaryService.SummarizeAllResponsesAsync(ct);]]></example>
-    public async ValueTask SummarizeAllResponsesAsync(CancellationToken cancellationToken)
+    public async Task SummarizeAllResponsesAsync(CancellationToken cancellationToken)
     {
         var sourceDir = _configWrapper.Value.ApplicationOptions.SourceDirectory;
         var outputDir = _configWrapper.Value.ApplicationOptions.OutputFolder;
@@ -49,11 +41,11 @@ public class SummaryService(
 
         var folders = Directory.GetDirectories(responseDir, "*", new EnumerationOptions
         {
-            RecurseSubdirectories = true
+            RecurseSubdirectories = false
         });
 
-
-        var summaryQuestions = await LoadQuestionsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+        var summaryQuestions = await LoadQuestionsAsync(cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
 
         foreach (var folder in folders)
         {
@@ -61,9 +53,12 @@ public class SummaryService(
             {
                 var fileName = $"{folder.LastFolder}_{question.Filename}";
 
+                _writer.MarkupLine(question.Text, Styles.Cyan);
+                _writer.WriteRule();
+
                 var response = await AskAgentAsync(folder, question, cancellationToken).ConfigureAwait(false);
 
-                await SaveResponseAsync(response, responseDir, "summary", fileName, cancellationToken).ConfigureAwait(false);
+                await SaveResponseAsync(response, fileName, cancellationToken).ConfigureAwait(false);
             }
         }
     }
@@ -81,6 +76,8 @@ public class SummaryService(
             Log.Warning("Summary CSV not found: {CsvFile}", csvFile);
             throw new FileNotFoundException("File not found", csvFile);
         }
+
+        questionBuilder.Clear();
 
         await questionBuilder.GetCsvFileAsync(csvFile, cancellationToken).ConfigureAwait(false);
 
@@ -122,27 +119,17 @@ public class SummaryService(
 
     /// <summary>Persists a generated summary to disk and logs the output path.</summary>
     /// <param name="summary">The markdown summary text to save.</param>
-    /// <param name="saveFolder">Root directory for response output.</param>
-    /// <param name="folder">Sub-folder identifier within the response directory.</param>
     /// <param name="fileName">The file name (without extension) for the output.</param>
     /// <param name="cancellationToken">Token to cancel the async write operation.</param>
     /// <returns>A task representing the asynchronous save operation.</returns>
     /// <example><![CDATA[await svc.SaveResponseAsync(text, dir, "summary", "f.md", ct);]]></example>
-    private async Task SaveResponseAsync(string summary, string saveFolder, string folder, string fileName, CancellationToken cancellationToken)
+    private async Task SaveResponseAsync(
+        string summary,
+        string fileName,
+        CancellationToken cancellationToken)
     {
         try
         {
-            //var path = Path.Join(saveFolder, folder);
-
-            //if (!Directory.Exists(path))
-            //{
-            //    Directory.CreateDirectory(path);
-            //}
-
-            //var summaryPath = Path.Combine(path, $"{fileName}_{DateTime.Now:yyyy_MM_dd_HHmmss}.md");
-
-            //await File.WriteAllTextAsync(summaryPath, $"# RAG Response summary\n\n{summary}\n\nGenerated: {DateTime.Now:O}", cancellationToken);
-
             var details = SaveDetails.FromSummary(summary, fileName, QuestionCategory.Summary);
             var path = await responseWriter.WriteResponseAsync(details, cancellationToken).ConfigureAwait(false);
 

@@ -3,12 +3,10 @@
 
 /// <summary>Generates and retrieves embeddings for questions.</summary>
 /// <param name="logger"> Logger instance.</param>
-/// <param name="embeddingService"> Embedding service.</param>
 /// <param name="qdrantClient"> Qdrant client.</param>
 /// <returns>Question embedding instance.</returns>
 public class QuestionEmbedding(
-    Serilog.ILogger logger,
-    IEmbeddingService embeddingService,
+    ILogger logger,
     IQdrantClient qdrantClient)
     : IQuestionEmbedding
 {
@@ -19,14 +17,14 @@ public class QuestionEmbedding(
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <param name="filter">Optional qdrant filter.</param>
     /// <returns>Aggregated context strings.</returns>
-    /// <example><![CDATA[string ctx = await GetContext("docs", qVec, ct);]]></example>
-    public async Task<string> GetContext(
+    /// <example><![CDATA[string ctx = await RetrieveContextAsync("docs", qVec, ct);]]></example>
+    public async Task<string> RetrieveContextAsync(
         string vectorStoreName,
         CancellationToken cancellationToken, Filter? filter = null)
     {
         List<RetrievedPoint> allPoints = [];
         PointId? nextOffset = null;
-        uint batchSize = 1000;
+        uint batchSize = 100;
 
         do
         {
@@ -49,7 +47,7 @@ public class QuestionEmbedding(
 
     private static async Task<string> StreamContextAsync(List<RetrievedPoint> value)
     {
-        const string fileName = "file_name";
+        const string fileName = "FileName";
         const string comments = nameof(CodeDocument.Comment);
         const string codes = nameof(CodeDocument.Code);
 
@@ -63,18 +61,9 @@ public class QuestionEmbedding(
 
             var code = match.TryGetValue(codes, out var cd) ? cd.StringValue ?? string.Empty : string.Empty;
 
-            sb.AppendLine($"File Name: {fileName.Trim()}  Description: {comment.Trim()} Code: {Environment.NewLine} {code.Trim()}");
+            sb.AppendLine($"File Name: {filename.Trim()}  Description: {comment.Trim()} Code: {Environment.NewLine} {code.Trim()}");
         }
 
         return sb.ToString();
     }
-
-    /// <summary>Generates a vector embedding for the user's question text.</summary>
-    /// <param name="userQuestion">The natural-language question to embed.</param>
-    /// <param name="cancellationToken">Token to cancel the embedding request.</param>
-    /// <returns>A read-only memory of floats representing the embedding vector.</returns>
-    /// <example><![CDATA[var v = await svc.GenerateEmbeddingAsync("How do I…", ct);]]></example>
-    public async Task<ReadOnlyMemory<float>> GenerateEmbeddingAsync(
-        string userQuestion,
-        CancellationToken cancellationToken) => await embeddingService.GenerateAsync(userQuestion, cancellationToken).ConfigureAwait(false);
 }

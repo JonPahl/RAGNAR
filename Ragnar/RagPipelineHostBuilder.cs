@@ -1,4 +1,4 @@
-﻿using Ragnar.Core;
+﻿using Ragnar.Embedding.Chunker;
 
 namespace Ragnar;
 
@@ -9,12 +9,14 @@ public static class RagPipelineHostBuilder
         .CreateDefaultBuilder(args)
         .ConfigureAppConfiguration(config =>
         {
-            const string X = "Ragnar";
+            // TODO How do I make changing what appsettings file to use easier.
+
+            //const string X = "Ragnar";
             // var x = "AspireObit";
             // const string X = "Shepherd_Api";
+            const string X = "ImageDescriptionWin";
 
-            config
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
+            config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
             .AddJsonFile($"appsettings.{X}.json", optional: true, reloadOnChange: true);
         })
         .ConfigureServices((context, services) =>
@@ -23,15 +25,19 @@ public static class RagPipelineHostBuilder
                 .AddSingleton<IQuestionBuilder, QuestionBuilder>();
             services
             .AddSingleton<ConfigToQuestionMapper>()
-            .AddScoped<Ragnar.Abstractions.IQuestionEmbedding, QuestionEmbedding>()
+            .AddScoped<IQuestionEmbedding, QuestionEmbedding>()
+
+            .AddSingleton<IChunkBySyntaxTree, ChunkBySyntaxTree>()
             .AddSingleton<IOllamaClientFactory, OllamaClientFactory>();
 
             services
-            .AddSingleton<IKnowledgeBaseInitialize, KnowledgeBaseInitialization>()
+            //.AddSingleton<IKnowledgeBaseSeeder, KnowledgeBaseInitialization>()
             .AddSingleton<IApplicationHeader, ApplicationHeader>()
             .AddSingleton<ISummaryService, SummaryService>()
             .AddScoped<IResponseWriter, ResponseWriter>()
             .AddSingleton<IVectorStoreBuilder, VectorStoreBuilder>()
+            .AddSingleton<IFileDiscoveryService, FileDiscoveryService>()
+
             .AddScoped<IOutputFormatter, ResponseMarkdownFormatter>();
             services.AddSingleton<IRagOrchestrator, RagOrchestrator>();
 
@@ -42,11 +48,11 @@ public static class RagPipelineHostBuilder
             .AddSingleton<IQuestionProvider, CsvFileQuestionProvider>();
 
             services.AddScoped<IFileValidator, FileValidator>();
-            services.AddKeyedSingleton<IPromptProvider, PromptTemplateProvider>("Common");
-            services.AddKeyedSingleton<IPromptProvider, SummarizePromptProvider>("Summary");
+            services.AddKeyedSingleton<IChatPromptProvider, PromptTemplateProvider>("Common");
+            services.AddKeyedSingleton<IChatPromptProvider, SummarizePromptProvider>("Summary");
 
             services.AddSingleton<IQuestionCatalogLoader, DefaultQuestionCatalogLoader>();
-            services.AddSingleton<IQuestionCombineBuilder, QuestionCombineBuilder>();
+            services.AddSingleton<IQuestionSourceBuilder, QuestionCombineBuilder>();
 
             // Infrastructure
             services.AddSingleton<IQdrantClient>(sp =>
@@ -60,13 +66,10 @@ public static class RagPipelineHostBuilder
             .AddSingleton<IOllamaAIClientBuilder, OllamaAIClientBuilder>();
             services.AddSingleton<IOllamaClientFactory, OllamaClientFactory>();
 
-            services.AddSingleton<IOllamaGenerationService, OllamaChatResponse>();
+            services.AddSingleton<IOllamaGenerationService, OllamaChatService>();
 
             // Pipeline Stages (Order preserved by registration)
             SetupPrimaryPipeline(services);
-
-            services
-            .AddKeyedScoped<IPipelineStage, QuestionOneStage>("Questions");
 
             services.AddSingleton<QuestionFactoryDelegate>(_ =>
              (text, key, category, isActive) => new Core.Model.Question(isActive, text, key, category));
@@ -83,6 +86,8 @@ public static class RagPipelineHostBuilder
             })
             .AddSingleton<IOllamaClientFactory, OllamaClientFactory>();
             services.AddSingleton<IOutputWriter, AnsiConsoleOutputWriter>();
+            services.AddSingleton<IPipelineRunner, PipelineRunner>();
+            services.AddSingleton<IClock, SystemClock>();
 
             // Configuration & Plugins
 
@@ -97,14 +102,28 @@ public static class RagPipelineHostBuilder
 
     private static void SetupPrimaryPipeline(IServiceCollection services)
     {
-        services
-        .AddKeyedScoped<IPipelineStage, BrandingStage>("Main");
+        services.AddSingleton(sp =>
+            new EmbeddingContext
+            {
+                SourceDirectory = sp.GetRequiredService<IOptions<RagnarConfig>>()
+        .Value.ApplicationOptions.SourceDirectory
+            });
 
-        services
-        .AddKeyedScoped<IPipelineStage, KnowledgeBasePreparationStage>("Main");
-        services
-        .AddKeyedScoped<IPipelineStage, QuestionProcessingStage>("Main");
-        services
-        .AddKeyedScoped<IPipelineStage, SummarizationStage>("Main");
+        // Register each stage (order matters)
+
+        services.AddSingleton<IPipelineStage<EmbeddingContext>, BrandingStage>();
+        services.AddSingleton<IPipelineStage<EmbeddingContext>, KnowledgeBasePreparationStage>();
+
+        services.AddSingleton<IPipelineStage<EmbeddingContext>, DiscoveryStage>();
+        services.AddSingleton<IPipelineStage<EmbeddingContext>, ParsingStage>();
+        services.AddSingleton<IPipelineStage<EmbeddingContext>, UpsertStage>();
+
+        services.AddSingleton<IPipelineStage<EmbeddingContext>, ShowFileStage>();
+
+        ////TODO Add Stage that loads questions and passes them in their own context to QuestionProcessingStage.
+
+        services.AddSingleton<IPipelineStage<EmbeddingContext>, QuestionExecutionStage>();
+
+        services.AddSingleton<IPipelineStage<EmbeddingContext>, SummarizationStage>();
     }
 }

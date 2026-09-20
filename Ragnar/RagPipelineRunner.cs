@@ -1,12 +1,10 @@
 ﻿namespace Ragnar;
 
-///<summary>
-/// Hosted service responsible for running the RAG pipeline.
-///</summary>
+
 public sealed class RagPipelineRunner(
-    [FromKeyedServices("Main"
-    )] IEnumerable<IPipelineStage> stages)
-    : IHostedService
+    EmbeddingContext embeddingContext,
+    IPipelineRunner pipelineRunner,
+    IEnumerable<IPipelineStage<EmbeddingContext>> stages) : IHostedService
 {
     /// <summary>Starts the RAG pipeline: collection check, embedding, and query processing. </summary>
     /// <param name="cancellationToken">
@@ -16,9 +14,13 @@ public sealed class RagPipelineRunner(
     [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Base class casing.")]
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        var Pipeline = new Embedding.Pipeline.RagPipelineRunner(stages);
 
-        await Pipeline.StartAsync(cancellationToken);
+        foreach (var stage in stages)
+        {
+            pipelineRunner.AddStage(stage);
+        }
+
+        var results = await pipelineRunner.ExecuteAsync(embeddingContext, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>Stops the hosted service (no-op).</summary>

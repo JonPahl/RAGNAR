@@ -4,9 +4,9 @@
 /// Parses C# syntax trees into CodeDocument chunks for embedding.
 /// </summary>
 /// <example><![CDATA[var docs = new ChunkBySyntaxTree().ChunkSourceFile("Program.cs", code);]]></example>
-public class ChunkBySyntaxTree
+public class ChunkBySyntaxTree(Serilog.ILogger logger, IQdrantClient client, IOptions<RagnarConfig> options) : IChunkBySyntaxTree
 {
-    private const string UNKNOWN_ELEMENT_NAME = "UNKNOWN";
+    private const string _uknownElementName = "UNKNOWN";
 
     /// <summary>
     /// Parses C# syntax trees into CodeDocument chunks for embedding.
@@ -16,7 +16,7 @@ public class ChunkBySyntaxTree
     /// <remarks>Uses Roslyn syntax tree traversal to extract top-level classes.</remarks>
     /// <example><![CDATA[var docs = new ChunkBySyntaxTree().ChunkSourceFile("Program.cs", code);]]></example>
     /// <returns>List of CodeDocuments or null on parse failure.</returns>
-    public IList<CodeDocument>? ChunkSourceFile(string filename, string codeText)
+    public async Task<IList<CodeDocument>?> ChunkSourceFile(string filename, string codeText)
     {
         var response = new List<CodeDocument>();
 
@@ -30,21 +30,90 @@ public class ChunkBySyntaxTree
             switch (node)
             {
                 case ClassDeclarationSyntax classDeclaration:
-                    {
-                        response.Add(LoadClass(filename, classDeclaration));
-                        break;
-                    }
+                    response.Add(LoadClass(filename, classDeclaration));
+                    break;
                 case InterfaceDeclarationSyntax interfaceDeclaration:
+                    response.Add(LoadInterface(filename, interfaceDeclaration));
+                    break;
+                case RecordDeclarationSyntax recordDeclarationSyntax:
+                    response.Add(LoadRecord(filename, recordDeclarationSyntax));
+                    break;
+                case TypeDeclarationSyntax typeDeclaration:
+                    if (!await FileStoredAsync(filename).ConfigureAwait(false))
                     {
-                        response.Add(LoadInterface(filename, interfaceDeclaration));
-                        break;
+                        response.Add(LoadTypeDeclaration(filename, typeDeclaration));
                     }
+                    break;
+                default:
+                    break;
+                    //case NamespaceDeclarationSyntax
+                    //default:
+                    //    var x = node.GetType().Name;
+                    //    logger.Error("file type: {type}; in file name: {filename} doesn't wasn't a class or interface.", node.GetType().Name, filename);
+                    //    break;
             }
         }
 
         return response;
         // Handle other top-level declarations if needed
     }
+
+    private CodeDocument LoadTypeDeclaration(string filename, TypeDeclarationSyntax typeDeclaration)
+    {
+        var category = InferCategoryFromPath(filename);
+
+        return CreateCodeDocument(filename,
+            typeDeclaration,
+            typeDeclaration.Kind().ToString(),
+            typeDeclaration?.Identifier.ValueText ?? _uknownElementName,
+            typeDeclaration?.GetLeadingTrivia(),
+            category);
+    }
+
+    private async Task<bool> FileStoredAsync(string fileName)
+    {
+        var redColorFilter = new Filter
+        {
+            Must =
+            {
+                new Condition
+                {
+                    Field = new FieldCondition
+                    {
+                        Key = "FileName",
+                        Match = new Match
+                        {
+                            Keyword = fileName
+                        }
+                    }
+                }
+            }
+        };
+
+        // 3. Execute the count query
+        var countResult = await client.CountAsync(
+            collectionName: options.Value.ApplicationOptions.VectorStoreName,
+            filter: redColorFilter,
+            exact: true
+        ).ConfigureAwait(false);
+
+        // 4. Retrieve the counted number of points
+
+        return countResult > 0;
+    }
+
+    private CodeDocument LoadRecord(string filename, RecordDeclarationSyntax recordDefine)
+    {
+        var category = InferCategoryFromPath(filename);
+
+        return CreateCodeDocument(filename,
+            recordDefine,
+            recordDefine.Kind().ToString(),
+            recordDefine?.Identifier.ValueText ?? _uknownElementName,
+            recordDefine?.GetLeadingTrivia(),
+            category);
+    }
+
 
     /// <summary>
     /// Converts class declaration node to CodeDocument.
@@ -57,25 +126,24 @@ public class ChunkBySyntaxTree
     {
         var category = InferCategoryFromPath(filename);
 
-        return CreateCodeDocument(filename, classDefine, classDefine.Kind().ToString(), classDefine?.Identifier.ValueText ?? UNKNOWN_ELEMENT_NAME, classDefine?.GetLeadingTrivia(), category);
+        return CreateCodeDocument(filename, classDefine, classDefine.Kind().ToString(), classDefine?.Identifier.ValueText ?? _uknownElementName, classDefine?.GetLeadingTrivia(), category);
     }
 
     private static CodeDocument LoadInterface(string filename, InterfaceDeclarationSyntax interfaceDefine)
     {
         var category = InferCategoryFromPath(filename);
 
-        return CreateCodeDocument(filename, interfaceDefine, interfaceDefine.Kind().ToString(), interfaceDefine?.Identifier.ValueText ?? UNKNOWN_ELEMENT_NAME, interfaceDefine?.GetLeadingTrivia(), category);
+        return CreateCodeDocument(filename, interfaceDefine, interfaceDefine.Kind().ToString(), interfaceDefine?.Identifier.ValueText ?? _uknownElementName, interfaceDefine?.GetLeadingTrivia(), category);
     }
 
 
     private static string InferCategoryFromPath(string fileName)
-    => Path.GetFileNameWithoutExtension(fileName)
-        .ToLowerInvariant() switch
+    => Path.GetFileNameWithoutExtension(fileName).ToUpperInvariant() switch
     {
-        var _ when fileName.ToLowerInvariant().Contains("test", StringComparison.OrdinalIgnoreCase) => "Testing",
-        var _ when fileName.Contains("plugin", StringComparison.OrdinalIgnoreCase) => "Plugin",
-        var _ when fileName.Contains("embedding", StringComparison.OrdinalIgnoreCase) => "Embedding",
-        var _ when fileName.Contains("core", StringComparison.OrdinalIgnoreCase) => "Core",
+        var _ when fileName.ToUpperInvariant().Contains("TEST", StringComparison.OrdinalIgnoreCase) => "Testing",
+        var _ when fileName.Contains("PLUGIN", StringComparison.OrdinalIgnoreCase) => "Plugin",
+        var _ when fileName.Contains("EMBEDDING", StringComparison.OrdinalIgnoreCase) => "Embedding",
+        var _ when fileName.Contains("CORE", StringComparison.OrdinalIgnoreCase) => "Core",
         _ => "Refactor"
     };
 
@@ -100,7 +168,7 @@ public class ChunkBySyntaxTree
             ElementType = elementType,
             ElementName = elementName,
             Comment = string.Join(Environment.NewLine, comments),
-            Comment_Length = string.Join(Environment.NewLine, comments).CharacterCount(),
+            CommentLength = string.Join(Environment.NewLine, comments).CharacterCount(),
             Code = node.NormalizeWhitespace().ToFullString(),
             Category = category,
         };
@@ -117,9 +185,11 @@ public class ChunkBySyntaxTree
         if (leadingTrivia == null)
             return [];
 
-        return [.. leadingTrivia.Value.Where(t => t.IsKind(SyntaxKind.SingleLineDocumentationCommentTrivia)
+        var values = leadingTrivia.Value.Where(t => t.IsKind(SyntaxKind.SingleLineDocumentationCommentTrivia)
         || t.IsKind(SyntaxKind.MultiLineDocumentationCommentTrivia)
         || t.IsKind(SyntaxKind.SingleLineCommentTrivia))
-            .Select(t => t.ToString().Trim())];
+            .Select(t => t.ToString().Trim()).ToList();
+
+        return values;
     }
 }

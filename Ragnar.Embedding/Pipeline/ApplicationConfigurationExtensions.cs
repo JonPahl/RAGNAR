@@ -9,14 +9,14 @@ public static class ApplicationConfigurationExtensions
     extension(IServiceCollection services)
     {
         /// <summary>Registers the Ollama-based embedding service as a singleton.</summary>
-        /// <remarks>Resolves logger, config, and client factory from the container.</remarks>        
+        /// <remarks>Resolves logger, config, and client factory from the container.</remarks>
         /// <returns>The service collection for chaining.</returns>
         /// <example><![CDATA[services.RegisterEmbeddingServices();]]></example>
         public IServiceCollection RegisterEmbeddingServices()
         {
             services.AddSingleton<IEmbeddingService>(sp =>
             {
-                var logger = sp.GetService<Serilog.ILogger>();
+                var logger = sp.GetService<ILogger>();
                 var config = sp.GetService<IOptions<RagnarConfig>>();
 
                 var ollamaClientProvider = sp.GetRequiredService<IOllamaClientFactory>();

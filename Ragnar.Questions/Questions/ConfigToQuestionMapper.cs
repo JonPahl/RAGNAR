@@ -11,9 +11,9 @@ public class ConfigToQuestionMapper(QuestionFactoryDelegate factory)
     /// </summary>
     /// <param name="configs">List of raw configurations.</param>
     /// <returns>New list of questions.</returns>
-    public List<Core.Model.Question> LoadFromConfig(IEnumerable<Plugins.Question> configs)
+    public IReadOnlyCollection<Core.Model.Question> LoadFromConfig(IEnumerable<Plugins.Question> configs)
     {
-        ArgumentNullException.ThrowIfNull(configs);
+        Guard.Against.Null(configs);
 
         var questions = configs
             .Select(config => factory(

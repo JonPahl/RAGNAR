@@ -11,7 +11,7 @@
 public sealed class RagOrchestrator(
     IOutputWriter writer,
     IOptions<RagnarConfig> configWrapper,
-    [FromKeyedServices("Common")] IPromptProvider
+    [FromKeyedServices("Common")] IChatPromptProvider
     promptTemplateProvider,
     IResponseWriter saveService,
     IOllamaClientFactory ollamaClientFactory,
@@ -31,7 +31,7 @@ public sealed class RagOrchestrator(
     {
         var finalPrompt = $"Context:\n{contextText}\n\nQuestion:\n{question.Text}\n\nAnswer:";
 
-        var ollamaClient = ollamaClientFactory.FindClient(OllamaServiceType.Ollama);
+        var ollamaClient = ollamaClientFactory.ResolveClient(OllamaServiceType.Ollama);
 
         var request = new GenerateRequest
         {
@@ -72,5 +72,5 @@ public sealed class RagOrchestrator(
     /// <example>
     /// <![CDATA[string answer = await GenerateAsync(request, ct);]]></example>
     /// <returns>Generated text.</returns>
-    private async ValueTask<string> GenerateAsync(GenerateRequest request, CancellationToken cancellationToken) => await ollamaProvider.GenerateResponse(request, cancellationToken).ConfigureAwait(false);
+    private async Task<string> GenerateAsync(GenerateRequest request, CancellationToken cancellationToken) => await ollamaProvider.GenerateResponse(request, cancellationToken).ConfigureAwait(false);
 }

@@ -50,8 +50,8 @@ public class QuestionBuilder : IQuestionBuilder
 
     public Core.Model.Question Build()
     {
-        Guard.Against.NullOrWhiteSpace(_text, nameof(_text));
-        Guard.Against.NullOrWhiteSpace(_key, nameof(_key));
+        Guard.Against.NullOrWhiteSpace(_text);
+        Guard.Against.NullOrWhiteSpace(_key);
 
         return new Core.Model.Question(
             _isEnabled,

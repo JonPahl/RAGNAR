@@ -1,12 +1,13 @@
 ﻿namespace Ragnar.OutputResponse;
 
-// TODO: Rewrite save to use the following item.
+// TODO Rewrite save to use the following item.
 // var details = new SaveDetails()
 
 public class SummarizeSaveResponse : IResponseWriter
 {
 
-    private const string Template = "# RAG Response Summary\n\n{0}\n\nGenerated: {1}";
+    private const string _template = "# RAG Response Summary\n\n{0}\n\nGenerated: {1}";
+
     private string? _responseDir;
 
     public async Task<string> WriteResponseAsync(SaveDetails details, CancellationToken cancellationToken)
@@ -20,7 +21,7 @@ public class SummarizeSaveResponse : IResponseWriter
         var fileName = $"{Path.GetFileNameWithoutExtension(details.Question.Filename)}_summary.md";
         var summaryPath = Path.Join(_responseDir, fileName);
 
-        var content = string.Format(Template, details.Content, DateTime.UtcNow.ToString("O"));
+        var content = string.Format(_template, details.Content, DateTime.UtcNow.ToString("O"));
         await File.WriteAllTextAsync(summaryPath, content, cancellationToken).ConfigureAwait(false);
 
         return summaryPath;

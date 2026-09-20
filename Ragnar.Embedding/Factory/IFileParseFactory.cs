@@ -6,7 +6,7 @@ public interface IFileParseFactory
     /// Parses file using correct _parser based on extension.
     /// </summary>
     /// <param name="file">File path.</param>
-    /// <param name="Ct">Cancellation token.</param>
+    /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Parsed documents.</returns>
     /// <example><![CDATA[var docs = await factory.ParseAsync("Program.cs", ct);]]></example>
     Task<IEnumerable<CodeDocument>> ParseAsync(string file, CancellationToken cancellationToken);

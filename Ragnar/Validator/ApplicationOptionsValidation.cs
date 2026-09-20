@@ -12,6 +12,7 @@ public sealed class ApplicationOptionsValidation
     public ApplicationOptionsValidation()
     {
         RuleFor(x => x.VectorStoreName)
+            .NotNull().WithMessage("Qdrant Vector Store Name is required.")
             .NotEmpty().WithMessage("Qdrant Vector Store Name is required.")
             .MaximumLength(128).WithMessage("VectorStoreName must not exceed 128 characters.");
 

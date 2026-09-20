@@ -23,7 +23,6 @@ C:\Users\jp325\source\Ragnar\Ragnar.IntegrationTests\bin\Debug\net10.0\appsettin
 C:\Users\jp325\source\Ragnar\Ragnar.IntegrationTests\bin\Debug\net10.0\appsettings.json
 C:\Users\jp325\source\Ragnar\Ragnar.IntegrationTests\bin\Debug\net10.0\appsettings.Ragnar.json
 C:\Users\jp325\source\Ragnar\Ragnar.IntegrationTests\bin\Debug\net10.0\appsettings.Shepherd_Api.json
-C:\Users\jp325\source\Ragnar\Ragnar.IntegrationTests\bin\Debug\net10.0\appsettings.WebpPng.json
 C:\Users\jp325\source\Ragnar\Ragnar.IntegrationTests\bin\Debug\net10.0\Ragnar.exe
 C:\Users\jp325\source\Ragnar\Ragnar.IntegrationTests\bin\Debug\net10.0\Ragnar.IntegrationTests.exe
 C:\Users\jp325\source\Ragnar\Ragnar.IntegrationTests\bin\Debug\net10.0\Ragnar.IntegrationTests.deps.json
@@ -276,3 +275,4 @@ C:\Users\jp325\source\Ragnar\Ragnar.IntegrationTests\obj\Debug\net10.0\refint\Ra
 C:\Users\jp325\source\Ragnar\Ragnar.IntegrationTests\obj\Debug\net10.0\Ragnar.IntegrationTests.pdb
 C:\Users\jp325\source\Ragnar\Ragnar.IntegrationTests\obj\Debug\net10.0\Ragnar.IntegrationTests.genruntimeconfig.cache
 C:\Users\jp325\source\Ragnar\Ragnar.IntegrationTests\obj\Debug\net10.0\ref\Ragnar.IntegrationTests.dll
+C:\Users\jp325\source\Ragnar\Ragnar.IntegrationTests\bin\Debug\net10.0\appsettings.ImageDescriptionWin.json

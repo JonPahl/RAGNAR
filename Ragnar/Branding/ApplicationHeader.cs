@@ -3,7 +3,9 @@
 /// <summary>Renders application branding and version information to console.</summary>
 /// <param name="writer">Console output writer used for branding display.</param>
 /// <remarks>Caches version string on initialization for rendering performance.</remarks>
-public sealed class ApplicationHeader(IOutputWriter writer) : IApplicationHeader
+/// <example><![CDATA[header.RenderBranding();]]></example>
+public sealed class ApplicationHeader(IOutputWriter writer)
+    : IApplicationHeader
 {
     /// <summary>Caches the current assembly informational version string.</summary>
     private readonly string _versionNumber =

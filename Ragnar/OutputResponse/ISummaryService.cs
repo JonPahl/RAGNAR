@@ -12,5 +12,5 @@ public interface ISummaryService
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>A task containing the summarized responses.</returns>
     /// <example><![CDATA[await svc.SummarizeAllResponsesAsync(ct);]]></example>
-    ValueTask SummarizeAllResponsesAsync(CancellationToken cancellationToken);
+    Task SummarizeAllResponsesAsync(CancellationToken cancellationToken);
 }

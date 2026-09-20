@@ -216,18 +216,18 @@
           }
         }
       },
-      "Microsoft.Agents.AI/1.20.0": {
+      "Microsoft.Agents.AI/1.21.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Agents.AI.Abstractions": "1.20.0",
-          "Microsoft.Extensions.AI": "10.9.0",
-          "Microsoft.Extensions.AI.Abstractions": "10.9.0",
-          "Microsoft.Extensions.AI.Evaluation": "10.9.0",
-          "Microsoft.Extensions.Compliance.Abstractions": "10.5.0",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.11",
-          "Microsoft.Extensions.FileSystemGlobbing": "10.0.11",
-          "Microsoft.Extensions.Logging.Abstractions": "10.0.11",
-          "Microsoft.Extensions.VectorData.Abstractions": "10.8.2",
+          "Microsoft.Agents.AI.Abstractions": "1.21.0",
+          "Microsoft.Extensions.AI": "10.10.0",
+          "Microsoft.Extensions.AI.Abstractions": "10.10.0",
+          "Microsoft.Extensions.AI.Evaluation": "10.10.0",
+          "Microsoft.Extensions.Compliance.Abstractions": "10.10.0",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.12",
+          "Microsoft.Extensions.FileSystemGlobbing": "10.0.12",
+          "Microsoft.Extensions.Logging.Abstractions": "10.0.12",
+          "Microsoft.Extensions.VectorData.Abstractions": "10.10.0",
           "Microsoft.ML.Tokenizers": "2.0.0"
         },
         "compile": {
@@ -241,10 +241,10 @@
           }
         }
       },
-      "Microsoft.Agents.AI.Abstractions/1.20.0": {
+      "Microsoft.Agents.AI.Abstractions/1.21.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.AI.Abstractions": "10.9.0"
+          "Microsoft.Extensions.AI.Abstractions": "10.10.0"
         },
         "compile": {
           "lib/net10.0/Microsoft.Agents.AI.Abstractions.dll": {
@@ -672,14 +672,14 @@
           }
         }
       },
-      "Microsoft.Extensions.AI/10.9.0": {
+      "Microsoft.Extensions.AI/10.10.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.AI.Abstractions": "10.9.0",
-          "Microsoft.Extensions.Caching.Abstractions": "10.0.11",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.11",
-          "Microsoft.Extensions.Logging.Abstractions": "10.0.11",
-          "System.Numerics.Tensors": "10.0.11"
+          "Microsoft.Extensions.AI.Abstractions": "10.10.0",
+          "Microsoft.Extensions.Caching.Abstractions": "10.0.12",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.12",
+          "Microsoft.Extensions.Logging.Abstractions": "10.0.12",
+          "System.Numerics.Tensors": "10.0.12"
         },
         "compile": {
           "lib/net10.0/Microsoft.Extensions.AI.dll": {
@@ -692,7 +692,7 @@
           }
         }
       },
-      "Microsoft.Extensions.AI.Abstractions/10.9.0": {
+      "Microsoft.Extensions.AI.Abstractions/10.10.0": {
         "type": "package",
         "compile": {
           "lib/net10.0/Microsoft.Extensions.AI.Abstractions.dll": {
@@ -705,10 +705,10 @@
           }
         }
       },
-      "Microsoft.Extensions.AI.Evaluation/10.9.0": {
+      "Microsoft.Extensions.AI.Evaluation/10.10.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.AI.Abstractions": "10.9.0"
+          "Microsoft.Extensions.AI.Abstractions": "10.10.0"
         },
         "compile": {
           "lib/net10.0/Microsoft.Extensions.AI.Evaluation.dll": {
@@ -762,10 +762,10 @@
           "buildTransitive/net8.0/_._": {}
         }
       },
-      "Microsoft.Extensions.Caching.Abstractions/10.0.11": {
+      "Microsoft.Extensions.Caching.Abstractions/10.0.12": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.Primitives": "10.0.11"
+          "Microsoft.Extensions.Primitives": "10.0.12"
         },
         "compile": {
           "lib/net10.0/Microsoft.Extensions.Caching.Abstractions.dll": {
@@ -1597,10 +1597,10 @@
           "buildTransitive/net8.0/Microsoft.Extensions.Telemetry.Abstractions.targets": {}
         }
       },
-      "Microsoft.Extensions.VectorData.Abstractions/10.8.2": {
+      "Microsoft.Extensions.VectorData.Abstractions/10.10.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Extensions.AI.Abstractions": "10.8.2"
+          "Microsoft.Extensions.AI.Abstractions": "10.10.0"
         },
         "compile": {
           "lib/net10.0/Microsoft.Extensions.VectorData.Abstractions.dll": {
@@ -1737,11 +1737,11 @@
           }
         }
       },
-      "Microsoft.Testing.Extensions.Telemetry/2.3.3": {
+      "Microsoft.Testing.Extensions.Telemetry/2.4.0": {
         "type": "package",
         "dependencies": {
           "Microsoft.ApplicationInsights": "2.23.0",
-          "Microsoft.Testing.Platform": "2.3.3"
+          "Microsoft.Testing.Platform": "[2.4.0, 3.0.0)"
         },
         "compile": {
           "lib/net9.0/Microsoft.Testing.Extensions.Telemetry.dll": {
@@ -1801,10 +1801,10 @@
           "buildMultiTargeting/Microsoft.Testing.Extensions.Telemetry.props": {}
         }
       },
-      "Microsoft.Testing.Extensions.TrxReport.Abstractions/2.3.3": {
+      "Microsoft.Testing.Extensions.TrxReport.Abstractions/2.4.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Testing.Platform": "2.3.3"
+          "Microsoft.Testing.Platform": "[2.4.0, 3.0.0)"
         },
         "compile": {
           "lib/net9.0/Microsoft.Testing.Extensions.TrxReport.Abstractions.dll": {
@@ -1817,7 +1817,7 @@
           }
         }
       },
-      "Microsoft.Testing.Platform/2.3.3": {
+      "Microsoft.Testing.Platform/2.4.0": {
         "type": "package",
         "compile": {
           "lib/net9.0/Microsoft.Testing.Platform.dll": {
@@ -1879,10 +1879,10 @@
           "buildMultiTargeting/Microsoft.Testing.Platform.targets": {}
         }
       },
-      "Microsoft.Testing.Platform.MSBuild/2.3.3": {
+      "Microsoft.Testing.Platform.MSBuild/2.4.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Testing.Platform": "2.3.3"
+          "Microsoft.Testing.Platform": "[2.4.0, 3.0.0)"
         },
         "compile": {
           "lib/net9.0/Microsoft.Testing.Extensions.MSBuild.dll": {
@@ -2017,10 +2017,10 @@
           "buildTransitive/netstandard2.0/OpenAI.targets": {}
         }
       },
-      "Polly/8.7.0": {
+      "Polly/8.8.0": {
         "type": "package",
         "dependencies": {
-          "Polly.Core": "8.7.0"
+          "Polly.Core": "8.8.0"
         },
         "compile": {
           "lib/net6.0/Polly.dll": {
@@ -2033,7 +2033,7 @@
           }
         }
       },
-      "Polly.Core/8.7.0": {
+      "Polly.Core/8.8.0": {
         "type": "package",
         "compile": {
           "lib/net8.0/Polly.Core.dll": {
@@ -2637,7 +2637,7 @@
           "buildTransitive/net8.0/_._": {}
         }
       },
-      "System.Numerics.Tensors/10.0.11": {
+      "System.Numerics.Tensors/10.0.12": {
         "type": "package",
         "compile": {
           "lib/net10.0/System.Numerics.Tensors.dll": {
@@ -2737,7 +2737,7 @@
           }
         }
       },
-      "xunit.analyzers/2.0.0": {
+      "xunit.analyzers/2.1.0": {
         "type": "package"
       },
       "xunit.runner.visualstudio/4.0.0": {
@@ -2752,10 +2752,10 @@
           "build/net8.0/xunit.runner.visualstudio.props": {}
         }
       },
-      "xunit.v3/4.0.0": {
+      "xunit.v3/4.0.1": {
         "type": "package",
         "dependencies": {
-          "xunit.v3.mtp-v2": "[4.0.0]"
+          "xunit.v3.mtp-v2": "[4.0.1]"
         },
         "compile": {
           "lib/net8.0/_._": {}
@@ -2764,7 +2764,7 @@
           "lib/net8.0/_._": {}
         }
       },
-      "xunit.v3.assert/4.0.0": {
+      "xunit.v3.assert/4.0.1": {
         "type": "package",
         "compile": {
           "lib/net8.0/xunit.v3.assert.dll": {
@@ -2777,7 +2777,7 @@
           }
         }
       },
-      "xunit.v3.common/4.0.0": {
+      "xunit.v3.common/4.0.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Bcl.AsyncInterfaces": "6.0.0"
@@ -2793,15 +2793,15 @@
           }
         }
       },
-      "xunit.v3.core.mtp-v2/4.0.0": {
+      "xunit.v3.core.mtp-v2/4.0.1": {
         "type": "package",
         "dependencies": {
-          "Microsoft.Testing.Extensions.Telemetry": "2.3.3",
-          "Microsoft.Testing.Extensions.TrxReport.Abstractions": "2.3.3",
-          "Microsoft.Testing.Platform": "2.3.3",
-          "Microsoft.Testing.Platform.MSBuild": "2.3.3",
-          "xunit.v3.extensibility.core": "[4.0.0]",
-          "xunit.v3.runner.inproc.console": "[4.0.0]"
+          "Microsoft.Testing.Extensions.Telemetry": "2.4.0",
+          "Microsoft.Testing.Extensions.TrxReport.Abstractions": "2.4.0",
+          "Microsoft.Testing.Platform": "2.4.0",
+          "Microsoft.Testing.Platform.MSBuild": "2.4.0",
+          "xunit.v3.extensibility.core": "[4.0.1]",
+          "xunit.v3.runner.inproc.console": "[4.0.1]"
         },
         "compile": {
           "lib/net8.0/xunit.v3.mtp-v2.dll": {}
@@ -2814,10 +2814,10 @@
           "buildTransitive/xunit.v3.core.mtp-v2.targets": {}
         }
       },
-      "xunit.v3.extensibility.core/4.0.0": {
+      "xunit.v3.extensibility.core/4.0.1": {
         "type": "package",
         "dependencies": {
-          "xunit.v3.common": "[4.0.0]"
+          "xunit.v3.common": "[4.0.1]"
         },
         "compile": {
           "lib/netstandard2.0/xunit.v3.core.dll": {
@@ -2830,12 +2830,12 @@
           }
         }
       },
-      "xunit.v3.mtp-v2/4.0.0": {
+      "xunit.v3.mtp-v2/4.0.1": {
         "type": "package",
         "dependencies": {
-          "xunit.analyzers": "2.0.0",
-          "xunit.v3.assert": "[4.0.0]",
-          "xunit.v3.core.mtp-v2": "[4.0.0]"
+          "xunit.analyzers": "2.1.0",
+          "xunit.v3.assert": "[4.0.1]",
+          "xunit.v3.core.mtp-v2": "[4.0.1]"
         },
         "compile": {
           "lib/net8.0/_._": {}
@@ -2844,12 +2844,12 @@
           "lib/net8.0/_._": {}
         }
       },
-      "xunit.v3.runner.common/4.0.0": {
+      "xunit.v3.runner.common/4.0.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.Win32.Registry": "[5.0.0]",
           "System.Security.AccessControl": "[6.0.1]",
-          "xunit.v3.common": "[4.0.0]"
+          "xunit.v3.common": "[4.0.1]"
         },
         "compile": {
           "lib/netstandard2.0/xunit.v3.runner.common.dll": {
@@ -2862,11 +2862,11 @@
           }
         }
       },
-      "xunit.v3.runner.inproc.console/4.0.0": {
+      "xunit.v3.runner.inproc.console/4.0.1": {
         "type": "package",
         "dependencies": {
-          "xunit.v3.extensibility.core": "[4.0.0]",
-          "xunit.v3.runner.common": "[4.0.0]"
+          "xunit.v3.extensibility.core": "[4.0.1]",
+          "xunit.v3.runner.common": "[4.0.1]"
         },
         "compile": {
           "lib/net8.0/xunit.v3.runner.inproc.console.dll": {
@@ -2904,8 +2904,8 @@
           "FluentValidation": "12.1.1",
           "FluentValidation.DependencyInjectionExtensions": "12.1.1",
           "HashDepot": "3.2.0",
-          "Microsoft.Agents.AI": "1.20.0",
-          "Microsoft.Agents.AI.Abstractions": "1.20.0",
+          "Microsoft.Agents.AI": "1.21.0",
+          "Microsoft.Agents.AI.Abstractions": "1.21.0",
           "Microsoft.CodeAnalysis": "5.9.0",
           "Microsoft.CodeAnalysis.CSharp": "5.9.0",
           "Microsoft.Extensions.Configuration": "10.0.12",
@@ -2918,7 +2918,7 @@
           "Microsoft.SemanticKernel.Connectors.Qdrant": "1.74.0-preview",
           "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.23.0",
           "OllamaSharp": "5.4.30",
-          "Polly": "8.7.0",
+          "Polly": "8.8.0",
           "Polly.Extensions.Http": "3.0.0",
           "Qdrant.Client": "1.19.0",
           "Ragnar.Core": "1.0.0",
@@ -3482,10 +3482,10 @@
         "logo.png"
       ]
     },
-    "Microsoft.Agents.AI/1.20.0": {
-      "sha512": "/nNbNNistrhtdpaqj4u83gbBjnU88nKNLtUs7e5vpyGXnsdh22mDd/FAvYO/T47FTMbRiTOXPWmcVXhGEry68Q==",
+    "Microsoft.Agents.AI/1.21.0": {
+      "sha512": "uzfyObaUtObJo1VFvV+DA0WI4T16RwPhVkbkhSFpY3gomEKizmmVeZVyuwPwJ85fANalmjrnAqb37b/SCBPFtA==",
       "type": "package",
-      "path": "microsoft.agents.ai/1.20.0",
+      "path": "microsoft.agents.ai/1.21.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3501,14 +3501,14 @@
         "lib/net9.0/Microsoft.Agents.AI.xml",
         "lib/netstandard2.0/Microsoft.Agents.AI.dll",
         "lib/netstandard2.0/Microsoft.Agents.AI.xml",
-        "microsoft.agents.ai.1.20.0.nupkg.sha512",
+        "microsoft.agents.ai.1.21.0.nupkg.sha512",
         "microsoft.agents.ai.nuspec"
       ]
     },
-    "Microsoft.Agents.AI.Abstractions/1.20.0": {
-      "sha512": "xe56ZcnCkU26SA2ap0cowHR3HsUS5hKiCiRIEMUX6DytmjXPqwbN737Ja9lepnxkwmE1u0lcxJC+EPYpJeSgYA==",
+    "Microsoft.Agents.AI.Abstractions/1.21.0": {
+      "sha512": "ukIDpnpLml5jhv4c+kkPfyd6IxcfBp8mG2OT88noq0qqr6+gfciHZSmk7cIw7RZesWLFfBrMwfhfQJVSFP6ASg==",
       "type": "package",
-      "path": "microsoft.agents.ai.abstractions/1.20.0",
+      "path": "microsoft.agents.ai.abstractions/1.21.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3524,7 +3524,7 @@
         "lib/net9.0/Microsoft.Agents.AI.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.Agents.AI.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.Agents.AI.Abstractions.xml",
-        "microsoft.agents.ai.abstractions.1.20.0.nupkg.sha512",
+        "microsoft.agents.ai.abstractions.1.21.0.nupkg.sha512",
         "microsoft.agents.ai.abstractions.nuspec"
       ]
     },
@@ -4038,10 +4038,10 @@
         "microsoft.codeanalysis.workspaces.common.nuspec"
       ]
     },
-    "Microsoft.Extensions.AI/10.9.0": {
-      "sha512": "ymREzi/+uQ9KL0d0ir3FXHUb/XLHyLYcJYH/7A/uO6rg6Km8hUk++nMRG4/gDpDYrrU6s6YIpSDTexofexMGRg==",
+    "Microsoft.Extensions.AI/10.10.0": {
+      "sha512": "XKvtDUD3KySkvA5UpS+UF67M5rcqiXjAQchTZZ26WnavVKXxwlUTVdK/Ju0tc/25+16AVUdNl8cnVVGX/tx03A==",
       "type": "package",
-      "path": "microsoft.extensions.ai/10.9.0",
+      "path": "microsoft.extensions.ai/10.10.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4057,14 +4057,14 @@
         "lib/net9.0/Microsoft.Extensions.AI.xml",
         "lib/netstandard2.0/Microsoft.Extensions.AI.dll",
         "lib/netstandard2.0/Microsoft.Extensions.AI.xml",
-        "microsoft.extensions.ai.10.9.0.nupkg.sha512",
+        "microsoft.extensions.ai.10.10.0.nupkg.sha512",
         "microsoft.extensions.ai.nuspec"
       ]
     },
-    "Microsoft.Extensions.AI.Abstractions/10.9.0": {
-      "sha512": "//nASHMCJVxnYfE/WSzfaLOao6/q816kPpgB9rxU0gfSmAny1u3rfQT0D4xAmcIo4yQqJs7rAeBB+M/dIMdZYA==",
+    "Microsoft.Extensions.AI.Abstractions/10.10.0": {
+      "sha512": "frBHj2ckpevA+KdDLikxv8oxGPrJiyTvaiblYp+vtVEt0q6J73XP5m2SICm86nFK6rl+L1GCKxIy4S5Lb3p2kQ==",
       "type": "package",
-      "path": "microsoft.extensions.ai.abstractions/10.9.0",
+      "path": "microsoft.extensions.ai.abstractions/10.10.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4080,14 +4080,14 @@
         "lib/net9.0/Microsoft.Extensions.AI.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.Extensions.AI.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.Extensions.AI.Abstractions.xml",
-        "microsoft.extensions.ai.abstractions.10.9.0.nupkg.sha512",
+        "microsoft.extensions.ai.abstractions.10.10.0.nupkg.sha512",
         "microsoft.extensions.ai.abstractions.nuspec"
       ]
     },
-    "Microsoft.Extensions.AI.Evaluation/10.9.0": {
-      "sha512": "X1W8yH63os/Me/5+ipZLmgRXjZJDJ1kUHxYRWxqP3c/DezHfSHD+Qf5nKgN1EHIY9GYqkIBTvtPEC8Hs+t4KBQ==",
+    "Microsoft.Extensions.AI.Evaluation/10.10.0": {
+      "sha512": "YXdqOSHl8X1/Vkmuu6QoV330FQ7aiYtNDqIUIiICSDd0HMx0No9D/ZWo0ocOPXd9bk00YQQfyK5HKcgRnRmQbQ==",
       "type": "package",
-      "path": "microsoft.extensions.ai.evaluation/10.9.0",
+      "path": "microsoft.extensions.ai.evaluation/10.10.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4105,7 +4105,7 @@
         "lib/net9.0/Microsoft.Extensions.AI.Evaluation.xml",
         "lib/netstandard2.0/Microsoft.Extensions.AI.Evaluation.dll",
         "lib/netstandard2.0/Microsoft.Extensions.AI.Evaluation.xml",
-        "microsoft.extensions.ai.evaluation.10.9.0.nupkg.sha512",
+        "microsoft.extensions.ai.evaluation.10.10.0.nupkg.sha512",
         "microsoft.extensions.ai.evaluation.nuspec"
       ]
     },
@@ -4157,10 +4157,10 @@
         "microsoft.extensions.ambientmetadata.application.nuspec"
       ]
     },
-    "Microsoft.Extensions.Caching.Abstractions/10.0.11": {
-      "sha512": "vUl798SmruTqqlt/xH2gDk3tJlhk6k3HdOXAHirlRfbNKDym4g/kRpUL9S4sl6F6FsOTOMW+ZsDapqlZMOOiEw==",
+    "Microsoft.Extensions.Caching.Abstractions/10.0.12": {
+      "sha512": "sI3A6MUAyZwccLnwq0cXuRmC3WBtXieimBWafXSfhRJ4jnM2uGVXrqImDDVyW27u4vVaTOGlJxNJd8d1FGvCNQ==",
       "type": "package",
-      "path": "microsoft.extensions.caching.abstractions/10.0.11",
+      "path": "microsoft.extensions.caching.abstractions/10.0.12",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -4181,7 +4181,7 @@
         "lib/net9.0/Microsoft.Extensions.Caching.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Caching.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Caching.Abstractions.xml",
-        "microsoft.extensions.caching.abstractions.10.0.11.nupkg.sha512",
+        "microsoft.extensions.caching.abstractions.10.0.12.nupkg.sha512",
         "microsoft.extensions.caching.abstractions.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -5361,10 +5361,10 @@
         "microsoft.extensions.telemetry.abstractions.nuspec"
       ]
     },
-    "Microsoft.Extensions.VectorData.Abstractions/10.8.2": {
-      "sha512": "e4AkXSuZaslSXCZLWpqBgjBYafwOh/b3LQp+RWIiJrvFjJXM9VUYVHRbbxWQTDuMxKPKFADRch5Dy3EKmBCHkA==",
+    "Microsoft.Extensions.VectorData.Abstractions/10.10.0": {
+      "sha512": "bZdR7QbdLLqmc9xPJIiD5U6H678xyv8eMATjQ0SmH7OZyi+/12G/nFAGCE6DNG22q76YNwkXo+V7GMyUckjjgw==",
       "type": "package",
-      "path": "microsoft.extensions.vectordata.abstractions/10.8.2",
+      "path": "microsoft.extensions.vectordata.abstractions/10.10.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5378,7 +5378,7 @@
         "lib/net8.0/Microsoft.Extensions.VectorData.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.Extensions.VectorData.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.Extensions.VectorData.Abstractions.xml",
-        "microsoft.extensions.vectordata.abstractions.10.8.2.nupkg.sha512",
+        "microsoft.extensions.vectordata.abstractions.10.10.0.nupkg.sha512",
         "microsoft.extensions.vectordata.abstractions.nuspec"
       ]
     },
@@ -5518,10 +5518,10 @@
         "microsoft.semantickernel.core.nuspec"
       ]
     },
-    "Microsoft.Testing.Extensions.Telemetry/2.3.3": {
-      "sha512": "nY8ceQyPWB9TRE1WE5Oe/sks2e10SxgPv61vBHsFYpgCeDtNwhpMZwmL29GklO3/etTdOsLdrCmNr4zJWaR2fg==",
+    "Microsoft.Testing.Extensions.Telemetry/2.4.0": {
+      "sha512": "JeP1RFqBa11fWmBk8xEfZcMKr4rxWSyI6OZ+659V069CaMkTEOQBW2UdSSeNz3absOsygcn7JJkzerC4LGnZ9w==",
       "type": "package",
-      "path": "microsoft.testing.extensions.telemetry/2.3.3",
+      "path": "microsoft.testing.extensions.telemetry/2.4.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5582,14 +5582,14 @@
         "lib/netstandard2.0/tr/Microsoft.Testing.Extensions.Telemetry.resources.dll",
         "lib/netstandard2.0/zh-Hans/Microsoft.Testing.Extensions.Telemetry.resources.dll",
         "lib/netstandard2.0/zh-Hant/Microsoft.Testing.Extensions.Telemetry.resources.dll",
-        "microsoft.testing.extensions.telemetry.2.3.3.nupkg.sha512",
+        "microsoft.testing.extensions.telemetry.2.4.0.nupkg.sha512",
         "microsoft.testing.extensions.telemetry.nuspec"
       ]
     },
-    "Microsoft.Testing.Extensions.TrxReport.Abstractions/2.3.3": {
-      "sha512": "dceVNxnfTEjKnrIreLcMfkgrzzBY8kgCCJX5NAv7Lq/6vPlTP4VB5zxKeuYy0yfCoBtWuPkLjUG6qtOBMfpypA==",
+    "Microsoft.Testing.Extensions.TrxReport.Abstractions/2.4.0": {
+      "sha512": "uRb+4qM42dFDg4kWJZ2kFEcwESNVCRZJjItp5vETorN3rSJGysP617LqYirOcrCYmxg+obPreHMM5JcsNDKtBw==",
       "type": "package",
-      "path": "microsoft.testing.extensions.trxreport.abstractions/2.3.3",
+      "path": "microsoft.testing.extensions.trxreport.abstractions/2.4.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5604,14 +5604,14 @@
         "lib/netstandard2.0/Microsoft.Testing.Extensions.TrxReport.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.Testing.Extensions.TrxReport.Abstractions.pdb",
         "lib/netstandard2.0/Microsoft.Testing.Extensions.TrxReport.Abstractions.xml",
-        "microsoft.testing.extensions.trxreport.abstractions.2.3.3.nupkg.sha512",
+        "microsoft.testing.extensions.trxreport.abstractions.2.4.0.nupkg.sha512",
         "microsoft.testing.extensions.trxreport.abstractions.nuspec"
       ]
     },
-    "Microsoft.Testing.Platform/2.3.3": {
-      "sha512": "ENbH4BQh9riXtOKc25KKITfiGGWhWMBJA7pZuNaF9zxzzSaVkp5AMeZxGQ6sXYaR6xb724NLz985Is6XIYqLSg==",
+    "Microsoft.Testing.Platform/2.4.0": {
+      "sha512": "dp1N3P1ujb0ztwFgqz2o/ItEvq+pm19/AiA+Xq7Zpcy7oPMcxDBZLYGtf0LlU1MveEBJuKVjZhI+LnkfcH/0jQ==",
       "type": "package",
-      "path": "microsoft.testing.platform/2.3.3",
+      "path": "microsoft.testing.platform/2.4.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5679,14 +5679,14 @@
         "lib/netstandard2.0/tr/Microsoft.Testing.Platform.resources.dll",
         "lib/netstandard2.0/zh-Hans/Microsoft.Testing.Platform.resources.dll",
         "lib/netstandard2.0/zh-Hant/Microsoft.Testing.Platform.resources.dll",
-        "microsoft.testing.platform.2.3.3.nupkg.sha512",
+        "microsoft.testing.platform.2.4.0.nupkg.sha512",
         "microsoft.testing.platform.nuspec"
       ]
     },
-    "Microsoft.Testing.Platform.MSBuild/2.3.3": {
-      "sha512": "iVAvNbZ5JPDZSrTcIrCDoCsAkzjDxwDEt2mDuMd8ng1P6e2P2NCd0g0BsoBVG+nJLSmK//V+yeEvjCa3E2fxHw==",
+    "Microsoft.Testing.Platform.MSBuild/2.4.0": {
+      "sha512": "qr5M6h16YHMJLFDcWELFVMMpGte2BUmveBZKT5YoBV+bmuJRPu9bv/Zqke4yQuOEKRNxoAETrG5jr+/6Rnr3Hg==",
       "type": "package",
-      "path": "microsoft.testing.platform.msbuild/2.3.3",
+      "path": "microsoft.testing.platform.msbuild/2.4.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5783,7 +5783,7 @@
         "lib/netstandard2.0/tr/Microsoft.Testing.Extensions.MSBuild.resources.dll",
         "lib/netstandard2.0/zh-Hans/Microsoft.Testing.Extensions.MSBuild.resources.dll",
         "lib/netstandard2.0/zh-Hant/Microsoft.Testing.Extensions.MSBuild.resources.dll",
-        "microsoft.testing.platform.msbuild.2.3.3.nupkg.sha512",
+        "microsoft.testing.platform.msbuild.2.4.0.nupkg.sha512",
         "microsoft.testing.platform.msbuild.nuspec"
       ]
     },
@@ -5975,10 +5975,10 @@
         "openai.nuspec"
       ]
     },
-    "Polly/8.7.0": {
-      "sha512": "0qR4f0OR8FeCAfLWcfwzAM7w6EmpUgwa22PgxKjcL25dEAto7sKpQQXbtxp38vVvK+V3RFkh/TeI7g/iUdoYIQ==",
+    "Polly/8.8.0": {
+      "sha512": "1/jm0wQA0hjcY8OcGx2HLzj4Tx33IpmEWWPUcekt07V7VO8suAUmeDRD7VM5wy9614pJMI2M0TB1pwKVflh4CQ==",
       "type": "package",
-      "path": "polly/8.7.0",
+      "path": "polly/8.8.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -5997,14 +5997,14 @@
         "lib/netstandard2.0/Polly.xml",
         "package-icon.png",
         "package-readme.md",
-        "polly.8.7.0.nupkg.sha512",
+        "polly.8.8.0.nupkg.sha512",
         "polly.nuspec"
       ]
     },
-    "Polly.Core/8.7.0": {
-      "sha512": "BS2t+nsBer16PIebCEPNBK5fgMisADQyRCd7K+BgkMWpFmSaiYE+rVVNpFhGRqUkJmNSLmw0uCNzHHWfgml28Q==",
+    "Polly.Core/8.8.0": {
+      "sha512": "TewV9uNFsoRFggoFbTAGFwsMYPuckA+wTIpQPyhLL9BANRPQRENz2S4bwATrB3HBOakN5oKLFIllPiDnVecmJg==",
       "type": "package",
-      "path": "polly.core/8.7.0",
+      "path": "polly.core/8.8.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -6026,7 +6026,7 @@
         "lib/netstandard2.0/Polly.Core.xml",
         "package-icon.png",
         "package-readme.md",
-        "polly.core.8.7.0.nupkg.sha512",
+        "polly.core.8.8.0.nupkg.sha512",
         "polly.core.nuspec"
       ]
     },
@@ -6942,10 +6942,10 @@
         "useSharedDesignerContext.txt"
       ]
     },
-    "System.Numerics.Tensors/10.0.11": {
-      "sha512": "4jNNt67NhCqf3bf2FN0mrsC+EH60L7Sny6poqVeiviB27Kw7TQzMmgn8HIaPc8E9EcuGusUyfeu21gLfzcBpDA==",
+    "System.Numerics.Tensors/10.0.12": {
+      "sha512": "17brFrnQHV/XMMazXNqFq4GkvzWy8yzDPo5Gb8TT8zJtMFbUqDycOCyPCp9F+eMc4L75kcCKRZqaeBHMwLCL9Q==",
       "type": "package",
-      "path": "system.numerics.tensors/10.0.11",
+      "path": "system.numerics.tensors/10.0.12",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -6966,7 +6966,7 @@
         "lib/net9.0/System.Numerics.Tensors.xml",
         "lib/netstandard2.0/System.Numerics.Tensors.dll",
         "lib/netstandard2.0/System.Numerics.Tensors.xml",
-        "system.numerics.tensors.10.0.11.nupkg.sha512",
+        "system.numerics.tensors.10.0.12.nupkg.sha512",
         "system.numerics.tensors.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -7108,10 +7108,10 @@
         "testably.abstractions.filesystem.interface.nuspec"
       ]
     },
-    "xunit.analyzers/2.0.0": {
-      "sha512": "2UtauxWDa9C6bT7MvFfZkNoFulfflb00jnDU2xeVO9Y58l4Ah2Mv/HiMs4b0zdpK/SfAxpajkgKNMN8zBKa+7Q==",
+    "xunit.analyzers/2.1.0": {
+      "sha512": "X7QXEcZQGz0G/HL4HUyK+aAvNa/IMGbOCnFIq4jD/Evktq12xANKwzOUr7b08vCmC1LXu/47qHWOdjm3KfaJ0A==",
       "type": "package",
-      "path": "xunit.analyzers/2.0.0",
+      "path": "xunit.analyzers/2.1.0",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -7122,7 +7122,7 @@
         "analyzers/dotnet/cs/xunit.analyzers.fixes.dll",
         "tools/install.ps1",
         "tools/uninstall.ps1",
-        "xunit.analyzers.2.0.0.nupkg.sha512",
+        "xunit.analyzers.2.1.0.nupkg.sha512",
         "xunit.analyzers.nuspec"
       ]
     },
@@ -7147,10 +7147,10 @@
         "xunit.runner.visualstudio.nuspec"
       ]
     },
-    "xunit.v3/4.0.0": {
-      "sha512": "czH4MaZ2k2eLjetuN5W1fUEnNVADsTOeYxDvrqIFh04XO6H3Y8Yu1FrSy3psF1q06DZV33wftjqZVv4acwIp9Q==",
+    "xunit.v3/4.0.1": {
+      "sha512": "KpDYf6jFjYfOchuRJOAXPOpwN03hLE1AF4kWzCUSnhr8JZMiGH4BT1YidCcm6BE1H4E90GyJzuKoCwXbg9PXmA==",
       "type": "package",
-      "path": "xunit.v3/4.0.0",
+      "path": "xunit.v3/4.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7158,14 +7158,14 @@
         "_content/logo-128-transparent.png",
         "lib/net472/_._",
         "lib/net8.0/_._",
-        "xunit.v3.4.0.0.nupkg.sha512",
+        "xunit.v3.4.0.1.nupkg.sha512",
         "xunit.v3.nuspec"
       ]
     },
-    "xunit.v3.assert/4.0.0": {
-      "sha512": "QxYfC+98lCMe7Kl9iWDUeUn+gmiPJ2Sz/r+trSdp1mvKyDMXj8S1kYdfkFNJSHyUSQ6KWomenSDgfWhGpR8zEQ==",
+    "xunit.v3.assert/4.0.1": {
+      "sha512": "nC7d3cY06Oo7hkdwWPZkBR0Ud75xNhgx0P7i0GmMMZC3puCGlc4szFiT30biH03IN/eDnr8h+nv3A1UD17bk/A==",
       "type": "package",
-      "path": "xunit.v3.assert/4.0.0",
+      "path": "xunit.v3.assert/4.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7175,14 +7175,14 @@
         "lib/net8.0/xunit.v3.assert.xml",
         "lib/netstandard2.0/xunit.v3.assert.dll",
         "lib/netstandard2.0/xunit.v3.assert.xml",
-        "xunit.v3.assert.4.0.0.nupkg.sha512",
+        "xunit.v3.assert.4.0.1.nupkg.sha512",
         "xunit.v3.assert.nuspec"
       ]
     },
-    "xunit.v3.common/4.0.0": {
-      "sha512": "cjaNGmOVA5QJxcp6uuSsDhbt0lNmxezFo226mbYOuXm9E9Owq8bYTKxa9wnAMZRnbvyCmCYhAvc/+UAzf0M2vA==",
+    "xunit.v3.common/4.0.1": {
+      "sha512": "Qf25TVdadDQYf9zVxSd7L9RNQhuP0jCUHmo96XTmIKLxGefylIEV63jRbXBPFzdXmV09TCdcurk+AQ9LiWS2Hg==",
       "type": "package",
-      "path": "xunit.v3.common/4.0.0",
+      "path": "xunit.v3.common/4.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7190,14 +7190,14 @@
         "_content/logo-128-transparent.png",
         "lib/netstandard2.0/xunit.v3.common.dll",
         "lib/netstandard2.0/xunit.v3.common.xml",
-        "xunit.v3.common.4.0.0.nupkg.sha512",
+        "xunit.v3.common.4.0.1.nupkg.sha512",
         "xunit.v3.common.nuspec"
       ]
     },
-    "xunit.v3.core.mtp-v2/4.0.0": {
-      "sha512": "2I7apws+6HPz5aYi4choAn7c8P4jPAvwbfAtLSy0JPH89oeY/z1Zqz65Cm3HJmput5l56Z1sJOinTxsAQmbyWQ==",
+    "xunit.v3.core.mtp-v2/4.0.1": {
+      "sha512": "7qfTfrIfS2wybpSVyRLmhXHbSudD2eNw66LfukixmKsRCTcfvOrLsx0qGL/lObcEh3Z2F4SIXgoFnLIiB8yfjQ==",
       "type": "package",
-      "path": "xunit.v3.core.mtp-v2/4.0.0",
+      "path": "xunit.v3.core.mtp-v2/4.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7219,14 +7219,14 @@
         "buildTransitive/xunit.v3.core.mtp-v2.targets",
         "lib/net472/xunit.v3.mtp-v2.dll",
         "lib/net8.0/xunit.v3.mtp-v2.dll",
-        "xunit.v3.core.mtp-v2.4.0.0.nupkg.sha512",
+        "xunit.v3.core.mtp-v2.4.0.1.nupkg.sha512",
         "xunit.v3.core.mtp-v2.nuspec"
       ]
     },
-    "xunit.v3.extensibility.core/4.0.0": {
-      "sha512": "+tTe9VX2vwrUHGI48FE4ly956Ry084wPH4I/7g5D36AkAMGjQRZZDVz8eH2GwX/CLS9PDQRSca534WyrAYsyzw==",
+    "xunit.v3.extensibility.core/4.0.1": {
+      "sha512": "J0d5OfFcp920nZxCRIvU14+TZhiSPQR0wvqEMZ3MRiJLPu1VmYlcRNkmcSW0i1DwkB81gAHc+fHUQf/cU64MYg==",
       "type": "package",
-      "path": "xunit.v3.extensibility.core/4.0.0",
+      "path": "xunit.v3.extensibility.core/4.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7234,14 +7234,14 @@
         "_content/logo-128-transparent.png",
         "lib/netstandard2.0/xunit.v3.core.dll",
         "lib/netstandard2.0/xunit.v3.core.xml",
-        "xunit.v3.extensibility.core.4.0.0.nupkg.sha512",
+        "xunit.v3.extensibility.core.4.0.1.nupkg.sha512",
         "xunit.v3.extensibility.core.nuspec"
       ]
     },
-    "xunit.v3.mtp-v2/4.0.0": {
-      "sha512": "svYjct2c3VbLyUSB2r9VWiIkYwemwXHhOgIVAor8RvupcZBFcdiGdmq8G519ZCu30yjPCr0EP3Hy4mvgEXcXpQ==",
+    "xunit.v3.mtp-v2/4.0.1": {
+      "sha512": "s88KiWwDDYgOWV3A+ViJiqCe9cLU/Rt6Gb5TfOC7Abv/HKSoj4IHVPcOQk7jPt7HhZHHEts5IuaVpB30eO5B1w==",
       "type": "package",
-      "path": "xunit.v3.mtp-v2/4.0.0",
+      "path": "xunit.v3.mtp-v2/4.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7249,14 +7249,14 @@
         "_content/logo-128-transparent.png",
         "lib/net472/_._",
         "lib/net8.0/_._",
-        "xunit.v3.mtp-v2.4.0.0.nupkg.sha512",
+        "xunit.v3.mtp-v2.4.0.1.nupkg.sha512",
         "xunit.v3.mtp-v2.nuspec"
       ]
     },
-    "xunit.v3.runner.common/4.0.0": {
-      "sha512": "1IEIAVRgnPo9nihd9D0TvxxsLKVRySa+K0wLy/m0SJ4RMdveRCUj/mICFboruO+ILUJ10fUfCCyp7MC5/y7cGw==",
+    "xunit.v3.runner.common/4.0.1": {
+      "sha512": "p9AyfBpj2e5Iws8B57SbLiSngg7mEdvegHInKR4T2cjt2mis9h8htVgCnmu//agZO4zri6p6VQOj5EkHHTy3gA==",
       "type": "package",
-      "path": "xunit.v3.runner.common/4.0.0",
+      "path": "xunit.v3.runner.common/4.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7264,14 +7264,14 @@
         "_content/logo-128-transparent.png",
         "lib/netstandard2.0/xunit.v3.runner.common.dll",
         "lib/netstandard2.0/xunit.v3.runner.common.xml",
-        "xunit.v3.runner.common.4.0.0.nupkg.sha512",
+        "xunit.v3.runner.common.4.0.1.nupkg.sha512",
         "xunit.v3.runner.common.nuspec"
       ]
     },
-    "xunit.v3.runner.inproc.console/4.0.0": {
-      "sha512": "Sp5AALIlZUf2U5pEt2LHs+ebn18eAPSFnXEouJTltLez5p+NQvBm7kzsKSkZOM6iyoS6nuN/wKdsJt2LvixjsQ==",
+    "xunit.v3.runner.inproc.console/4.0.1": {
+      "sha512": "Hqwfd6ehMIhPmVWUQ2dgmknzuLFTWeyp8ES1q3D4YR5bQVyiXDcaIoaFwqAz2zgLr49WaW4Mz7VVncP7u/Q8/Q==",
       "type": "package",
-      "path": "xunit.v3.runner.inproc.console/4.0.0",
+      "path": "xunit.v3.runner.inproc.console/4.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7281,7 +7281,7 @@
         "lib/net472/xunit.v3.runner.inproc.console.xml",
         "lib/net8.0/xunit.v3.runner.inproc.console.dll",
         "lib/net8.0/xunit.v3.runner.inproc.console.xml",
-        "xunit.v3.runner.inproc.console.4.0.0.nupkg.sha512",
+        "xunit.v3.runner.inproc.console.4.0.1.nupkg.sha512",
         "xunit.v3.runner.inproc.console.nuspec"
       ]
     },
@@ -7338,7 +7338,7 @@
       "System.IO.Abstractions.TestingHelpers >= 22.2.0",
       "coverlet.collector >= 10.0.1",
       "xunit.runner.visualstudio >= 4.0.0",
-      "xunit.v3 >= 4.0.0"
+      "xunit.v3 >= 4.0.1"
     ]
   },
   "packageFolders": {
@@ -7488,7 +7488,7 @@
           },
           "xunit.v3": {
             "target": "Package",
-            "version": "[4.0.0, )"
+            "version": "[4.0.1, )"
           }
         },
         "imports": [

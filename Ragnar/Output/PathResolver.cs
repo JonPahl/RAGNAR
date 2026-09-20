@@ -4,10 +4,10 @@
 /// <param name="options">Ragnar config providing source and output folder paths.</param>
 /// <remarks>Implements IPathResolver for consistent output folder structure management.</remarks>
 /// <example><![CDATA[var dir = resolver.ResolveResponseDirectory(cat);]]></example>
-public sealed class PathResolver(IOptions<RagnarConfig> options)
-    : IPathResolver
+public sealed class PathResolver(IOptions<RagnarConfig> options) : IPathResolver
 {
 
+    /// <summary>Cached ApplicationOptions for path resolution.</summary>
     private readonly ApplicationOptions _applicationOptions = options.Value.ApplicationOptions ?? throw new ArgumentNullException(nameof(options), "RagnarConfig options cannot be null.");
 
 
@@ -22,10 +22,10 @@ public sealed class PathResolver(IOptions<RagnarConfig> options)
         var baseDir = category is null || string.IsNullOrWhiteSpace(category.ToString()) ? nameof(QuestionCategory.Uncategorized) : category.ToString();
 
         var responseDir = Path.Join(_applicationOptions.SourceDirectory, _applicationOptions.OutputFolder);
+        var categoryDir = Path.Join(responseDir, baseDir);
 
-        if (!Directory.Exists(responseDir))
-            throw new DirectoryNotFoundException(responseDir);
+        Directory.CreateDirectory(categoryDir);
 
-        return Path.Join(responseDir, baseDir);
+        return categoryDir;
     }
 }

@@ -2,6 +2,7 @@
 
 public static class StringExtensions
 {
+    /// <param name="xmlComment">The XML comment string to analyze for non-tag character count.</param>
     extension(string xmlComment)
     {
         /// <summary>Counts non-tag, non-comment characters in an XML comment.</summary>

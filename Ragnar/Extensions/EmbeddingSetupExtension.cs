@@ -9,12 +9,11 @@ public static class EmbeddingSetupExtension
         {
             services.AddSingleton<IEmbeddingService, OllamaEmbeddingService>();
 
-            services.AddSingleton<IGeneratorService, PointStructFactory>();
+            services.AddSingleton<IQdrantPointFactory, PointStructFactory>();
 
             services
-                .AddScoped<IEmbeddingPipeline, EmbeddingPipeline>()
-                .AddScoped<Embedding.UnitOfWork.IVectorStoreRepository, VectorStoreRepository>()
-                .AddScoped<IEmbedTextPipeline, EmbedTextPipeline>()
+                .AddScoped<IVectorSetup, VectorSetup>()
+                .AddScoped<IVectorStoreWriter, VectorStoreWriter>()
                 .AddScoped<IFileParseFactory, CodeParserFactory>();
             return services;
         }

@@ -13,10 +13,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\Ragnar\VectorStoreBuilder.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
     <None Include="..\.roslynatorconfig" Link=".roslynatorconfig" />
   </ItemGroup>

@@ -1,18 +1,18 @@
 ﻿namespace Ragnar.Plugins;
 
-/// <summary>Provides questions from an external source.</summary>
+/// <summary>Defines the contract for supplying question data from a source.</summary>
+/// <example><![CDATA[var qs = await provider.LoadQuestionsAsync("f.csv", ct);]]></example>
 public interface IQuestionProvider
 {
-    /// <summary>Gets the name of this provider (e.g., "JSON", "API").</summary>
+    /// <summary>Gets the display name identifying this question provider.</summary>
+    /// <returns>A short label such as "CSV File" or "API".</returns>
+    /// <example><![CDATA[string n = provider.ProviderName;]]></example>
     string ProviderName { get; }
 
-    /// <summary>Lets the provider load and return a set of question configurations asynchronously.</summary>
-    /// <param name="cancellationToken">The cancellation token to observe.</param>
-    /// <returns>A task that yields an enumerable of question configurations.</returns>
-    /// <remarks>Implementations should handle cancellation gracefully.</remarks>
-    /// <example><![CDATA[
-    /// var provider = new JsonQuestionProvider("questions.json");
-    /// var questions = await provider.LoadQuestionsAsync(ct);
-    /// ]]></example>
+    /// <summary>Loads and maps question records from the source file.</summary>
+    /// <param name="fileName">Path to the question data file.</param>
+    /// <param name="cancellationToken">Token to cancel the async load.</param>
+    /// <returns>Collection of loaded <see cref="Question"/> objects.</returns>
+    /// <example><![CDATA[var q = await provider.LoadQuestionsAsync("q.csv", ct);]]></example>
     Task<IEnumerable<Question>> LoadQuestionsAsync(string fileName, CancellationToken cancellationToken);
 }

@@ -1,8 +1,7 @@
 ﻿namespace Ragnar.Services;
 
 /// <summary>Initializes a new instance of the system prompt provider.</summary>
-public class PromptTemplateProvider
-    : IPromptProvider
+public class PromptTemplateProvider : IChatPromptProvider
 {
     /// <summary> Gets the content of the prompt. </summary>
 

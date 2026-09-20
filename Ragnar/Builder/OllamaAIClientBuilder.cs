@@ -7,7 +7,7 @@ public class OllamaAIClientBuilder(
 
     public OllamaAIClientBuilder WithChatClient(OllamaServiceType ollamaType)
     {
-        _client = clientFactory.FindClient(ollamaType);
+        _client = clientFactory.ResolveClient(ollamaType);
 
         return this;
     }

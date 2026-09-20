@@ -1,6 +1,6 @@
 ﻿namespace Ragnar.Output;
 
-public class ResponseMarkdownFormatter : IOutputFormatter
+public class ResponseMarkdownFormatter(IClock clock) : IOutputFormatter
 {
     public string FileExtension { get; set; } = "md";
 
@@ -8,7 +8,7 @@ public class ResponseMarkdownFormatter : IOutputFormatter
     {
         var response = new StringBuilder();
         response.AppendLine($"{details.Question.MarkdownHeader}");
-        response.AppendLine($"> **Date Generated**: {DateTime.Now.ToString("G")}");
+        response.AppendLine($"> **Date Generated**: {clock.Now.ToString("G")}");
         response.AppendLine("> ## Question: ");
         response.AppendLine($"> {details.Question.Text}");
         response.Append($"> **Method Call Duration**: {details.ElapsedTime}");

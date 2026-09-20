@@ -23,7 +23,6 @@ C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\appsettings.Deve
 C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\appsettings.json
 C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\appsettings.Ragnar.json
 C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\appsettings.Shepherd_Api.json
-C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\appsettings.WebpPng.json
 C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\Ragnar.exe
 C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\xunit.abstractions.dll
 C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\xunit.runner.visualstudio.testadapter.dll
@@ -285,3 +284,4 @@ C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\obj\Debug\net10.0\refint\Ragnar.Te
 C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\obj\Debug\net10.0\Ragnar.Tests.pdb
 C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\obj\Debug\net10.0\Ragnar.Tests.genruntimeconfig.cache
 C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\obj\Debug\net10.0\ref\Ragnar.Tests.dll
+C:\Users\jp325\source\Ragnar\Ragnar.UnitTests\bin\Debug\net10.0\appsettings.ImageDescriptionWin.json

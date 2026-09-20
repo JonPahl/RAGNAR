@@ -2097,7 +2097,7 @@
             },
             "xunit.v3": {
               "target": "Package",
-              "version": "[4.0.0, )"
+              "version": "[4.0.1, )"
             }
           },
           "imports": [
@@ -2479,11 +2479,11 @@
             },
             "Microsoft.Agents.AI": {
               "target": "Package",
-              "version": "[1.20.0, )"
+              "version": "[1.21.0, )"
             },
             "Microsoft.Agents.AI.Abstractions": {
               "target": "Package",
-              "version": "[1.20.0, )"
+              "version": "[1.21.0, )"
             },
             "Microsoft.CodeAnalysis": {
               "target": "Package",
@@ -2547,7 +2547,7 @@
             },
             "Polly": {
               "target": "Package",
-              "version": "[8.7.0, )"
+              "version": "[8.8.0, )"
             },
             "Polly.Extensions.Http": {
               "target": "Package",

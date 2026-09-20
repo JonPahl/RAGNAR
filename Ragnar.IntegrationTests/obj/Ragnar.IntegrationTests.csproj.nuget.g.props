@@ -14,16 +14,16 @@
     <SourceRoot Include="C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages\" />
   </ItemGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Import Project="$(NuGetPackageRoot)microsoft.testing.platform\2.3.3\buildTransitive\net9.0\Microsoft.Testing.Platform.props" Condition="Exists('$(NuGetPackageRoot)microsoft.testing.platform\2.3.3\buildTransitive\net9.0\Microsoft.Testing.Platform.props')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.testing.platform.msbuild\2.3.3\buildTransitive\Microsoft.Testing.Platform.MSBuild.props" Condition="Exists('$(NuGetPackageRoot)microsoft.testing.platform.msbuild\2.3.3\buildTransitive\Microsoft.Testing.Platform.MSBuild.props')" />
-    <Import Project="$(NuGetPackageRoot)microsoft.testing.extensions.telemetry\2.3.3\buildTransitive\net9.0\Microsoft.Testing.Extensions.Telemetry.props" Condition="Exists('$(NuGetPackageRoot)microsoft.testing.extensions.telemetry\2.3.3\buildTransitive\net9.0\Microsoft.Testing.Extensions.Telemetry.props')" />
-    <Import Project="$(NuGetPackageRoot)xunit.v3.core.mtp-v2\4.0.0\buildTransitive\xunit.v3.core.mtp-v2.props" Condition="Exists('$(NuGetPackageRoot)xunit.v3.core.mtp-v2\4.0.0\buildTransitive\xunit.v3.core.mtp-v2.props')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.testing.platform\2.4.0\buildTransitive\net9.0\Microsoft.Testing.Platform.props" Condition="Exists('$(NuGetPackageRoot)microsoft.testing.platform\2.4.0\buildTransitive\net9.0\Microsoft.Testing.Platform.props')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.testing.platform.msbuild\2.4.0\buildTransitive\Microsoft.Testing.Platform.MSBuild.props" Condition="Exists('$(NuGetPackageRoot)microsoft.testing.platform.msbuild\2.4.0\buildTransitive\Microsoft.Testing.Platform.MSBuild.props')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.testing.extensions.telemetry\2.4.0\buildTransitive\net9.0\Microsoft.Testing.Extensions.Telemetry.props" Condition="Exists('$(NuGetPackageRoot)microsoft.testing.extensions.telemetry\2.4.0\buildTransitive\net9.0\Microsoft.Testing.Extensions.Telemetry.props')" />
+    <Import Project="$(NuGetPackageRoot)xunit.v3.core.mtp-v2\4.0.1\buildTransitive\xunit.v3.core.mtp-v2.props" Condition="Exists('$(NuGetPackageRoot)xunit.v3.core.mtp-v2\4.0.1\buildTransitive\xunit.v3.core.mtp-v2.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.codeanalysis.analyzers\5.9.0\buildTransitive\Microsoft.CodeAnalysis.Analyzers.props" Condition="Exists('$(NuGetPackageRoot)microsoft.codeanalysis.analyzers\5.9.0\buildTransitive\Microsoft.CodeAnalysis.Analyzers.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.extensions.telemetry.abstractions\10.10.0\buildTransitive\net8.0\Microsoft.Extensions.Telemetry.Abstractions.props" Condition="Exists('$(NuGetPackageRoot)microsoft.extensions.telemetry.abstractions\10.10.0\buildTransitive\net8.0\Microsoft.Extensions.Telemetry.Abstractions.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.extensions.configuration.usersecrets\10.0.12\buildTransitive\net8.0\Microsoft.Extensions.Configuration.UserSecrets.props" Condition="Exists('$(NuGetPackageRoot)microsoft.extensions.configuration.usersecrets\10.0.12\buildTransitive\net8.0\Microsoft.Extensions.Configuration.UserSecrets.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Pkgxunit_analyzers Condition=" '$(Pkgxunit_analyzers)' == '' ">C:\Users\jp325\.nuget\packages\xunit.analyzers\2.0.0</Pkgxunit_analyzers>
+    <Pkgxunit_analyzers Condition=" '$(Pkgxunit_analyzers)' == '' ">C:\Users\jp325\.nuget\packages\xunit.analyzers\2.1.0</Pkgxunit_analyzers>
     <PkgRoslynator_Formatting_Analyzers Condition=" '$(PkgRoslynator_Formatting_Analyzers)' == '' ">C:\Users\jp325\.nuget\packages\roslynator.formatting.analyzers\5.0.0</PkgRoslynator_Formatting_Analyzers>
     <PkgRoslynator_CodeAnalysis_Analyzers Condition=" '$(PkgRoslynator_CodeAnalysis_Analyzers)' == '' ">C:\Users\jp325\.nuget\packages\roslynator.codeanalysis.analyzers\5.0.0</PkgRoslynator_CodeAnalysis_Analyzers>
     <PkgRoslynator_Analyzers Condition=" '$(PkgRoslynator_Analyzers)' == '' ">C:\Users\jp325\.nuget\packages\roslynator.analyzers\5.0.0</PkgRoslynator_Analyzers>
