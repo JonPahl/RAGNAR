@@ -11,7 +11,7 @@
 public sealed class RagOrchestrator(
     IOutputWriter writer,
     IOptions<RagnarConfig> configWrapper,
-    [FromKeyedServices("Common")] IPromptProvider
+    [FromKeyedServices("Common")] IChatPromptProvider
     promptTemplateProvider,
     IResponseWriter saveService,
     IOllamaClientFactory ollamaClientFactory,
@@ -31,7 +31,7 @@ public sealed class RagOrchestrator(
     {
         var finalPrompt = $"Context:\n{contextText}\n\nQuestion:\n{question.Text}\n\nAnswer:";
 
-        var ollamaClient = ollamaClientFactory.FindClient(OllamaServiceType.Ollama);
+        var ollamaClient = ollamaClientFactory.ResolveClient(OllamaServiceType.Ollama);
 
         var request = new GenerateRequest
         {
@@ -52,14 +52,14 @@ public sealed class RagOrchestrator(
             response += request.System;
         }
 
-        await SaveResponseAsync(new SaveDetails(question, response, sw.ElapsedTimeString()), cancellationToken).ConfigureAwait(false);
+        await SaveResponseAsync(new ResponseRecord(question, response, sw.FormatElapsedTime()), cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>Saves generation response to disk and prints path.</summary>
     /// <param name="details">Response details to save.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <example><![CDATA[await SaveResponseAsync(new SaveDetails(...), ct);]]></example>
-    private async Task SaveResponseAsync(SaveDetails details, CancellationToken cancellationToken)
+    /// <example><![CDATA[await SaveResponseAsync(new ResponseRecord(...), ct);]]></example>
+    private async Task SaveResponseAsync(ResponseRecord details, CancellationToken cancellationToken)
     {
         var path = await saveService.WriteResponseAsync(details, cancellationToken).ConfigureAwait(false);
         writer.WriteLine();
@@ -72,5 +72,5 @@ public sealed class RagOrchestrator(
     /// <example>
     /// <![CDATA[string answer = await GenerateAsync(request, ct);]]></example>
     /// <returns>Generated text.</returns>
-    private async ValueTask<string> GenerateAsync(GenerateRequest request, CancellationToken cancellationToken) => await ollamaProvider.GenerateResponse(request, cancellationToken).ConfigureAwait(false);
+    private async Task<string> GenerateAsync(GenerateRequest request, CancellationToken cancellationToken) => await ollamaProvider.GenerateResponse(request, cancellationToken).ConfigureAwait(false);
 }

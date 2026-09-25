@@ -1,16 +1,15 @@
 ﻿namespace Ragnar.Output;
 
-/// <summary>
-/// Writes out response from question to either disk or in future other location.
-/// </summary>
+/// <summary>Persists formatted question responses to disk as files.</summary>
+/// <example><![CDATA[var path = await writer.WriteResponseAsync(details, ct);]]></example>
 public interface IResponseWriter
 {
-    /// <summary>Generates and writes a markdown file from save details; returns the full file path.</summary>
-    /// <param name="details">Contains question metadata and content to write.</param>
-    /// <param name="cancellationToken">Cancellation token for async operation.</param>
-    /// <returns>The absolute path to the created markdown file.</returns>
-    /// <example><![CDATA[string path = await writer.WriteResponseAsync(details, ct);]]></example>
-    Task<string> WriteResponseAsync(SaveDetails details, CancellationToken cancellationToken);
+    /// <summary>Saves a formatted response to a timestamped file in the category folder.</summary>
+    /// <param name="details">Question metadata and content to write.</param>
+    /// <param name="cancellationToken">Token to cancel the file write operation.</param>
+    /// <returns>Absolute path to the created output file.</returns>
+    /// <example><![CDATA[string p = await writer.WriteResponseAsync(d, ct);]]></example>
+    Task<string> WriteResponseAsync(ResponseRecord details, CancellationToken cancellationToken);
 
-    // TODO: Add in ability to receive value from ollama stream loop, and write to disk via file stream.
+    // TODO Add in ability to receive value from ollama stream loop, and write to disk via file stream.
 }

@@ -12,7 +12,7 @@ public sealed class CodeDocumentExtensionsTests
             ElementType = "Class",
             ElementName = "Program",
             Comment = "// Main",
-            Comment_Length = 6,
+            CommentLength = 6,
             Code = "public class Program { }",
             Category = "Refactor"
         };

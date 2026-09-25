@@ -8,5 +8,5 @@ public interface IRagOrchestrator
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Async task.</returns>
     /// <example><![CDATA[await pipeline.ExecuteAsync(q, ctx, ct);]]></example>
-    Task ExecuteAsync(Core.Model.Question question, string contextText, CancellationToken cancellationToken);
+    Task ExecuteAsync(Question question, string contextText, CancellationToken cancellationToken);
 }

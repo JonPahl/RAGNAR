@@ -6,7 +6,7 @@
 /// <param name="httpClientFactory">DI factory for creating configured HttpClient instances.</param>
 /// <param name="ragnarConfig">Ragnar config with host, port, model, and timeout values.</param>
 /// <remarks>Clients are cached per OllamaServiceType to avoid repeated construction.</remarks>
-/// <example><![CDATA[var client = factory.FindClient(OllamaServiceType.Ollama);]]></example>
+/// <example><![CDATA[var client = factory.ResolveClient(OllamaServiceType.Ollama);]]></example>
 public class OllamaClientFactory(IHttpClientFactory httpClientFactory, IOptions<RagnarConfig> ragnarConfig) : IOllamaClientFactory
 {
     private readonly ConcurrentDictionary<OllamaServiceType, OllamaApiClient> _cache = new();
@@ -20,11 +20,11 @@ public class OllamaClientFactory(IHttpClientFactory httpClientFactory, IOptions<
     /// <returns>An implementation of <see cref="OllamaApiClient"/>.</returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when an unsupported OllamaServiceType is provided.</exception>
     /// <example>
-    /// <![CDATA[ var client = factory.FindClient(OllamaServiceType.Ollama); ]]>
+    /// <![CDATA[ var client = factory.ResolveClient(OllamaServiceType.Ollama); ]]>
     /// </example>
-    public OllamaApiClient FindClient(OllamaServiceType serviceType)
+    public OllamaApiClient ResolveClient(OllamaServiceType serviceType)
     {
-        return _cache.GetOrAdd(serviceType, static (t, self) => t switch
+        return _cache.GetOrAdd(serviceType, (t, self) => t switch
         {
             OllamaServiceType.Ollama => self.BuildLlmClient(),
             OllamaServiceType.Embedding => self.BuildEmbeddingClient(),

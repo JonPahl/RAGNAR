@@ -1,7 +1,7 @@
 ﻿namespace Ragnar.Embedding.Embedding;
 
 public sealed class EmbeddingGeneratorService(
-    Serilog.ILogger logger,
+    ILogger logger,
     IOptions<RagnarConfig> configuration,
     IEmbeddingGenerator<string, Embedding<float>> generator)
     : IEmbeddingService
@@ -13,7 +13,7 @@ public sealed class EmbeddingGeneratorService(
 
         try
         {
-            var result = await generator.GenerateAsync(input, cancellationToken: timeoutCts.Token);
+            var result = await generator.GenerateAsync(input, cancellationToken: timeoutCts.Token).ConfigureAwait(false);
             return result.Vector.ToArray();
         }
         catch (OperationCanceledException) when (ct.IsCancellationRequested)
@@ -38,7 +38,7 @@ public sealed class EmbeddingGeneratorService(
 
         try
         {
-            var result = await generator.GenerateAsync(inputs, cancellationToken: timeoutCts.Token);
+            var result = await generator.GenerateAsync(inputs, cancellationToken: timeoutCts.Token).ConfigureAwait(false);
             return result;
         }
         catch (OperationCanceledException) when (ct.IsCancellationRequested)

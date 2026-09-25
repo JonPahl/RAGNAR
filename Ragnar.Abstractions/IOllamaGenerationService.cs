@@ -1,14 +1,13 @@
 ﻿namespace Ragnar.Abstractions;
 
-/// <summary>
-/// Call Ollama to generate a response to asked question.
-/// </summary>
+/// <summary>Streams Ollama LLM chat responses with console rendering.</summary>
+/// <example><![CDATA[var txt = await svc.GenerateResponse(req, ct);]]></example>
 public interface IOllamaGenerationService
 {
-    /// <summary>Streams and collects full LLM response into a string.</summary>
-    /// <param name="request">Generation request with prompt/options.</param>
-    /// <param name="cancellationToken">Cancellation token.</param>
-    /// <returns>Full generated text.</returns>
-    /// <example><![CDATA[string answer = await provider.GenerateResponse(request, Ct);]]></example>
+    /// <summary>Generates a full chat response using configured Ollama options.</summary>
+    /// <param name="request">The generation request with prompt and system text.</param>
+    /// <param name="cancellationToken">Token to abort generation.</param>
+    /// <returns>The complete generated text response string.</returns>
+    /// <example><![CDATA[string t = await svc.GenerateResponse(req, ct);]]></example>
     Task<string> GenerateResponse(GenerateRequest request, CancellationToken cancellationToken);
 }

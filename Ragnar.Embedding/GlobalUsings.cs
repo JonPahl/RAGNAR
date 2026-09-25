@@ -33,3 +33,5 @@ global using Ragnar.Plugins;
 global using Serilog;
 
 global using Spectre.Console;
+global using System.Diagnostics;
+global using Ragnar.Core;

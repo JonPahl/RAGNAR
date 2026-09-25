@@ -1,17 +1,32 @@
 ﻿namespace Ragnar.Core.Options;
 
 /// <summary>Configuration container for application components: options, embeddings, Ollama, and file loading.</summary>
+/// <example>
+/// <![CDATA[var app = config.ApplicationOptions;]]>
+/// </example>
 public record RagnarConfig
 {
     /// <summary>Gets or sets the main application options.</summary>
-    public ApplicationOptions? ApplicationOptions { get; init; }
+    /// <example><![CDATA[ApplicationOptions? opts = config.ApplicationOptions;]]></example>
+    public required ApplicationOptions ApplicationOptions { get; init; }
 
     /// <summary>Gets or sets the embedding model options.</summary>
-    public EmbeddingOptions? EmbeddingOptions { get; init; }
+    /// <example>
+    /// <![CDATA[EmbeddingOptions? opts = config.EmbeddingOptions;]]>
+    /// </example>
+    public required EmbeddingOptions EmbeddingOptions { get; init; }
 
-    /// <summary>Gets or sets Ollama-specific configuration settings.</summary>
-    public OllamaOptions? OllamaOptions { get; init; }
+    /// <summary>Gets or sets Ollama-specific configuration settings.
+    /// </summary>
+    /// <example>
+    /// <![CDATA[OllamaOptions? opts = config.OllamaOptions;]]>
+    /// </example>
+    public required OllamaOptions OllamaOptions { get; init; }
 
-    /// <summary>Gets or sets file loading behavior and validation options.</summary>
-    public FileLoadOptions FileLoadOptions { get; init; } = new();
+    /// <summary>Gets or sets file loading behavior and validation options.
+    /// </summary>
+    /// <example>
+    /// <![CDATA[FileLoadOptions opts = config.FileLoadOptions;]]>
+    /// </example>
+    public required FileLoadOptions FileLoadOptions { get; init; }
 }

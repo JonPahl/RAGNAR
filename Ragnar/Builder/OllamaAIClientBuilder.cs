@@ -1,13 +1,13 @@
 ﻿namespace Ragnar.Builder;
 
-public class OllamaAIClientBuilder(
-    IOllamaClientFactory clientFactory) : IOllamaAIClientBuilder
+public class OllamaAIClientBuilder(IOllamaClientFactory clientFactory)
+    : IOllamaAIClientBuilder
 {
     private IChatClient _client;
 
     public OllamaAIClientBuilder WithChatClient(OllamaServiceType ollamaType)
     {
-        _client = clientFactory.FindClient(ollamaType);
+        _client = clientFactory.ResolveClient(ollamaType);
 
         return this;
     }

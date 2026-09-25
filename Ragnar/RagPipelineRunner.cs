@@ -1,24 +1,25 @@
 ﻿namespace Ragnar;
 
-///<summary>
-/// Hosted service responsible for running the RAG pipeline.
-///</summary>
 public sealed class RagPipelineRunner(
-    [FromKeyedServices("Main"
-    )] IEnumerable<IPipelineStage> stages)
-    : IHostedService
+    EmbeddingContext embeddingContext,
+    QuestionPipelineContext questionPipelineContext,
+    IPipelineRunner<EmbeddingContext> embeddingPipelineRunner,
+    IPipelineRunner<QuestionPipelineContext> questionPipelineRunner,
+    IEnumerable<IPipelineStage<EmbeddingContext>> stages) : IHostedService
 {
     /// <summary>Starts the RAG pipeline: collection check, embedding, and query processing. </summary>
     /// <param name="cancellationToken">
     /// Cancellation token.</param>
-    /// <returns>Task representing async operation.</returns>
-    /// <example><![CDATA[await host.ExecuteAsync();]]></example>
+    /// <returns>Task representing async operation.
+    /// </returns>
+    /// <example><![CDATA[await host.ExecuteAsync();]]>
+    /// </example>
     [SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "Base class casing.")]
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        var Pipeline = new Embedding.Pipeline.RagPipelineRunner(stages);
+        var Embedding = await embeddingPipelineRunner.ExecuteAsync(embeddingContext, cancellationToken).ConfigureAwait(false);
 
-        await Pipeline.StartAsync(cancellationToken);
+        questionPipelineRunner.ExecuteAsync(questionPipelineContext, cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>Stops the hosted service (no-op).</summary>

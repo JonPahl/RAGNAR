@@ -1,8 +1,4 @@
-﻿using System.Reflection;
-
-using Ragnar.Core.Enums;
-
-namespace Ragnar.Tests;
+﻿namespace Ragnar.Tests;
 
 // ───────────────────────────────────────────────────────────────
 //  8.  OllamaClientFactory
@@ -15,6 +11,8 @@ public class OllamaClientFactoryTests
     {
         var config = new RagnarConfig
         {
+            FileLoadOptions = new(),
+            ApplicationOptions = new ApplicationOptions() { SourceDirectory = "", VectorStoreName = "" },
             OllamaOptions = new OllamaOptions
             {
                 Host = host,
@@ -28,14 +26,16 @@ public class OllamaClientFactoryTests
                 EmbeddingModel = embedModel,
                 Dimension = 768,
                 Host = "localhost",
-                Port = 0
+                Port = 0,
+                BatchSize = 16
             }
         };
         var mockOpts = new Mock<IOptions<RagnarConfig>>();
         mockOpts.Setup(o => o.Value).Returns(config);
 
         var mockHttpFactory = new Mock<IHttpClientFactory>();
-        mockHttpFactory.Setup(f => f.CreateClient(It.IsAny<string>())).Returns(new HttpClient());
+        mockHttpFactory.Setup(f => f.CreateClient(It.IsAny<string>()))
+            .Returns(new HttpClient());
 
         var factory = new OllamaClientFactory(mockHttpFactory.Object, mockOpts.Object);
         return (factory, mockHttpFactory);
@@ -45,7 +45,7 @@ public class OllamaClientFactoryTests
     public void FindClientReturnsOllamaClientForLlmType()
     {
         var (factory, _) = CreateFactory();
-        var client = factory.FindClient(OllamaServiceType.Ollama);
+        var client = factory.ResolveClient(OllamaServiceType.Ollama);
         Assert.NotNull(client);
         Assert.IsType<OllamaApiClient>(client);
     }
@@ -54,7 +54,7 @@ public class OllamaClientFactoryTests
     public void FindClientReturnsEmbeddingClientForEmbeddingType()
     {
         var (factory, _) = CreateFactory();
-        var client = factory.FindClient(OllamaServiceType.Embedding);
+        var client = factory.ResolveClient(OllamaServiceType.Embedding);
         Assert.NotNull(client);
     }
 
@@ -62,8 +62,8 @@ public class OllamaClientFactoryTests
     public void FindClientCachesClientSameInstanceReturned()
     {
         var (factory, _) = CreateFactory();
-        var c1 = factory.FindClient(OllamaServiceType.Ollama);
-        var c2 = factory.FindClient(OllamaServiceType.Ollama);
+        var c1 = factory.ResolveClient(OllamaServiceType.Ollama);
+        var c2 = factory.ResolveClient(OllamaServiceType.Ollama);
         Assert.Same(c1, c2);
     }
 
@@ -71,8 +71,8 @@ public class OllamaClientFactoryTests
     public void FindClientDifferentTypesReturnDifferentInstances()
     {
         var (factory, _) = CreateFactory();
-        var llm = factory.FindClient(OllamaServiceType.Ollama);
-        var emb = factory.FindClient(OllamaServiceType.Embedding);
+        var llm = factory.ResolveClient(OllamaServiceType.Ollama);
+        var emb = factory.ResolveClient(OllamaServiceType.Embedding);
         Assert.NotSame(llm, emb);
     }
 
@@ -80,14 +80,14 @@ public class OllamaClientFactoryTests
     public void FindClientThrowsArgumentOutOfRangeForInvalidType()
     {
         var (factory, _) = CreateFactory();
-        Assert.Throws<ArgumentOutOfRangeException>(() => factory.FindClient((OllamaServiceType)99));
+        Assert.Throws<ArgumentOutOfRangeException>(() => factory.ResolveClient((OllamaServiceType)99));
     }
 
     [Fact]
     public void FindClientSetsLlmModelOnLlmClient()
     {
         var (factory, _) = CreateFactory(llmModel: "llama3");
-        var client = factory.FindClient(OllamaServiceType.Ollama);
+        var client = factory.ResolveClient(OllamaServiceType.Ollama);
         Assert.Equal("llama3", client.SelectedModel);
     }
 
@@ -95,7 +95,7 @@ public class OllamaClientFactoryTests
     public void FindClientSetsEmbeddingModelOnEmbeddingClient()
     {
         var (factory, _) = CreateFactory(embedModel: "bge-m3");
-        var client = factory.FindClient(OllamaServiceType.Embedding);
+        var client = factory.ResolveClient(OllamaServiceType.Embedding);
         Assert.Equal("bge-m3", client.SelectedModel);
     }
 
@@ -104,12 +104,12 @@ public class OllamaClientFactoryTests
     [Fact]
     public void NormalizeHostPrefacesHttpWhenMissing()
     {
-        var method = typeof(OllamaClientFactory).GetMethod(nameof(OllamaClientFactory.FindClient));
+        var method = typeof(OllamaClientFactory).GetMethod(nameof(OllamaClientFactory.ResolveClient));
         var normalize = typeof(OllamaClientFactory).GetMethods(BindingFlags.NonPublic | BindingFlags.Static)
             .FirstOrDefault(m => m.Name == "NormalizeHost");
         Assert.NotNull(normalize);
 
-        var result = (string)normalize!.Invoke(null, ["localhost"])!;
+        var result = (string)normalize.Invoke(null, ["localhost"])!;
         Assert.Equal("http://localhost", result);
     }
 

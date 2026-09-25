@@ -7,15 +7,19 @@
 /// <example><![CDATA[string v = asm.InformationalVersion;]]></example>
 public static class AssemblyExtensions
 {
-    /// <summary>
-    /// Assembly extension method.
-    /// </summary>
-    /// <param name="asm">Assembly Info.</param>
+    private static readonly ConcurrentDictionary<Assembly, string> _cache = new();
+
+
+    /// <summary>Resolves and caches the informational version string of an assembly.</summary>
+    private static string Resolve(Assembly asm) =>
+        _cache.GetOrAdd(asm, a => a.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion
+         ?? a.GetName().Version?.ToString()
+         ?? "1.0.0");
+
     extension(Assembly asm)
     {
-        /// <summary>Retrieves the informational version from an assembly.</summary>
-        /// <returns>The informational version string or default fallback.</returns>
-        // <example><![CDATA[[string v = typeof(App).Assembly.InformationalVersion;]]></example>
-        public string? InformationalVersion => asm.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "1.0.0";
+        /// <summary>Retrieves the informational version of *this* assembly (cached).</summary>
+        /// <example><![CDATA[string v = Assembly.GetExecutingAssembly().InformationalVersion;]]></example>
+        public string InformationalVersion => Resolve(asm);
     }
 }

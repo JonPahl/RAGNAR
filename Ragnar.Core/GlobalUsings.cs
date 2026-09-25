@@ -1,15 +1,26 @@
 ﻿global using System.ComponentModel.DataAnnotations;
 global using System.Diagnostics.CodeAnalysis;
 global using System.Text;
+
 global using Ardalis.GuardClauses;
+
 global using HashDepot;
+
 global using Microsoft.Extensions.AI;
+global using Microsoft.Extensions.Options;
+
 global using OllamaSharp;
+
 global using Qdrant.Client;
 global using Qdrant.Client.Grpc;
+
+global using Ragnar.Core.Options;
 global using Ragnar.Core.Utils;
 global using Ragnar.Plugins;
+
 global using Spectre.Console;
 global using Spectre.Console.Rendering;
-global using Microsoft.Extensions.Options;
-global using Ragnar.Core.Options;
+global using Ragnar.Core.Rendering.Decorators;
+global using System.Collections.Concurrent;
+global using Ragnar.Core.Validation;
+global using FluentValidation;

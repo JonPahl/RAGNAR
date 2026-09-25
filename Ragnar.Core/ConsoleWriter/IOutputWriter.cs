@@ -1,11 +1,13 @@
 ﻿namespace Ragnar.Core.ConsoleWriter;
 
+/// <summary>Abstraction for writing styled element elements to the console.</summary>
+/// <example><![CDATA[writer.Write(element); writer.WriteRule();]]></example>
 public interface IOutputWriter
 {
     /// <summary>
     /// Writes formatted markup to console.
     /// </summary>
-    /// <param name="text">text to write.</param>
+    /// <param name="text">element to write.</param>
     /// <param name="style">Optional style.</param>
     void Markup(string text, Style? style = null);
 
@@ -15,18 +17,17 @@ public interface IOutputWriter
     void MarkupLine(string text, Style? style = null);
 
     /// <summary>
-    /// Writes plain text.
+    /// Writes plain element.
     /// </summary>
     void Write(string text, Style? style = null);
 
-    /// <summary>
-    /// Writes renderable.
-    /// </summary>
-    void Write(IRenderable text);
+    /// <summary>Writes a styled console element without appending a newline.</summary>
+    /// <param name="element">The Spectre.Console element to render.</param>
+    /// <example><![CDATA[writer.Write(new Text("Hello", Styles.Bold));]]></example>
+    void Write(IRenderable element);
 
-    /// <summary>
-    /// Writes empty line.
-    /// </summary>
+    /// <summary>Writes a newline to the console output stream.</summary>
+    /// <example><![CDATA[writer.WriteLine();]]></example>
     void WriteLine();
 
     /// <summary>
@@ -34,9 +35,8 @@ public interface IOutputWriter
     /// </summary>
     void WriteLine(string text, Style? style = null);
 
-    /// <summary>
-    /// Writes horizontal rule.
-    /// </summary>
+    /// <summary>Writes a horizontal rule separator to the console.</summary>
+    /// <example><![CDATA[writer.WriteRule();]]></example>
     void WriteRule();
 
     void WriteException(Exception ex);

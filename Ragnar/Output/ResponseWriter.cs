@@ -1,33 +1,39 @@
 ﻿namespace Ragnar.Output;
 
-/// <summary>Initializes the writer with configuration and services.</summary>
-/// <param name="formatter">Formatter for output content.</param>
-/// <param name="pathResolver">Resolver for directory paths.</param>
-/// <param name="fileWriter">Service for writing files.</param>
+/// <summary>Writes formatted AI responses to timestamped Markdown files under category sub-folders.</summary>
+/// <remarks>Delegates formatting to <see cref="IOutputFormatter"/>, path logic to
+/// <see cref="IPathResolver"/>, and I/O to <see cref="IWriter"/>.</remarks>
+/// <param name = "formatter">Formatter for output content.</param>
+/// <param name = "pathResolver">Resolver for directory paths.</param>
+/// <param name = "fileWriter">Service for writing files.</param>
+/// <param name = "clock">IClock used to generate timestamped file names.</param>
+/// <example><![CDATA[await writer.WriteResponseAsync(details, ct);]]></example>
 public sealed class ResponseWriter(
     IOutputFormatter formatter,
     IPathResolver pathResolver,
-    IWriter fileWriter)
+    IWriter fileWriter,
+    IClock clock)
     : IResponseWriter
 {
     /// <summary>Saves question metadata to a timestamped markdown file.</summary>
     /// <param name="details">Contains question metadata and content to write.</param>
     /// <param name="cancellationToken">Token to cancel the asynchronous file write operation.</param>
     /// <remarks>Creates category subdirectories if they do not already exist.</remarks>
-    /// <example><![CDATA[var path = await writer.WriteResponseAsync(details, ct);]]></example>
     /// <returns>Absolute path to the created markdown file.</returns>
-    public async Task<string> WriteResponseAsync(SaveDetails details, CancellationToken cancellationToken)
+    /// <example><![CDATA[await writer.WriteResponseAsync(details, ct);]]></example>
+    public async Task<string> WriteResponseAsync(ResponseRecord details, CancellationToken cancellationToken)
     {
         var directory = pathResolver
             .ResolveResponseDirectory(details.Question.Category);
+        pathResolver.EnsureDirectoryExists(directory);
 
-        Directory.CreateDirectory(directory);
+        var stamp = clock.UtcNow.ToString("yyyyMMdd_HHmmss");
 
-        var fileName = $"{details.Question.Filename}_{DateTime.Now:yyyyMMdd_HHmmss}.{formatter.FileExtension}";
+        var fileName = $"{details.Question.Filename}_{stamp}.{formatter.FileExtension}";
 
         var fullPath = Path.Join(directory, fileName);
 
-        var content = formatter.Format(details);
+        var content = formatter.FormatResponse(details);
 
         await fileWriter.WriteAsync(fullPath, content, cancellationToken).ConfigureAwait(false);
         return fullPath;

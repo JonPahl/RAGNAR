@@ -15,7 +15,7 @@ public static class PluginExtension
         /// <param name="cancellationToken">Cancellation Token.</param>
         /// <returns>Loaded question configurations.</returns>
         /// <example><![CDATA[List<Question> configs = await LoadPluginQuestionsAsync("General.csv", provider, ct);]]></example>
-        public async Task<List<Plugins.Question>> LoadPluginQuestionsAsync(string name, IQuestionProvider provider, CancellationToken cancellationToken)
+        public async Task<List<Plugins.Question>> LoadPluginQuestionsAsync(string name, IQuestionSource provider, CancellationToken cancellationToken)
         {
             var questions = await provider.LoadQuestionsAsync(name, cancellationToken).ConfigureAwait(false);
             configs.AddRange(questions);

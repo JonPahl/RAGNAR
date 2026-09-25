@@ -16,7 +16,7 @@ internal sealed class FileValidator : IFileValidator
         var fileName = file.Name;
         var extension = file.Extension;
 
-        var hasAllowedExtension = fileLoadOptions.AllowedFileExtensions.Any(ext => ext.Equals(extension, StringComparison.OrdinalIgnoreCase));
+        var hasAllowedExtension = fileLoadOptions.AllowedExtensions.Any(ext => ext.Equals(extension, StringComparison.OrdinalIgnoreCase));
 
         var isNotExcludedByFile = !fileLoadOptions.ExcludedFiles.Contains(fileName, StringComparer.OrdinalIgnoreCase);
         var isNotExcludedByDir = !fileLoadOptions.ExcludedDirectories.Any(exclDir =>

@@ -1,12 +1,10 @@
 ﻿namespace Ragnar.OutputResponse;
 
-/// <summary>Initializes a new instance of the SummaryAgent orchestrator.</summary>
-/// <param name ="ollamaClientProvider"> Client provider used for LLM response generation.</param>
-/// <param name ="summaryPrompt"> System prompt template used for content summaries.</param>
+
 public class ContentSummarizerAgent(
     IOllamaAIClientBuilder ollamaAIClientBuilder,
     IOllamaGenerationService ollamaClientProvider,
-    [FromKeyedServices("Summary")] IPromptProvider summaryPrompt)
+    [FromKeyedServices("Summary")] IChatPromptProvider summaryPrompt)
 {
     /// <summary>Generates a high-level summary of files in a directory.</summary>
     /// <param name ="folder"> Directory path to analyze and summarize.</param>
@@ -25,7 +23,7 @@ public class ContentSummarizerAgent(
         var request = new GenerateRequest
         {
             Prompt = summaryPrompt.GetTemplate(contents, question),
-            System = $"{summaryPrompt.System}\n{question}"
+            System = $"{summaryPrompt.System}"
         };
 
         var policy = Policy.Handle<HttpRequestException>()
@@ -54,7 +52,10 @@ public class ContentSummarizerAgent(
     /// <param name = "cancellationToken"> Cancellation Token to abort processing.</param>
     /// <returns>AI-generated response text addressing the question.</returns>
     /// <example><![CDATA[var resp = await agent.AskAgent(path, q, ct);]]></example>
-    public async Task<string> AskAgent(string folder, string question, CancellationToken cancellationToken)
+    public async Task<string> AskAgent(
+        string folder,
+        string question,
+        CancellationToken cancellationToken)
     {
         var response = await AiAgent
             .RunAsync($"Read all the files in the directory {folder} and ask the follow question, {question}", cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -84,6 +85,6 @@ public class ContentSummarizerAgent(
             builder.AppendLine($"---\n{AppDefaults.FileMarkerStart}{Path.GetFileName(file)}{AppDefaults.FileMarkerEnd}\n{text}\n");
         }
 
-        return $"{AppDefaults.CODE_BLOCK_START} {builder} {AppDefaults.CODE_BLOCK_END}";
+        return $"{AppDefaults.CodeBlockEnd} {builder} {AppDefaults.CodeBlockEnd}";
     }
 }

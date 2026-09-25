@@ -1,11 +1,10 @@
 ﻿namespace Ragnar.Services;
 
 /// <summary>SummarizePromptProvider: Provides templates for generating content summaries.</summary>
-/// <remarks>Implements IPromptProvider with a default high-level summary template.</remarks>
-public class SummarizePromptProvider
-    : IPromptProvider
+/// <remarks>Implements IChatPromptProvider with a default high-level summary template.</remarks>
+/// <example><![CDATA[string s = provider.System;]]></example>
+public class SummarizePromptProvider : IChatPromptProvider
 {
-
     /// <summary>System prompt instructing the LLM to produce a concise, high-level code summary.</summary>
     /// <returns>The static instruction string used as the system message.</returns>
     /// <example><![CDATA[string sys = provider.System;]]></example>

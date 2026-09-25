@@ -29,15 +29,15 @@ public class DefaultQuestionCatalogLoader(Serilog.ILogger logger, IOutputWriter 
 
         var questions = GetDefaultQuestions();
 
-        if (categories is not null || categories.Any())
+        if (categories is null && categories.Count == 0)
+        {
+            return [.. questions.Where(x => x.IsEnabled)];
+        }
+        else
         {
             var category = questions.WithCategory(categories).ToList();
 
             return [.. category.Where(x => x.IsEnabled).OrderBy(q => q.Category)];
-        }
-        else
-        {
-            return [.. questions.Where(x => x.IsEnabled)];
         }
     }
 
@@ -49,12 +49,6 @@ public class DefaultQuestionCatalogLoader(Serilog.ILogger logger, IOutputWriter 
     {
         if (categoryFilter is null or [])
             return LoadQuestionCategories.All();
-
-        //foreach (var category in categoryFilter) {
-        // if (Enum.TryParse(category, ignoreCase: true, out QuestionCategory categoryCategory)) {
-        // _categories.Add(categoryCategory); } else {
-        // logger.Error("Could not parse: {Category}. Please check name", category);
-        // writer.MarkupLine($"[red]⚠ Could not parse: {category}. Please check name.[/]"); }}
 
         if (_categories.Count == 0)
         {

@@ -12,7 +12,7 @@
 public class OllamaGenerationService(IOllamaClientFactory clientFactory)
     : IOllamaGenerationService
 {
-    private readonly OllamaApiClient _ollamaClient = clientFactory.FindClient(OllamaServiceType.Ollama);
+    private readonly OllamaApiClient _ollamaClient = clientFactory.ResolveClient(OllamaServiceType.Ollama);
 
     /// <summary>Streams and collects full LLM response into a string.</summary>
     /// <param name="request">Generation request with prompt/options.</param>
@@ -33,8 +33,7 @@ public class OllamaGenerationService(IOllamaClientFactory clientFactory)
                 RepeatPenalty = 1.02f,
             };
 
-            //TODO: Rework to use chatClient
-            //Also include tracking on thinking vs finished results.
+            // TODO Rework to use chatClient, Also include tracking on thinking vs finished results.
 
             var panelText = new Markup(string.Empty, Styles.Yellow).LeftJustified();
 

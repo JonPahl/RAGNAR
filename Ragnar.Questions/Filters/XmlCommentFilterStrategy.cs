@@ -1,7 +1,7 @@
 ﻿namespace Ragnar.Questions.Filters;
 
 /// <summary>Filters XML comments based on size and content rules.</summary>
-/// <remarks>Excludes test-related categories and short comments below threshold.</remarks>
+/// <remarks>Excludes test-related categories and correct length comments below threshold.</remarks>
 /// <example><![CDATA[var f = strategy.CreateFilter(50);]]></example>
 
 public sealed class XmlCommentFilterStrategy : IFilterStrategy
@@ -40,7 +40,7 @@ public sealed class XmlCommentFilterStrategy : IFilterStrategy
                     {
                         ExceptKeywords = new RepeatedStrings()
                         {
-                            Strings = { "Tests", "Test", "tests", "test","Testing" }
+                            Strings = { "Test", "Tests", "Testing" }
                         }
                     }
                 }

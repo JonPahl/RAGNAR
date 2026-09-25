@@ -2,7 +2,7 @@
 
 /// <summary>Provides extension methods for FileSystemEntry filtering operations.</summary>
 /// <remarks>Helper for checking file extensions against allowed collections.</remarks>
-/// <example><![CDATA[bool ok = entry.HasAllowedExtension([[".cs", ".json"]]);]]></example>
+/// <example><![CDATA[bool ok = entry.HasAllowedExtension([".cs", ".json"]);]]></example>
 public static class FileSystemEntryExtensions
 {
     /// <summary>
@@ -26,8 +26,8 @@ public static class FileSystemEntryExtensions
         if (entry.IsDirectory)
             return false;
 
-        var extension = Path.GetExtension(entry.FileName.ToString());
+        var extension = Path.GetExtension(entry.FileName);
 
-        return allowedExtensions.Contains(extension, StringComparer.OrdinalIgnoreCase);
+        return allowedExtensions.Contains(extension.ToString(), StringComparer.OrdinalIgnoreCase);
     }
 }

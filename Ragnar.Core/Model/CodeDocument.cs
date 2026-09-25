@@ -18,7 +18,7 @@ public sealed record CodeDocument
     /// <summary>Gets the associated comment string.</summary>
     public required string Comment { get; init; }
     public string? Category { get; init; }
-    public required int Comment_Length { get; init; }
+    public required int CommentLength { get; init; }
 
     public PointId AsPoint()
     {

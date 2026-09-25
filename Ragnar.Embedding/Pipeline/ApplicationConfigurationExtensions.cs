@@ -9,26 +9,26 @@ public static class ApplicationConfigurationExtensions
     extension(IServiceCollection services)
     {
         /// <summary>Registers the Ollama-based embedding service as a singleton.</summary>
-        /// <remarks>Resolves logger, config, and client factory from the container.</remarks>        
+        /// <remarks>Resolves logger, config, and client factory from the container.</remarks>
         /// <returns>The service collection for chaining.</returns>
         /// <example><![CDATA[services.RegisterEmbeddingServices();]]></example>
         public IServiceCollection RegisterEmbeddingServices()
         {
             services.AddSingleton<IEmbeddingService>(sp =>
             {
-                var logger = sp.GetService<Serilog.ILogger>();
+                var logger = sp.GetService<ILogger>();
                 var config = sp.GetService<IOptions<RagnarConfig>>();
 
                 var ollamaClientProvider = sp.GetRequiredService<IOllamaClientFactory>();
 
-                return new OllamaEmbeddingService(logger, ollamaClientProvider, config);
+                return new OllamaEmbeddingGenerator(logger, ollamaClientProvider, config);
             });
 
             return services;
         }
 
 
-        /// <summary>Discovers and registers IQuestionProvider implementations from plugin DLLs.</summary>
+        /// <summary>Discovers and registers IQuestionSource implementations from plugin DLLs.</summary>
         /// <remarks>Loads assemblies from the base Questions/Plugins directory.</remarks>
         /// <example><![CDATA[services.LoadQuestionPlugins();]]></example>
         /// <returns>The service collection for chaining.</returns>
@@ -44,9 +44,9 @@ public static class ApplicationConfigurationExtensions
                     var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(dll);
 
                     var providers = assembly.GetTypes()
-                        .Where(t => typeof(IQuestionProvider).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) != null);
+                        .Where(t => typeof(IQuestionSource).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) != null);
 
-                    foreach (var type in providers) services.AddTransient(typeof(IQuestionProvider), type);
+                    foreach (var type in providers) services.AddTransient(typeof(IQuestionSource), type);
                 }
                 catch (Exception ex)
                 {

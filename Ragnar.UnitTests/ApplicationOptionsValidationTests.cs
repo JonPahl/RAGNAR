@@ -5,7 +5,7 @@
 // ───────────────────────────────────────────────────────────────
 public class ApplicationOptionsValidationTests
 {
-    private readonly ApplicationOptionsValidation _validator = new();
+    private readonly ApplicationOptionsValidator _validator = new();
 
     [Fact]
     public void ValidOptionsProduceNoErrors()
@@ -68,7 +68,7 @@ public class ApplicationOptionsValidationTests
 
         Assert.False(result.IsValid);
         Assert.Contains(result.Errors, e => e.PropertyName == nameof(ApplicationOptions.VectorStoreName) &&
-        e.ErrorCode.IndexOf("MaximumLength", StringComparison.OrdinalIgnoreCase) != -1);
+        e.ErrorCode.Contains("MaximumLength", StringComparison.OrdinalIgnoreCase));
     }
 
     [Fact]

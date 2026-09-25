@@ -9,7 +9,7 @@ public class FileValidator(FileLoadOptions options) : IFileValidator
 
     private readonly HashSet<string> _excludedDirectories = new(options.ExcludedDirectories, StringComparer.OrdinalIgnoreCase);
 
-    private readonly string[] _allowedExtensions = [.. options.AllowedFileExtensions];
+    private readonly string[] _allowedExtensions = [.. options.AllowedExtensions];
 
     /// <summary>Checks whether a file satisfies all configured load-option rules.</summary>
     /// <param name="file">The file to validate against the filter.</param>
@@ -51,7 +51,7 @@ public class FileValidator(FileLoadOptions options) : IFileValidator
 
         var ext = file.Extension;
         foreach (var _ in _allowedExtensions.Where(allowedExt => ext.Equals(allowedExt, StringComparison.OrdinalIgnoreCase))
-            .Select(allowedExt => new { }))
+            .Select(_ => new { }))
         {
             allowed = true;
         }

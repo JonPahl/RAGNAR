@@ -2,6 +2,8 @@
 
 /// <summary>Handles asynchronous file writing operations across the application.</summary>
 /// <remarks>Implements IWriter using standard .NET async file APIs for thread safety.</remarks>
+/// <example><![CDATA[await writer.WriteAsync("out.txt", "data", ct);]]>
+/// </example>
 public sealed class FileWriter : IWriter
 {
     /// <summary>Writes text content to a specified file path asynchronously.</summary>

@@ -1,6 +1,7 @@
 ﻿global using System.Buffers;
 global using System.Collections.Concurrent;
 global using System.Collections.Immutable;
+global using System.Collections.ObjectModel;
 global using System.ComponentModel;
 global using System.Diagnostics;
 global using System.Diagnostics.CodeAnalysis;
@@ -36,6 +37,7 @@ global using Ragnar.Abstractions;
 global using Ragnar.Branding;
 global using Ragnar.Builder;
 global using Ragnar.Contracts;
+global using Ragnar.Core;
 global using Ragnar.Core.ConsoleWriter;
 global using Ragnar.Core.Enums;
 global using Ragnar.Core.Model;
@@ -59,11 +61,15 @@ global using Ragnar.Questions.Questions;
 global using Ragnar.RagPipeline;
 global using Ragnar.Services;
 global using Ragnar.Stages;
-global using Ragnar.Stages.Questions;
 global using Ragnar.Utils;
 
 global using Serilog;
 
 global using Spectre.Console;
-global using System.Collections.ObjectModel;
-global using Ragnar.Core;
+
+global using ChatRole = OllamaSharp.Models.Chat.ChatRole;
+global using Ragnar.Core.Rendering;
+global using Polly.Retry;
+global using Ragnar.Embedding.Chunker;
+global using System.Text.RegularExpressions;
+global using Ragnar.Stages.Questions;

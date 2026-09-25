@@ -6,24 +6,24 @@ public record OllamaOptions
     /// Gets ollama Uri Host.
     /// </summary>
     [Required]
-    public required string Host { get; init; } = "http://localhost";
+    public required string Host { get; init; }
 
     /// <summary>
     /// Gets port number for host.
     /// </summary>
     [Required]
     [Range(1, 65000)]
-    public required int Port { get; init; } = 11434;
+    public required int Port { get; init; }
 
     /// <summary>
     /// Gets lLM Model used when generating request.
     /// </summary>
     [Required]
-    public required string LlmModel { get; init; } = "qwen3-coder-next";
+    public required string LlmModel { get; init; }
 
     /// <summary>
     /// Gets that request timeout duration.
     /// </summary>
     [Required]
-    public required TimeSpan Timeout { get; init; } = TimeSpan.FromMinutes(30);
+    public required TimeSpan Timeout { get; init; }
 }

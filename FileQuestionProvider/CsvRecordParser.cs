@@ -28,6 +28,6 @@ public sealed class CsvRecordParser : IRecordParser<QuestionRecord>
         csv.Context.RegisterClassMap<QuestionMap>();
 
         return await csv
-            .GetRecordsAsync<QuestionRecord>(cancellationToken).ToListAsync(cancellationToken: cancellationToken);
+            .GetRecordsAsync<QuestionRecord>(cancellationToken).ToListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
     }
 }

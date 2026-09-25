@@ -11,6 +11,11 @@
     <AnalysisLevel>latest</AnalysisLevel>
     <AnalysisMode>AllEnabledByDefault</AnalysisMode>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Pipeline\Interface\**" />
+    <EmbeddedResource Remove="Pipeline\Interface\**" />
+    <None Remove="Pipeline\Interface\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
@@ -51,10 +56,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Ragnar.Abstractions\Ragnar.Abstractions.csproj" />
     <ProjectReference Include="..\Ragnar.Core\Ragnar.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Pipeline\Interface\" />
   </ItemGroup>
 
 </Project>

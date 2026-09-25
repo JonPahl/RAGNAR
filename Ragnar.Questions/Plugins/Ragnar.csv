@@ -1,5 +1,6 @@
-IsEnabled,Text,FileName,Category
+﻿IsEnabled,Text,FileName,Category
 "0","Offer 5 suggestions of a catchy name and tagline for this application to be named.", "Names", "General"
-"0","Can you generate 5 prompts for creating an image optimized for Easy Diffusion, Theme the photo of a shepherd over looking a flock of translucent sheep and lambs?", "Image", "General"
+"0","Offer 5 suggestions of a catchy name and tagline for this application. The name should focus on what the application does and not focused on the AI aspect.", "Names2", "General"
+"0","Can you generate 5 prompts for creating an image to be used as a splash screen when loading this application. Please base the image a photo turning into typed text.  Optimized for Easy Diffusion?", "Image", "General"
 "0","Can you generate 5 prompts for creating a small logo image optimized for Easy Diffusion, Theme of a shepherd and a flock of translucent sheep and lambs?", "ImageLogo", "General"
-"0","Can you generate a prompt for creating an image that best describes this code base with a Norse theme around Ragnar?", "Image", "General"
+"0","Can you generate a prompt for creating an image that best describes this codebase with a Norse theme around Ragnar?", "Image", "General"

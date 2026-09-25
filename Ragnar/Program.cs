@@ -1,4 +1,4 @@
-Console.InputEncoding = Encoding.UTF8;
+﻿Console.InputEncoding = Encoding.UTF8;
 Console.OutputEncoding = Encoding.UTF8;
 
 try
@@ -8,7 +8,7 @@ try
 
     using var host = builder.Build();
 
-    await host.RunAsync();
+    await host.RunAsync().ConfigureAwait(false);
 
     AnsiConsole.Console.WriteLine("Processes completed.");
 }
@@ -19,5 +19,5 @@ catch (Exception ex)
 }
 finally
 {
-    await Log.CloseAndFlushAsync();
+    await Log.CloseAndFlushAsync().ConfigureAwait(false);
 }
