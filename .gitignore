@@ -365,3 +365,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Ragnar.Abstractions/bin/Debug/net10.0/FileQuestionProvider.dll
+/FileQuestionProvider/obj/Debug/net10.0/FileQuestionProvider.AssemblyInfo.cs
+/FileQuestionProvider/obj/Debug/net10.0/FileQuestionProvider.AssemblyInfoInputs.cache
