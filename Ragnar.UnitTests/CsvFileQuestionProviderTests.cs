@@ -6,12 +6,12 @@ namespace Ragnar.Tests;
 public class CsvFileQuestionProviderTests
 {
     private readonly Mock<IRecordParser<QuestionRecord>> _parserMock;
-    private readonly CsvFileQuestionProvider _sut;
+    private readonly CsvQuestionSource _sut;
 
     public CsvFileQuestionProviderTests()
     {
         _parserMock = new Mock<IRecordParser<QuestionRecord>>();
-        _sut = new CsvFileQuestionProvider(_parserMock.Object);
+        _sut = new CsvQuestionSource(_parserMock.Object);
     }
 
     [Fact]

@@ -10,7 +10,7 @@ public class SummaryService(
     IOptions<RagnarConfig> configWrapper,
     IQuestionSourceBuilder questionBuilder,
     IResponseWriter responseWriter)
-    : ISummaryService
+    : IResponseSummarizer
 {
     private readonly ILogger _logger = logger;
     private readonly IOutputWriter _writer = writer;
@@ -51,7 +51,7 @@ public class SummaryService(
         {
             foreach (var question in summaryQuestions)
             {
-                var fileName = $"{folder.LastFolder}_{question.Filename}";
+                var fileName = $"{folder.FolderName}_{question.Filename}";
 
                 _writer.MarkupLine(question.Text, Styles.Cyan);
                 _writer.WriteRule();
@@ -108,6 +108,9 @@ public class SummaryService(
         Core.Model.Question question,
         CancellationToken cancellationToken)
     {
+
+        // FIXME This method never finishes. How should I rework the agent to allow it to correctly process a large list of markdown information.
+
         var agent = new ContentSummarizerAgent(
             _ollamaAIClient,
             _ollamaClientProvider,
@@ -130,7 +133,7 @@ public class SummaryService(
     {
         try
         {
-            var details = SaveDetails.FromSummary(summary, fileName, QuestionCategory.Summary);
+            var details = ResponseRecord.FromSummary(summary, fileName, QuestionCategory.Summary);
             var path = await responseWriter.WriteResponseAsync(details, cancellationToken).ConfigureAwait(false);
 
             _writer.WriteRule();

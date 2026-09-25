@@ -1,7 +1,7 @@
 ﻿namespace Ragnar.OutputResponse;
 
 // TODO Rewrite save to use the following item.
-// var details = new SaveDetails()
+// var details = new ResponseRecord()
 
 public class SummarizeSaveResponse : IResponseWriter
 {
@@ -10,7 +10,7 @@ public class SummarizeSaveResponse : IResponseWriter
 
     private string? _responseDir;
 
-    public async Task<string> WriteResponseAsync(SaveDetails details, CancellationToken cancellationToken)
+    public async Task<string> WriteResponseAsync(ResponseRecord details, CancellationToken cancellationToken)
     {
         var sourceDir = Path.GetDirectoryName(details.Question.Filename)
                         ?? Directory.GetCurrentDirectory();

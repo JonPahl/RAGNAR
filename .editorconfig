@@ -204,6 +204,13 @@ dotnet_diagnostic.CA1515.severity = none
 dotnet_diagnostic.CA2225.severity = error
 dotnet_diagnostic.RCS1110.severity = warning
 
+# Enable CA2007 and set the severity (suggestion, warning, or error)
+dotnet_diagnostic.CA2007.severity = error
+
+# Optional: Customize the behavior of CA2007
+#dotnet_code_quality.CA2007.allow_receive_in_reply_to_reply_to = true
+
+
 # Enforce one outer type per file (SA1402)
 dotnet_diagnostic.SA1402.severity = error
 

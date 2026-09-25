@@ -6,7 +6,7 @@
 /// <param name = "configWrapper" > The configuration wrapper.</param>
 public class CodeParserFactory(IOptions<RagnarConfig> configWrapper, ILogger logger, IChunkBySyntaxTree cSharpFile) : IFileParseFactory
 {
-    private readonly ParseCSharpFile codeParser = new(logger, cSharpFile);
+    private readonly ParseCSharpFile _codeParser = new(logger, cSharpFile);
 
     private readonly FileParser _parser = new(configWrapper, logger);
 
@@ -28,5 +28,5 @@ public class CodeParserFactory(IOptions<RagnarConfig> configWrapper, ILogger log
 
     private async Task<IEnumerable<CodeDocument>> ParseFile(string file, CancellationToken cancellationToken) => await _parser.ParseAsync(file, cancellationToken).ConfigureAwait(false);
 
-    private async Task<IEnumerable<CodeDocument>> GetCodeDocumentsAsync(string file, CancellationToken cancellationToken) => await codeParser.ParseAsync(file, cancellationToken).ConfigureAwait(false);
+    private async Task<IEnumerable<CodeDocument>> GetCodeDocumentsAsync(string file, CancellationToken cancellationToken) => await _codeParser.ParseAsync(file, cancellationToken).ConfigureAwait(false);
 }

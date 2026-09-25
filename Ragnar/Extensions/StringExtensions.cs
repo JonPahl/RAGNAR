@@ -27,9 +27,8 @@ public static class StringExtensions
 
         /// <summary>Retrieves the last folder segment from a file-system path.</summary>
         /// <returns>The last folder name extracted from the path.</returns>
-        /// <example><![CDATA[var f = @"C:\src\proj\app".LastFolder(); // "app"]]></example>
-        public string LastFolder => Path.GetFileName(value.ToString().TrimEnd('/', '\\'));
-
+        /// <example><![CDATA[var f = @"C:\src\proj\app".FolderName(); // "app"]]></example>
+        public string FolderName => Path.GetFileName(value.ToString().TrimEnd('/', '\\'));
 
         /// <summary>Checks whether the filename appears in the exclusion list.</summary>
         /// <param name="exclusions">Set of filenames to exclude (case-insensitive).</param>

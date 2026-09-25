@@ -17,12 +17,30 @@ public class VectorStoreRepositoryTests
         _generatorMock = new Mock<IQdrantPointFactory>();
         _config = new RagnarConfig
         {
+            FileLoadOptions = new FileLoadOptions(),
+            OllamaOptions = new OllamaOptions()
+            {
+                Host = "",
+                LlmModel = "",
+                Port = 0,
+                Timeout = TimeSpan.FromMinutes(30)
+            },
             ApplicationOptions = new ApplicationOptions
             {
-                VectorStoreName = "test_store",
+                VectorStoreName = "test_collection",
                 SourceDirectory = ""
+            },
+            EmbeddingOptions = new EmbeddingOptions
+            {
+                Dimension = 768,
+                EmbeddingModel = "",
+                Host = "",
+                Port = 0,
+                Timeout = TimeSpan.FromSeconds(30),
+                BatchSize = 16
             }
         };
+
         _sut = new VectorStoreWriter(
             _loggerMock.Object,
             _embeddingMock.Object,

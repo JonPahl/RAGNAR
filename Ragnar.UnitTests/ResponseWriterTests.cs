@@ -25,7 +25,7 @@ public class ResponseWriterTests
     public async Task WriteResponseAsyncShouldWriteFileAndReturnPath()
     {
         // Arrange
-        var details = new SaveDetails
+        var details = new ResponseRecord
         (
             new Core.Model.Question
             (true, "Test?",
@@ -34,8 +34,8 @@ public class ResponseWriterTests
             ), Content: "", ElapsedTime: "00:00"
         );
 
-        var expectedDir = "C:\\Response\\CSharp";
-        var expectedContent = "# Response\nContent here";
+        const string expectedDir = "C:\\Response\\CSharp";
+        const string expectedContent = "# Response\nContent here";
 
         _pathResolverMock
             .Setup(p => p.ResolveResponseDirectory(QuestionCategory.Other))
@@ -44,7 +44,7 @@ public class ResponseWriterTests
             .Setup(f => f.FileExtension)
             .Returns("md");
         _formatterMock
-            .Setup(f => f.Format(details))
+            .Setup(f => f.FormatResponse(details))
             .Returns(expectedContent);
 
         // Act
@@ -60,7 +60,7 @@ public class ResponseWriterTests
     public async Task WriteResponseAsyncNullCategoryShouldResolveUnCategorized()
     {
         // Arrange
-        var details = new SaveDetails(
+        var details = new ResponseRecord(
 
             Question: new Core.Model.Question
             (
@@ -73,7 +73,7 @@ public class ResponseWriterTests
             .Setup(p => p.ResolveResponseDirectory(It.IsAny<QuestionCategory?>()))
             .Returns("/output/Uncategorized");
         _formatterMock.Setup(f => f.FileExtension).Returns("md");
-        _formatterMock.Setup(f => f.Format(details)).Returns("content");
+        _formatterMock.Setup(f => f.FormatResponse(details)).Returns("content");
 
         // Act
         var result = await _sut.WriteResponseAsync(details, CancellationToken.None);
@@ -86,14 +86,14 @@ public class ResponseWriterTests
     public async Task WriteResponseAsyncFileWriterThrowsShouldPropagate()
     {
         // Arrange
-        var details = new SaveDetails(
+        var details = new ResponseRecord(
             new Core.Model.Question(true, "Q", "f.csv", QuestionCategory.Other),
             "",
             "00:00");
 
         _pathResolverMock.Setup(p => p.ResolveResponseDirectory(It.IsAny<QuestionCategory?>())).Returns("/tmp");
         _formatterMock.Setup(f => f.FileExtension).Returns("md");
-        _formatterMock.Setup(f => f.Format(details)).Returns("x");
+        _formatterMock.Setup(f => f.FormatResponse(details)).Returns("x");
         _fileWriterMock
             .Setup(w => w.WriteAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ThrowsAsync(new IOException("Disk full"));

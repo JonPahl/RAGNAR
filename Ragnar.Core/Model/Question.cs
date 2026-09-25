@@ -26,8 +26,6 @@ public sealed record class Question(
     /// <returns>A new active question instance.</returns>
     public static Question IsActive(string text, string key, QuestionCategory category)
     {
-        //TODO Call question AbstractValidation.
-
         Guard.Against.NullOrWhiteSpace(text);
         Guard.Against.NullOrWhiteSpace(key);
 

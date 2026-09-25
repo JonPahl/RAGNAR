@@ -29,15 +29,15 @@ public class DefaultQuestionCatalogLoader(Serilog.ILogger logger, IOutputWriter 
 
         var questions = GetDefaultQuestions();
 
-        if (categories is not null || categories.Count != 0)
+        if (categories is null && categories.Count == 0)
+        {
+            return [.. questions.Where(x => x.IsEnabled)];
+        }
+        else
         {
             var category = questions.WithCategory(categories).ToList();
 
             return [.. category.Where(x => x.IsEnabled).OrderBy(q => q.Category)];
-        }
-        else
-        {
-            return [.. questions.Where(x => x.IsEnabled)];
         }
     }
 

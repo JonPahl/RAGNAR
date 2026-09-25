@@ -7,31 +7,28 @@ public record EmbeddingOptions
     /// <summary>Gets the embedding service host URL (default: "localhost").</summary>
     /// <example>
     /// <![CDATA[options.Host = "localhost";]]></example>
-    [Required]
-    public required string Host { get; init; } = "localhost";
+    public required string Host { get; init; }
 
     /// <summary>Gets the embedding service port number (default: 6334).</summary>
     /// <example><![CDATA[options.Port = 8080;]]></example>
-    [Required]
-    public required int Port { get; init; } = 6334;
+    public required int Port { get; init; }
 
     /// <summary>Gets the name of the embedding model to use (default: "nomic-embed-text").</summary>
     /// <example><![CDATA[options.EmbeddingModel = "all-MiniLM-L6-v2";]]></example>
-    [Required]
-    public required string EmbeddingModel { get; init; } = "nomic-embed-text";
+    public required string EmbeddingModel { get; init; }
 
     /// <summary>Gets the request timeout duration (default: 30 seconds).</summary>
     /// <example><![CDATA[options.Timeout = TimeSpan.FromSeconds(60);]]></example>
-    [Required]
-    public required TimeSpan Timeout { get; init; } = TimeSpan.FromSeconds(30);
+    public required TimeSpan Timeout { get; init; }
 
     /// <summary>Gets the embedding vector dimension (default: 768, range 1–65536).</summary>
-    /// <example><![CDATA[options.Dimension = 512UL;]]></example>
-    [Required]
-    [Range(1, 65536)]
-    public required ulong Dimension { get; init; } = 768;
+    /// <example><![CDATA[options.Dimension = 512UL;]]>
+    /// </example>
+    public required ulong Dimension { get; init; }
 
-    [Required]
-    [Range(1, 512)]
-    public required int BatchSize { get; init; } = 16;
+    /// <summary>Gets the number of vectors to embed per batch request.</summary>
+    /// <example>
+    /// <![CDATA[options.BatchSize = 32;]]>
+    /// </example>
+    public required int BatchSize { get; init; }
 }

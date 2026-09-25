@@ -22,24 +22,24 @@ public class StringExtensionsTests
     [Fact]
     public void LastFolderReturnsFinalDirectorySegment()
     {
-        var path = @"C:\Projects\MyApp\src\Core";
-        var result = path.AsSpan().LastFolder;
+        const string path = @"C:\Projects\MyApp\src\Core";
+        var result = path.AsSpan().FolderName;
         Assert.Equal("Core", result);
     }
 
     [Fact]
     public void LastFolderHandlesUnixPath()
     {
-        var path = "/home/user/projects/myapp/src/core";
-        var result = path.AsSpan().LastFolder;
+        const string path = "/home/user/projects/myapp/src/core";
+        var result = path.AsSpan().FolderName;
         Assert.Equal("core", result);
     }
 
     [Fact]
     public void LastFolderTrimsTrailingSlashes()
     {
-        var path = @"C:\Projects\MyApp\";
-        var result = path.AsSpan().LastFolder;
+        const string path = @"C:\Projects\MyApp\";
+        var result = path.AsSpan().FolderName;
         Assert.Equal("MyApp", result);
     }
 

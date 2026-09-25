@@ -99,6 +99,7 @@
 
   <ItemGroup>
     <Folder Include="Rendering\" />
+    <Folder Include="Stages\" />
   </ItemGroup>
 
 </Project>

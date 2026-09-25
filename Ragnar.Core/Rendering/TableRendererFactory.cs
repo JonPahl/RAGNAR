@@ -29,6 +29,8 @@ public sealed class TableRendererFactory
 
     public TableRendererFactory WithRows(IEnumerable<IEnumerable<string>> rows)
     {
+        ArgumentNullException.ThrowIfNull(rows);
+
         foreach (var row in rows)
             _builder.AddRow([.. row]);
         return this;

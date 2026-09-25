@@ -16,7 +16,7 @@ public class AnsiConsoleOutputWriter : IOutputWriter
     public void Write(string text, Style? style = null) => AnsiConsole.Write(text, style.EnsureValidStyle());
 
 
-    public void Write(IRenderable text) => AnsiConsole.Write(text);
+    public void Write(IRenderable element) => AnsiConsole.Write(element);
 
     public void WriteException(Exception ex)
         => AnsiConsole.WriteException(ex);

@@ -7,7 +7,7 @@ public static class EmbeddingSetupExtension
     {
         public IServiceCollection EmbeddingSetup()
         {
-            services.AddSingleton<IEmbeddingService, OllamaEmbeddingService>();
+            services.AddSingleton<IEmbeddingService, OllamaEmbeddingGenerator>();
 
             services.AddSingleton<IQdrantPointFactory, PointStructFactory>();
 

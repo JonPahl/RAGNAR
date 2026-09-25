@@ -11,6 +11,8 @@ public class OllamaClientFactoryTests
     {
         var config = new RagnarConfig
         {
+            FileLoadOptions = new(),
+            ApplicationOptions = new ApplicationOptions() { SourceDirectory = "", VectorStoreName = "" },
             OllamaOptions = new OllamaOptions
             {
                 Host = host,
@@ -32,7 +34,8 @@ public class OllamaClientFactoryTests
         mockOpts.Setup(o => o.Value).Returns(config);
 
         var mockHttpFactory = new Mock<IHttpClientFactory>();
-        mockHttpFactory.Setup(f => f.CreateClient(It.IsAny<string>())).Returns(new HttpClient());
+        mockHttpFactory.Setup(f => f.CreateClient(It.IsAny<string>()))
+            .Returns(new HttpClient());
 
         var factory = new OllamaClientFactory(mockHttpFactory.Object, mockOpts.Object);
         return (factory, mockHttpFactory);

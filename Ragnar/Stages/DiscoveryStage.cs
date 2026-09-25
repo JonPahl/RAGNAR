@@ -5,7 +5,8 @@ public sealed class DiscoveryStage(
     IOptions<RagnarConfig> options,
     IFileDiscoveryService fileLoader,
     ILogger logger,
-    IOutputWriter writer) : IPipelineStage<EmbeddingContext>
+    IOutputWriter writer)
+    : IPipelineStage<EmbeddingContext>
 {
     public string Name => "Discovering files…";
     public bool ShouldRun => true;

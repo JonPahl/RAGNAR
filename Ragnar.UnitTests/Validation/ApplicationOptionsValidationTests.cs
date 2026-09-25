@@ -1,16 +1,12 @@
-﻿
-
-
-
-namespace Ragnar.Tests.Validation;
+﻿namespace Ragnar.Tests.Validation;
 
 public class ApplicationOptionsValidationTests
 {
-    private readonly ApplicationOptionsValidation _validator;
+    private readonly ApplicationOptionsValidator _validator;
 
     public ApplicationOptionsValidationTests()
     {
-        _validator = new ApplicationOptionsValidation();
+        _validator = new ApplicationOptionsValidator();
     }
 
     [Fact]

@@ -2,15 +2,15 @@
 
 /// <summary>StopwatchExtensions: Provides extension methods for formatting elapsed time.</summary>
 /// <remarks>Helper class for console output timing and performance tracking.</remarks>
-/// <example><![CDATA[string s = Stopwatch.StartNew().ElapsedTimeString();]]></example>
+/// <example><![CDATA[string s = Stopwatch.StartNew().FormatElapsedTime();]]></example>
 public static class StopwatchExtensions
 {
     /// <summary> Formats elapsed time as mm:ss string.</summary>
     /// <param name="sw">Stopwatch instance to measure and format.</param>
     /// <remarks>Returns a fixed-width string with minutes and seconds.</remarks>
-    /// <example><![CDATA[string time = sw.ElapsedTimeString();]]></example>
+    /// <example><![CDATA[string time = sw.FormatElapsedTime();]]></example>
     /// <returns>Elapsed time string formatted as mm:ss.</returns>
-    public static string ElapsedTimeString(this Stopwatch sw)
+    public static string FormatElapsedTime(this Stopwatch sw)
     {
         Guard.Against.Null(sw);
         var t = sw.Elapsed;

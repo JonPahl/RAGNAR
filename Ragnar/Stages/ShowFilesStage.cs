@@ -5,11 +5,16 @@ public sealed class ShowFileStage(
     IOptions<RagnarConfig> options,
     IQdrantClient client,
     ILogger logger
-    //IOutputWriter writer
     ) : IPipelineStage<EmbeddingContext>
 {
+
+    /// <summary>Gets the human-readable stage name for progress display.</summary>
+    /// <returns>The string "Show files…".</returns>
+    /// <example><![CDATA[string n = stage.Name;]]></example>
     public string Name => "Show files…";
-    public bool ShouldRun => true;
+
+    /// <summary>Indicates this stage should always execute in the pipeline.</summary>
+    public bool ShouldRun => false;
 
     public async Task ExecuteAsync(EmbeddingContext context, CancellationToken cancellationToken)
     {
@@ -17,7 +22,6 @@ public sealed class ShowFileStage(
 
         ShowTable(items);
     }
-
 
     private async Task<List<string>> EntryExists(IQdrantClient client)
     {
@@ -30,7 +34,6 @@ public sealed class ShowFileStage(
 
         do
         {
-            // 3. Request the page using the accumulated offset
             var response = await client.ScrollAsync(
                 collectionName: collectionName,
                 limit: limit,
@@ -77,4 +80,3 @@ public sealed class ShowFileStage(
         AnsiConsole.Write(table);
     }
 }
-

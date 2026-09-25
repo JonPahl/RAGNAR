@@ -6,6 +6,7 @@
 /// <example><![CDATA[var t = new ConsoleTableBuilder().AddColumns("A","B").AddRow("1","2").ToTable();]]></example>
 public sealed class ConsoleTableBuilder : ITableBuilder
 {
+    /// <summary>Cached expected cell count per row, locked on the first <c>AddRow</c> call.</summary>
     private int? _expectedCellCount;
 
 
@@ -18,7 +19,11 @@ public sealed class ConsoleTableBuilder : ITableBuilder
     /// <example><![CDATA[builder.Expand = true;]]></example>
     public bool Expand { get; set; }
 
-    /// <inheritdoc/>
+
+    /// <summary>Adds one or more column headers to the table definition.</summary>
+    /// <param name = "columns">Column header names to append to the table.</param>
+    /// <returns>The builder instance for fluent chaining.</returns>
+    /// <example><![CDATA[builder.AddColumns("Name", "Value");]]></example>
     public ConsoleTableBuilder AddColumns(params string[] columns)
     {
         Guard.Against.Null(columns);
@@ -33,7 +38,7 @@ public sealed class ConsoleTableBuilder : ITableBuilder
 
         foreach (var col in columns)
         {
-            Guard.Against.NullOrWhiteSpace(col, nameof(columns));
+            Guard.Against.NullOrWhiteSpace(col);
             if (Columns.Contains(col, StringComparer.OrdinalIgnoreCase))
                 throw new ArgumentException($"Duplicate column '{col}'.", nameof(columns));
         }
@@ -42,7 +47,12 @@ public sealed class ConsoleTableBuilder : ITableBuilder
         return this;
     }
 
-    /// <inheritdoc/>
+    /// <summary>Appends a data row whose cells match the previously defined column count.</summary>
+    /// <param name = "cells">Cell values for the new row; count must match columns.</param>
+    /// <returns>The builder instance for fluent chaining.</returns>
+    /// <example>
+    /// <![CDATA[builder.AddRow("Hello", "World");]]>
+    /// </example>
     public ConsoleTableBuilder AddRow(params string[] cells)
     {
         Guard.Against.Null(cells);

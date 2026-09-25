@@ -4,7 +4,7 @@ public class ResponseMarkdownFormatter(IClock clock) : IOutputFormatter
 {
     public string FileExtension { get; set; } = "md";
 
-    public string Format(SaveDetails details)
+    public string FormatResponse(ResponseRecord details)
     {
         var response = new StringBuilder();
         response.AppendLine($"{details.Question.MarkdownHeader}");

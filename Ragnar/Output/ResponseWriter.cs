@@ -1,11 +1,13 @@
 ﻿namespace Ragnar.Output;
 
-/// <summary>Initializes the writer with configuration and services.</summary>
-/// <param name="formatter">Formatter for output content.</param>
-/// <param name="pathResolver">Resolver for directory paths.</param>
-/// <param name="fileWriter">Service for writing files.</param>
-/// <example><![CDATA[await writer.WriteResponseAsync(details, ct);]]>
-/// </example>
+/// <summary>Writes formatted AI responses to timestamped Markdown files under category sub-folders.</summary>
+/// <remarks>Delegates formatting to <see cref="IOutputFormatter"/>, path logic to
+/// <see cref="IPathResolver"/>, and I/O to <see cref="IWriter"/>.</remarks>
+/// <param name = "formatter">Formatter for output content.</param>
+/// <param name = "pathResolver">Resolver for directory paths.</param>
+/// <param name = "fileWriter">Service for writing files.</param>
+/// <param name = "clock">IClock used to generate timestamped file names.</param>
+/// <example><![CDATA[await writer.WriteResponseAsync(details, ct);]]></example>
 public sealed class ResponseWriter(
     IOutputFormatter formatter,
     IPathResolver pathResolver,
@@ -19,10 +21,11 @@ public sealed class ResponseWriter(
     /// <remarks>Creates category subdirectories if they do not already exist.</remarks>
     /// <returns>Absolute path to the created markdown file.</returns>
     /// <example><![CDATA[await writer.WriteResponseAsync(details, ct);]]></example>
-    public async Task<string> WriteResponseAsync(SaveDetails details, CancellationToken cancellationToken)
+    public async Task<string> WriteResponseAsync(ResponseRecord details, CancellationToken cancellationToken)
     {
         var directory = pathResolver
             .ResolveResponseDirectory(details.Question.Category);
+        pathResolver.EnsureDirectoryExists(directory);
 
         var stamp = clock.UtcNow.ToString("yyyyMMdd_HHmmss");
 
@@ -30,7 +33,7 @@ public sealed class ResponseWriter(
 
         var fullPath = Path.Join(directory, fileName);
 
-        var content = formatter.Format(details);
+        var content = formatter.FormatResponse(details);
 
         await fileWriter.WriteAsync(fullPath, content, cancellationToken).ConfigureAwait(false);
         return fullPath;

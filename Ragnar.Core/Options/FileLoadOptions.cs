@@ -4,9 +4,9 @@ public record FileLoadOptions
 {
     /// <summary>Gets filters files by extension, name, and directory.</summary>
     /// <example>
-    /// <![CDATA[var opts = new FileLoadOptions { AllowedFileExtensions = [".cs", ".json"] };]]> </example>
+    /// <![CDATA[var opts = new FileLoadOptions { AllowedExtensions = [".cs", ".json"] };]]> </example>
     [Required]
-    public HashSet<string> AllowedFileExtensions { get; init; } = new(StringComparer.OrdinalIgnoreCase);
+    public HashSet<string> AllowedExtensions { get; init; } = new(StringComparer.OrdinalIgnoreCase);
 
     /// <summary>Gets file by name that should not be included.</summary>
     /// <example>

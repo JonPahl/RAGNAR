@@ -1,14 +1,14 @@
 ﻿namespace Ragnar.Abstractions;
 
-/// <summary>Defines the contract for parsing source files into code segments.</summary>
-/// <example><![CDATA[var docs = await parser.ParseAsync("Main.cs", ct);]]></example>
+/// <summary>Contract for parsing source files into embeddable code document segments.</summary>
+/// <example><![CDATA[var p = new CSharpFileParser(logger);]]></example>
 public interface IFileParser
 {
-    /// <summary>Parses a file into discrete <see cref="CodeDocument"/> segments.</summary>
-    /// <param name="filePath">Path to the file to parse.</param>
-    /// <param name="cancellationToken">Token to cancel parsing.</param>
-    /// <returns>Array of code document segments ready for embedding.</returns>
-    /// <example><![CDATA[var s = await parser.ParseAsync("App.cs", ct);]]></example>
+    /// <summary>Parses a file into discrete code document segments for embedding.</summary>
+    /// <param name="filePath">Path to the source file to parse.</param>
+    /// <param name="cancellationToken">Token to cancel the parse operation.</param>
+    /// <returns>Collection of parsed code document segments.</returns>
+    /// <example><![CDATA[var segs = await parser.ParseAsync("Main.cs", ct);]]></example>
     Task<IEnumerable<CodeDocument>> ParseAsync(string filePath, CancellationToken cancellationToken);
 
     /// <summary>Reads the raw text content of a file.</summary>

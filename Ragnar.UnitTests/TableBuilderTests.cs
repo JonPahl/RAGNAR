@@ -1,11 +1,8 @@
-﻿// ═══════════════════════════════════════════════════════════
-// VectorStoreRepositoryTests.cs
-// ═══════════════════════════════════════════════════════════
-namespace Ragnar.Tests;
+﻿namespace Ragnar.Tests;
 
 public class TableBuilderTests
 {
-    private readonly ConsoleTableBuilder _sut = new();
+    private readonly ConsoleTableBuilder _sut;
 
     public TableBuilderTests()
     {

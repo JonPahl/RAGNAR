@@ -11,6 +11,12 @@ public class OllamaClientFactoryTests
         _httpClientFactoryMock = new Mock<IHttpClientFactory>();
         _config = new RagnarConfig
         {
+            ApplicationOptions = new ApplicationOptions()
+            {
+                SourceDirectory = "",
+                VectorStoreName = ""
+            },
+            FileLoadOptions = new FileLoadOptions(),
             OllamaOptions = new OllamaOptions
             {
                 Host = "localhost",
@@ -87,10 +93,11 @@ public class OllamaClientFactoryTests
             .Returns(mockClient);
 
         // Act
-        _sut.ResolveClient(OllamaServiceType.Ollama);
+        var result = _sut.ResolveClient(OllamaServiceType.Ollama);
 
-        // Assert
-        _httpClientFactoryMock.Verify(f => f.CreateClient(It.IsAny<string>()), Times.Once);
+        // Assert – the factory is responsible for setting BaseAddress
+        Assert.Equal(
+            new Uri("http://localhost:11434"), result.Config.Uri);
         mockClient.Dispose();
     }
 }

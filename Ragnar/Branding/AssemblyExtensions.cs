@@ -7,19 +7,19 @@
 /// <example><![CDATA[string v = asm.InformationalVersion;]]></example>
 public static class AssemblyExtensions
 {
-    /// <summary>Adds version-query helpers to <see cref="Assembly"/> instances.</summary>
-    /// <param name="asm">The target assembly to extend.</param>
-    /// <example><![CDATA[var v = typeof(App).Assembly.InformationalVersion;]]></example>
+    private static readonly ConcurrentDictionary<Assembly, string> _cache = new();
+
+
+    /// <summary>Resolves and caches the informational version string of an assembly.</summary>
+    private static string Resolve(Assembly asm) =>
+        _cache.GetOrAdd(asm, a => a.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion
+         ?? a.GetName().Version?.ToString()
+         ?? "1.0.0");
+
     extension(Assembly asm)
     {
-        /// <summary>Retrieves the informational version from an assembly.</summary>
-        /// <returns>The informational version string or default fallback.</returns>
-        /// <example><![CDATA[string v = typeof(App).Assembly.InformationalVersion;]]></example>
-        public string InformationalVersion => "1.0.0";
-        // cachedVersion.Version;
-
-        //private string cachedVersion = new(() =>
-        //typeof(AssemblyExtensions).Assembly
-        //.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? "1.0.0");
+        /// <summary>Retrieves the informational version of *this* assembly (cached).</summary>
+        /// <example><![CDATA[string v = Assembly.GetExecutingAssembly().InformationalVersion;]]></example>
+        public string InformationalVersion => Resolve(asm);
     }
 }

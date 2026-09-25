@@ -4,10 +4,12 @@
 /// <param name="options">Ragnar config providing source and output folder paths.</param>
 /// <remarks>Implements IPathResolver for consistent output folder structure management.</remarks>
 /// <example><![CDATA[var dir = resolver.ResolveResponseDirectory(cat);]]></example>
-public sealed class PathResolver(IOptions<RagnarConfig> options) : IPathResolver
+public sealed class PathResolver(
+    IOptions<RagnarConfig> options) : IPathResolver
 {
 
     /// <summary>Cached ApplicationOptions for path resolution.</summary>
+    /// <example><![CDATA[// Populated from RagnarConfig at construction time.]]></example>
     private readonly ApplicationOptions _applicationOptions = options.Value.ApplicationOptions ?? throw new ArgumentNullException(nameof(options), "RagnarConfig options cannot be null.");
 
 
@@ -21,11 +23,13 @@ public sealed class PathResolver(IOptions<RagnarConfig> options) : IPathResolver
     {
         var baseDir = category is null || string.IsNullOrWhiteSpace(category.ToString()) ? nameof(QuestionCategory.Uncategorized) : category.ToString();
 
-        var responseDir = Path.Join(_applicationOptions.SourceDirectory, _applicationOptions.OutputFolder);
-        var categoryDir = Path.Join(responseDir, baseDir);
-
-        Directory.CreateDirectory(categoryDir);
-
-        return categoryDir;
+        return Path.Join(_applicationOptions.SourceDirectory, _applicationOptions.OutputFolder, baseDir);
     }
+
+    /// <summary>Ensures the resolved directory exists (idempotent).</summary>
+    /// <param name="path">Absolute directory path to create if missing.</param>
+    /// <example>
+    /// <![CDATA[resolver.EnsureDirectoryExists(@"C:\out\XML");]]>
+    /// </example>
+    public void EnsureDirectoryExists(string path) => Directory.CreateDirectory(path);
 }

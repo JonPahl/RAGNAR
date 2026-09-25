@@ -21,14 +21,14 @@ public static class ApplicationConfigurationExtensions
 
                 var ollamaClientProvider = sp.GetRequiredService<IOllamaClientFactory>();
 
-                return new OllamaEmbeddingService(logger, ollamaClientProvider, config);
+                return new OllamaEmbeddingGenerator(logger, ollamaClientProvider, config);
             });
 
             return services;
         }
 
 
-        /// <summary>Discovers and registers IQuestionProvider implementations from plugin DLLs.</summary>
+        /// <summary>Discovers and registers IQuestionSource implementations from plugin DLLs.</summary>
         /// <remarks>Loads assemblies from the base Questions/Plugins directory.</remarks>
         /// <example><![CDATA[services.LoadQuestionPlugins();]]></example>
         /// <returns>The service collection for chaining.</returns>
@@ -44,9 +44,9 @@ public static class ApplicationConfigurationExtensions
                     var assembly = AssemblyLoadContext.Default.LoadFromAssemblyPath(dll);
 
                     var providers = assembly.GetTypes()
-                        .Where(t => typeof(IQuestionProvider).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) != null);
+                        .Where(t => typeof(IQuestionSource).IsAssignableFrom(t) && t.IsClass && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) != null);
 
-                    foreach (var type in providers) services.AddTransient(typeof(IQuestionProvider), type);
+                    foreach (var type in providers) services.AddTransient(typeof(IQuestionSource), type);
                 }
                 catch (Exception ex)
                 {

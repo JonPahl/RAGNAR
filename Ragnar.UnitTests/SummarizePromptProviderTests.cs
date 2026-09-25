@@ -34,8 +34,8 @@ public class SummarizePromptProviderTests
     public void GetTemplateShouldIncludeContentAndQuestion()
     {
         // Arrange
-        var content = "public void DoWork() { }";
-        var question = "Explain this method";
+        const string content = "public void DoWork() { }";
+        const string question = "Explain this method";
 
         // Act
         var result = _sut.GetTemplate(content, question);
@@ -71,8 +71,8 @@ public class SummarizePromptProviderTests
     public void GetTemplateShouldHaveQuestionAfterContent()
     {
         // Arrange
-        var content = "Line1\nLine2";
-        var question = "Summarise";
+        const string content = "Line1\nLine2";
+        const string question = "Summarise";
 
         // Act
         var result = _sut.GetTemplate(content, question);

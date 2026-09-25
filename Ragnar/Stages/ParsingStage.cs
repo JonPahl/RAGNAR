@@ -4,10 +4,9 @@
 /// <example><![CDATA[await stage.ExecuteAsync(ctx, ct);]]></example>
 public sealed class ParsingStage(
     IFileParseFactory parseFactory,
-    ILogger logger,
-    IOutputWriter writer) : IPipelineStage<EmbeddingContext>
+    ILogger logger)
+    : IPipelineStage<EmbeddingContext>
 {
-
     /// <summary>Gets the human-readable stage name for progress display.</summary>
     /// <example><![CDATA[string name = stage.Name;]]></example>
     public string Name => "Parsing files…";

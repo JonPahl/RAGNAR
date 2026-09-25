@@ -13,6 +13,9 @@ public class VectorStoreBuilderTests
         _loggerMock = new Mock<ILogger>();
         _config = new RagnarConfig
         {
+            FileLoadOptions = new FileLoadOptions(),
+            OllamaOptions = new OllamaOptions()
+            { Host = "", LlmModel = "", Port = 0, Timeout = TimeSpan.FromMinutes(30) },
             ApplicationOptions = new ApplicationOptions
             {
                 VectorStoreName = "test_collection",
@@ -28,6 +31,7 @@ public class VectorStoreBuilderTests
                 BatchSize = 16
             }
         };
+
         _sut = new VectorStoreBuilder(
             _loggerMock.Object,
             Options.Create(_config),

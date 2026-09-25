@@ -26,8 +26,8 @@ public class SummarizePromptProviderTests
     public void GetTemplateWithContentAndQuestionShouldCombineBoth()
     {
         // Arrange
-        var content = "public class Foo { void Bar() {} }";
-        var question = "Explain the design pattern used.";
+        const string content = "public class Foo { void Bar() {} }";
+        const string question = "Explain the design pattern used.";
 
         // Act
         var result = _sut.GetTemplate(content, question);

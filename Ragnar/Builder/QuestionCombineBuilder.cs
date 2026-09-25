@@ -2,7 +2,7 @@
 
 
 public sealed class QuestionCombineBuilder(
-    IQuestionProvider questionProvider,
+    IQuestionSource questionProvider,
     IQuestionCatalogLoader questionLoader,
     IQuestionBuilder questionBuilder,
     IOptions<RagnarConfig> options) : IQuestionSourceBuilder
@@ -129,7 +129,7 @@ public sealed class QuestionCombineBuilder(
         var categories = options.Value.ApplicationOptions.CategoriesToProcess;
 
         // If the list is null or empty, keep everything (no filter).
-        if (categories?.Any() != true)
+        if (categories.Any())
             return this;
 
         var hash = categories.ToHashSet();

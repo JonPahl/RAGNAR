@@ -1,7 +1,7 @@
 ﻿namespace Ragnar;
 
 [Serializable]
-internal class PipelineStageException : Exception
+public sealed class PipelineStageException : Exception
 {
     public PipelineStageException()
     {

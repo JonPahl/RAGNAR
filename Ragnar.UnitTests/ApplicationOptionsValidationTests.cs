@@ -5,7 +5,7 @@
 // ───────────────────────────────────────────────────────────────
 public class ApplicationOptionsValidationTests
 {
-    private readonly ApplicationOptionsValidation _validator = new();
+    private readonly ApplicationOptionsValidator _validator = new();
 
     [Fact]
     public void ValidOptionsProduceNoErrors()

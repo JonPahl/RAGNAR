@@ -60,7 +60,7 @@ public class FileDiscoveryService : IFileDiscoveryService
     private static IEnumerable<string> ListFiles(string rootPath, FileLoadOptions filter)
     {
         var allowedExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        foreach (var ext in filter.AllowedFileExtensions)
+        foreach (var ext in filter.AllowedExtensions)
         {
             allowedExtensions.Add(ext);
         }

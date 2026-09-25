@@ -1,6 +1,4 @@
-﻿
-
-namespace Ragnar.Ollama;
+﻿namespace Ragnar.Ollama;
 
 /// <summary>Streams Ollama chat responses with live console rendering.</summary>
 /// <remarks>Applies token limits, temperature, and real-time panel updates.</remarks>
@@ -76,21 +74,28 @@ public class OllamaChatService(
                 // Optionally re-throw or mark the response as degraded
             }
 
-            await foreach (var token in client.SendAsAsync(ChatRole.User, request.Prompt, cancellationToken: cancellationToken).ConfigureAwait(false))
+            try
             {
-                if (token is null)
+                await foreach (var token in client.SendAsAsync(ChatRole.User, request.Prompt, cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    throw new ArgumentException("null response is null");
+                    if (token is null)
+                    {
+                        throw new ArgumentException("null response is null");
+                    }
+
+                    var clean = Markup.Escape(token);
+                    completeText.Append(clean);
+
+                    panelText = new Markup(completeText.ToString(), Styles.Yellow);
+
+                    ctx.UpdateTarget(panel);
+                    ctx.UpdateTarget(panelText);
+                    ctx.Refresh();
                 }
-
-                var clean = Markup.Escape(token);
-                completeText.Append(clean);
-
-                panelText = new Markup(completeText.ToString(), Styles.Yellow);
-
-                ctx.UpdateTarget(panel);
-                ctx.UpdateTarget(panelText);
-                ctx.Refresh();
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
         }).ConfigureAwait(false);
 

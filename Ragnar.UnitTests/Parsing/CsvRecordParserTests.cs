@@ -15,7 +15,7 @@ public class CsvRecordParserTests : IDisposable
     public async Task ParseAsyncValidCsvShouldReturnRecords()
     {
         // Arrange
-        var csvContent = "Text,Category,IsEnabled,FileName\r\n" +
+        const string csvContent = "Text,Category,IsEnabled,FileName\r\n" +
                          "What is C#?,CSharp,true,questions.csv\r\n" +
                          "How to use LINQ?,CSharp,true,questions.csv\r\n";
         await File.WriteAllTextAsync(_tempFilePath, csvContent, TestContext.Current.CancellationToken);
@@ -33,7 +33,7 @@ public class CsvRecordParserTests : IDisposable
     public async Task ParseAsyncEmptyFileShouldReturnEmptyList()
     {
         // Arrange
-        var csvContent = "Text,Category,IsEnabled,FileName\r\n";
+        const string csvContent = "Text,Category,IsEnabled,FileName\r\n";
         await File.WriteAllTextAsync(_tempFilePath, csvContent, TestContext.Current.CancellationToken);
 
         // Act
@@ -60,22 +60,17 @@ public class CsvRecordParserTests : IDisposable
     }
 
     [Fact]
-    public async Task ParseAsyncCancellationRequestedShouldThrow()
+    public async Task ParseAsyncCancellationRequestedBeforeStartShouldThrow()
     {
-        // Arrange
-        var csvContent = "Text,Category,IsEnabled,FileName\r\n" +
-                         "Test,CSharp,true,file.csv\r\n";
-        await File.WriteAllTextAsync(_tempFilePath, csvContent, TestContext.Current.CancellationToken);
-        var cts = new CancellationTokenSource();
+        // Arrange – token is already cancelled
+        using var cts = new CancellationTokenSource();
         await cts.CancelAsync();
+        await File.WriteAllTextAsync(_tempFilePath, "Text,Category,IsEnabled,FileName\r\n", TestContext.Current.CancellationToken);
 
         // Act & Assert
-        await Assert.ThrowsAnyAsync<OperationCanceledException>(() =>
-            _sut.ParseAsync(_tempFilePath, cts.Token));
-
-        cts.Dispose();
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(
+            () => _sut.ParseAsync(_tempFilePath, cts.Token));
     }
-
     public void Dispose()
     {
         if (File.Exists(_tempFilePath))

@@ -1,7 +1,7 @@
 ﻿namespace Ragnar.Builder;
 
-public class OllamaAIClientBuilder(
-    IOllamaClientFactory clientFactory) : IOllamaAIClientBuilder
+public class OllamaAIClientBuilder(IOllamaClientFactory clientFactory)
+    : IOllamaAIClientBuilder
 {
     private IChatClient _client;
 

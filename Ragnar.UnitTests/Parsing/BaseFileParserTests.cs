@@ -17,7 +17,7 @@ public class BaseFileParserTests : IDisposable
     public async Task ReadFileAsyncValidFileShouldReturnContent()
     {
         // Arrange
-        var content = "public class Test { }";
+        const string content = "public class Test { }";
         await File.WriteAllTextAsync(_tempFile, content, TestContext.Current.CancellationToken);
 
         // Act

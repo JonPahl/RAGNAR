@@ -1,61 +1,103 @@
 ﻿namespace Ragnar;
 
-/// <summary>Executes ordered pipeline stages sequentially with timing and error handling.</summary>
-/// <param name="writer">Console output writer for stage progress.</param>
-/// <param name="logger">Serilog logger for stage diagnostics.</param>
-/// <example><![CDATA[runner.AddStage(s).ExecuteAsync(ctx, ct);]]></example>
-public sealed class PipelineRunner(IOutputWriter writer, ILogger logger)
-    : IPipelineRunner
+/// <summary>Orchestrates sequential execution of pipeline stages with retry and progress tracking.</summary>
+/// <param name="logger"></param>
+/// <param name="writer"></param>
+/// <remarks>Thread-safe stage registration; supports reorder, remove, and per-stage retry policies.</remarks>
+/// <example><![CDATA[await runner.AddStage(s).ExecuteAsync(ctx, ct);]]></example>
+public sealed class PipelineRunner(
+    ILogger logger,
+    IOutputWriter writer)
+    : BasePipeline<EmbeddingContext>
 {
-    /// <summary>Ordered list of pipeline stages to execute.</summary>
-    private readonly List<IPipelineStage<EmbeddingContext>> _stages = [];
+    private readonly Lock _gate = new();
 
+    private readonly List<PipelineStageEntry<EmbeddingContext>>
+            _stages = [];
 
-    /// <summary>Registers a pipeline stage to be executed in order.</summary>
-    /// <param name="stage">The pipeline stage to append.</param>
-    /// <returns>This runner for fluent chaining.</returns>
-    /// <example><![CDATA[runner.AddStage(new ParsingStage(f, l, w));]]></example>
-    public PipelineRunner AddStage(IPipelineStage<EmbeddingContext> stage)
+    /// <summary>Registers a pipeline stage, enforcing unique names.</summary>
+    /// <param name="stage">The stage to add to the execution sequence.</param>
+    /// <returns>The runner instance for fluent chaining.</returns>
+    /// <example><![CDATA[runner.AddStage(parsingStage);]]></example>
+    public override PipelineRunner AddStage(IPipelineStage<EmbeddingContext> stage)
     {
-        _stages.Add(stage);
+        Guard.Against.Null(stage);
+
+        lock (_gate)
+        {
+            if (_stages.Any(x => x.Name == stage.Name))
+                throw new ArgumentException($"Stage '{stage.Name}' is already registered.", nameof(stage));
+
+            _stages.Add(new PipelineStageEntry<EmbeddingContext>(stage)
+            {
+                CachedPolicy = Policy.Handle<HttpRequestException>()
+                .Or<TimeoutException>()
+                .WaitAndRetryAsync(3, a => TimeSpan.FromSeconds(Math.Pow(2, a)))
+            });
+        }
         return this;
     }
 
-    /// <summary>Runs all registered stages sequentially with per-stage timing.</summary>
-    /// <param name="context">Shared embedding pipeline context passed between stages.</param>
-    /// <param name="ct">Token to abort the pipeline at any stage boundary.</param>
-    /// <returns>The mutated EmbeddingContext after all stages complete.</returns>
+    /// <summary>Removes a previously registered stage by name.</summary>
+    /// <param name="name">Display name of the stage to remove.</param>
+    /// <returns>The runner instance for fluent chaining.</returns>
+    /// <example><![CDATA[runner.RemoveStage("Parsing");]]></example>
+    public override PipelineRunner RemoveStage(string name)
+    {
+        lock (_gate)
+            _stages.RemoveAll(s => s.Name == name);
+        return this;
+    }
+
+    /// <summary>Moves a registered stage to a new position in the sequence.</summary>
+    /// <param name="fromName">Name of the stage to relocate.</param>
+    /// <param name="newIndex">Zero-based target index; clamped to valid range.</param>
+    /// <returns>The runner instance for fluent chaining.</returns>
+    /// <example><![CDATA[runner.Reorder("Parsing", 0);]]></example>
+    public override PipelineRunner Reorder(string fromName, int newIndex)
+    {
+        lock (_gate)
+        {
+            var entry = _stages.FirstOrDefault(s => s.Name == fromName)
+                        ?? throw new KeyNotFoundException(fromName);
+
+            _stages.Remove(entry);
+            _stages.Insert(Math.Clamp(newIndex, 0, _stages.Count), entry);
+        }
+        return this;
+    }
+
+    /// <summary>Executes all registered stages sequentially with retry and logging.</summary>
+    /// <param name="context">Shared embedding context passed through each stage.</param>
+    /// <param name="ct">Token to cancel pipeline execution.</param>
+    /// <returns>The enriched context after all stages complete.</returns>
     /// <example><![CDATA[await runner.ExecuteAsync(ctx, ct);]]></example>
-    public async Task<EmbeddingContext> ExecuteAsync(
-        EmbeddingContext context, CancellationToken ct)
+    public override async Task<EmbeddingContext> ExecuteAsync(EmbeddingContext context, CancellationToken ct)
     {
         var sw = Stopwatch.StartNew();
-        for (var i = 0; i < _stages.Count; i++)
-        {
-            var stage = _stages[i];
+        List<PipelineStageEntry<EmbeddingContext>> snapshot;
+        lock (_gate) snapshot = [.. _stages];
 
+        for (var i = 0; i < snapshot.Count; i++)
+        {
+            var stage = snapshot[i].Stage;
             if (!stage.ShouldRun)
             {
-                logger.Information("Skipping stages [{Index}]: {Name}", i, stage.Name);
+                logger.Information("Skipping stage [{Index}]: {Name}", i, stage.Name);
                 continue;
             }
 
-            logger.Information("Starting stages [{Index}/{Total}]: {Name}", i + 1, _stages.Count, stage.Name);
+            logger.Information("Starting stage [{Index}/{Total}]: {Name}", i + 1, snapshot.Count, stage.Name);
             var stageSw = Stopwatch.StartNew();
 
             try
             {
-                var retryPolicy = Policy
-                    .Handle<HttpRequestException>()
-                    .Or<TimeoutException>()
-                    .WaitAndRetryAsync(3, attempt => TimeSpan.FromSeconds(Math.Pow(2, attempt)),
-                    (ex, ts, attempt, _) => logger.Warning(ex, "Stage {Name} attempt {A} failed, retrying in {Ts}",
-                    stage.Name, attempt, ts));
-
-                await retryPolicy.ExecuteAsync(
+                await snapshot[i].CachedPolicy
+                    .ExecuteAsync(
                     async () => await stage
-                    .ExecuteAsync(context, ct).ConfigureAwait(false)
-                    ).ConfigureAwait(false);
+                    .ExecuteAsync(context, ct)
+                    .ConfigureAwait(false))
+                    .ConfigureAwait(false);
             }
             catch (OperationCanceledException) when (ct.IsCancellationRequested)
             {
@@ -63,14 +105,16 @@ public sealed class PipelineRunner(IOutputWriter writer, ILogger logger)
             }
             catch (Exception ex)
             {
-                logger.Fatal(ex, "Stage [{Index}] {Name} failed after {Elapsed}", i, stage.Name, stageSw.Elapsed);
+                logger.Fatal(ex, "Stage [{Index}] {Name} failed after {Elapsed}",
+                    i, stage.Name, stageSw.Elapsed);
                 throw new PipelineStageException(stage.Name, ex);
             }
 
-            logger.Information("Completed stages [{Index}] {Name} in {Time}", i, stage.Name, stageSw.ElapsedTimeString());
+            logger.Information("Completed stage [{Index}] {Name} in {Time}",
+                i, stage.Name, stageSw.FormatElapsedTime());
         }
 
-        logger.Information("Pipeline finished in {Total}", sw.ElapsedTimeString());
+        logger.Information("Pipeline finished in {Total}", sw.FormatElapsedTime());
         return context;
     }
 }

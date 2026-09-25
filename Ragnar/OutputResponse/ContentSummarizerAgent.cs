@@ -1,8 +1,6 @@
 ﻿namespace Ragnar.OutputResponse;
 
-/// <summary>Initializes a new instance of the SummaryAgent orchestrator.</summary>
-/// <param name ="ollamaClientProvider"> Client provider used for LLM response generation.</param>
-/// <param name ="summaryPrompt"> System prompt template used for content summaries.</param>
+
 public class ContentSummarizerAgent(
     IOllamaAIClientBuilder ollamaAIClientBuilder,
     IOllamaGenerationService ollamaClientProvider,

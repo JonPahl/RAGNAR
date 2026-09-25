@@ -1,6 +1,9 @@
 ﻿namespace Ragnar.Abstractions;
 
 /// <summary>Interface for providing system prompts and content templates.</summary>
+/// <example> <![CDATA[[
+/// var s = provider.System;
+/// var t = provider.GetTemplate("code", "Q");]]></example>
 public interface IChatPromptProvider
 {
     /// <summary>Gets the system prompt instruction string for the AI model.</summary>

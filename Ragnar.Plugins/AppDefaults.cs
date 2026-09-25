@@ -6,7 +6,7 @@
 public static class AppDefaults
 {
     /// <summary>Label used when a question category is not yet classified.</summary>
-    public const string unCategorizedCategory = "Uncategorized";
+    public const string UnCategorizedCategory = "Uncategorized";
 
     /// <summary>Opening marker that wraps the original prompt in output documents.</summary>
     public const string OriginalPromptLabel = "[Original Prompt]";

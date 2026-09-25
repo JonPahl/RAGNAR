@@ -22,7 +22,8 @@ public class ChunkBySyntaxTree(Serilog.ILogger logger, IQdrantClient client, IOp
 
         var tree = CSharpSyntaxTree.ParseText(codeText);
 
-        if (tree.GetRoot() is not CompilationUnitSyntax root)
+        var r = await tree.GetRootAsync().ConfigureAwait(false);
+        if (r is not CompilationUnitSyntax root)
             return null;
 
         foreach (var node in root.DescendantNodes())
@@ -46,11 +47,6 @@ public class ChunkBySyntaxTree(Serilog.ILogger logger, IQdrantClient client, IOp
                     break;
                 default:
                     break;
-                    //case NamespaceDeclarationSyntax
-                    //default:
-                    //    var x = node.GetType().Name;
-                    //    logger.Error("file type: {type}; in file name: {filename} doesn't wasn't a class or interface.", node.GetType().Name, filename);
-                    //    break;
             }
         }
 
@@ -58,7 +54,7 @@ public class ChunkBySyntaxTree(Serilog.ILogger logger, IQdrantClient client, IOp
         // Handle other top-level declarations if needed
     }
 
-    private CodeDocument LoadTypeDeclaration(string filename, TypeDeclarationSyntax typeDeclaration)
+    private static CodeDocument LoadTypeDeclaration(string filename, TypeDeclarationSyntax typeDeclaration)
     {
         var category = InferCategoryFromPath(filename);
 
@@ -72,37 +68,26 @@ public class ChunkBySyntaxTree(Serilog.ILogger logger, IQdrantClient client, IOp
 
     private async Task<bool> FileStoredAsync(string fileName)
     {
-        var redColorFilter = new Filter
+        var fileStoredFilter = new Filter
         {
-            Must =
-            {
-                new Condition
-                {
-                    Field = new FieldCondition
-                    {
+            Must = {
+                new Condition {
+                    Field = new FieldCondition {
                         Key = "FileName",
-                        Match = new Match
-                        {
-                            Keyword = fileName
-                        }
-                    }
-                }
-            }
+                        Match = new Match { Keyword = fileName }}
+                }}
         };
 
-        // 3. Execute the count query
         var countResult = await client.CountAsync(
             collectionName: options.Value.ApplicationOptions.VectorStoreName,
-            filter: redColorFilter,
+            filter: fileStoredFilter,
             exact: true
         ).ConfigureAwait(false);
-
-        // 4. Retrieve the counted number of points
 
         return countResult > 0;
     }
 
-    private CodeDocument LoadRecord(string filename, RecordDeclarationSyntax recordDefine)
+    private static CodeDocument LoadRecord(string filename, RecordDeclarationSyntax recordDefine)
     {
         var category = InferCategoryFromPath(filename);
 
@@ -113,7 +98,6 @@ public class ChunkBySyntaxTree(Serilog.ILogger logger, IQdrantClient client, IOp
             recordDefine?.GetLeadingTrivia(),
             category);
     }
-
 
     /// <summary>
     /// Converts class declaration node to CodeDocument.

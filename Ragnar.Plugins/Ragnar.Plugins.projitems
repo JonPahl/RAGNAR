@@ -9,7 +9,7 @@
     <Import_RootNamespace>Ragnar.Plugins</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)IQuestionProvider.cs" />
+    <Compile Include="..\Ragnar.Plugins\IQuestionSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)QuestionCategory.cs" />
     <Compile Include="..\Ragnar.Plugins\Question.cs" />
   </ItemGroup>

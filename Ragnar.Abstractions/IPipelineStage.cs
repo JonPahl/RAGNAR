@@ -1,7 +1,7 @@
 ﻿namespace Ragnar.Abstractions;
 
-/// <summary>Typed pipeline stage that operates on a specific context object.</summary>
-/// <typeparamref name="TContext">The shared context flowing between stages.</typeparam>
+/// <summary>Defines a single executable stage within the embedding pipeline.</summary>
+/// <typeparam name="TContext">The context type carried through the stage.</typeparam>
 /// <example><![CDATA[await stage.ExecuteAsync(ct);]]></example>
 public interface IPipelineStage<in TContext>
 {
@@ -10,8 +10,10 @@ public interface IPipelineStage<in TContext>
     /// <example><![CDATA[string n = stage.Name;]]></example>
     string Name { get; }
 
+    /// <summary>Indicates whether this stage should execute in the pipeline.</summary>
+    /// <returns><c>true</c> to run; <c>false</c> to skip.</returns>
+    /// <example><![CDATA[bool shouldRun = stage.ShouldRun;]]></example>
     bool ShouldRun { get; }
-
 
     /// <summary>Executes the stage logic against the supplied pipeline context.</summary>
     /// <param name="context">The shared pipeline context carrying state between stages.</param>

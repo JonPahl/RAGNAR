@@ -5,7 +5,7 @@
 /// Populated incrementally: Discovery → Parsing → Upsert.
 /// Each stage reads the fields it needs and writes its output before yielding.
 /// </remarks>
-public sealed class EmbeddingContext
+public class EmbeddingContext
 {
     /// <summary>Resolved source directory (set by configuration stage).</summary>
     public string SourceDirectory { get; set; } = null!;

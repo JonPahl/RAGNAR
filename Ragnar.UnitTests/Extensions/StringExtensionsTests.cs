@@ -43,35 +43,35 @@ public class StringExtensionsTests
     [Fact]
     public void LastFolderWindowsPathShouldReturnLastSegment()
     {
-        var result = @"C:\src\proj\app".AsSpan().LastFolder;
+        var result = @"C:\src\proj\app".AsSpan().FolderName;
         Assert.Equal("app", result);
     }
 
     [Fact]
     public void LastFolderLinuxPathShouldReturnLastSegment()
     {
-        var result = "/home/user/projects/ragnar".AsSpan().LastFolder;
+        var result = "/home/user/projects/ragnar".AsSpan().FolderName;
         Assert.Equal("ragnar", result);
     }
 
     [Fact]
     public void LastFolderTrailingSlashShouldTrimAndReturn()
     {
-        var result = @"C:\src\proj\app\".AsSpan().LastFolder;
+        var result = @"C:\src\proj\app\".AsSpan().FolderName;
         Assert.Equal("app", result);
     }
 
     [Fact]
     public void LastFolderTrailingForwardSlashShouldTrimAndReturn()
     {
-        var result = "/home/user/projects/ragnar/".AsSpan().LastFolder;
+        var result = "/home/user/projects/ragnar/".AsSpan().FolderName;
         Assert.Equal("ragnar", result);
     }
 
     [Fact]
     public void LastFolderSingleSegmentShouldReturnItself()
     {
-        var result = "justafolder".AsSpan().LastFolder;
+        var result = "justafolder".AsSpan().FolderName;
         Assert.Equal("justafolder", result);
     }
 

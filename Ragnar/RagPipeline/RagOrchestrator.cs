@@ -52,14 +52,14 @@ public sealed class RagOrchestrator(
             response += request.System;
         }
 
-        await SaveResponseAsync(new SaveDetails(question, response, sw.ElapsedTimeString()), cancellationToken).ConfigureAwait(false);
+        await SaveResponseAsync(new ResponseRecord(question, response, sw.FormatElapsedTime()), cancellationToken).ConfigureAwait(false);
     }
 
     /// <summary>Saves generation response to disk and prints path.</summary>
     /// <param name="details">Response details to save.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
-    /// <example><![CDATA[await SaveResponseAsync(new SaveDetails(...), ct);]]></example>
-    private async Task SaveResponseAsync(SaveDetails details, CancellationToken cancellationToken)
+    /// <example><![CDATA[await SaveResponseAsync(new ResponseRecord(...), ct);]]></example>
+    private async Task SaveResponseAsync(ResponseRecord details, CancellationToken cancellationToken)
     {
         var path = await saveService.WriteResponseAsync(details, cancellationToken).ConfigureAwait(false);
         writer.WriteLine();
