@@ -1,194 +1,439 @@
-# ─────────────────────────────────────────────
-#  Ragnar – Reorganise namespaces & folders
-#  Run from: C:\Users\jp325\source\Ragnar
-# ─────────────────────────────────────────────
+#!/usr/bin/env pwsh
+#Requires -Version 7.3
+# Reorganise Ragnar solution folders and namespaces.
+# Run from the solution root directory.
+
 $ErrorActionPreference = 'Stop'
-$root   = $PWD
-$abst   = Join-Path $root 'Ragnar.Abstractions'
-$core   = Join-Path $root 'Ragnar.Core'
-$embed  = Join-Path $root 'Ragnar.Embedding'
-$main   = Join-Path $root 'Ragnar'
-$plugins = Join-Path $root 'Ragnar.Plugins'
-$tests  = Join-Path $root 'Ragnar.UnitTests'
+$Root = $PSScriptRoot          # C:\Users\jp325\source\Ragnar
+$Src  = Join-Path $Root 'src'
+$Test = Join-Path $Root 'tests'
 
-function Move-File {
-    param([[string]]$src, [[string]]$dst)
-    if (-not (Test-Path $src)) { Write-Host "  SKIP (not found): $src" -ForegroundColor DarkYellow; return }
-    $dstDir = Split-Path $dst -Parent
-    if (-not (Test-Path $dstDir)) { New-Item -ItemType Directory -Path $dstDir -Force | Out-Null }
-    if (Test-Path $dst) { Write-Host "  SKIP (exists):    $dst" -ForegroundColor DarkYellow; return }
-    Move-Item -Path $src -Destination $dst
-    Write-Host "  MOVED:  $src → $dst" -ForegroundColor Green
+Write-Host "=== Ragnar reorganisation ===" -ForegroundColor Cyan
+
+# ──────────────────────────────────────────────
+# 0. Safety: verify we are in the right place
+# ──────────────────────────────────────────────
+if (-not (Test-Path (Join-Path $Root 'Ragnar.Abstractions'))) {
+    throw "Ragnar.Abstractions not found under '$Root'. Run from the solution root."
 }
 
-function Fix-Namespace {
-    param([[string]]$file, [[string]]$newNs)
-    if (-not (Test-Path $file)) { return }
-    $content = Get-Content $file -Raw
-    # Replace the first "namespace X" line (block-scoped) with the new one
-    $content = $content -replace 'namespace\s+[[\w.]]+\s*\{?', "namespace $newNs {"
-    # Also handle file-scoped: "namespace X;"
-    $content = $content -replace "namespace\s+[[\w.]]+\s*;", "namespace $newNs;"
-    [[System.IO.File]]::WriteAllText($file, $content)
-    Write-Host "  NS:     $file → $newNs" -ForegroundColor Cyan
+# ──────────────────────────────────────────────
+# 1. Create src/ and tests/ top-level dirs
+# ──────────────────────────────────────────────
+New-Item -ItemType Directory -Path $Src  -Force | Out-Null
+New-Item -ItemType Directory -Path $Test -Force | Out-Null
+
+# ──────────────────────────────────────────────
+# 2. Move solution-level projects into src/
+# ──────────────────────────────────────────────
+$prodProjects = @(
+    'Ragnar',
+    'Ragnar.Abstractions',
+    'Ragnar.Core',
+    'Ragnar.Embedding',
+    'Ragnar.Questions'
+)
+foreach ($p in $prodProjects) {
+    $from = Join-Path $Root $p
+    $to   = Join-Path $Src  $pcls
+    if (Test-Path $from) {
+        Write-Host "  src/$p" -ForegroundColor DarkGray
+        Move-Item $from $to
+    }
 }
 
-# ── Phase 2: Interfaces → Abstractions.Contracts ──
-Write-Host "`n═══ Phase 2: Move interfaces to Ragnar.Abstractions ═══" -ForegroundColor Yellow
-$abstContracts = Join-Path $abst 'Contracts'
-if (-not (Test-Path $abstContracts)) { New-Item -ItemType Directory -Path $abstContracts -Force | Out-Null }
+# ──────────────────────────────────────────────
+# 3. Move test projects into tests/
+# ──────────────────────────────────────────────
+$testProjects = @(
+    'Tests\Ragnar.UnitTests',
+    'Tests\Ragnar.IntegrationTests'
+)
+foreach ($p in $testProjects) {
+    $from = Join-Path $Root $p
+    $name = (Split-Path $p -Leaf)
+    $to   = Join-Path $Test $name
+    if (Test-Path $from) {
+        Write-Host "  tests/$name" -ForegroundColor DarkGray
+        Move-Item $from $to
+    }
+}
 
-Move-File (Join-Path $main 'Contracts\IApplicationHeader.cs') (Join-Path $abstContracts 'IApplicationHeader.cs')
-Fix-Namespace (Join-Path $abstContracts 'IApplicationHeader.cs') 'Ragnar.Abstractions.Contracts'
+# ──────────────────────────────────────────────
+# 4. Ragnar.Abstractions – group interfaces by domain
+# ──────────────────────────────────────────────
+$abs = Join-Path $Src 'Ragnar.Abstractions'
 
-Move-File (Join-Path $main 'Output\IOutputFormatter.cs') (Join-Path $abstContracts 'IOutputFormatter.cs')
-Fix-Namespace (Join-Path $abstContracts 'IOutputFormatter.cs') 'Ragnar.Abstractions.Contracts'
+# Create domain folders
+$absIo  = Join-Path $abs 'IO'
+$absEmb = Join-Path $abs 'Embedding'
+$absRend = Join-Path $abs 'Rendering'
+foreach ($d in @($absIo, $absEmb, $absRend)) {
+    New-Item -ItemType Directory -Path $d -Force | Out-Null
+}
 
-Move-File (Join-Path $plugins 'IQuestionSource.cs') (Join-Path $abstContracts 'IQuestionSource.cs')
-Fix-Namespace (Join-Path $abstContracts 'IQuestionSource.cs') 'Ragnar.Abstractions.Contracts'
-
-# IPathResolver / IWriter / IResponseWriter – move if they exist as separate files
-@(
-    'IPathResolver.cs',
-    'IWriter.cs',
-    'IResponseWriter.cs',
-    'IClock.cs',
+# IO interfaces
+$ioInterfaces = @(
     'IFileParser.cs',
-    'IFileParseFactory.cs',
+    'IOutputFormatter.cs',
     'IOutputWriter.cs',
-    'IPipelineStage.cs'
-) | ForEach-Object {
-    $name = $_
-    $src  = Join-Path $main "Output\$name"
-    if (-not (Test-Path $src)) { $src = Join-Path $main "Contracts\$name" }
-    if (-not (Test-Path $src)) { $src = Join-Path $main "$name" }
-    Move-File $src (Join-Path $abstContracts $name)
-    Fix-Namespace (Join-Path $abstContracts $name) 'Ragnar.Abstractions.Contracts'
-}
-
-# ── Phase 3: Models & Validators → Core ──
-Write-Host "`n═══ Phase 3: Move models & validators to Ragnar.Core ═══" -ForegroundColor Yellow
-$coreModels     = Join-Path $core 'Models'
-$coreValidation = Join-Path $core 'Validation'
-$coreText       = Join-Path $core 'Text'
-@( $coreModels, $coreValidation, $coreText ) | ForEach-Object {
-    if (-not (Test-Path $_)) { New-Item -ItemType Directory -Path $_ -Force | Out-Null }
-}
-
-Move-File (Join-Path $main 'Models\EmbeddingData.cs') (Join-Path $coreModels 'EmbeddingData.cs')
-Fix-Namespace (Join-Path $coreModels 'EmbeddingData.cs') 'Ragnar.Core.Models'
-
-Move-File (Join-Path $main 'Validator\FileLoadOptionsValidator.cs') (Join-Path $coreValidation 'FileLoadOptionsValidator.cs')
-Fix-Namespace (Join-Path $coreValidation 'FileLoadOptionsValidator.cs') 'Ragnar.Core.Validation'
-
-Move-File (Join-Path $main 'Validator\OllamaOptionsValidator.cs') (Join-Path $coreValidation 'OllamaOptionsValidator.cs')
-Fix-Namespace (Join-Path $coreValidation 'OllamaOptionsValidator.cs') 'Ragnar.Core.Validation'
-
-Move-File (Join-Path $embed 'StringExtensions.cs') (Join-Path $coreText 'StringExtensions.cs')
-Fix-Namespace (Join-Path $coreText 'StringExtensions.cs') 'Ragnar.Core.Text'
-
-# ── Phase 4: Clean up Embedding ──
-Write-Host "`n═══ Phase 4: Reorganise Ragnar.Embedding ═══" -ForegroundColor Yellow
-$embedParsers   = Join-Path $embed 'Parsers'
-$embedVector    = Join-Path $embed 'VectorStore'
-@( $embedParsers, $embedVector ) | ForEach-Object {
-    if (-not (Test-Path $_)) { New-Item -ItemType Directory -Path $_ -Force | Out-Null }
-}
-
-Move-File (Join-Path $embed 'UnitOfWork\BaseFileParser.cs') (Join-Path $embedParsers 'BaseFileParser.cs')
-Fix-Namespace (Join-Path $embedParsers 'BaseFileParser.cs') 'Ragnar.Embedding.Parsers'
-
-# Move any other parsers found in UnitOfWork
-Get-ChildItem (Join-Path $embed 'UnitOfWork') -Filter '*.cs' -ErrorAction SilentlyContinue | ForEach-Object {
-    Move-File $_.FullName (Join-Path $embedParsers $_.Name)
-    Fix-Namespace (Join-Path $embedParsers $_.Name) 'Ragnar.Embedding.Parsers'
-}
-
-Move-File (Join-Path $embed 'VectorStoreBuilder.cs') (Join-Path $embedVector 'VectorStoreBuilder.cs')
-Fix-Namespace (Join-Path $embedVector 'VectorStoreBuilder.cs') 'Ragnar.Embedding.VectorStore'
-
-# Remove empty UnitOfWork folder
-$uw = Join-Path $embed 'UnitOfWork'
-if ((Test-Path $uw) -and -not (Get-ChildItem $uw -ErrorAction SilentlyContinue)) {
-    Remove-Item $uw
-    Write-Host "  REMOVED empty folder: $uw" -ForegroundColor DarkYellow
-}
-
-# ── Phase 5: Main project housekeeping ──
-Write-Host "`n═══ Phase 5: Reorganise main Ragnar project ═══" -ForegroundColor Yellow
-$mainPipeline = Join-Path $main 'Pipeline'
-if (-not (Test-Path $mainPipeline)) { New-Item -ItemType Directory -Path $mainPipeline -Force | Out-Null }
-
-Move-File (Join-Path $main 'PipelineRunner.cs') (Join-Path $mainPipeline 'PipelineRunner.cs')
-Fix-Namespace (Join-Path $mainPipeline 'PipelineRunner.cs') 'Ragnar.Pipeline'
-
-# Remove empty Contracts / Validator / Models folders if they're empty
-@( 'Contracts', 'Validator', 'Models' ) | ForEach-Object {
-    $dir = Join-Path $main $_
-    if ((Test-Path $dir) -and -not (Get-ChildItem $dir -ErrorAction SilentlyContinue)) {
-        Remove-Item $dir
-        Write-Host "  REMOVED empty folder: $dir" -ForegroundColor DarkYellow
+    'IPathResolver.cs',
+    'IQuestionSource.cs',
+    'IRecordParser.cs',
+    'IWriter.cs'
+)
+foreach ($f in $ioInterfaces) {
+    # Search both root and Contracts/
+    $candidates = @(
+        (Join-Path $abs $f),
+        (Join-Path $abs "Contracts\$f")
+    ) | Where-Object { Test-Path $_ }
+    foreach ($c in $candidates) {
+        Move-Item $c (Join-Path $absIo $f) -Force
+        Write-Host "  Abstractions/IO/$f"
     }
 }
 
-# ── Phase 6: Reorganise Unit Tests ──
-Write-Host "`n═══ Phase 6: Reorganise Ragnar.UnitTests ═══" -ForegroundColor Yellow
-
-# Core/Extensions
-$coreTestExt = Join-Path $tests 'Core\Extensions'
-if (-not (Test-Path $coreTestExt)) { New-Item -ItemType Directory -Path $coreTestExt -Force | Out-Null }
-
-Move-File (Join-Path $tests 'Extensions\StringExtensionsTests.cs') (Join-Path $coreTestExt 'StringExtensionsTests.cs')
-Fix-Namespace (Join-Path $coreTestExt 'StringExtensionsTests.cs') 'Ragnar.UnitTests.Core.Extensions'
-
-Move-File (Join-Path $tests 'StopwatchExtensionsTests.cs') (Join-Path $coreTestExt 'StopwatchExtensionsTests.cs')
-Fix-Namespace (Join-Path $coreTestExt 'StopwatchExtensionsTests.cs') 'Ragnar.UnitTests.Core.Extensions'
-
-# Core/Validation
-$coreTestVal = Join-Path $tests 'Core\Validation'
-if (-not (Test-Path $coreTestVal)) { New-Item -ItemType Directory -Path $coreTestVal -Force | Out-Null }
-
-Move-File (Join-Path $tests 'Validation\OllamaOptionsValidatorTests.cs') (Join-Path $coreTestVal 'OllamaOptionsValidatorTests.cs')
-Fix-Namespace (Join-Path $coreTestVal 'OllamaOptionsValidatorTests.cs') 'Ragnar.UnitTests.Core.Validation'
-
-Move-File (Join-Path $tests 'Validation\FileLoadOptionsValidatorTests.cs') (Join-Path $coreTestVal 'FileLoadOptionsValidatorTests.cs')
-Fix-Namespace (Join-Path $coreTestVal 'FileLoadOptionsValidatorTests.cs') 'Ragnar.UnitTests.Core.Validation'
-
-# Embedding/Parsers
-$embedTestParsers = Join-Path $tests 'Embedding\Parsers'
-if (-not (Test-Path $embedTestParsers)) { New-Item -ItemType Directory -Path $embedTestParsers -Force | Out-Null }
-
-Move-File (Join-Path $tests 'Parsing\CsvRecordParserTests.cs') (Join-Path $embedTestParsers 'CsvRecordParserTests.cs')
-Fix-Namespace (Join-Path $embedTestParsers 'CsvRecordParserTests.cs') 'Ragnar.UnitTests.Embedding.Parsers'
-
-# Embedding/VectorStore
-$embedTestVs = Join-Path $tests 'Embedding\VectorStore'
-if (-not (Test-Path $embedTestVs)) { New-Item -ItemType Directory -Path $embedTestVs -Force | Out-Null }
-
-Move-File (Join-Path $tests 'VectorStore\VectorStoreBuilderTests.cs') (Join-Path $embedTestVs 'VectorStoreBuilderTests.cs')
-Fix-Namespace (Join-Path $embedTestVs 'VectorStoreBuilderTests.cs') 'Ragnar.UnitTests.Embedding.VectorStore'
-
-# Output
-$testOutput = Join-Path $tests 'Output'
-if (-not (Test-Path $testOutput)) { New-Item -ItemType Directory -Path $testOutput -Force | Out-Null }
-
-Move-File (Join-Path $tests 'ResponseWriterTests.cs') (Join-Path $testOutput 'ResponseWriterTests.cs')
-Fix-Namespace (Join-Path $testOutput 'ResponseWriterTests.cs') 'Ragnar.UnitTests.Output'
-
-# Remove empty test folders
-@( 'Extensions', 'Validation', 'Parsing', 'VectorStore' ) | ForEach-Object {
-    $dir = Join-Path $tests $_
-    if ((Test-Path $dir) -and -not (Get-ChildItem $dir -ErrorAction SilentlyContinue)) {
-        Remove-Item $dir
-        Write-Host "  REMOVED empty test folder: $dir" -ForegroundColor DarkYellow
+# Embedding interfaces
+$embInterfaces = @(
+    'IOllamaClientFactory.cs',
+    'IQdrantClient.cs',
+    'IQdrantPointFactory.cs',
+    'IVectorSearchService.cs'
+)
+foreach ($f in $embInterfaces) {
+    $candidates = @(
+        (Join-Path $abs $f),
+        (Join-Path $abs "Contracts\$f")
+    ) | Where-Object { Test-Path $_ }
+    foreach ($c in $candidates) {
+        Move-Item $c (Join-Path $absEmb $f) -Force
+        Write-Host "  Abstractions/Embedding/$f"
     }
 }
 
-# ── Done ──
-Write-Host "`n═══════════════════════════════════════════════════════" -ForegroundColor Green
-Write-Host "  Reorganisation complete. Next steps:" -ForegroundColor Green
-Write-Host "  1. Update <ProjectReference> entries in .csproj files" -ForegroundColor Green
-Write-Host "  2. dotnet restore && dotnet build" -ForegroundColor Green
-Write-Host "  3. Fix any missing 'using' directives" -ForegroundColor Green
-Write-Host "  4. dotnet test" -ForegroundColor Green
-Write-Host "═══════════════════════════════════════════════════════" -ForegroundColor Green
+# Rendering interfaces
+$rendInterfaces = @(
+    'IChatPromptProvider.cs',
+    'ITableBuilder.cs',
+    'ITableRenderer.cs'
+)
+foreach ($f in $rendInterfaces) {
+    $candidates = @(
+        (Join-Path $abs $f),
+        (Join-Path $abs "Contracts\$f")
+    ) | Where-Object { Test-Path $_ }
+    foreach ($c in $candidates) {
+        Move-Item $c (Join-Path $absRend $f) -Force
+        Write-Host "  Abstractions/Rendering/$f"
+    }
+}
+
+# Remove empty Contracts folder if it exists
+$contracts = Join-Path $abs 'Contracts'
+if ((Test-Path $contracts) -and (-not (Get-ChildItem $contracts -File))) {
+    Remove-Item $contracts -Force
+    Write-Host "  Removed empty Abstractions/Contracts/"
+}
+
+# ──────────────────────────────────────────────
+# 5. Ragnar.Core – tidy sub-folders
+# ──────────────────────────────────────────────
+$core = Join-Path $Src 'Ragnar.Core'
+
+# Ensure Models/ holds domain POCOs
+$coreModels = Join-Path $core 'Models'
+New-Item -ItemType Directory -Path $coreModels -Force | Out-Null
+
+# Move QuestionExtensions.cs into Models/ (it's a model extension)
+$qExt = Join-Path $core 'Models\QuestionExtensions.cs'
+if (-not (Test-Path $qExt)) {
+    $found = Get-ChildItem $core -Recurse -Filter 'QuestionExtensions.cs' | Select-Object -First 1
+    if ($found) { Move-Item $found.FullName $qExt -Force; Write-Host "  Core/Models/QuestionExtensions.cs" }
+}
+
+# Move EmbeddingOptions.cs to Options/ (if it's in Models/)
+$embOpt = Join-Path $core 'Options\EmbeddingOptions.cs'
+$embOptModel = Join-Path $core 'Models\EmbeddingOptions.cs'
+if ((Test-Path $embOptModel) -and (-not (Test-Path $embOpt))) {
+    Move-Item $embOptModel $embOpt -Force
+    Write-Host "  Core/Options/EmbeddingOptions.cs"
+}
+
+# ──────────────────────────────────────────────
+# 6. Ragnar.Embedding – separate VectorStore from Parsers
+# ──────────────────────────────────────────────
+$emb = Join-Path $Src 'Ragnar.Embedding'
+$embVec = Join-Path $emb 'VectorStore'
+$embCli = Join-Path $emb 'Clients'
+New-Item -ItemType Directory -Path $embVec -Force | Out-Null
+New-Item -ItemType Directory -Path $embCli -Force | Out-Null
+
+# PointStructFactory → VectorStore/
+$psf = Join-Path $emb 'Parsers\PointStructFactory.cs'
+if (Test-Path $psf) {
+    Move-Item $psf (Join-Path $embVec 'PointStructFactory.cs') -Force
+    Write-Host "  Embedding/VectorStore/PointStructFactory.cs"
+}
+
+# OllamaClientFactory → Clients/ (if present at root)
+$ocf = Get-ChildItem $emb -Recurse -Filter 'OllamaClientFactory.cs' | Select-Object -First 1
+if ($ocf -and ($ocf.DirectoryName -ne $embCli)) {
+    Move-Item $ocf.FullName (Join-Path $embCli 'OllamaClientFactory.cs') -Force
+    Write-Host "  Embedding/Clients/OllamaClientFactory.cs"
+}
+
+# ──────────────────────────────────────────────
+# 7. Ragnar.Questions – rename Questions/ → Sources/
+# ──────────────────────────────────────────────
+$q = Join-Path $Src 'Ragnar.Questions'
+$qSrc = Join-Path $q 'Sources'
+New-Item -ItemType Directory -Path $qSrc -Force | Out-Null
+
+$qOld = Join-Path $q 'Questions'
+if (Test-Path $qOld) {
+    Get-ChildItem $qOld -File | ForEach-Object {
+        Move-Item $_.FullName (Join-Path $qSrc $_.Name) -Force
+        Write-Host "  Questions/Sources/$($_.Name)"
+    }
+    Remove-Item $qOld -Force
+}
+
+# ──────────────────────────────────────────────
+# 8. Ragnar (main app) – de-dupe, reorganise
+# ──────────────────────────────────────────────
+$main = Join-Path $Src 'Ragnar'
+
+# 8a. Remove duplicate AssemblyExtensions.cs
+$asmFiles = Get-ChildItem $main -Recurse -Filter 'AssemblyExtensions.cs'
+if ($asmFiles.Count -gt 1) {
+    $keep = $asmFiles[0]   # keep first one found
+    $asmFiles | Select-Object -Skip 1 | ForEach-Object {
+        Remove-Item $_.FullName -Force
+        Write-Host "  REMOVED duplicate: $($_.FullName)"
+    }
+    # Normalise: ensure it's in Branding/
+    $target = Join-Path $main 'Branding\AssemblyExtensions.cs'
+    if ((Resolve-Path $keep.FullName) -ne (Resolve-Path $target -ErrorAction SilentlyContinue)) {
+        Move-Item $keep.FullName $target -Force
+    }
+    Write-Host "  Branding/AssemblyExtensions.cs (single copy)"
+}
+
+# 8b. SummarizePromptProvider → Prompts/
+$prompts = Join-Path $main 'Prompts'
+New-Item -ItemType Directory -Path $prompts -Force | Out-Null
+$summarize = Join-Path $main 'Services\SummarizePromptProvider.cs'
+if (Test-Path $summarize) {
+    Move-Item $summarize (Join-Path $prompts 'SummarizePromptProvider.cs') -Force
+    Write-Host "  Prompts/SummarizePromptProvider.cs"
+}
+
+# 8c. Ensure Stages sub-folders exist
+$stagesEmb = Join-Path $main 'Stages\Embedding'
+$stagesQ   = Join-Path $main 'Stages\Questions'
+New-Item -ItemType Directory -Path $stagesEmb -Force | Out-Null
+New-Item -ItemType Directory -Path $stagesQ   -Force | Out-Null
+
+# Move ParsingStage into Stages/Embedding/
+$ps = Join-Path $main 'Stages\ParsingStage.cs'
+if (Test-Path $ps) {
+    Move-Item $ps (Join-Path $stagesEmb 'ParsingStage.cs') -Force
+    Write-Host "  Stages/Embedding/ParsingStage.cs"
+}
+
+# 8d. Remove empty Services/ if it exists
+$srv = Join-Path $main 'Services'
+if ((Test-Path $srv) -and (-not (Get-ChildItem $srv -File))) {
+    Remove-Item $srv -Force
+}
+
+# ──────────────────────────────────────────────
+# 9. Unit Tests – mirror production structure
+# ──────────────────────────────────────────────
+$ut = Join-Path $Test 'Ragnar.UnitTests'
+
+# Create mirror folders
+$utFolders = @(
+    'Core\Extensions',
+    'Core\Options',
+    'Core\Rendering',
+    'Embedding\Parsers',
+    'Embedding\VectorStore',
+    'Questions\Filters',
+    'Questions\Sources',
+    'Output',
+    'Stages\Embedding',
+    'Stages\Questions'
+)
+foreach ($f in $utFolders) {
+    New-Item -ItemType Directory -Path (Join-Path $ut $f) -Force | Out-Null
+}
+
+# Move specific test files
+$testMoves = @(
+    @{ From = 'XmlCommentFilterStrategyTests.cs'; To = 'Questions\Filters\XmlCommentFilterStrategyTests.cs' }
+    @{ From = 'Core\Extensions\StringExtensionsTests.cs'; To = 'Core\Extensions\StringExtensionsTests.cs' }
+    @{ From = 'ApplicationOptionsValidationTests.cs'; To = 'Core\Options\ApplicationOptionsValidationTests.cs' }
+    @{ From = 'Providers\CsvFileQuestionProviderTests.cs'; To = 'Questions\Sources\CsvQuestionSourceTests.cs' }
+    @{ From = 'Embedding\VectorStore\VectorStoreBuilderTests.cs'; To = 'Embedding\VectorStore\VectorStoreBuilderTests.cs' }
+)
+foreach ($m in $testMoves) {
+    $from = Join-Path $ut $m.From
+    $to   = Join-Path $ut $m.To
+    if ((Test-Path $from) -and (-not (Test-Path $to))) {
+        Move-Item $from $to -Force
+        Write-Host "  UnitTests/$($m.To)"
+    }
+}
+
+# Remove empty legacy folders
+foreach ($legacy in @('Providers')) {
+    $lp = Join-Path $ut $legacy
+    if ((Test-Path $lp) -and (-not (Get-ChildItem $lp -File))) {
+        Remove-Item $lp -Force
+    }
+}
+
+# ──────────────────────────────────────────────
+# 10. Integration Tests – tidy
+# ──────────────────────────────────────────────
+$it = Join-Path $Test 'Ragnar.IntegrationTests'
+$itOut = Join-Path $it 'Output'
+New-Item -ItemType Directory -Path $itOut -Force | Out-Null
+$rwt = Join-Path $it 'ResponseWriterIntegrationTests.cs'
+if ((Test-Path $rwt) -and (-not (Test-Path (Join-Path $itOut 'ResponseWriterIntegrationTests.cs')))) {
+    Move-Item $rwt (Join-Path $itOut 'ResponseWriterIntegrationTests.cs') -Force
+    Write-Host "  IntegrationTests/Output/ResponseWriterIntegrationTests.cs"
+}
+
+# ──────────────────────────────────────────────
+# 11. Update namespaces in .cs files (bulk sed)
+# ──────────────────────────────────────────────
+$namespaceMap = [ordered]@{
+    'Ragnar.Abstractions'            = 'Ragnar.Abstractions'          # base unchanged
+    'Ragnar.Abstractions.Contracts'  = 'Ragnar.Abstractions.IO'       # contracts → domain
+    'Ragnar.Core.Text'               = 'Ragnar.Core.Text'
+    'Ragnar.Core.Validation'         = 'Ragnar.Core.Validation'
+    'Ragnar.Core.Rendering'          = 'Ragnar.Core.Rendering'
+    'Ragnar.Core.Models'             = 'Ragnar.Core.Models'
+    'Ragnar.Core.Options'            = 'Ragnar.Core.Options'
+    'Ragnar.Embedding.Parsers'       = 'Ragnar.Embedding.Parsers'
+    'Ragnar.Questions.Questions'     = 'Ragnar.Questions.Sources'
+    'Ragnar.Services'                = 'Ragnar.Prompts'
+}
+
+# Update namespace declarations in moved files
+$allCs = Get-ChildItem $Src -Recurse -Filter '*.cs'
+foreach ($file in $allCs) {
+    $content = Get-Content $file.FullName -Raw
+    $newContent = $content
+
+    # Fix Contracts → IO (only for files now in IO/)
+    if ($file.FullName -match '\\IO\\' -or $file.FullName -match '/IO/') {
+        $newContent = $newContent -replace
+            'namespace Ragnar\.Abstractions\.Contracts',
+            'namespace Ragnar.Abstractions.IO'
+    }
+    # Fix Questions → Sources
+    if ($file.FullName -match '\\Sources\\' -or $file.FullName -match '/Sources/') {
+        $newContent = $newContent -replace
+            'namespace Ragnar\.Questions\.Questions',
+            'namespace Ragnar.Questions.Sources'
+    }
+    # Fix Services → Prompts
+    if ($file.FullName -match '\\Prompts\\' -or $file.FullName -match '/Prompts/') {
+        $newContent = $newContent -replace
+            'namespace Ragnar\.Services',
+            'namespace Ragnar.Prompts'
+    }
+    # Fix VectorStore
+    if ($file.FullName -match '\\VectorStore\\' -or $file.FullName -match '/VectorStore/') {
+        $newContent = $newContent -replace
+            'namespace Ragnar\.Embedding\.Parsers\b(?!\.)',
+            'namespace Ragnar.Embedding.VectorStore'
+    }
+
+    if ($newContent -ne $content) {
+        Set-Content $file.FullName -Value $newContent -NoNewline
+        Write-Host "  ns updated: $($file.FullName)"
+    }
+}
+
+# Also fix in test projects
+$testCs = Get-ChildItem $Test -Recurse -Filter '*.cs'
+foreach ($file in $testCs) {
+    $content = Get-Content $file.FullName -Raw
+    $newContent = $content -replace
+        'namespace Ragnar\.Questions\.Questions',
+        'namespace Ragnar.Questions.Sources'
+    $newContent = $newContent -replace
+        'namespace Ragnar\.Services\b',
+        'namespace Ragnar.Prompts'
+    if ($newContent -ne $content) {
+        Set-Content $file.FullName -Value $newContent -NoNewline
+        Write-Host "  test ns updated: $($file.FullName)"
+    }
+}
+
+# ──────────────────────────────────────────────
+# 12. Update .csproj ProjectReference paths
+# ──────────────────────────────────────────────
+$allCsproj = Get-ChildItem $Src, $Test -Recurse -Filter '*.csproj'
+foreach ($proj in $allCsproj) {
+    $content = Get-Content $proj.FullName -Raw
+    $newContent = $content
+
+    # Fix relative paths: ../../Ragnar.Abstractions → ../../src/Ragnar.Abstractions
+    # (adjust based on actual relative depth)
+    $newContent = $newContent -replace
+        'Include="\.\.\\?\.\.\\?Ragnar\.Abstractions"',
+        'Include="../../src/Ragnar.Abstractions"'
+    $newContent = $newContent -replace
+        'Include="\.\.\\?\.\.\\?Ragnar\.Core"',
+        'Include="../../src/Ragnar.Core"'
+    $newContent = $newContent -replace
+        'Include="\.\.\\?\.\.\\?Ragnar\.Embedding"',
+        'Include="../../src/Ragnar.Embedding"'
+    $newContent = $newContent -replace
+        'Include="\.\.\\?\.\.\\?Ragnar\.Questions"',
+        'Include="../../src/Ragnar.Questions"'
+    $newContent = $newContent -replace
+        'Include="\.\.\\?\.\.\\?Ragnar\\?"',
+        'Include="../../src/Ragnar"'
+
+    if ($newContent -ne $content) {
+        Set-Content $proj.FullName -Value $newContent -NoNewline
+        Write-Host "  refs updated: $($proj.Name)"
+    }
+}
+
+# ──────────────────────────────────────────────
+# 13. Update .sln project paths (if .sln exists)
+# ──────────────────────────────────────────────
+$sln = Get-ChildItem $Root -Filter '*.sln' | Select-Object -First 1
+if ($sln) {
+    $content = Get-Content $sln.FullName -Raw
+    $newContent = $content
+    # Example: Ragnar.Abstractions\ → src\Ragnar.Abstractions\
+    $newContent = $newContent -replace 'Ragnar\.Abstractions\\', 'src\Ragnar.Abstractions\'
+    $newContent = $newContent -replace 'Ragnar\.Core\\',           'src\Ragnar.Core\'
+    $newContent = $newContent -replace 'Ragnar\.Embedding\\',      'src\Ragnar.Embedding\'
+    $newContent = $newContent -replace 'Ragnar\.Questions\\',      'src\Ragnar.Questions\'
+    $newContent = $newContent -replace '(?<![\w.])Ragnar\\',       'src\Ragnar\'
+    $newContent = $newContent -replace 'Tests\\Ragnar\.UnitTests\\',         'tests\Ragnar.UnitTests\'
+    $newContent = $newContent -replace 'Tests\\Ragnar\.IntegrationTests\\',  'tests\Ragnar.IntegrationTests\'
+    if ($newContent -ne $content) {
+        Set-Content $sln.FullName -Value $newContent -NoNewline
+        Write-Host "  sln updated: $($sln.Name)"
+    }
+}
+
+# ──────────────────────────────────────────────
+# 14. Build & verify
+# ──────────────────────────────────────────────
+Write-Host "`n=== Building solution ===" -ForegroundColor Cyan
+dotnet build $sln.FullName 2>&1 | Tee-Object -FilePath (Join-Path $Root 'build-reorg.log')
+
+Write-Host "`n=== Reorganisation complete ===" -ForegroundColor Green
+Write-Host "Review build-reorg.log for any remaining errors."

@@ -121,6 +121,23 @@ dotnet_style_null_propagation = true:suggestion
 #dotnet_naming_style.ipascal_case.required_prefix = I
 #dotnet_naming_style.ipascal_case.capitalization = pascal_case
 
+# Disallow multiple blank lines
+dotnet_style_allow_multiple_blank_lines_experimental = false
+
+# Set severity (suggestion, warning, or error)
+dotnet_diagnostic.IDE2000.severity = warning
+
+# Naming: public/protected members use PascalCase
+dotnet_naming_rule.public_members_pascal_style.severity        = error
+dotnet_naming_rule.public_members_pascal_style.symbols          = public_members
+dotnet_naming_rule.public_members_pascal_style.style            = pascal_style
+
+dotnet_naming_symbols.public_members.applicable_modifiers       = public, protected
+dotnet_naming_symbols.public_members.applicable_kinds           = property, method, field, local_function
+
+dotnet_naming_style.pascal_style.capitalization                 = pascal_case
+
+
 # ==========================================
 # 1. Define Naming Styles
 # ==========================================
@@ -210,12 +227,16 @@ dotnet_diagnostic.CA2007.severity = error
 # Optional: Customize the behavior of CA2007
 #dotnet_code_quality.CA2007.allow_receive_in_reply_to_reply_to = true
 
-
 # Enforce one outer type per file (SA1402)
 dotnet_diagnostic.SA1402.severity = error
 
 ## Optional Companion Rule - SA1649: File name should match first type name
 dotnet_diagnostic.SA1649.severity = error
+
+# Elevate duplicate DI registration analyzer warning to an error
+dotnet_diagnostic.DI0001.severity = error
+dotnet_diagnostic.DI003.severity = error
+dotnet_diagnostic.DI013.severity = error
 
 [{*.csproj,*.props,*.targets}]
 indent_size = 2

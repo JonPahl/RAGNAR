@@ -1,6 +1,6 @@
-﻿namespace Ragnar.Questions;
+﻿namespace Ragnar.Plugins;
 
-/// <summary>Centralises shared string constants for prompt and response formatting.</summary>
+/// <summary>Centralizes shared string constants for prompt and response formatting.</summary>
 /// <remarks>Prevents magic strings scattered across writers and parsers.</remarks>
 /// <example><![CDATA[var label = AppDefaults.ORIGINAL_PROMPT_LABEL;]]></example>
 public static class AppDefaults
@@ -18,7 +18,7 @@ public static class AppDefaults
     public const string MarkdownFenceMarker = "***";
 
     /// <summary>Token signalling the start of a code-block region in responses.</summary>
-    public const string CodEBlockStart = "[RESPONSE_CODE]";
+    public const string CodeBlockStart = "[RESPONSE_CODE]";
 
     /// <summary>Token signalling the end of a code-block region in responses.</summary>
     public const string CodeBlockEnd = "[/RESPONSE_CODE]";
