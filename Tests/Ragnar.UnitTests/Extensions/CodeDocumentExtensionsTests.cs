@@ -1,0 +1,29 @@
+﻿namespace Ragnar.Tests.Extensions;
+
+public sealed class CodeDocumentExtensionsTests
+{
+    [Fact]
+    public void DictionaryReturnsNonEmptyDictionary()
+    {
+        // Arrange
+        var doc = new CodeDocument
+        {
+            FileName = "Program.cs",
+            FilePath = "C:/",
+            ElementType = "Class",
+            ElementName = "Program",
+            Comment = "// Main",
+            CommentLength = 6,
+            Code = "public class Program { }",
+            Category = "Refactor"
+        };
+
+        // Act
+        var dict = doc.Dictionary;
+
+        // Assert
+        Assert.Equal(7, dict.Count);
+        Assert.Equal("Program.cs", dict[nameof(CodeDocument.FileName)]);
+        Assert.Equal("Refactor", dict[nameof(CodeDocument.Category)]);
+    }
+}

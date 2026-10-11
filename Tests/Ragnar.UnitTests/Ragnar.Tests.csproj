@@ -1,0 +1,110 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+	  <EnableNETAnalyzers>true</EnableNETAnalyzers>
+	  <AnalysisLevel>latest</AnalysisLevel>
+	  <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <PropertyGroup>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <AnalysisLevel>latest</AnalysisLevel>
+    <AnalysisMode>AllEnabledByDefault</AnalysisMode>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Agents\**" />
+    <Compile Remove="Core\**" />
+    <Compile Remove="Factories\**" />
+    <Compile Remove="Pipelines\**" />
+    <Compile Remove="Questions\**" />
+    <Compile Remove="Rendering\**" />
+    <Compile Remove="Util\**" />
+    <Compile Remove="Validators\**" />
+    <Compile Remove="Writers\**" />
+    <EmbeddedResource Remove="Agents\**" />
+    <EmbeddedResource Remove="Core\**" />
+    <EmbeddedResource Remove="Factories\**" />
+    <EmbeddedResource Remove="Pipelines\**" />
+    <EmbeddedResource Remove="Questions\**" />
+    <EmbeddedResource Remove="Rendering\**" />
+    <EmbeddedResource Remove="Util\**" />
+    <EmbeddedResource Remove="Validators\**" />
+    <EmbeddedResource Remove="Writers\**" />
+    <None Remove="Agents\**" />
+    <None Remove="Core\**" />
+    <None Remove="Factories\**" />
+    <None Remove="Pipelines\**" />
+    <None Remove="Questions\**" />
+    <None Remove="Rendering\**" />
+    <None Remove="Util\**" />
+    <None Remove="Validators\**" />
+    <None Remove="Writers\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+    <None Include="..\.roslynatorconfig" Link=".roslynatorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="10.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="5.9.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.401">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.12" />
+    <PackageReference Include="Microsoft.SemanticKernel.Connectors.Qdrant" Version="1.74.0-preview" />
+    <PackageReference Include="Moq" Version="4.21.0" />
+    <PackageReference Include="OllamaSharp" Version="5.5.0" />
+    <PackageReference Include="Qdrant.Client" Version="1.19.0" />
+    <PackageReference Include="Roslynator.Analyzers" Version="5.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Roslynator.CodeAnalysis.Analyzers" Version="5.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Roslynator.Formatting.Analyzers" Version="5.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Serilog" Version="4.4.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
+    <PackageReference Include="Spectre.Console.Testing" Version="0.57.2" />
+    <PackageReference Include="System.CommandLine" Version="2.0.12" />
+    <PackageReference Include="System.IO.Abstractions.TestingHelpers" Version="22.3.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="4.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="xunit.v3" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Src\Ragnar.Abstractions\Ragnar.Abstractions.csproj" />
+    <ProjectReference Include="..\..\Src\Ragnar.Core\Ragnar.Core.csproj" />
+    <ProjectReference Include="..\..\Src\Ragnar.Embedding\Ragnar.Embedding.csproj" />
+    <ProjectReference Include="..\..\Src\Ragnar.Questions\Ragnar.Questions.csproj" />
+    <ProjectReference Include="..\..\Src\Ragnar\Ragnar.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Output\" />
+    <Folder Include="Stages\" />
+  </ItemGroup>
+
+</Project>
