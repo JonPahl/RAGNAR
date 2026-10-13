@@ -3,8 +3,7 @@
 /// <summary>Abstract base class providing a thread-safe, ordered pipeline of typed stages.</summary>
 /// <typeparam name="T">The context type flowing through pipeline stages.</typeparam>
 /// <example><![CDATA[var p = new MyPipeline(); p.AddStage(s1).AddStage(s2);]]></example>
-public abstract class BasePipeline<T>
-    : IPipeline<T>
+public abstract class BasePipeline<T> : IPipeline<T>
 {
     /// <summary>Mutual-exclusion gate protecting the internal stage list.</summary>
     private readonly Lock _gate = new();

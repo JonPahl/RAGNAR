@@ -22,6 +22,7 @@ public sealed class MarkdownFileParser(
         string filePath,
         CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
         var fileContent = await ReadFileAsync(filePath, cancellationToken).ConfigureAwait(false);
 
         var chunks = SplitIntoParagraphs(filePath, fileContent.AsMemory(),

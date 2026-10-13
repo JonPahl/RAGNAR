@@ -29,10 +29,20 @@ public abstract class BaseFileParser(Serilog.ILogger logger) : IFileParser
 
         try
         {
+            if (!File.Exists(filePath))
+            {
+                throw new FileNotFoundException($"File '{filePath}' does not exist.");
+            }
+
             return await File.ReadAllTextAsync(filePath, cancellationToken).ConfigureAwait(false);
         }
         catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
         {
+            throw;
+        }
+        catch (FileNotFoundException ex)
+        {
+            logger.Error(ex, "File not found: {FilePath}", filePath);
             throw;
         }
         catch (Exception ex)

@@ -7,11 +7,13 @@
 public static class GeneratorExtensions
 {
     /// <summary>
-    /// Converts an Ollama API client object into an embedding generator.
+    /// Returns the Ollama API client as an <see cref="IEmbeddingGenerator{,}"/>,
+    /// or throws if the client does not implement the interface.
     /// </summary>
-    /// <param name="api">Ollama API object.</param>
-    /// <returns>Embedding generator.</returns>
-    /// <example><![CDATA[var gen = ollamaClient.AsEmbeddingGenerator();]]></example>
+    /// <exception cref="ArgumentNullException"><paramref name="api"/> is null.</exception>
+    /// <exception cref="InvalidCastException">The client does not implement <see cref="IEmbeddingGenerator{TInput,TEmbedding}"/>.</exception>
+    /// <example><![CDATA[var gen = ollamaClient.AsEmbeddingGenerator();]]>
+    /// </example>
     public static IEmbeddingGenerator<string, Embedding<float>> AsEmbeddingGenerator(this IOllamaApiClient api)
     {
         Guard.Against.Null(api);

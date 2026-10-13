@@ -3,7 +3,7 @@
 /// <summary>Validates files against the provided load options.</summary>
 /// <example>
 /// <![CDATA[bool ok = validator.IsValid(fileInfo, loadOptions);]]></example>
-internal sealed class FileValidator : IFileValidator
+internal sealed class FileValidator : IFileEligibilityValidator
 {
     /// <summary>Determines whether a file passes extension and exclusion rules.</summary>
     /// <param name="file">The file system entry to validate.</param>

@@ -66,15 +66,15 @@
     <PackageReference Include="Moq" Version="4.21.0" />
     <PackageReference Include="OllamaSharp" Version="5.5.0" />
     <PackageReference Include="Qdrant.Client" Version="1.19.0" />
-    <PackageReference Include="Roslynator.Analyzers" Version="5.0.0">
+    <PackageReference Include="Roslynator.Analyzers" Version="5.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Roslynator.CodeAnalysis.Analyzers" Version="5.0.0">
+    <PackageReference Include="Roslynator.CodeAnalysis.Analyzers" Version="5.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Roslynator.Formatting.Analyzers" Version="5.0.0">
+    <PackageReference Include="Roslynator.Formatting.Analyzers" Version="5.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -83,11 +83,11 @@
     <PackageReference Include="Spectre.Console.Testing" Version="0.57.2" />
     <PackageReference Include="System.CommandLine" Version="2.0.12" />
     <PackageReference Include="System.IO.Abstractions.TestingHelpers" Version="22.3.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="4.0.0">
+    <PackageReference Include="xunit.runner.visualstudio" Version="4.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="xunit.v3" Version="4.0.1" />
+    <PackageReference Include="xunit.v3" Version="4.0.2" />
   </ItemGroup>
 
   <ItemGroup>

@@ -50,7 +50,7 @@ public class ContentSummarizerAgent(
         var a = options.Value.OllamaOptions;
         var b = options.Value.GenerationOptions;
 
-        IChatClient agent = new OllamaChatClientBuilder(factory)
+        var agent = new OllamaChatClientBuilder(factory)
             .WithChatClient(OllamaServiceType.Ollama)
             .WithModel(a.LlmModel)
             .WithTemperature(b.Temperature)
@@ -105,9 +105,9 @@ public class ContentSummarizerAgent(
             var text = await reader.ReadToEndAsync(cancellationToken)
                 .ConfigureAwait(false);
 
-            builder.AppendLine($"---\n{AppDefaults.FileMarkerStart}{Path.GetFileName(file)}{AppDefaults.FileMarkerEnd}\n{text}\n");
+            builder.AppendLine($"---\n{PromptFormatting.FileMarkerStart}{Path.GetFileName(file)}{PromptFormatting.FileMarkerEnd}\n{text}\n");
         }
 
-        return $"{AppDefaults.CodeBlockEnd} {builder} {AppDefaults.CodeBlockEnd}";
+        return $"{PromptFormatting.CodeBlockEnd} {builder} {PromptFormatting.CodeBlockEnd}";
     }
 }

@@ -3,8 +3,8 @@
 /// <summary>
 /// Static class to call Custom system enumerable.
 /// </summary>
-public class FileDiscoveryService
-    : IFileDiscoveryService
+public class FileDiscoveryService(IFileEligibilityValidator validator)
+        : IFileDiscoveryService
 {
     /// <summary>
     /// Yields filtered file paths asynchronously.
@@ -18,77 +18,26 @@ public class FileDiscoveryService
     /// </exception>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="filter"/> is null.</exception>
     /// <exception cref="ArgumentException">Thrown when no file options are provided. </exception>
-    public IAsyncEnumerable<string> GetFilesAsync(
-        string directory,
-        FileLoadOptions filter,
-        CancellationToken cancellationToken)
+    public async IAsyncEnumerable<string> GetFilesAsync(
+    string directory, FileLoadOptions filter,
+    [EnumeratorCancellation] CancellationToken cancellationToken)
     {
         Guard.Against.Null(filter);
         Guard.Against.NullOrEmpty(directory);
-
         if (!Directory.Exists(directory))
-        {
-            throw new DirectoryNotFoundException($"Directory not found: {directory}");
-        }
+            throw new DirectoryNotFoundException(directory);
 
-        return GetValuesAsync(directory, filter, cancellationToken);
-    }
-
-    /// <summary>Yields filtered file paths asynchronously with cancellation support.</summary>
-    /// <param name="directory">Root search directory.</param>
-    /// <param name="filter">File-load filter options (extensions, exclusions).</param>
-    /// <param name="cancellationToken">Token to abort enumeration.</param>
-    /// <returns>Async sequence of matching file paths.</returns>
-    /// <example><![CDATA[await foreach (var f in GetValuesAsync(".", opts, ct)) { }]]></example>
-    private async IAsyncEnumerable<string> GetValuesAsync(
-        string directory,
-        FileLoadOptions filter,
-        [EnumeratorCancellation] CancellationToken cancellationToken = default)
-    {
-        foreach (var path in ListFiles(directory, filter))
+        // Directory.EnumerateFiles is inherently sync; enumerate, filter, yield
+        foreach (var path in Directory.EnumerateFiles(directory, "*.*", SearchOption.AllDirectories))
         {
             cancellationToken.ThrowIfCancellationRequested();
+
+            var fi = new FileInfo(path);
+            if (!validator.IsValid(fi, filter))
+                continue;
+
             yield return path;
+            await Task.Yield();
         }
-    }
-
-    /// <summary>Recursively lists files, skipping excluded directories and disallowed extensions.</summary>
-    /// <param name="rootPath">Directory to enumerate recursively.</param>
-    /// <param name="filter">Filter containing allowed extensions and excluded dirs.</param>
-    /// <returns>Enumerable of full file paths passing all filters.</returns>
-    /// <example><![CDATA[foreach (var f in ListFiles(".", opts)) { }]]></example>
-    private IEnumerable<string> ListFiles(string rootPath, FileLoadOptions filter)
-    {
-        var allowedExtensions = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        foreach (var ext in filter.AllowedExtensions)
-        {
-            allowedExtensions.Add(ext);
-        }
-
-        // Define directory names or relative paths you want to skip
-        var skippedDirectories = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-
-        foreach (var dir in filter.ExcludedDirectories)
-        {
-            skippedDirectories.Add(dir);
-        }
-
-        return Directory.EnumerateFiles(rootPath, "*.*", SearchOption.AllDirectories)
-            .Where(filePath =>
-            {
-                var dirName = Path.GetDirectoryName(filePath);
-                if (dirName != null)
-                {
-                    var segments = dirName.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
-                    if (segments.Any(seg => skippedDirectories.Contains(seg)))
-                    {
-                        return false; // Skip this file
-                    }
-                }
-
-                // Check if the file extension is allowed
-                var ext = Path.GetExtension(filePath);
-                return allowedExtensions.Contains(ext);
-            });
     }
 }

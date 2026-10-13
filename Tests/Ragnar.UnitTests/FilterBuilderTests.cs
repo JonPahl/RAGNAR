@@ -2,33 +2,17 @@
 
 public class FilterBuilderTests
 {
-    private readonly FilterBuilder _sut;
+    private readonly QdrantFilterBuilder _sut;
 
     public FilterBuilderTests()
     {
-        _sut = new FilterBuilder();
+        _sut = new QdrantFilterBuilder();
     }
 
     [Fact]
     public void IsEmptyWithNoConditionsShouldReturnTrue()
     {
         Assert.True(_sut.IsEmpty);
-    }
-
-    [Fact]
-    public void IsEmptyAfterAddMatchShouldReturnFalse()
-    {
-        _sut.AddMatch("Field", "Value");
-
-        Assert.False(_sut.IsEmpty);
-    }
-
-    [Fact]
-    public void IsEmptyAfterAddExclusionShouldReturnFalse()
-    {
-        _sut.AddExclusion("Field", "Value");
-
-        Assert.False(_sut.IsEmpty);
     }
 
     [Fact]
@@ -161,6 +145,6 @@ public class FilterBuilderTests
 
         // Assert
         Assert.Equal(2, result.Must.Count);
-        Assert.Equal(1, result.MustNot.Count);
+        Assert.Single(result.MustNot);
     }
 }

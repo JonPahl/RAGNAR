@@ -9,7 +9,8 @@
     <Import_RootNamespace>Ragnar.Plugins</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)AppDefaults.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DomainDefaults.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)PromptFormatting.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Directory.Build.props" />

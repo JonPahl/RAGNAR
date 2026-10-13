@@ -43,10 +43,7 @@ public static partial class RagPipelineHostBuilder
                 services.AddHostedService<RagPipelineRunner>();
             });
     }
-}
 
-public static partial class RagPipelineHostBuilder
-{
     private static void AddCoreServices(this IServiceCollection s)
     {
         s.AddKeyedSingleton<IChatPromptProvider, PromptTemplateProvider>("Common");
@@ -62,7 +59,7 @@ public static partial class RagPipelineHostBuilder
         s.AddSingleton<IOutputFormatter, ResponseMarkdownFormatter>();
         s.AddSingleton<IFileDiscoveryService, FileDiscoveryService>();
         s.AddSingleton<IFileParseFactory, CodeParserFactory>();
-        s.AddSingleton<IFileValidator, FileValidator>();
+        s.AddSingleton<IFileEligibilityValidator, FileValidator>();
 
         s.AddSingleton<ISyntaxTreeChunker, SyntaxTreeChunker>();
         s.AddSingleton<IVectorStoreBuilder, VectorStoreBuilder>();
@@ -128,7 +125,7 @@ public static partial class RagPipelineHostBuilder
                 .AddStage(new DiscoveryStage(options, fileloader, logger, outputWriter))
                 .AddStage(new ParsingStage(parseFactory, logger))
                 .AddStage(new UpsertStage(repository, logger, options, outputWriter))
-                .AddStage(new ShowFileStage(options, qdrantClient, logger));
+                .AddStage(new StoredFileListStage(options, qdrantClient, logger));
         });
     }
 
@@ -136,7 +133,7 @@ public static partial class RagPipelineHostBuilder
     {
         s.AddSingleton<IContextRetriever, ContextRetriever>();
         s.AddSingleton<IQuestionSource, CsvQuestionSource>();
-        s.AddSingleton<IQuestionSourceBuilder, QuestionCombineBuilder>();
+        s.AddSingleton<IQuestionSourceBuilder, QuestionAggregator>();
         s.AddSingleton<IQuestionCatalogLoader, DefaultQuestionCatalogLoader>();
         s.AddSingleton<IConfigurationLoader, FileConfigLoader>();
         s.AddSingleton<IRecordParser<QuestionRecord>, CsvRecordParser>();
@@ -149,8 +146,8 @@ public static partial class RagPipelineHostBuilder
                sp.GetRequiredService<IQuestionSource>(),
                sp.GetRequiredService<IQuestionSourceBuilder>(),
                sp.GetRequiredService<Serilog.ILogger>()))
-            .AddStage(new QuestionShowStage())
-            .AddStage(new QuestionExecutionStage(
+            .AddStage(new QuestionTableStage())
+            .AddStage(new QuestionAnswerStage(
                 sp.GetRequiredService<IRagOrchestrator>(),
                 sp.GetRequiredService<IOptions<RagnarConfig>>(),
                 sp.GetRequiredService<IOutputWriter>(),

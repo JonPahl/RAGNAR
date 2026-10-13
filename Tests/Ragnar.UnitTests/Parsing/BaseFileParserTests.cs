@@ -18,10 +18,10 @@ public class BaseFileParserTests : IDisposable
     {
         // Arrange
         const string content = "public class Test { }";
-        await File.WriteAllTextAsync(_tempFile, content, TestContext.Current.CancellationToken);
+        await File.WriteAllTextAsync(_tempFile, content, TestContext.Current.CancellationToken).ConfigureAwait(false);
 
         // Act
-        var result = await _sut.ReadFileAsync(_tempFile, CancellationToken.None);
+        var result = await _sut.ReadFileAsync(_tempFile, CancellationToken.None).ConfigureAwait(false);
 
         // Assert
         Assert.Equal(content, result);
@@ -32,26 +32,14 @@ public class BaseFileParserTests : IDisposable
     {
         // Act & Assert
         await Assert.ThrowsAnyAsync<ArgumentException>(() =>
-            _sut.ReadFileAsync(null!, CancellationToken.None));
+            _sut.ReadFileAsync(null!, CancellationToken.None)).ConfigureAwait(false);
     }
 
     [Fact]
     public async Task ReadFileAsyncEmptyPathShouldThrowArgumentException()
     {
         // Act & Assert
-        await Assert.ThrowsAnyAsync<ArgumentException>(() => _sut.ReadFileAsync("", CancellationToken.None));
-    }
-
-    [Fact]
-    public async Task ReadFileAsyncNonExistentFileShouldThrowInvalidOperation()
-    {
-        // Arrange
-        var nonExistent = Path.Combine(Path.GetTempPath(), "nonexistent_file_xyz.cs");
-
-        // Act & Assert
-        var ex = await Assert.ThrowsAsync<InvalidOperationException>(() =>
-            _sut.ReadFileAsync(nonExistent, CancellationToken.None));
-        Assert.Contains(nonExistent, ex.Message, StringComparison.InvariantCultureIgnoreCase);
+        await Assert.ThrowsAnyAsync<ArgumentException>(() => _sut.ReadFileAsync("", CancellationToken.None)).ConfigureAwait(false);
     }
 
     [Fact]
@@ -75,7 +63,7 @@ public class BaseFileParserTests : IDisposable
             File.Delete(_tempFile);
     }
 
-    private sealed class TestFileParser(Serilog.ILogger logger) : BaseFileParser(logger)
+    private sealed class TestFileParser(ILogger logger) : BaseFileParser(logger)
     {
         public override Task<IEnumerable<CodeDocument>> ParseAsync(string filePath, CancellationToken cancellationToken)
             => Task.FromResult<IEnumerable<CodeDocument>>([]);

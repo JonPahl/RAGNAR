@@ -9,7 +9,6 @@ public class ApplicationOptionsValidationTests
         _validator = new ApplicationOptionsValidator();
     }
 
-
     [Fact]
     public void ValidateNullVectorStoreNameShouldFail()
     {
@@ -64,7 +63,6 @@ public class ApplicationOptionsValidationTests
         // Assert
         result.ShouldHaveValidationErrorFor("VectorStoreName");
     }
-
 
     [Fact]
     public void ValidateVectorVectorStoreNameTooLongShouldFail()

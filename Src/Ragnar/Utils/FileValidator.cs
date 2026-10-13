@@ -4,7 +4,7 @@
 /// <remarks>Performs ordinal, case-insensitive comparisons against load options.</remarks>
 /// <example><![CDATA[bool ok = validator.IsValid(file, in options);]]></example>
 public class FileValidator(FileLoadOptions options)
-    : IFileValidator
+    : IFileEligibilityValidator
 {
     private readonly HashSet<string> _excludedFiles = new(options.ExcludedFiles, StringComparer.OrdinalIgnoreCase);
 

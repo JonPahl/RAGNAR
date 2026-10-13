@@ -2,76 +2,81 @@
 
 public class FilterBuilderEdgeCaseTests
 {
-    [Fact]
-    public void BuildWithOnlyExclusionsShouldReturnFilterWithMustNot()
+    private readonly QdrantFilterBuilder _sut;
+
+    public FilterBuilderEdgeCaseTests()
     {
-        var builder = new FilterBuilder();
-        builder.AddExclusion("Status", "deleted");
-
-        var filter = builder.Build();
-
-        Assert.Empty(filter.Must);
-        Assert.Single(filter.MustNot);
+        _sut = new QdrantFilterBuilder();
     }
 
     [Fact]
-    public void BuildWithMultipleExclusionsShouldIncludeAll()
+    public void AddRangeShouldThrowWhenBothGteAndLteAreNull()
     {
-        var builder = new FilterBuilder();
-        builder.AddExclusion("A", "1")
-               .AddExclusion("B", "2")
-               .AddExclusion("C", "3");
-
-        var filter = builder.Build();
-
-        Assert.Equal(3, filter.MustNot.Count);
+        // Act & Assert
+        var ex = Assert.Throws<ArgumentException>(() => _sut.AddRange("Field"));
+        Assert.Contains("at least one", ex.Message, StringComparison.OrdinalIgnoreCase);
     }
 
     [Fact]
-    public void AddRangeWithOnlyGteShouldCreateCondition()
+    public void AddExclusionRangeShouldThrowWhenBothBoundsAreNull()
     {
-        var builder = new FilterBuilder();
-        var result = builder.AddRange("Score", gte: 85.0);
-
-        Assert.Same(builder, result);
-        var filter = builder.Build();
-        Assert.NotEmpty(filter.Must);
+        // Act & Assert
+        Assert.Throws<ArgumentException>(() => _sut.AddExclusionRange("Field"));
     }
 
     [Fact]
-    public void AddRangeWithOnlyLteShouldCreateCondition()
+    public void AddRangeWithOnlyGteShouldSucceed()
     {
-        var builder = new FilterBuilder();
-        var result = builder.AddRange("Score", lte: 10.0);
+        // Act
+        var result = _sut.AddRange("Len", gte: 10.0);
 
-        Assert.Same(builder, result);
-        var filter = builder.Build();
-        Assert.NotEmpty(filter.Must);
+        // Assert
+        Assert.Same(_sut, result);
+        Assert.False(_sut.IsEmpty);
     }
 
     [Fact]
-    public void AddExceptKeywordsWithSingleKeywordShouldWork()
+    public void AddRangeWithOnlyLteShouldSucceed()
     {
-        var builder = new FilterBuilder();
-        builder.AddExceptKeywords("Tag", "skip");
+        // Act
+        var result = _sut.AddRange("Len", lte: 100.0);
 
-        var filter = builder.Build();
-        Assert.NotEmpty(filter.Must);
+        // Assert
+        Assert.Same(_sut, result);
+        Assert.False(_sut.IsEmpty);
     }
 
     [Fact]
-    public void ChainedOperationsShouldBuildValidFilter()
+    public void BuildWithOnlyMustNotConditionsShouldReturnFilterWithEmptyMust()
     {
-        var builder = new FilterBuilder();
-        builder.AddMatch("Type", "XML")
-               .AddRange("Length", gte: 10, lte: 500)
-               .AddExceptKeywords("Cat", "Test")
-               .AddExclusion("Deprecated", "true")
-               .AddExclusionRange("Score", gte: 0, lte: 5);
+        // Arrange
+        _sut.AddExclusion("Field", "Value");
 
-        var filter = builder.Build();
+        // Act
+        var result = _sut.Build();
 
-        Assert.Equal(3, filter.Must.Count);
-        Assert.Equal(2, filter.MustNot.Count);
+        // Assert
+        Assert.NotNull(result);
+        Assert.NotEmpty(result.MustNot);
+    }
+
+    [Fact]
+    public void ChainingMultipleConditionsShouldWork()
+    {
+        // Act
+        var result = _sut
+            .AddMatch("A", "1")
+            .AddExclusion("B", "2")
+            .AddRange("C", gte: 1.0, lte: 100.0)
+            .AddExceptKeywords("D", "X", "Y")
+            .AddExclusionRange("E", gte: 5.0);
+
+        // Assert
+        Assert.Same(_sut, result);
+        Assert.False(_sut.IsEmpty);
+
+        var filter = _sut.Build();
+        Assert.Equal(3, filter.Must.Count);   // A, C, D
+        Assert.Equal(2, filter.MustNot.Count); // B, E
     }
 }

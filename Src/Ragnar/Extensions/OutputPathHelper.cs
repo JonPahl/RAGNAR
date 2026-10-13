@@ -15,9 +15,9 @@ public static class OutputPathHelper
         var parts = folders as IReadOnlyCollection<string> ?? [.. folders];
 
         if (parts.Count == 0)
-            return string.IsNullOrEmpty(baseDir) ? AppDefaults.ResponseDirectoryName : Path.Join(baseDir, AppDefaults.ResponseDirectoryName);
+            return string.IsNullOrEmpty(baseDir) ? DomainDefaults.ResponseDir : Path.Join(baseDir, DomainDefaults.ResponseDir);
 
-        return Path.Join(parts.Append(AppDefaults.ResponseDirectoryName).ToArray());
+        return Path.Join(parts.Append(DomainDefaults.ResponseDir).ToArray());
     }
 
     /// <summary>Wraps a prompt string in markdown fence markers for display.</summary>
@@ -25,5 +25,5 @@ public static class OutputPathHelper
     /// <returns>Prompt wrapped in `***[Original Prompt]...***`.</returns>
     /// <example><![CDATA[string formatted = prompt.ShowPrompt();]]></example>
     public static string ShowPrompt(this string prompt) =>
-    $"\n\n{AppDefaults.MarkdownFenceMarker}\n{AppDefaults.OriginalPromptLabel}\n{prompt}\n{AppDefaults.OriginalPromptLabelEnd}{AppDefaults.MarkdownFenceMarker}";
+    $"\n\n{PromptFormatting.Fence}\n{PromptFormatting.OriginalPromptLabel}\n{prompt}\n{PromptFormatting.OriginalPromptLabelEnd}{PromptFormatting.Fence}";
 }

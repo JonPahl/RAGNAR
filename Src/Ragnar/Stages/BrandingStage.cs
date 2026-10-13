@@ -14,6 +14,7 @@ public class BrandingStage(IApplicationHeader header)
     /// </example>
     public string Name => "Branding Stage";
 
+    /// <summary>Always null; this display stage requires no retry logic.</summary>
     public AsyncRetryPolicy? RetryPolicy => null;
 
     /// <summary>Indicates the branding stage should always execute in the pipeline.</summary>

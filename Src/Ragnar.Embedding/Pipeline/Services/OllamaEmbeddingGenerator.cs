@@ -23,6 +23,7 @@ public class OllamaEmbeddingGenerator(
     public void Dispose()
     {
         _generator.Dispose();
+        _timeoutCts.Dispose();
     }
 
     /// <summary>Generates a single vector embedding for the given input text via the Ollama model.</summary>

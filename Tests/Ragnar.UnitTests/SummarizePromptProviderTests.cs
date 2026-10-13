@@ -37,7 +37,7 @@ public class SummarizePromptProviderTests
         var result = _sut.GetTemplate(content, question);
 
         // Assert
-        Assert.Contains(content, result);
+        Assert.Contains(content, result, StringComparison.InvariantCultureIgnoreCase);
     }
 
     [Fact]

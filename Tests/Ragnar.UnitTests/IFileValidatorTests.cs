@@ -2,39 +2,65 @@
 
 public class IFileValidatorTests
 {
+    private sealed class TestFileValidator : IFileEligibilityValidator
+    {
+        public bool IsValid(FileInfo file, in FileLoadOptions fileLoadOptions)
+        {
+            ArgumentNullException.ThrowIfNull(file);
+            return fileLoadOptions.AllowedExtensions.Contains(file.Extension, StringComparer.OrdinalIgnoreCase);
+        }
+    }
+
+    private readonly IFileEligibilityValidator _validator = new TestFileValidator();
+
     [Fact]
     public void IsValidWithNullFileShouldThrowArgumentNullException()
     {
-        var validator = new Mock<IFileValidator>();
+        // Arrange
         var opts = new FileLoadOptions { AllowedExtensions = [".cs"], ExcludedDirectories = [] };
 
-        Assert.ThrowsAny<ArgumentNullException>(() =>
-            validator.Object.IsValid(null!, in opts));
+        // Act & Assert
+        Assert.Throws<ArgumentNullException>(() => _validator.IsValid(null!, opts));
     }
 
     [Fact]
-    public void IsValidShouldReturnTrueForAllowedFile()
+    public void IsValidWithMatchingExtensionShouldReturnTrue()
     {
-        var validator = new Mock<IFileValidator>();
-        validator.Setup(v => v.IsValid(It.IsAny<FileInfo>(), It.Is<FileLoadOptions>(o => o.AllowedExtensions.Contains(".cs"))))
-                 .Returns(true);
+        // Arrange
+        using var tempFile = new TempFileHelper("test.cs", "content");
+        var opts = new FileLoadOptions { AllowedExtensions = [".cs", ".json"], ExcludedDirectories = [] };
 
-        var fi = new FileInfo("test.cs");
-        var opts = new FileLoadOptions { AllowedExtensions = [".cs"], ExcludedDirectories = [] };
+        // Act
+        var result = _validator.IsValid(tempFile.Info, opts);
 
-        Assert.True(validator.Object.IsValid(fi, in opts));
+        // Assert
+        Assert.True(result);
     }
 
     [Fact]
-    public void IsValidShouldReturnFalseForDisallowedFile()
+    public void IsValidWithNonMatchingExtensionShouldReturnFalse()
     {
-        var validator = new Mock<IFileValidator>();
-        validator.Setup(v => v.IsValid(It.IsAny<FileInfo>(), It.Is<FileLoadOptions>(o => !o.AllowedExtensions.Contains(".exe"))))
-                 .Returns(false);
-
-        var fi = new FileInfo("malware.exe");
+        // Arrange
+        using var tempFile = new TempFileHelper("test.pdf", "content");
         var opts = new FileLoadOptions { AllowedExtensions = [".cs"], ExcludedDirectories = [] };
 
-        Assert.False(validator.Object.IsValid(fi, in opts));
+        // Act
+        var result = _validator.IsValid(tempFile.Info, opts);
+
+        // Assert
+        Assert.False(result);
+    }
+
+    private sealed class TempFileHelper : IDisposable
+    {
+        private readonly string _path;
+        public FileInfo Info { get; }
+        public TempFileHelper(string name, string content)
+        {
+            _path = Path.Combine(Path.GetTempPath(), name);
+            File.WriteAllText(_path, content);
+            Info = new FileInfo(_path);
+        }
+        public void Dispose() => File.Delete(_path);
     }
 }

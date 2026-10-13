@@ -4,7 +4,7 @@ public class ShowFileStageTests
 {
     private readonly Mock<IQdrantClient> _clientMock;
     private readonly Mock<Serilog.ILogger> _loggerMock;
-    private readonly ShowFileStage _sut;
+    private readonly StoredFileListStage _sut;
 
     public ShowFileStageTests()
     {
@@ -34,7 +34,7 @@ public class ShowFileStageTests
             { Host = "localhost", Port = 11434, LlmModel = "ollama-model", Timeout = TimeSpan.FromSeconds(30) }
         };
 
-        _sut = new ShowFileStage(Options.Create(config), _clientMock.Object, _loggerMock.Object);
+        _sut = new StoredFileListStage(Options.Create(config), _clientMock.Object, _loggerMock.Object);
     }
 
     [Fact]

@@ -12,22 +12,15 @@ public class XmlCommentFilterStrategyTests
     [Fact]
     public void SupportedCategoryShouldReturnXml()
     {
-        Assert.Equal(QuestionCategory.XML, _sut.SupportedCategory);
-    }
-
-    [Fact]
-    public void CreateFilterWithZeroThresholdShouldReturnFilterWithRangeAndExcept()
-    {
         // Act
-        var filter = _sut.CreateFilter(0);
+        var category = _sut.SupportedCategory;
 
         // Assert
-        Assert.NotNull(filter);
-        Assert.NotEmpty(filter.Must);
+        Assert.Equal(QuestionCategory.XML, category);
     }
 
     [Fact]
-    public void CreateFilterWithPositiveThresholdShouldReturnFilterWithRange()
+    public void CreateFilterShouldReturnNonEmptyFilter()
     {
         // Act
         var filter = _sut.CreateFilter(100);
@@ -35,36 +28,65 @@ public class XmlCommentFilterStrategyTests
         // Assert
         Assert.NotNull(filter);
         Assert.NotEmpty(filter.Must);
-        // Should contain a range condition for CommentLength
-        var rangeCondition = filter.Must.FirstOrDefault(c => c.Field?.Key == "CommentLength");
-        Assert.NotNull(rangeCondition);
     }
 
     [Fact]
-    public void CreateFilterShouldExcludeTestCategoryKeywords()
+    public void CreateFilterShouldIncludeCommentLengthRange()
     {
         // Act
         var filter = _sut.CreateFilter(50);
 
         // Assert
-        Assert.NotNull(filter);
-        // Should have an except-keywords condition for Category
-        var exceptCondition = filter.Must.FirstOrDefault(c => c.Field?.Key == "Category");
-        Assert.NotNull(exceptCondition);
-        Assert.NotNull(exceptCondition.Field?.Match?.ExceptKeywords);
-        Assert.Contains("Test", exceptCondition.Field.Match.ExceptKeywords.Strings);
-        Assert.Contains("Tests", exceptCondition.Field.Match.ExceptKeywords.Strings);
-        Assert.Contains("Testing", exceptCondition.Field.Match.ExceptKeywords.Strings);
+        Assert.Contains(filter.Must, c => c.Field?.Key == "CommentLength");
     }
 
     [Fact]
-    public void CreateFilterShouldBeDeterministicForSameThreshold()
+    public void CreateFilterShouldExcludeTestCategories()
     {
         // Act
-        var filter1 = _sut.CreateFilter(25);
-        var filter2 = _sut.CreateFilter(25);
+        var filter = _sut.CreateFilter(50);
 
         // Assert
-        Assert.Equal(filter1.Must.Count, filter2.Must.Count);
+        var hasExceptKeywords = filter.Must.Any(c =>
+            c.Field?.Match?.ExceptKeywords?.Strings != null &&
+            c.Field.Match.ExceptKeywords.Strings.Contains("Test"));
+        Assert.True(hasExceptKeywords);
+    }
+
+    [Fact]
+    public void CreateFilterShouldExcludeTestsCategory()
+    {
+        // Act
+        var filter = _sut.CreateFilter(50);
+
+        // Assert
+        var hasExceptKeywords = filter.Must.Any(c =>
+            c.Field?.Match?.ExceptKeywords?.Strings != null &&
+            c.Field.Match.ExceptKeywords.Strings.Contains("Tests"));
+        Assert.True(hasExceptKeywords);
+    }
+
+    [Fact]
+    public void CreateFilterShouldExcludeTestingCategory()
+    {
+        // Act
+        var filter = _sut.CreateFilter(50);
+
+        // Assert
+        var hasExceptKeywords = filter.Must.Any(c =>
+            c.Field?.Match?.ExceptKeywords?.Strings != null &&
+            c.Field.Match.ExceptKeywords.Strings.Contains("Testing"));
+        Assert.True(hasExceptKeywords);
+    }
+
+    [Fact]
+    public void CreateFilterWithDifferentThresholdsShouldProduceDifferentFilters()
+    {
+        // Act
+        var filterA = _sut.CreateFilter(50);
+        var filterB = _sut.CreateFilter(200);
+
+        // Assert – filters are distinct objects
+        Assert.NotSame(filterA, filterB);
     }
 }

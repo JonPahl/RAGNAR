@@ -6,7 +6,7 @@ public class QuestionExecutionStageTests
     private readonly Mock<IOutputWriter> _writerMock;
     private readonly Mock<IContextRetriever> _contextMock;
     private readonly Mock<Serilog.ILogger> _loggerMock;
-    private readonly QuestionExecutionStage _sut;
+    private readonly QuestionAnswerStage _sut;
 
     public QuestionExecutionStageTests()
     {
@@ -19,12 +19,12 @@ public class QuestionExecutionStageTests
         {
             ApplicationOptions = new ApplicationOptions { VectorStoreName = "test_collection", SourceDirectory = "" },
             EmbeddingOptions = new EmbeddingOptions { Dimension = 1536, BatchSize = 10, EmbeddingModel = "test-model", Host = "http://localhost", Port = 11434, Timeout = TimeSpan.FromSeconds(30) },
-            FileLoadOptions = new FileLoadOptions { },
+            FileLoadOptions = new FileLoadOptions(),
             GenerationOptions = new GenerationOptions { MaxTokens = 1000, },
             OllamaOptions = new OllamaOptions { Host = "http://localhost", Port = 11434, Timeout = TimeSpan.FromSeconds(30), LlmModel = "test-llm-model" },
         };
 
-        _sut = new QuestionExecutionStage(
+        _sut = new QuestionAnswerStage(
             _ragMock.Object,
             Options.Create(config),
             _writerMock.Object,

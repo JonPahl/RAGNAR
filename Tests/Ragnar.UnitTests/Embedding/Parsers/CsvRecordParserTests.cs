@@ -18,10 +18,10 @@ public class CsvRecordParserTests : IDisposable
         const string csvContent = "Text,Category,IsEnabled,FileName\r\n" +
                          "What is C#?,CSharp,true,questions.csv\r\n" +
                          "How to use LINQ?,CSharp,true,questions.csv\r\n";
-        await File.WriteAllTextAsync(_tempFilePath, csvContent, TestContext.Current.CancellationToken);
+        await File.WriteAllTextAsync(_tempFilePath, csvContent, TestContext.Current.CancellationToken).ConfigureAwait(false);
 
         // Act
-        var result = await _sut.ParseAsync(_tempFilePath, CancellationToken.None);
+        var result = await _sut.ParseAsync(_tempFilePath, CancellationToken.None).ConfigureAwait(false);
 
         // Assert
         var list = result.ToList();
@@ -34,10 +34,10 @@ public class CsvRecordParserTests : IDisposable
     {
         // Arrange
         const string csvContent = "Text,Category,IsEnabled,FileName\r\n";
-        await File.WriteAllTextAsync(_tempFilePath, csvContent, TestContext.Current.CancellationToken);
+        await File.WriteAllTextAsync(_tempFilePath, csvContent, TestContext.Current.CancellationToken).ConfigureAwait(false);
 
         // Act
-        var result = await _sut.ParseAsync(_tempFilePath, CancellationToken.None);
+        var result = await _sut.ParseAsync(_tempFilePath, CancellationToken.None).ConfigureAwait(false);
 
         // Assert
         Assert.Empty(result);
@@ -48,7 +48,7 @@ public class CsvRecordParserTests : IDisposable
     {
         // Act & Assert
         await Assert.ThrowsAnyAsync<ArgumentException>(() =>
-            _sut.ParseAsync(null!, CancellationToken.None));
+            _sut.ParseAsync(null!, CancellationToken.None)).ConfigureAwait(false);
     }
 
     [Fact]
@@ -56,7 +56,7 @@ public class CsvRecordParserTests : IDisposable
     {
         // Act & Assert
         await Assert.ThrowsAnyAsync<ArgumentException>(() =>
-            _sut.ParseAsync("", CancellationToken.None));
+            _sut.ParseAsync("", CancellationToken.None)).ConfigureAwait(false);
     }
 
     public void Dispose()

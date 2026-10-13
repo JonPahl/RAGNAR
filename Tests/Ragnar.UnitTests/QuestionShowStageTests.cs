@@ -1,13 +1,12 @@
 ﻿namespace Ragnar.Tests;
 
-
 public class QuestionShowStageTests
 {
-    private readonly QuestionShowStage _sut;
+    private readonly QuestionTableStage _sut;
 
     public QuestionShowStageTests()
     {
-        _sut = new QuestionShowStage();
+        _sut = new QuestionTableStage();
     }
 
     [Fact]
@@ -16,12 +15,15 @@ public class QuestionShowStageTests
         Assert.Equal("Show Questions Stage", _sut.Name);
     }
 
-    [Fact]
-    public void ShouldRunShouldAlwaysReturnTrue()
+    [Theory]
+    [InlineData(typeof(QuestionPipelineContext))] // valid context
+    [InlineData(typeof(object))]            // null (cast via null!)
+    public void ShouldRunShouldAlwaysReturnTrue(Type unused)
     {
-        var context = new QuestionPipelineContext();
-
-        Assert.True(_sut.ShouldRun(context));
+        QuestionPipelineContext? ctx = unused == typeof(QuestionPipelineContext)
+            ? new QuestionPipelineContext()
+            : null!;
+        Assert.True(_sut.ShouldRun(ctx));
     }
 
     [Fact]
@@ -36,7 +38,6 @@ public class QuestionShowStageTests
     {
         Assert.Null(_sut.RetryPolicy);
     }
-
 
     [Fact]
     public async Task ExecuteAsyncWithCancelledTokenShouldThrow()

@@ -1,13 +1,11 @@
-﻿using CollectionInfo = Ragnar.Core.CollectionInfo;
-
-namespace Ragnar.Tests;
+﻿namespace Ragnar.Tests;
 
 public class CollectionInfoTests
 {
     [Fact]
     public void CollectionInfoShouldStoreAllProperties()
     {
-        var info = new CollectionInfo
+        var info = new Core.CollectionInfo
         {
             Name = "ragnar",
             Dimension = 768,
@@ -24,8 +22,8 @@ public class CollectionInfoTests
     [Fact]
     public void CollectionInfoShouldSupportEquality()
     {
-        var a = new CollectionInfo { Name = "x", Dimension = 128, VectorsCount = 10, Status = "green" };
-        var b = new CollectionInfo { Name = "x", Dimension = 128, VectorsCount = 10, Status = "green" };
+        var a = new Core.CollectionInfo { Name = "x", Dimension = 128, VectorsCount = 10, Status = "green" };
+        var b = new Core.CollectionInfo { Name = "x", Dimension = 128, VectorsCount = 10, Status = "green" };
 
         Assert.Equal(a, b);
     }
@@ -33,8 +31,8 @@ public class CollectionInfoTests
     [Fact]
     public void CollectionInfoShouldDifferWhenDimensionDiffers()
     {
-        var a = new CollectionInfo { Name = "x", Dimension = 128, VectorsCount = 10, Status = "green" };
-        var b = new CollectionInfo { Name = "x", Dimension = 256, VectorsCount = 10, Status = "green" };
+        var a = new Core.CollectionInfo { Name = "x", Dimension = 128, VectorsCount = 10, Status = "green" };
+        var b = new Core.CollectionInfo { Name = "x", Dimension = 256, VectorsCount = 10, Status = "green" };
 
         Assert.NotEqual(a, b);
     }
@@ -42,7 +40,7 @@ public class CollectionInfoTests
     [Fact]
     public void CollectionInfoShouldBeImmutable()
     {
-        var info = new CollectionInfo { Name = "immutable", Dimension = 64, VectorsCount = 5, Status = "yellow" };
+        var info = new Core.CollectionInfo { Name = "immutable", Dimension = 64, VectorsCount = 5, Status = "yellow" };
         var copy = info with { Name = "changed" };
 
         Assert.Equal("immutable", info.Name);

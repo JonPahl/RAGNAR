@@ -17,7 +17,7 @@ public sealed class XmlCommentFilterStrategy
     /// <param name="sizeThreshold">The minimum element size threshold.</param>
     /// <returns>The configured filter instance.</returns>
     /// <example><![CDATA[var f = strategy.CreateFilter(50);]]></example>
-    public Filter CreateFilter(int sizeThreshold) => new FilterBuilder()
+    public Filter CreateFilter(int sizeThreshold) => new QdrantFilterBuilder()
             .AddRange("CommentLength", sizeThreshold)
             .AddExceptKeywords("Category", "Test", "Tests", "Testing")
             .Build();

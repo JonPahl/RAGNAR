@@ -54,7 +54,7 @@ public class VectorStoreRepositoryTests
     public async Task UpsertBatchAsyncEmptyDocumentsShouldReturnCompleted()
     {
         // Act
-        var result = await _sut.UpsertBatchAsync([], CancellationToken.None);
+        var result = await _sut.UpsertBatchAsync([], CancellationToken.None).ConfigureAwait(false);
 
         // Assert
         Assert.Equal(UpdateStatus.Completed, result.Status);
@@ -65,11 +65,11 @@ public class VectorStoreRepositoryTests
     {
         // Arrange
         var cts = new CancellationTokenSource();
-        await cts.CancelAsync();
+        await cts.CancelAsync().ConfigureAwait(false);
 
         // Act & Assert
         await Assert.ThrowsAnyAsync<OperationCanceledException>(() =>
-            _sut.UpsertBatchAsync([new CodeDocument() { Code = "", FilePath = "", Comment = "", CommentLength = 0, ElementName = "", ElementType = "", FileName = "" }], cts.Token));
+            _sut.UpsertBatchAsync([new CodeDocument() { Code = "", FilePath = "", Comment = "", CommentLength = 0, ElementName = "", ElementType = "", FileName = "" }], cts.Token)).ConfigureAwait(false);
 
         cts.Dispose();
     }

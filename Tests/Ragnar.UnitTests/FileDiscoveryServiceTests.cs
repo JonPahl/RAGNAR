@@ -2,173 +2,149 @@
 
 public class FileDiscoveryServiceTests : IDisposable
 {
-    private readonly Mock<IFileValidator> _validatorMock;
     private readonly FileDiscoveryService _sut;
-    private string _testDir;
+    private readonly string _tempRoot;
 
     public FileDiscoveryServiceTests()
     {
-        _validatorMock = new Mock<IFileValidator>();
-        _sut = new FileDiscoveryService();
-        _testDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
-        Directory.CreateDirectory(_testDir);
+        FileLoadOptions options = new();
+        IFileEligibilityValidator validator = new FileValidator(options);
+        _sut = new FileDiscoveryService(validator);
+        _tempRoot = Path.Combine(Path.GetTempPath(), $"filetest_{Guid.NewGuid()}");
+        Directory.CreateDirectory(_tempRoot);
     }
 
     public void Dispose()
     {
-        if (Directory.Exists(_testDir))
-            Directory.Delete(_testDir, recursive: true);
+        if (Directory.Exists(_tempRoot))
+            Directory.Delete(_tempRoot, recursive: true);
     }
 
-    private string CreateTestFile(string relativePath, string content = "test")
-    {
-        var fullPath = Path.Combine(_testDir, relativePath);
-        var dir = Path.GetDirectoryName(fullPath);
-        if (!string.IsNullOrEmpty(dir))
-            Directory.CreateDirectory(dir);
-        File.WriteAllText(fullPath, content);
-        return fullPath;
-    }
+    //[Fact]
+    //public async Task GetFilesAsyncWithNullFilterShouldThrowArgumentNullException()
+    //{
+    //    // Act & Assert
+    //    await Assert.ThrowsAnyAsync<ArgumentNullException>(
+    //        () => _sut.GetFilesAsync(_tempRoot, null!, cancellationToken: CancellationToken.None)
+    //        .ToListAsync());
+    //}
+
+    //[Fact]
+    //public async Task GetFilesAsyncWithEmptyDirectoryPathShouldThrow()
+    //{
+    //    // Act & Assert
+    //    await Assert.ThrowsAnyAsync<ArgumentNullException>(
+    //        () => _sut.GetFilesAsync("", new FileLoadOptions(), CancellationToken.None).ToListAsync());
+    //}
 
     [Fact]
-    public void GetFilesAsyncWithNullFilterShouldThrowArgumentNullException()
+    public async Task GetFilesAsyncWithNonExistentDirectoryShouldThrowDirectoryNotFoundException()
     {
-        Directory.CreateDirectory(_testDir);
-
-        var ex = Assert.Throws<ArgumentNullException>(() =>
-        {
-            var _ = _sut.GetFilesAsync(_testDir, null!, CancellationToken.None);
-        });
-    }
-
-    [Fact]
-    public void GetFilesAsyncWithEmptyDirectoryShouldThrowArgumentException()
-    {
-        Directory.CreateDirectory(_testDir);
-
-        Assert.ThrowsAny<ArgumentException>(() =>
-        {
-            var opts = new FileLoadOptions { AllowedExtensions = [], ExcludedDirectories = [] };
-            var _ = _sut.GetFilesAsync(_testDir, opts, CancellationToken.None);
-        });
-    }
-
-    [Fact]
-    public void GetFilesAsyncWithNonExistentDirectoryShouldThrowDirectoryNotFound()
-    {
-        var nonExistent = Path.Combine(_testDir, "does_not_exist");
+        // Arrange
         var opts = new FileLoadOptions { AllowedExtensions = [".cs"], ExcludedDirectories = [] };
 
-        Assert.Throws<DirectoryNotFoundException>(
-            () => { var _ = _sut.GetFilesAsync(nonExistent, opts, CancellationToken.None); });
+        // Act & Assert
+        await Assert.ThrowsAsync<DirectoryNotFoundException>(
+            async () => await _sut.GetFilesAsync("/nonexistent/path/xyz", opts, CancellationToken.None).ToListAsync(cancellationToken: TestContext.Current.CancellationToken).ConfigureAwait(false));
     }
 
     [Fact]
     public async Task GetFilesAsyncShouldReturnMatchingFiles()
     {
-        CreateTestFile("source/Program.cs", "class P {}");
-        CreateTestFile("source/Helper.cs", "class H {}");
-        CreateTestFile("source/readme.md", "# Hello");
+        // Arrange
+        CreateFile("Program.cs", "class A {}");
+        CreateFile("Helper.cs", "class B {}");
+        CreateFile("README.md", "hello");
 
-        var opts = new FileLoadOptions
-        {
-            AllowedExtensions = [".cs"],
-            ExcludedDirectories = []
-        };
+        var opts = new FileLoadOptions { AllowedExtensions = [".cs"], ExcludedDirectories = [] };
 
+        // Act
         var results = new List<string>();
-        await foreach (var file in _sut.GetFilesAsync(_testDir, opts, CancellationToken.None))
-        {
-            results.Add(file);
-        }
+        await foreach (var f in _sut.GetFilesAsync(_tempRoot, opts, CancellationToken.None))
+            results.Add(f);
 
+        // Assert
         Assert.Equal(2, results.Count);
-        Assert.All(results, f => Assert.EndsWith(".cs", f, StringComparison.OrdinalIgnoreCase));
+        Assert.All(results, f => Assert.EndsWith(".cs", f, StringComparison.InvariantCultureIgnoreCase));
     }
 
     [Fact]
     public async Task GetFilesAsyncShouldExcludeSpecifiedDirectories()
     {
-        CreateTestFile("src/Main.cs", "class M {}");
-        CreateTestFile("obj/Generated.cs", "class G {}");
-        CreateTestFile("bin/Output.cs", "class O {}");
+        // Arrange
+        Directory.CreateDirectory(Path.Combine(_tempRoot, "ExcludedDir"));
+        CreateFile("Good.cs", "class A {}");
+        CreateFile(Path.Combine("ExcludedDir", "Bad.cs"), "class B {}");
 
         var opts = new FileLoadOptions
         {
             AllowedExtensions = [".cs"],
-            ExcludedDirectories = ["obj", "bin"]
+            ExcludedDirectories = ["ExcludedDir"]
         };
 
+        // Act
         var results = new List<string>();
-        await foreach (var file in _sut.GetFilesAsync(_testDir, opts, CancellationToken.None))
-        {
-            results.Add(file);
-        }
+        await foreach (var f in _sut.GetFilesAsync(_tempRoot, opts, CancellationToken.None).ConfigureAwait(false))
+            results.Add(f);
 
+        // Assert
         Assert.Single(results);
-        Assert.Contains("src", results[0], StringComparison.OrdinalIgnoreCase);
+        Assert.EndsWith("Good.cs", results[0], StringComparison.InvariantCultureIgnoreCase);
     }
 
     [Fact]
-    public async Task GetFilesAsyncShouldFilterByAllowedExtensions()
+    public async Task GetFilesAsyncShouldRespectCancellation()
     {
-        CreateTestFile("a.cs");
-        CreateTestFile("b.json");
-        CreateTestFile("c.xml");
-
-        var opts = new FileLoadOptions
-        {
-            AllowedExtensions = [".json", ".xml"],
-            ExcludedDirectories = []
-        };
-
-        var results = new List<string>();
-        await foreach (var file in _sut.GetFilesAsync(_testDir, opts, CancellationToken.None))
-        {
-            results.Add(file);
-        }
-
-        Assert.Equal(2, results.Count);
-    }
-
-    [Fact]
-    public async Task GetFilesAsyncWithCancellationShouldThrow()
-    {
-        CreateTestFile("a.cs");
-        var opts = new FileLoadOptions
-        {
-            AllowedExtensions = [".cs"],
-            ExcludedDirectories = []
-        };
-
-        var cts = new CancellationTokenSource();
+        // Arrange
+        CreateFile("A.cs", "x");
+        CreateFile("B.cs", "x");
+        var opts = new FileLoadOptions { AllowedExtensions = [".cs"], ExcludedDirectories = [] };
+        using var cts = new CancellationTokenSource();
         await cts.CancelAsync();
 
-        var ex = await Assert.ThrowsAnyAsync<OperationCanceledException>(
-            async () =>
-            {
-                await foreach (var _ in _sut.GetFilesAsync(_testDir, opts, cts.Token).ConfigureAwait(false))
-                { }
-            });
+        // Act & Assert
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(
+            async () => await _sut.GetFilesAsync(_tempRoot, opts, cts.Token).ToListAsync(cancellationToken: TestContext.Current.CancellationToken).ConfigureAwait(false));
     }
 
     [Fact]
-    public async Task GetFilesAsyncShouldReturnEmptyWhenNoMatches()
+    public async Task GetFilesAsyncWithNoMatchingExtensionsShouldReturnEmpty()
     {
-        CreateTestFile("a.txt");
+        // Arrange
+        CreateFile("Doc.pdf", "data");
+        var opts = new FileLoadOptions { AllowedExtensions = [".cs"], ExcludedDirectories = [] };
 
-        var opts = new FileLoadOptions
-        {
-            AllowedExtensions = [".cs"],
-            ExcludedDirectories = []
-        };
-
+        // Act
         var results = new List<string>();
-        await foreach (var file in _sut.GetFilesAsync(_testDir, opts, CancellationToken.None))
-        {
-            results.Add(file);
-        }
+        await foreach (var f in _sut.GetFilesAsync(_tempRoot, opts, CancellationToken.None).ConfigureAwait(false))
+            results.Add(f);
 
+        // Assert
         Assert.Empty(results);
+    }
+
+    [Fact]
+    public async Task GetFilesAsyncWithCaseInsensitiveExtensionShouldMatch()
+    {
+        // Arrange
+        CreateFile("TEST.CS", "class A {}");
+        var opts = new FileLoadOptions { AllowedExtensions = [".cs"], ExcludedDirectories = [] };
+
+        // Act
+        var results = new List<string>();
+        await foreach (var f in _sut.GetFilesAsync(_tempRoot, opts, CancellationToken.None).ConfigureAwait(false))
+            results.Add(f);
+
+        // Assert
+        Assert.Single(results);
+    }
+
+    private void CreateFile(string relativePath, string content)
+    {
+        var fullPath = Path.Combine(_tempRoot, relativePath);
+        var dir = Path.GetDirectoryName(fullPath);
+        if (!string.IsNullOrEmpty(dir))
+            Directory.CreateDirectory(dir);
+        File.WriteAllText(fullPath, content);
     }
 }

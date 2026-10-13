@@ -13,7 +13,7 @@ public class OutputPathHelperTests
         var result = folders.GetResponseDirectory();
 
         // Assert
-        Assert.Equal(AppDefaults.ResponseDirectoryName, result);
+        Assert.Equal(DomainDefaults.ResponseDir, result);
     }
 
     [Fact]
@@ -26,7 +26,7 @@ public class OutputPathHelperTests
         var result = folders.GetResponseDirectory("/base");
 
         // Assert
-        Assert.Equal(Path.Join("/base", AppDefaults.ResponseDirectoryName), result);
+        Assert.Equal(Path.Join("/base", DomainDefaults.ResponseDir), result);
     }
 
     [Fact]
@@ -39,7 +39,7 @@ public class OutputPathHelperTests
         var result = folders.GetResponseDirectory();
 
         // Assert
-        Assert.Equal(Path.Join("Category1", "SubFolder", AppDefaults.ResponseDirectoryName), result);
+        Assert.Equal(Path.Join("Category1", "SubFolder", DomainDefaults.ResponseDir), result);
     }
 
     [Fact]
@@ -52,20 +52,20 @@ public class OutputPathHelperTests
         var result = folders.GetResponseDirectory();
 
         // Assert
-        Assert.Equal(Path.Join("MyCategory", AppDefaults.ResponseDirectoryName), result);
+        Assert.Equal(Path.Join("MyCategory", DomainDefaults.ResponseDir), result);
     }
 
     [Fact]
     public void GetResponseDirectoryWithIReadOnlyCollectionShouldWork()
     {
         // Arrange
-        var folders = (IReadOnlyCollection<string>)new[] { "A", "B" };
+        var folders = (IReadOnlyCollection<string>)["A", "B"];
 
         // Act
         var result = folders.GetResponseDirectory();
 
         // Assert
-        Assert.Equal(Path.Join("A", "B", AppDefaults.ResponseDirectoryName), result);
+        Assert.Equal(Path.Join("A", "B", DomainDefaults.ResponseDir), result);
     }
 
     [Fact]
@@ -78,7 +78,7 @@ public class OutputPathHelperTests
         var result = folders.GetResponseDirectory("/ignored/base");
 
         // Assert – when folders are present, baseDir is not prepended
-        Assert.Equal(Path.Join("Deep", "Nested", AppDefaults.ResponseDirectoryName), result);
+        Assert.Equal(Path.Join("Deep", "Nested", DomainDefaults.ResponseDir), result);
     }
 
     [Theory]
@@ -91,12 +91,8 @@ public class OutputPathHelperTests
         var result = folders.GetResponseDirectory();
 
         // Assert
-        Assert.EndsWith(AppDefaults.ResponseDirectoryName, result);
+        Assert.EndsWith(DomainDefaults.ResponseDir, result, StringComparison.InvariantCultureIgnoreCase);
     }
-
-    // ──────────────────────────────────────────────
-    // ShowPrompt
-    // ──────────────────────────────────────────────
 
     [Fact]
     public void ShowPromptShouldWrapInFenceMarkers()
@@ -108,10 +104,10 @@ public class OutputPathHelperTests
         var result = prompt.ShowPrompt();
 
         // Assert
-        Assert.Contains(AppDefaults.MarkdownFenceMarker, result);
-        Assert.Contains(AppDefaults.OriginalPromptLabel, result);
-        Assert.Contains(AppDefaults.OriginalPromptLabelEnd, result);
-        Assert.Contains(prompt, result);
+        Assert.Contains(PromptFormatting.Fence, result, StringComparison.InvariantCultureIgnoreCase);
+        Assert.Contains(PromptFormatting.OriginalPromptLabel, result, StringComparison.InvariantCultureIgnoreCase);
+        Assert.Contains(PromptFormatting.OriginalPromptLabelEnd, result, StringComparison.InvariantCultureIgnoreCase);
+        Assert.Contains(prompt, result, StringComparison.InvariantCultureIgnoreCase);
     }
 
     [Fact]
@@ -124,7 +120,7 @@ public class OutputPathHelperTests
         var result = prompt.ShowPrompt();
 
         // Assert
-        var expected = $"\n\n{AppDefaults.MarkdownFenceMarker}\n{AppDefaults.OriginalPromptLabel}\n{prompt}\n{AppDefaults.OriginalPromptLabelEnd}{AppDefaults.MarkdownFenceMarker}";
+        var expected = $"\n\n{PromptFormatting.Fence}\n{PromptFormatting.OriginalPromptLabel}\n{prompt}\n{PromptFormatting.OriginalPromptLabelEnd}{PromptFormatting.Fence}";
         Assert.Equal(expected, result);
     }
 
@@ -135,9 +131,9 @@ public class OutputPathHelperTests
         var result = "".ShowPrompt();
 
         // Assert
-        Assert.Contains(AppDefaults.OriginalPromptLabel, result);
-        Assert.Contains(AppDefaults.OriginalPromptLabelEnd, result);
-        Assert.Contains(AppDefaults.MarkdownFenceMarker, result);
+        Assert.Contains(PromptFormatting.OriginalPromptLabel, result, StringComparison.InvariantCultureIgnoreCase);
+        Assert.Contains(PromptFormatting.OriginalPromptLabelEnd, result, StringComparison.InvariantCultureIgnoreCase);
+        Assert.Contains(PromptFormatting.Fence, result, StringComparison.InvariantCultureIgnoreCase);
     }
 
     [Fact]
@@ -150,9 +146,9 @@ public class OutputPathHelperTests
         var result = prompt.ShowPrompt();
 
         // Assert
-        Assert.Contains("Line one", result);
-        Assert.Contains("Line two", result);
-        Assert.Contains("Line three", result);
+        Assert.Contains("Line one", result, StringComparison.InvariantCultureIgnoreCase);
+        Assert.Contains("Line two", result, StringComparison.InvariantCultureIgnoreCase);
+        Assert.Contains("Line three", result, StringComparison.InvariantCultureIgnoreCase);
     }
 
     [Fact]
@@ -162,6 +158,6 @@ public class OutputPathHelperTests
         var result = "hello".ShowPrompt();
 
         // Assert
-        Assert.StartsWith("\n\n", result);
+        Assert.StartsWith("\n\n", result, StringComparison.InvariantCultureIgnoreCase);
     }
 }

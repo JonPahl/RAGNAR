@@ -1,13 +1,13 @@
 ## WORKSPACE EXECUTIVE SUMMARY (YAML)
-# Generated: 2026-10-11T16:49:26.7936276-05:00
+# Generated: 2026-10-13T15:24:47.6493567-05:00
 # Root: C:\Users\jp325\source\Ragnar
 Architecture:
   Type: Backend (C#/.NET)
-  Scale: 270 relevant source files
+  Scale: 305 relevant source files
   Components: 0
   Controllers: 0
   Models: 8
-  Services: 8
+  Services: 9
 ---
 - File: Src\Ragnar\Ragnar.csproj
   Preview: "<Project Sdk='Microsoft.NET.Sdk'>  <PropertyGroup>   <OutputType>Exe</OutputType>   <TargetFramework>net10.0</TargetFramework>   <ImplicitUsings>enabl..."
@@ -31,48 +31,76 @@ Architecture:
   Preview: "# 🐉 Ragnar: Smart, Recursive Code Reasoning — From Query to Solution [![.NET](https://img.shields.io/badge/.NET-10.0-blue?logo=dotnet)](https://dotne..."
 - File: Reorganize.ps1
   Preview: "#!/usr/bin/env pwsh #Requires -Version 7.3 # Reorganise Ragnar solution folders and namespaces. # Run from the solution root directory. $ErrorActionPr..."
-- File: Ragnar.Plugins\AppDefaults.cs
-  Preview: "namespace Ragnar.Plugins; /// <summary>Centralizes shared string constants for prompt and response formatting.</summary> /// <remarks>Prevents magic s..."
-- File: Response\Diagram\Diagram_20261009_014147.md
+- File: Ragnar.Plugins\DomainDefaults.cs
+  Symbols: [DomainDefaults]
+  Preview: "namespace Ragnar.Plugins; ///<summary> ///Domain defaults class. ///</summary> public static class DomainDefaults {   /// <summary>   /// Constant for..."
+- File: Ragnar.Plugins\PromptFormatting.cs
+  Symbols: [PromptFormatting]
+  Preview: "namespace Ragnar.Plugins; ///<summary> ///Prompt formatting constants. ///</summary> public static class PromptFormatting {   /// <summary>   /// Labe..."
+- File: .sonarqube\conf\SonarQubeAnalysisConfig.xml
+  Preview: "<?xml version='1.0' encoding='utf-8'?> <AnalysisConfig xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSche..."
+- File: Response\Diagram\Diagram_20261012_010418.md
   Preview: "### <span style='color:darkblue;'>Diagram</span> Analyze the following C# code base. Generate the appropriate Mermaid diagrams, a sequence diagram, an..."
-- File: Response\Diagram\Diagram_20261010_010732.md
+- File: Response\Diagram\Diagram_20261012_080416.md
   Preview: "### <span style='color:darkblue;'>Diagram</span> Analyze the following C# code base. Generate the appropriate Mermaid diagrams, a sequence diagram, an..."
-- File: Response\General\Maintain_20261010_021958.md
+- File: Response\Diagram\OtherDiagram_20261012_023007.md
+  Preview: "### <span style='color:darkblue;'>Diagram</span> Analyze the following C# code base. Generate the appropriate diagrams based on the provided source co..."
+- File: Response\Diagram\OtherDiagram_20261012_090902.md
+  Preview: "### <span style='color:darkblue;'>Diagram</span> Analyze the following C# code base. Generate the appropriate diagrams based on the provided source co..."
+- File: Response\Diagram\QdrantDiagram_20261012_034016.md
+  Preview: "### <span style='color:darkblue;'>Diagram</span> Analyze the C# code base. Generate the appropriate Mermaid diagrams for the Qdrant database. > **Date..."
+- File: Response\General\Image_20261012_043006.md
+  Preview: "### <span style='color:darkblue;'>General</span> Can you generate a prompt for creating a logo that best describes this codebase with a Norse theme ar..."
+- File: Response\General\Image_20261012_095043.md
+  Preview: "### <span style='color:darkblue;'>General</span> Can you generate a prompt for creating a logo that best describes this codebase with a Norse theme ar..."
+- File: Response\General\Maintain_20261012_051112.md
   Preview: "### <span style='color:darkblue;'>General</span> Calculate how easy this code is to maintain? Can you generate updated examples for how to fix them? >..."
-- File: Response\General\Organization_20261010_034659.md
+- File: Response\General\Maintain_20261012_104638.md
+  Preview: "### <span style='color:darkblue;'>General</span> Calculate how easy this code is to maintain? Can you generate updated examples for how to fix them? >..."
+- File: Response\General\Organization_20261012_120107.md
   Preview: "### <span style='color:darkblue;'>General</span> Can you suggest how to better organize based on the code into namespaces and folders? Please provide ..."
-- File: Response\General\Program_20261010_044508.md
-  Preview: "### <span style='color:darkblue;'>General</span> Rework program.cs file to be easier to read and maintain? > **Date Generated**: 10/9/2026 11:45:08 PM..."
-- File: Response\General\UpdateBuilders_20261009_221147.md
+- File: Response\General\Other_20261012_124458.md
+  Preview: "### <span style='color:darkblue;'>General</span> Are there any other comments I should be made aware of? > **Date Generated**: 10/12/2026 7:44:58 AM >..."
+- File: Response\General\Program_20261012_133751.md
+  Preview: "### <span style='color:darkblue;'>General</span> Rework program.cs file to be easier to read and maintain? > **Date Generated**: 10/12/2026 8:37:51 AM..."
+- File: Response\General\Readme_20261012_144006.md
+  Preview: "# Ragnar ## AI-Powered Code Q&A with RAG Pipeline > **Ragnar** is a .NET console application that parses C# source code, generates embeddings via Olla..."
+- File: Response\General\UpdateBuilders_20261012_160804.md
   Preview: "### <span style='color:darkblue;'>General</span> How do I rework, improve or update the existing builders that are implement in this code base. > **Da..."
-- File: Response\General\UpdateBuilders_20261010_054225.md
-  Preview: "### <span style='color:darkblue;'>General</span> How do I rework, improve or update the existing builders that are implement in this code base. > **Da..."
-- File: Response\General\UpdatePipelines_20261010_065829.md
+- File: Response\General\UpdatePipelines_20261012_171234.md
   Preview: "### <span style='color:darkblue;'>General</span> How do I rework or improve the existing pipelines that are implement in this code base. > **Date Gene..."
-- File: Response\Other\Debit_20261010_075919.md
-  Preview: "### <span style='color:darkblue;'>Other</span> What technical debt should I be made aware of this C# application. > **Date Generated**: 10/10/2026 2:5..."
-- File: Response\Refactor\Code_smell_20261010_090951.md
+- File: Response\Logging\Logging_20261012_194241.md
+  Preview: "### <span style='color:darkblue;'>Logging</span> Can you add logging to all methods in the project using Serilog? > **Date Generated**: 10/12/2026 2:4..."
+- File: Response\Other\Debit_20261012_203823.md
+  Preview: "### <span style='color:darkblue;'>Other</span> What technical debt should I be made aware of this C# application. > **Date Generated**: 10/12/2026 3:3..."
+- File: Response\Other\other_qu_20261012_212508.md
+  Preview: "### <span style='color:darkblue;'>Other</span> Are there other questions I should ask to analyze this codebase? > **Date Generated**: 10/12/2026 4:25:..."
+- File: Response\Refactor\Code_smell_20261012_224409.md
   Preview: "### <span style='color:darkblue;'>Refactor</span> Can you identify any code smells in the project and suggest how to fix them? > **Date Generated**: 1..."
-- File: Response\Refactor\Rename_20261010_102714.md
+- File: Response\Refactor\FluentValidation_20261012_232222.md
+  Preview: "### <span style='color:darkblue;'>Refactor</span> Can you suggest FluentValidation Attributes I should use? Provide how I should implement any suggest..."
+- File: Response\Refactor\Refactored_DesignPattern_20261013_023330.md
+  Preview: "### <span style='color:darkblue;'>Refactor</span> Please provide a complete refactored version to help implement design patterns using SOLID principle..."
+- File: Response\Refactor\Rename_20261013_032541.md
   Preview: "### <span style='color:darkblue;'>Refactor</span> Please recommend improved class, method, and variable names to make this application easier to under..."
-- File: Response\Refactor\ROI_20261010_113149.md
+- File: Response\Refactor\ROI_20261013_043018.md
   Preview: "### <span style='color:darkblue;'>Refactor</span> What are the top 3 most critical technical debt items in this codebase, ranked by impact and remedia..."
-- File: Response\Refactor\TODO_20261010_120223.md
+- File: Response\Refactor\TODO_20261013_050645.md
   Preview: "### <span style='color:darkblue;'>Refactor</span> Can you provide examples on how to implement all mentioned TODO, if enough details are present? > **..."
-- File: Response\Testing\TestFolder_20261011_134918.md
-  Preview: "### <span style='color:darkblue;'>Testing</span> Please provide a script to automatically reorder all tests into a better folder layout > **Date Gener..."
-- File: Response\Testing\UnitTestCreate_20261011_155926.md
+- File: Response\Testing\UnitTestCreate_20261013_071845.md
   Preview: "### <span style='color:darkblue;'>Testing</span> Please create unit tests using (xunit and moq) for all public methods where applicable. > **Date Gene..."
-- File: Response\Testing\UnitTestModify_20261011_193508.md
+- File: Response\Testing\UnitTestModify_20261013_091625.md
   Preview: "### <span style='color:darkblue;'>Testing</span> Please modify existing unit tests using xunit and moq for all public methods where applicable. > **Da..."
-- File: Response\Testing\UnitTestRemove_20261011_201730.md
+- File: Response\Testing\UnitTestRemove_20261013_100213.md
   Preview: "### <span style='color:darkblue;'>Testing</span> Please suggest any existing unit tests that should either merged or removed if duplicated. > **Date G..."
-- File: Response\XML\XML_Code_20261011_202254.md
+- File: Response\XML\XML_Code_20261013_100656.md
   Preview: "### <span style='color:darkblue;'>XML</span> Can you provide a list of all elements missing one or more XML documentation comments (i.e., Summary, Par..."
-- File: Response\XML\XML_interface_20261011_203531.md
+- File: Response\XML\XML_interface_20261013_101910.md
   Preview: "### <span style='color:darkblue;'>XML</span> Can you provide a list of all interfaces and interface methods missing XML documentation comments (i.e., ..."
-- File: Response\XML_RAW\XML_RAW_20261010_165130.md
+- File: Response\XML_RAW\XML_RAW_20261013_112220.md
   Preview: "### <span style='color:darkblue;'>XML_RAW</span> Can you provide a list of all classes and methods missing one or more XML documentation comment (i.e...."
+- File: Response\XML_RAW\XML_Update_20261013_121112.md
+  Preview: "### <span style='color:darkblue;'>XML_RAW</span> Can you provide a list of any existing comments that are incorrect or incomplete for all classes and ..."
 - File: Src\Ragnar\appsettings.AspireObit.json
   Preview: "{  'RagnarConfig': {   'ApplicationOptions': {    'SourceDirectory': '%USERPROFILE%\\source\\repos\\Obituary.Aspire\\',    'VectorStoreName': 'Shepher..."
 - File: Src\Ragnar\appsettings.Bank.json
@@ -82,13 +110,13 @@ Architecture:
 - File: Src\Ragnar\appsettings.ImageDescriptionWin.json
   Preview: "{  'RagnarConfig': {   'ApplicationOptions': {    'SourceDirectory': '%USERPROFILE%\\source\\repos\\New folder\\PhotoBrief\\',    'VectorStoreName': '..."
 - File: Src\Ragnar\appsettings.json
-  Preview: "{  'RagnarConfig': {   'ApplicationOptions': {    'OutputFolder': 'Response',    'CategoriesToProcess': ['Testing','XML'],    'IncludeOriginalPrompt':..."
+  Preview: "{  'RagnarConfig': {   'ApplicationOptions': {    'OutputFolder': 'Response',    'CategoriesToProcess': [],    'IncludeOriginalPrompt': false,    'Pag..."
 - File: Src\Ragnar\appsettings.Ragnar.json
   Preview: "{  'RagnarConfig': {   'ApplicationOptions': {    'SourceDirectory': '%USERPROFILE%\\source\\Ragnar\\',    'VectorStoreName': 'Ragnar'   },   'FileLoa..."
 - File: Src\Ragnar\appsettings.Shepherd_Api.json
   Preview: "{  'RagnarConfig': {   'ApplicationOptions': {    'SourceDirectory': '%USERPROFILE%\\source\\repos\\ShepardFlock\\ShepherdFlock.Api\\',    'VectorStor..."
 - File: Src\Ragnar\BasePipeline.cs
-  Symbols: [SetRetryPolicy, providing, flowing, lock, BasePipeline]
+  Symbols: [flowing, providing]
   Preview: "namespace Ragnar; /// <summary>Abstract base class providing a thread-safe, ordered pipeline of typed stages.</summary> /// <typeparam name='T'>The co..."
 - File: Src\Ragnar\ContextRetriever.cs
   Preview: "namespace Ragnar; /// <summary>Generates and retrieves embeddings for questions.</summary> /// <param name='logger'> Logger instance.</param> /// <par..."
@@ -102,18 +130,16 @@ Architecture:
 - File: Src\Ragnar\PipelineStageEntry.cs
   Preview: "namespace Ragnar; /// <summary>Holds a stage reference along with its retry configuration for pipeline execution.</summary> /// <example><![CDATA[Pipe..."
 - File: Src\Ragnar\PipelineStageException.cs
-  Symbols: [PipelineStageException, PipelineStageException, base, base]
   Preview: "namespace Ragnar; /// <summary> /// Represents a non-recoverable error encountered during a pipeline stage execution. /// </summary> /// <example><![C..."
 - File: Src\Ragnar\Program.cs
   Preview: "Console.InputEncoding = Encoding.UTF8; Console.OutputEncoding = Encoding.UTF8; Log.Logger = new LoggerConfiguration()   .WriteTo.Console()   .CreateBo..."
 - File: Src\Ragnar\QuestionPipelineRunner.cs
-  Symbols: [RemoveStage, for, AddStage, Reorder, ExecuteAsync, QuestionPipelineRunner, lock, lock, when, catch, catch]
   Preview: "namespace Ragnar; /// <summary>Executes an ordered sequence of question pipeline stages with retry logic.</summary> /// <remarks>Supports adding, remo..."
 - File: Src\Ragnar\RagPipelineHostBuilder.cs
-  Symbols: [AddEmbeddingPipeline, AddCoreServices, AddQuestionPipeline, RagPipelineHostBuilder, RagPipelineHostBuilder, AddInfrastructure, CreateDefaultBuilder, EmbeddingContext]
+  Symbols: [RagPipelineHostBuilder]
   Preview: "namespace Ragnar; /// <summary> /// Builds the default .NET 10 generic host pre-configured for the Ragnar RAG pipeline. /// </summary> public static p..."
 - File: Src\Ragnar\RagPipelineRunner.cs
-  Symbols: [casing, casing, StartAsync, RagPipelineRunner]
+  Symbols: [RagPipelineRunner]
   Preview: "namespace Ragnar; /// <summary> /// Hosted service that orchestrates the embedding and question pipelines. /// </summary> /// <example><![CDATA[await ..."
 - File: Src\Ragnar.Abstractions\GlobalUsings.cs
   Preview: "global using Microsoft.Extensions.AI; global using OllamaSharp; global using OllamaSharp.Models; global using Qdrant.Client.Grpc; global using Ragnar...."
@@ -123,14 +149,14 @@ Architecture:
 - File: Src\Ragnar.Abstractions\IEmbeddingService.cs
   Symbols: [IEmbeddingService]
   Preview: "namespace Ragnar.Abstractions; /// <summary>Interface for embedding generator service functionality.</summary> /// <example><![CDATA[var v = await svc..."
-- File: Src\Ragnar.Abstractions\IFileValidator.cs
-  Symbols: [IFileValidator]
+- File: Src\Ragnar.Abstractions\IFileEligibilityValidator.cs
+  Symbols: [IFileEligibilityV]
   Preview: "namespace Ragnar.Abstractions; /// <summary> /// Validates files against load options (extension, name, directory). /// </summary> /// <example><![CDA..."
 - File: Src\Ragnar.Abstractions\IOllamaGenerationService.cs
   Symbols: [IOllamaGenerationService]
   Preview: "namespace Ragnar.Abstractions; /// <summary>Streams Ollama LLM chat responses with console rendering.</summary> /// <example><![CDATA[var txt = await ..."
 - File: Src\Ragnar.Abstractions\IPipelineStage.cs
-  Symbols: [IPipelineStage, carried, carried]
+  Symbols: [carried]
   Preview: "namespace Ragnar.Abstractions; /// <summary>Defines a single executable stage within the embedding pipeline.</summary> /// <typeparam name='TContext'>..."
 - File: Src\Ragnar.Abstractions\IRagOrchestrator.cs
   Preview: "namespace Ragnar.Abstractions; /// <summary>Defines the contract for orchestrating the RAG question-to-answer pipeline.</summary> /// <remarks>Impleme..."
@@ -145,10 +171,9 @@ Architecture:
   Symbols: [IQuestionSource]
   Preview: "namespace Ragnar.Core; /// <summary>Defines the contract for supplying question data from a source.</summary> /// <example><![CDATA[var qs = await pro..."
 - File: Src\Ragnar.Core\IVectorStoreBuilder.cs
-  Symbols: [for, IVectorStoreBuilder]
+  Symbols: [IVectorStoreBuilder]
   Preview: "namespace Ragnar.Core; /// <summary>Manages Qdrant collection creation and existence verification.</summary> /// <example><![CDATA[await builder.Build..."
 - File: Src\Ragnar.Core\VectorStoreBuilder.cs
-  Symbols: [CreateAsync, DescribeAsync, MakeIndexAsync, EnsureExistsAsync, ExistsAsync, VectorStoreBuilder, VectorStoreBuilder]
   Preview: "namespace Ragnar.Core; /// <summary>Builds and manages a Qdrant vector store collection with indices.</summary> /// <remarks>Ensures collection existe..."
 - File: Src\Ragnar.Embedding\GlobalUsings.cs
   Preview: "global using System.Runtime.CompilerServices; global using System.Runtime.Loader; global using Ardalis.GuardClauses; global using Microsoft.CodeAnalys..."
@@ -161,7 +186,7 @@ Architecture:
   Symbols: [LoadQuestionCategories]
   Preview: "namespace Ragnar.Questions; /// <summary> /// Build list of enum options to Hashset. /// </summary> public static class LoadQuestionCategories {   ///..."
 - File: Src\Ragnar.Questions\QuestionFilterSelector.cs
-  Symbols: [FindFilter, QuestionFilterSelector, Question]
+  Symbols: [Question]
   Preview: "namespace Ragnar.Questions; /// <summary>Selects appropriate question filter based on input criteria.</summary> /// <example><![CDATA[var f = Question..."
 - File: Tests\Ragnar.IntegrationTests\GlobalUsings.cs
   Preview: "global using Ragnar.Output; global using Microsoft.Extensions.DependencyInjection; global using Microsoft.Extensions.Hosting; global using Ragnar.Core..."
@@ -171,96 +196,96 @@ Architecture:
 - File: Tests\Ragnar.UnitTests\AppDefaultsTests.cs
   Symbols: [UncategorizedCategoryShouldBeExpectedValue, AppDefaultsTests]
   Preview: "namespace Ragnar.Tests; public class AppDefaultsTests {   [Fact]   public void UncategorizedCategoryShouldBeExpectedValue()   {     Assert.Equal('Unca..."
-- File: Tests\Ragnar.UnitTests\ApplicationConfigurationExtensionsTests.cs
-  Symbols: [LoadQuestionPluginsReturnsServicesWhenPluginDirDoesNotExist, ApplicationConfigurationExtensionsTests]
-  Preview: "namespace Ragnar.Tests; public class ApplicationConfigurationExtensionsTests {   [Fact]   public void LoadQuestionPluginsReturnsServicesWhenPluginDirD..."
-- File: Tests\Ragnar.UnitTests\AssemblyExtensionsTests.cs
-  Symbols: [AssemblyExtensionsTests, AssemblyExtensionsTests]
-  Preview: "using AssemblyExtensions = Ragnar.Branding.AssemblyExtensions; namespace Ragnar.Tests; public class AssemblyExtensionsTests {   private readonly Assem..."
 - File: Tests\Ragnar.UnitTests\BrandingStageTests.cs
-  Symbols: [ExecuteAsyncShouldRenderBranding, BrandingStageTests, BrandingStageTests, ShouldRunWithNullContextShouldReturnTrue, NameShouldReturnBrandingStage, ShouldRunShouldAlwaysReturnTrue, RetryPolicyShouldBeNull, ExecuteAsyncShouldCompleteSuccessfully]
+  Symbols: [BrandingStageTests, BrandingStageTests]
   Preview: "namespace Ragnar.Tests; public class BrandingStageTests {   private readonly Mock<IApplicationHeader> _headerMock;   private readonly BrandingStage _s..."
 - File: Tests\Ragnar.UnitTests\CodeParserFactoryTests.cs
-  Symbols: [ParseAsyncWithNonCSharpFileShouldDelegateToGenericParser, CodeParserFactoryTests, CodeParserFactoryTests, ParseAsyncWithCSharpFileShouldDelegateToCodeParser, ParseAsyncWithCancelledTokenShouldNotThrowSpecificException, Dispose, Test, Test]
-  Preview: "using Ragnar.Embedding.Chunker; using Ragnar.Embedding.Factory; namespace Ragnar.Tests; public class CodeParserFactoryTests : IDisposable {   private ..."
+  Symbols: [CodeParserFactoryTests]
+  Preview: "namespace Ragnar.Tests; public class CodeParserFactoryTests {   private readonly Mock<Serilog.ILogger> _loggerMock;   private readonly Mock<ISyntaxTre..."
 - File: Tests\Ragnar.UnitTests\CollectionInfoTests.cs
-  Symbols: [CollectionInfoTests, CollectionInfoTests, CollectionInfoShouldStoreAllProperties, CollectionInfoShouldStoreAllProperties]
-  Preview: "using CollectionInfo = Ragnar.Core.CollectionInfo; namespace Ragnar.Tests; public class CollectionInfoTests {   [Fact]   public void CollectionInfoSho..."
+  Symbols: [CollectionInfoShouldStoreAllProperties, CollectionInfoShouldDifferWhenDimensionDiffers, CollectionInfoTests, CollectionInfoShouldBeImmutable, CollectionInfoShouldSupportEquality]
+  Preview: "namespace Ragnar.Tests; public class CollectionInfoTests {   [Fact]   public void CollectionInfoShouldStoreAllProperties()   {     var info = new Core..."
+- File: Tests\Ragnar.UnitTests\EmbeddingGeneratorServiceTests.cs
+  Symbols: [EmbeddingGeneratorServiceTests]
+  Preview: "namespace Ragnar.Tests; public class EmbeddingGeneratorServiceTests {   private readonly Mock<Serilog.ILogger> _loggerMock;   private readonly Mock<IO..."
 - File: Tests\Ragnar.UnitTests\EmbeddingOptionsTests.cs
-  Symbols: [EmbeddingOptionsTests, EmbeddingOptionsShouldStoreAllProperties]
-  Preview: "namespace Ragnar.Tests; public class EmbeddingOptionsTests {   [Fact]   public void EmbeddingOptionsShouldStoreAllProperties()   {     var opts = new ..."
-- File: Tests\Ragnar.UnitTests\EmbeddingSetupExtensionTests.cs
-  Symbols: [EmbeddingSetupShouldRegisterIEmbeddingService, EmbeddingSetupExtensionTests]
-  Preview: "namespace Ragnar.Tests; public class EmbeddingSetupExtensionTests {   [Fact]   public void EmbeddingSetupShouldRegisterIEmbeddingService()   {     var..."
+  Symbols: [ShouldStoreAllProperties, EmbeddingOptionsTests]
+  Preview: "namespace Ragnar.Tests; public class EmbeddingOptionsTests {   [Fact]   public void ShouldStoreAllProperties()   {     // Arrange & Act     var opts =..."
 - File: Tests\Ragnar.UnitTests\FileDiscoveryServiceTests.cs
-  Symbols: [GetFilesAsyncShouldFilterByAllowedExtensions, GetFilesAsyncWithEmptyDirectoryShouldThrowArgumentException, GetFilesAsyncWithNullFilterShouldThrowArgumentNullException, GetFilesAsyncWithNonExistentDirectoryShouldThrowDirectoryNotFound, GetFilesAsyncShouldReturnMatchingFiles, G, M, O, H, P, Dispose, GetFilesAsyncShouldReturnEmptyWhenNoMatches, GetFilesAsyncShouldExcludeSpecifiedDirectories, FileDiscoveryServiceTests, FileDiscoveryServiceTests]
-  Preview: "namespace Ragnar.Tests; public class FileDiscoveryServiceTests : IDisposable {   private readonly Mock<IFileValidator> _validatorMock;   private reado..."
+  Symbols: [A, A, A, B, B, GetFilesAsyncShouldReturnMatchingFiles, GetFilesAsyncWithCaseInsensitiveExtensionShouldMatch, GetFilesAsyncWithNoMatchingExtensionsShouldReturnEmpty, GetFilesAsyncShouldExcludeSpecifiedDirectories, FileDiscoveryServiceTests, FileDiscoveryServiceTests, CreateFile, GetFilesAsyncShouldRespectCancellation, Dispose, GetFilesAsyncWithNonExistentDirectoryShouldThrowDirectoryNotFoundException]
+  Preview: "namespace Ragnar.Tests; public class FileDiscoveryServiceTests : IDisposable {   private readonly FileDiscoveryService _sut;   private readonly string..."
 - File: Tests\Ragnar.UnitTests\FileLoadOptionsValidatorTests.cs
-  Symbols: [FileLoadOptionsValidatorTests, ValidOptionsShouldProduceNoErrors]
+  Symbols: [FileLoadOptionsValidatorTests, FileLoadOptionsValidatorTests]
   Preview: "namespace Ragnar.Tests; public class FileLoadOptionsValidatorTests {   private readonly FileLoadOptionsValidator _sut;   public FileLoadOptionsValidat..."
 - File: Tests\Ragnar.UnitTests\FileParserTests.cs
-  Symbols: [FileParserTests]
-  Preview: "//namespace Ragnar.Tests; //public class FileParserTests //{ //  private readonly Mock<IOptions<RagnarConfig>> _configMock; //  private readonly Mock<..."
+  Symbols: [ParseAsyncShouldThrowWhenFileNotFound, ParseAsyncValidFileShouldReturnCodeDocuments, ParseAsyncCancellationShouldPropagate, FileParserTests, FileParserTests, ParseAsyncEmptyFileShouldReturnEmptyOrSingleDocument]
+  Preview: "namespace Ragnar.Tests; public class FileParserTests {   private readonly Mock<IOptions<RagnarConfig>> _configMock;   private readonly Mock<ILogger> _..."
+- File: Tests\Ragnar.UnitTests\FileSystemEntryExtensionsTests.cs
+  Symbols: [FileSystemEntryExtensionsTests]
+  Preview: "//using System.IO.Enumeration; //namespace Ragnar.Tests; //public class FileSystemEntryExtensionsTests //{ //  //[Fact] //  //public void HasAllowedEx..."
 - File: Tests\Ragnar.UnitTests\FilterBuilderEdgeCaseTests.cs
-  Symbols: [FilterBuilderEdgeCaseTests, BuildWithOnlyExclusionsShouldReturnFilterWithMustNot]
-  Preview: "namespace Ragnar.Tests; public class FilterBuilderEdgeCaseTests {   [Fact]   public void BuildWithOnlyExclusionsShouldReturnFilterWithMustNot()   {   ..."
+  Symbols: [AddRangeWithOnlyLteShouldSucceed, AddRangeShouldThrowWhenBothGteAndLteAreNull, FilterBuilderEdgeCaseTests, FilterBuilderEdgeCaseTests, AddExclusionRangeShouldThrowWhenBothBoundsAreNull, AddRangeWithOnlyGteShouldSucceed, ChainingMultipleConditionsShouldWork, BuildWithOnlyMustNotConditionsShouldReturnFilterWithEmptyMust]
+  Preview: "namespace Ragnar.Tests; public class FilterBuilderEdgeCaseTests {   private readonly QdrantFilterBuilder _sut;   public FilterBuilderEdgeCaseTests()  ..."
 - File: Tests\Ragnar.UnitTests\FilterBuilderTests.cs
-  Symbols: [BuildWithMultipleConditionsShouldIncludeAll, IsEmptyWithNoConditionsShouldReturnTrue, FilterBuilderTests, FilterBuilderTests, AddExclusionShouldAddToMustNotConditions, AddRangeWithNoBoundsShouldThrow, AddMatchShouldAddToMustConditions, BuildWithExclusionsShouldIncludeMustNot, IsEmptyAfterAddExclusionShouldReturnFalse, AddRangeWithGteShouldCreateFilter, AddRangeWithLteShouldCreateFilter, AddExclusionRangeShouldAddToMustNot, BuildWithConditionsShouldReturnFilter, AddExceptKeywordsShouldAddCondition, BuildWithNoConditionsShouldThrow]
-  Preview: "namespace Ragnar.Tests; public class FilterBuilderTests {   private readonly FilterBuilder _sut;   public FilterBuilderTests()   {     _sut = new Filt..."
+  Symbols: [AddRangeWithGteShouldCreateFilter, AddRangeWithNoBoundsShouldThrow, AddExceptKeywordsShouldAddCondition, AddMatchShouldAddToMustConditions, BuildWithConditionsShouldReturnFilter, BuildWithMultipleConditionsShouldIncludeAll, BuildWithNoConditionsShouldThrow, AddExclusionRangeShouldAddToMustNot, FilterBuilderTests, FilterBuilderTests, AddRangeWithLteShouldCreateFilter, IsEmptyWithNoConditionsShouldReturnTrue, AddExclusionShouldAddToMustNotConditions, AddRangeWithBothBoundsShouldCreateFilter, BuildWithExclusionsShouldIncludeMustNot]
+  Preview: "namespace Ragnar.Tests; public class FilterBuilderTests {   private readonly QdrantFilterBuilder _sut;   public FilterBuilderTests()   {     _sut = ne..."
 - File: Tests\Ragnar.UnitTests\GenerationOptionsTests.cs
-  Symbols: [GenerationOptionsShouldHaveDefaultValues, GenerationOptionsTests, GenerationOptionsTests]
-  Preview: "namespace Ragnar.Tests; public class GenerationOptionsTests {   [Fact]   public void GenerationOptionsShouldHaveDefaultValues()   {     var opts = new..."
+  Symbols: [DefaultMaxTokensShouldBe32768, GenerationOptionsTests]
+  Preview: "namespace Ragnar.Tests; public class GenerationOptionsTests {   [Fact]   public void DefaultMaxTokensShouldBe32768()   {     // Act     var opts = new..."
 - File: Tests\Ragnar.UnitTests\GlobalUsings.cs
   Preview: "global using System.Reflection; global using FluentValidation.TestHelper; global using Microsoft.Extensions.DependencyInjection; global using Microsof..."
 - File: Tests\Ragnar.UnitTests\IFileValidatorTests.cs
-  Symbols: [IsValidWithNullFileShouldThrowArgumentNullException, IFileValidatorTests]
-  Preview: "namespace Ragnar.Tests; public class IFileValidatorTests {   [Fact]   public void IsValidWithNullFileShouldThrowArgumentNullException()   {     var va..."
+  Symbols: [IsValid, IsValidWithNullFileShouldThrowArgumentNullException, IsValidWithNonMatchingExtensionShouldReturnFalse, IsValidWithMatchingExtensionShouldReturnTrue, IFileValidatorTests, TempFileHelper, TempFileHelper, TestFileValidator]
+  Preview: "namespace Ragnar.Tests; public class IFileValidatorTests {   private sealed class TestFileValidator : IFileEligibilityValidator   {     public bool Is..."
 - File: Tests\Ragnar.UnitTests\NumberedRowDecoratorTests.cs
-  Symbols: [RenderShouldDelegateToInnerRenderer, RenderShouldAddIndexColumnIfMissing, RenderWithCustomHeaderShouldUseCustomColumn, TableShouldReturnInnerTable, NumberedRowDecoratorTests, NumberedRowDecoratorTests]
-  Preview: "namespace Ragnar.Tests; public class NumberedRowDecoratorTests {   private readonly Mock<ITableRenderer> _innerMock;   private readonly ConsoleTableBu..."
+  Symbols: [NumberedRowDecoratorTests, NumberedRowDecoratorTests, TablePropertyShouldReturnInnerTable, DefaultColumnHeaderShouldBeHash, RenderShouldCallInnerRender, CustomColumnHeaderShouldBeAccepted]
+  Preview: "namespace Ragnar.Tests; public class NumberedRowDecoratorTests {   private readonly Mock<ITableRenderer> _innerMock;   public NumberedRowDecoratorTest..."
 - File: Tests\Ragnar.UnitTests\OllamaOptionsValidatorTests.cs
-  Symbols: [OllamaOptionsValidatorTests, ValidOptionsShouldProduceNoErrors]
+  Symbols: [ValidOptionsShouldProduceNoErrors, OllamaOptionsValidatorTests]
   Preview: "namespace Ragnar.Tests; public class OllamaOptionsValidatorTests {   private readonly OllamaOptionsValidator _validator = new();   [Fact]   public voi..."
 - File: Tests\Ragnar.UnitTests\OutputPathHelperTests.cs
-  Symbols: [ShowPromptWithMultilineTextShouldPreserveContent, OutputPathHelperTests, ShowPromptShouldWrapInFenceMarkers, GetResponseDirectoryWithMultipleFoldersShouldAppendDefault, ShowPromptShouldStartWithNewlines, ShowPromptWithEmptyStringShouldStillWrap, GetResponseDirectoryWithEmptyFoldersAndBaseDirShouldJoinPath, GetResponseDirectoryWithBaseDirAndFoldersShouldUseFoldersOnly, GetResponseDirectoryWithSingleFolderShouldAppendDefault, GetResponseDirectoryWithIReadOnlyCollectionShouldWork, GetResponseDirectoryShouldAlwaysEndWithResponseDirectoryName, ShowPromptShouldHaveCorrectStructure, GetResponseDirectoryWithEmptyFoldersAndNoBaseShouldReturnDefault]
-  Preview: "namespace Ragnar.Tests;  public class OutputPathHelperTests {   // ──────────────────────────────────────────────   // GetResponseDirectory   // ─────..."
+  Symbols: [OutputPathHelperTests, GetResponseDirectoryWithEmptyFoldersAndNoBaseShouldReturnDefault]
+  Preview: "namespace Ragnar.Tests; public class OutputPathHelperTests {   [Fact]   public void GetResponseDirectoryWithEmptyFoldersAndNoBaseShouldReturnDefault()..."
 - File: Tests\Ragnar.UnitTests\PathResolverTests.cs
-  Symbols: [PathResolverTests, PathResolverTests]
+  Symbols: [PathResolverTests, PathResolverTests, ResolveResponseDirectoryWithCategoryShouldIncludeCategoryName]
   Preview: "namespace Ragnar.Tests; public class PathResolverTests {   private readonly Mock<IOptions<RagnarConfig>> _configMock;   private readonly PathResolver ..."
 - File: Tests\Ragnar.UnitTests\PipelineRunnerTests.cs
-  Symbols: [AddStageShouldEnforceUniqueNamesAcrossAllStages, QuestionTestStage, ClearStagesShouldRemoveAllStages, StageNamesShouldReturnEmptyWhenNoStages, TestStage, ReorderShouldMoveStageToBeginning, AddStageWithDuplicateNameShouldThrowArgumentException, ReplaceStageShouldSwapStage, ExecuteAsync, ExecuteAsyncShouldRunStagesInOrder, ExecuteAsyncWithNoStagesShouldReturnContext, ExecuteAsyncWithFailingStageShouldThrowPipelineStageException, PipelineRunnerTests, PipelineRunnerTests, StageNamesShouldReturnAllRegisteredNames]
-  Preview: "using Polly; namespace Ragnar.Tests; public class PipelineRunnerTests : IDisposable {   private readonly Mock<Serilog.ILogger> _loggerMock;   private ..."
+  Symbols: [PipelineRunnerTests, TestContext]
+  Preview: "//namespace Ragnar.Tests; //public class PipelineRunnerTests //{ //  private readonly Mock<Serilog.ILogger> _loggerMock; //  private readonly Pipeline..."
+- File: Tests\Ragnar.UnitTests\QuestionCombineBuilderExtensionsTests.cs
+  Symbols: [QuestionCombineBuilderExtensionsTests, SetActiveTrueShouldCallAsActive]
+  Preview: "namespace Ragnar.Tests; public class QuestionCombineBuilderExtensionsTests {   [Fact]   public void SetActiveTrueShouldCallAsActive()   {     // Arran..."
 - File: Tests\Ragnar.UnitTests\QuestionExecutionStageTests.cs
-  Symbols: [ShouldRunWithNoQuestionsShouldReturnFalse, QuestionExecutionStageTests, QuestionExecutionStageTests, ShouldRunWithNullQuestionsShouldReturnFalse, NameShouldReturnAskQuestionsStage, RetryPolicyShouldHandleHttpRequestAndTimeout, ExecuteAsyncShouldCallWriterForEachQuestion, ShouldRunWithQuestionsShouldReturnTrue, ExecuteAsyncShouldProcessEachQuestion]
+  Symbols: [QuestionExecutionStageTests]
   Preview: "namespace Ragnar.Tests; public class QuestionExecutionStageTests {   private readonly Mock<IRagOrchestrator> _ragMock;   private readonly Mock<IOutput..."
 - File: Tests\Ragnar.UnitTests\QuestionFilterSelectorTests.cs
-  Symbols: [FindFilterWithXmlCategoryAndZeroThresholdShouldStillReturnFilter, FindFilterShouldReturnDifferentFiltersForDifferentThresholds, FindFilterWithXmlCategoryShouldReturnConfiguredFilter, FindFilterWithUnsupportedCategoryShouldReturnEmptyFilter, QuestionFilterSelectorTests]
-  Preview: "namespace Ragnar.Tests; public class QuestionFilterSelectorTests {   [Fact]   public void FindFilterWithXmlCategoryShouldReturnConfiguredFilter()   { ..."
+  Symbols: [FindFilterWithXmlCategoryShouldReturnNonEmptyFilter, QuestionFilterSelectorTests]
+  Preview: "namespace Ragnar.Tests; public class QuestionFilterSelectorTests {   [Fact]   public void FindFilterWithXmlCategoryShouldReturnNonEmptyFilter()   {   ..."
 - File: Tests\Ragnar.UnitTests\QuestionPipelineContextTests.cs
-  Symbols: [ResponsesShouldDefaultToEmptyDictionary, QuestionsShouldBeSettable, ResponsesShouldAcceptNewEntries, QuestionPipelineContextTests, QuestionsShouldDefaultToEmptyList, TimingsShouldDefaultToEmptyDictionary, TimingsShouldAcceptNewEntries]
-  Preview: "namespace Ragnar.Tests; public class QuestionPipelineContextTests {   [Fact]   public void QuestionsShouldDefaultToEmptyList()   {     var ctx = new Q..."
+  Symbols: [QuestionsShouldDefaultToEmptyList, QuestionPipelineContextTests]
+  Preview: "namespace Ragnar.Tests; public class QuestionPipelineContextTests {   [Fact]   public void QuestionsShouldDefaultToEmptyList()   {     // Arrange & Ac..."
 - File: Tests\Ragnar.UnitTests\QuestionShowStageTests.cs
-  Symbols: [ExecuteAsyncWithCancelledTokenShouldThrow, ShouldRunWithNullContextShouldStillReturnTrue, NameShouldReturnShowQuestionsStage, QuestionShowStageTests, QuestionShowStageTests, ShouldRunShouldAlwaysReturnTrue, RetryPolicyShouldBeNull]
-  Preview: "namespace Ragnar.Tests;  public class QuestionShowStageTests {   private readonly QuestionShowStage _sut;   public QuestionShowStageTests()   {     _s..."
+  Symbols: [ExecuteAsyncWithCancelledTokenShouldThrow, ShouldRunShouldAlwaysReturnTrue, ShouldRunWithNullContextShouldStillReturnTrue, RetryPolicyShouldBeNull, NameShouldReturnShowQuestionsStage, QuestionShowStageTests, QuestionShowStageTests]
+  Preview: "namespace Ragnar.Tests; public class QuestionShowStageTests {   private readonly QuestionTableStage _sut;   public QuestionShowStageTests()   {     _s..."
 - File: Tests\Ragnar.UnitTests\ReorganizeTests.ps1
   Preview: "#Requires -Version 5.1 <# .SYNOPSIS   Reorganizes Ragnar.UnitTests into a consistent folder layout   that mirrors the production source structure. .DE..."
 - File: Tests\Ragnar.UnitTests\ResponseWriterTests.cs
-  Symbols: [WriteResponseAsyncFileNameShouldIncludeTimestamp, WriteResponseAsyncShouldPropagateCancellation, WriteResponseAsyncFileNameShouldIncludeSourceFilename, ResponseWriterTests, ResponseWriterTests, WriteResponseAsyncShouldUseFormatterExtension, WriteResponseAsyncShouldWriteFileAndReturnPath, WriteResponseAsyncShouldUseFormattedContent, Dispose, WriteResponseAsyncShouldCreateDirectory]
+  Symbols: [WriteResponseAsyncShouldUseFormatterExtension, WriteResponseAsyncShouldPropagateCancellation, WriteResponseAsyncShouldUseFormattedContent, WriteResponseAsyncShouldCreateDirectory, WriteResponseAsyncShouldWriteFileAndReturnPath, ResponseWriterTests, ResponseWriterTests, WriteResponseAsyncFileNameShouldIncludeTimestamp, Dispose, WriteResponseAsyncFileNameShouldIncludeSourceFilename]
   Preview: "namespace Ragnar.Tests; public class ResponseWriterTests : IDisposable {   private readonly Mock<IOutputFormatter> _formatterMock;   private readonly ..."
 - File: Tests\Ragnar.UnitTests\ShowFileStageTests.cs
-  Symbols: [ShowFileStageTests, ShowFileStageTests, ExecuteAsyncWithCancelledTokenShouldThrow, ShouldRunShouldAlwaysReturnTrue, RetryPolicyShouldBeNull, OllamaOptions, NameShouldReturnShowFiles]
+  Symbols: [ExecuteAsyncWithCancelledTokenShouldThrow, ShowFileStageTests, ShowFileStageTests, ShouldRunShouldAlwaysReturnTrue, NameShouldReturnShowFiles, OllamaOptions, RetryPolicyShouldBeNull]
   Preview: "namespace Ragnar.Tests; public class ShowFileStageTests {   private readonly Mock<IQdrantClient> _clientMock;   private readonly Mock<Serilog.ILogger>..."
 - File: Tests\Ragnar.UnitTests\StageMetricTests.cs
-  Symbols: [StageMetricTests, StageMetricShouldStoreAllProperties]
+  Symbols: [StageMetricShouldDifferWhenErrorDiffers, StageMetricShouldStoreAllProperties, StageMetricShouldSupportEquality, StageMetricTests, StageMetric, StageMetric, StageMetric, StageMetric, StageMetric, StageMetric, StageMetricWithFailureShouldStoreError]
   Preview: "namespace Ragnar.Tests; public class StageMetricTests {   [Fact]   public void StageMetricShouldStoreAllProperties()   {     var duration = TimeSpan.F..."
 - File: Tests\Ragnar.UnitTests\StylesTests.cs
-  Symbols: [YellowHasCorrectColor, StylesTests, IsExcludedEdgeCases, GreenBlinkHasCorrectColorAndDecoration]
+  Symbols: [GreenBlinkHasCorrectColorAndDecoration, StylesTests]
   Preview: "namespace Ragnar.Tests; public sealed class StylesTests {   [Fact]   public void GreenBlinkHasCorrectColorAndDecoration()   {     // Act     var style..."
 - File: Tests\Ragnar.UnitTests\SummarizePromptProviderTests.cs
-  Symbols: [GetTemplateShouldIncludeContent, GetTemplateEmptyContentShouldStillIncludeQuestion, SystemShouldContainInstructionAboutConciseness, GetTemplateShouldEndWithNewLine, Hello, GetTemplateShouldIncludeQuestion, GetTemplateShouldPlaceContentBeforeQuestion, GetTemplateShouldReturnCorrectFormat, SummarizePromptProviderTests, SystemShouldReturnNonEmptyString]
+  Symbols: [GetTemplateShouldIncludeContent, GetTemplateShouldIncludeQuestion, GetTemplateEmptyContentShouldStillIncludeQuestion, SummarizePromptProviderTests, SystemShouldContainInstructionAboutConciseness, GetTemplateShouldEndWithNewLine, GetTemplateShouldPlaceContentBeforeQuestion, SystemShouldReturnNonEmptyString, GetTemplateShouldReturnCorrectFormat, Hello]
   Preview: "namespace Ragnar.Tests; public class SummarizePromptProviderTests {   private readonly SummarizePromptProvider _sut = new();   [Fact]   public void Sy..."
 - File: Tests\Ragnar.UnitTests\XmlCommentFilterStrategyTests.cs
-  Symbols: [CreateFilterWithLargeThresholdShouldWork, SupportedCategoryShouldBeXml, CreateFilterShouldReturnNonNullFilter, XmlCommentFilterStrategyTests, XmlCommentFilterStrategyTests, XmlCommentFilterStrategyTests, XmlCommentFilterStrategyTests, CreateFilterShouldContainRangeCondition, CreateFilterWithZeroThresholdShouldStillWork, CreateFilterShouldExcludeTestCategory]
+  Symbols: [XmlCommentFilterStrategyTests, XmlCommentFilterStrategyTests]
   Preview: "namespace Ragnar.Tests; public class XmlCommentFilterStrategyTests {   private readonly XmlCommentFilterStrategy _sut;   public XmlCommentFilterStrate..."
 - File: __Response\Diagram\Diagram_20260926_194739.md
   Preview: "### <span style='color:darkblue;'>Diagram</span> Analyze the following C# code base. Generate the appropriate Mermaid diagrams, a sequence diagram, an..."
@@ -298,12 +323,46 @@ Architecture:
   Preview: "### <span style='color:darkblue;'>XML</span> Can you provide a list of all interfaces and interface methods missing XML documentation comments (i.e., ..."
 - File: __Response\XML_RAW\XML_RAW_20260926_165724.md
   Preview: "### <span style='color:darkblue;'>XML_RAW</span> Can you provide a list of all classes and methods missing one or more XML documentation comment (i.e...."
+- File: .sonarqube\conf\0\FilesToAnalyze.txt
+  Preview: "C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\CollectionInfo.cs C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\ConsoleWriter\AnsiConsoleOutputWriter.cs C..."
+- File: .sonarqube\conf\0\ProjectOutFolderPath.txt
+  Preview: "C:\Users\jp325\source\Ragnar\.sonarqube\out\0 "
+- File: .sonarqube\conf\0\SonarProjectConfig.xml
+  Preview: "<?xml version='1.0' encoding='utf-8'?> <SonarProjectConfig xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XML..."
+- File: .sonarqube\conf\1\FilesToAnalyze.txt
+  Preview: "C:\Users\jp325\source\Ragnar\Src\Ragnar.Abstractions\Contracts\IApplicationHeader.cs C:\Users\jp325\source\Ragnar\Src\Ragnar.Abstractions\Contracts\IR..."
+- File: .sonarqube\conf\1\ProjectOutFolderPath.txt
+  Preview: "C:\Users\jp325\source\Ragnar\.sonarqube\out\1 "
+- File: .sonarqube\conf\1\SonarProjectConfig.xml
+  Preview: "<?xml version='1.0' encoding='utf-8'?> <SonarProjectConfig xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XML..."
+- File: .sonarqube\conf\2\FilesToAnalyze.txt
+  Preview: "C:\Users\jp325\source\Ragnar\Src\Ragnar.Questions\Filters\IFilterStrategy.cs C:\Users\jp325\source\Ragnar\Src\Ragnar.Questions\Filters\NoTestsFilterSt..."
+- File: .sonarqube\conf\2\ProjectOutFolderPath.txt
+  Preview: "C:\Users\jp325\source\Ragnar\.sonarqube\out\2 "
+- File: .sonarqube\conf\2\SonarProjectConfig.xml
+  Preview: "<?xml version='1.0' encoding='utf-8'?> <SonarProjectConfig xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XML..."
+- File: .sonarqube\conf\3\FilesToAnalyze.txt
+  Preview: "C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Chunker\ISyntaxTreeChunker.cs C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Chunker\SyntaxTreeCh..."
+- File: .sonarqube\conf\3\ProjectOutFolderPath.txt
+  Preview: "C:\Users\jp325\source\Ragnar\.sonarqube\out\3 "
+- File: .sonarqube\conf\3\SonarProjectConfig.xml
+  Preview: "<?xml version='1.0' encoding='utf-8'?> <SonarProjectConfig xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XML..."
+- File: .sonarqube\conf\4\FilesToAnalyze.txt
+  Preview: "C:\Users\jp325\source\Ragnar\Src\Ragnar\BasePipeline.cs C:\Users\jp325\source\Ragnar\Src\Ragnar\Branding\ApplicationHeader.cs C:\Users\jp325\source\Ra..."
+- File: .sonarqube\conf\4\ProjectOutFolderPath.txt
+  Preview: "C:\Users\jp325\source\Ragnar\.sonarqube\out\4 "
+- File: .sonarqube\conf\4\SonarProjectConfig.xml
+  Preview: "<?xml version='1.0' encoding='utf-8'?> <SonarProjectConfig xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XML..."
+- File: .sonarqube\conf\cs\SonarLint.xml
+  Preview: "<?xml version='1.0' encoding='UTF-8'?> <AnalysisInput>  <Settings>   <Setting>    <Key>sonar.cs.ignoreHeaderComments</Key>    <Value>true</Value>   </..."
+- File: .sonarqube\conf\vbnet\SonarLint.xml
+  Preview: "<?xml version='1.0' encoding='UTF-8'?> <AnalysisInput>  <Settings>   <Setting>    <Key>sonar.vbnet.ignoreHeaderComments</Key>    <Value>true</Value>  ..."
 - File: Src\Ragnar\Branding\ApplicationHeader.cs
   Preview: "namespace Ragnar.Branding; /// <summary>Renders application branding and version information to console.</summary> /// <param name='writer'>Console ou..."
 - File: Src\Ragnar\Branding\AssemblyExtensions.cs
-  Preview: "namespace Ragnar.Branding; /// <summary> /// Gets the informational version of an assembly. /// </summary> /// <remarks>Useful for dynamic version dis..."
+  Preview: "namespace Ragnar.Branding; /// <summary> Gets the informational version of an assembly. /// </summary> /// <remarks>Useful for dynamic version display..."
 - File: Src\Ragnar\Builder\IOllamaChatClientBuilder.cs
-  Symbols: [IOllamaChatClientBuilder1, to, IOllamaChatClientBuilder, IOllamaChatClientBuilder, IOllamaChatClientBuilder]
+  Symbols: [IOllamaChatClientBuilder]
   Preview: "namespace Ragnar.Builder; public interface IOllamaChatClientBuilder {   OllamaChatClientBuilderConfigured WithChatClient(OllamaServiceType type);   Ol..."
 - File: Src\Ragnar\Builder\IQuestionSourceBuilder.cs
   Symbols: [IQuestionSourceBuilder]
@@ -312,16 +371,15 @@ Architecture:
   Symbols: [OllamaChatClientBuilder]
   Preview: "namespace Ragnar.Builder; public sealed class OllamaChatClientBuilder(IOllamaClientFactory factory)   : IOllamaChatClientBuilder {   private readonly ..."
 - File: Src\Ragnar\Builder\OllamaChatClientBuilderConfigured.cs
-  Symbols: [Set, WithMiddleware, OllamaAIClientBuilder, Build, OllamaChatClientBuilderConfigured, OllamaChatClientBuilderConfigured, used]
+  Symbols: [OllamaChatClientBuilderConfigured]
   Preview: "namespace Ragnar.Builder; public sealed class OllamaChatClientBuilderConfigured {   private readonly IOllamaClientFactory _factory;   private OllamaCl..."
-- File: Src\Ragnar\Builder\QuestionCombineBuilder.cs
-  Symbols: [GetCategories, GetFileConfig, GetCsvFilesAsync, QuestionCombineBuilder, WithCategoryFilter, Build, Clear, GetCsvFileAsync]
+- File: Src\Ragnar\Builder\QuestionAggregator.cs
   Preview: "namespace Ragnar.Builder; /// <summary> /// Fluent builder that aggregates questions from multiple sources into a final list. /// </summary> /// <exam..."
 - File: Src\Ragnar\Builder\QuestionCombineBuilderExtensions.cs
-  Symbols: [QuestionCombineBuilderExtensions, extension, SetActive]
+  Symbols: [QuestionCombineBuilderExtensions]
   Preview: "namespace Ragnar.Builder; /// <summary>Provides fluent convenience methods for <see cref='QuestionBuilder'/>.</summary> public static class QuestionCo..."
 - File: Src\Ragnar\Extensions\EmbeddingSetupExtension.cs
-  Symbols: [extension, EmbeddingSetupExtension, EmbeddingSetupExtension, EmbeddingSetup]
+  Symbols: [EmbeddingSetupExtension]
   Preview: "namespace Ragnar.Extensions; /// <summary>Registers embedding-related services and pipelines in the DI container.</summary> /// <example><![CDATA[buil..."
 - File: Src\Ragnar\Extensions\FileSystemEntryExtensions.cs
   Preview: "namespace Ragnar.Extensions; /// <summary>Provides extension methods for FileSystemEntry filtering operations.</summary> /// <remarks>Helper for check..."
@@ -329,7 +387,7 @@ Architecture:
   Symbols: [OutputPathHelper]
   Preview: "namespace Ragnar.Extensions; /// <summary> /// Extension methods for saving file. /// </summary> public static class OutputPathHelper {   /// <summary..."
 - File: Src\Ragnar\Extensions\PluginExtension.cs
-  Symbols: [extension, PluginExtension, LoadPluginQuestionsAsync]
+  Symbols: [extension, PluginExtension]
   Preview: "namespace Ragnar.Extensions; /// <summary> /// Extension methods for plugin-related operations. /// </summary> public static class PluginExtension {  ..."
 - File: Src\Ragnar\Extensions\RagPipelineExtensions.cs
   Symbols: [RagPipelineExtensions]
@@ -338,7 +396,7 @@ Architecture:
   Symbols: [for]
   Preview: "namespace Ragnar.Extensions; /// <summary>StopwatchExtensions: Provides extension methods for formatting elapsed time.</summary> /// <remarks>Helper c..."
 - File: Src\Ragnar\Extensions\StringExtensions.cs
-  Symbols: [StringExtensions, for, extension, CharacterCount]
+  Symbols: [extension, StringExtensions]
   Preview: "namespace Ragnar.Extensions; /// <summary>Extends <see cref='string'/> with utility methods for comment processing.</summary> public static class Stri..."
 - File: Src\Ragnar\Factory\IQuestionBuilder.cs
   Symbols: [IQuestionBuilder]
@@ -346,13 +404,11 @@ Architecture:
 - File: Src\Ragnar\Factory\OllamaClientFactory.cs
   Preview: "namespace Ragnar.Factory; /// <summary> /// Creates Ollama API clients based on type (Ollama or Embedding). /// </summary> /// <param name='httpClient..."
 - File: Src\Ragnar\Factory\QuestionBuilder.cs
-  Symbols: [QuestionBuilder, WithText, AsActive, WithFileName, AsInactive, Build, SetCategory]
+  Symbols: [QuestionBuilder]
   Preview: "namespace Ragnar.Factory; /// <summary>Initializes a new instance of the default question factory.</summary> public class QuestionBuilder : IQuestionB..."
 - File: Src\Ragnar\Ollama\OllamaChatService.cs
-  Symbols: [OllamaChatService, BuildOptions, GenerateResponse, when, catch, catch, new]
   Preview: "namespace Ragnar.Ollama; /// <summary>Streams Ollama chat responses with live console rendering.</summary> /// <remarks>Applies token limits, temperat..."
 - File: Src\Ragnar\Ollama\OllamaGenerationService.cs
-  Symbols: [GenerateResponse, catch, new, OllamaGenerationService]
   Preview: "namespace Ragnar.Ollama; /// <summary> /// Configures and caches OllamaOptions clients per model. /// </summary> /// <example><![CDATA[var provider = ..."
 - File: Src\Ragnar\Output\FileWriter.cs
   Preview: "namespace Ragnar.Output; /// <summary>Handles asynchronous file writing operations across the application.</summary> /// <remarks>Implements IWriter u..."
@@ -368,26 +424,22 @@ Architecture:
   Symbols: [ResponseMarkdownFormatte]
   Preview: "namespace Ragnar.Output; /// <summary>Formats LLM responses into structured Markdown output files.</summary> /// <param name='clock'>The IClock implem..."
 - File: Src\Ragnar\Output\ResponseWriter.cs
-  Symbols: [WriteResponseAsync, ResponseWriter]
   Preview: "namespace Ragnar.Output; /// <summary>Writes formatted AI responses to timestamped Markdown files under category sub-folders.</summary> /// <remarks>D..."
 - File: Src\Ragnar\Output\SystemClock.cs
   Preview: "namespace Ragnar.Output; /// <summary> /// Provides system clock access for local and UTC timestamps. /// </summary> /// <example><![CDATA[[DateTime n..."
 - File: Src\Ragnar\OutputResponse\ContentSummarizerAgent.cs
-  Symbols: [ContentSummarizerAgent, LoadFolderContentsAsync, AskAgent, SetupAgent]
   Preview: "namespace Ragnar.OutputResponse; /// <summary> /// AI agent that summarizes directory contents and answers questions via Ollama. /// </summary> /// <e..."
 - File: Src\Ragnar\OutputResponse\IResponseSummarizer.cs
   Symbols: [IResponseSummarizer]
   Preview: "namespace Ragnar.OutputResponse; /// <summary> /// Provides a service to summarize all responses. /// </summary> /// <example><![CDATA[await svc.Summa..."
 - File: Src\Ragnar\OutputResponse\SummarizeSaveResponse.cs
-  Symbols: [SummarizeSaveResponse, WriteResponseAsync]
   Preview: "namespace Ragnar.OutputResponse; // TODO Rewrite save to use the following item. // var details = new ResponseRecord() /// <summary> /// Writes a summ..."
 - File: Src\Ragnar\OutputResponse\SummaryService.cs
-  Symbols: [AskAgentAsync, SummaryService, SaveResponseAsync, catch, SummarizeAllResponsesAsync, LoadQuestionsAsync]
+  Symbols: [SummaryService]
   Preview: "namespace Ragnar.OutputResponse; /// <summary>Orchestrates LLM summarization of response folders into markdown.</summary> /// <example><![CDATA[await ..."
 - File: Src\Ragnar\Pipeline\PipelineContextBase.cs
   Preview: "namespace Ragnar.Pipeline; public abstract record PipelineContextBase {   /// <summary>Walled-clock start, set once by the runner.</summary>   public ..."
 - File: Src\Ragnar\Pipeline\PipelineRunner.cs
-  Symbols: [RemoveStage, ClearStages, for, AddStage, Reorder, ExecuteAsync, PipelineRunner, lock, lock, when, catch, ReplaceStage]
   Preview: "namespace Ragnar.Pipeline; /// <summary>Orchestrates sequential execution of pipeline stages with retry and progress tracking.</summary> /// <param na..."
 - File: Src\Ragnar\Pipeline\StageMetric.cs
   Preview: "namespace Ragnar.Pipeline; /// <summary>Immutable record capturing per-stage execution metrics for reporting.</summary> /// <example><![CDATA[var m = ..."
@@ -403,24 +455,19 @@ Architecture:
   Symbols: [PromptTemplateProvider]
   Preview: "namespace Ragnar.Services; /// <summary>Initializes a new instance of the system prompt provider.</summary> public class PromptTemplateProvider   : IC..."
 - File: Src\Ragnar\Stages\BrandingStage.cs
-  Symbols: [BrandingStage, ExecuteAsync]
   Preview: "namespace Ragnar.Stages; /// <summary>Renders Ragnar branding, tagline, and version to the console.</summary> /// <param name='header'>Application hea..."
 - File: Src\Ragnar\Stages\DiscoveryStage.cs
-  Symbols: [ExecuteAsync, DiscoveryStage]
   Preview: "namespace Ragnar.Stages; /// <summary>Discovers source discoveredFiles matching configured load options.</summary> /// <remarks>Walks the source direc..."
-- File: Src\Ragnar\Stages\ShowFileStage.cs
-  Symbols: [ExecuteAsync, EnumerateStoredFiles, ShowFileStage]
+- File: Src\Ragnar\Stages\StoredFileListStage.cs
   Preview: "namespace Ragnar.Stages; /// <summary>Discovers and displays source files stored in the Qdrant collection.</summary> /// <remarks>Scrolls all points i..."
 - File: Src\Ragnar\Stages\SummarizationStage.cs
-  Symbols: [ExecuteAsync, SummarizationStage, Rule]
   Preview: "namespace Ragnar.Stages; /// <summary>Orchestrates summarization of all response folders via SummaryService.</summary> /// <param name='summaryService..."
 - File: Src\Ragnar\Stages\UpsertStage.cs
-  Symbols: [UpsertStage, ExecuteAsync, new]
   Preview: "namespace Ragnar.Stages; /// <summary>Initializes a new upsert stage with its dependencies.</summary> /// <param name='repository'>The vector-store wr..."
 - File: Src\Ragnar\Utils\FileValidator.cs
   Preview: "namespace Ragnar.Utils; /// <summary>Validates file access using extension, name, and directory rules.</summary> /// <remarks>Performs ordinal, case-i..."
 - File: Src\Ragnar\Utils\PathExtensions.cs
-  Symbols: [for, PathExtensions]
+  Symbols: [PathExtensions, for]
   Preview: "namespace Ragnar.Utils; /// <summary>Contains common utility methods for path and string handling.</summary> /// <remarks>Static helper class for appl..."
 - File: Src\Ragnar\Utils\Styles.cs
   Preview: "namespace Ragnar.Utils; /// <summary> /// Custom console style classes. /// </summary> /// <example><![CDATA[AnsiConsole.MarkupLine('[green]ok[/]', St..."
@@ -428,10 +475,10 @@ Architecture:
   Symbols: [ApplicationOptionsValidator]
   Preview: "namespace Ragnar.Validator; /// <summary>Initializes validation rules for application-level options.</summary> /// <example><![CDATA[[var v = new Appl..."
 - File: Src\Ragnar\Validator\EmbeddingOptionsValidator.cs
-  Symbols: [EmbeddingOptionsValidator, EmbeddingOptionsValidator]
+  Symbols: [EmbeddingOptionsValidator]
   Preview: "namespace Ragnar.Validator; /// <summary>Validates embedding service configuration.</summary> /// <example><![CDATA[var v = new EmbeddingOptionsValida..."
 - File: Src\Ragnar\Validator\RagnarConfigValidator.cs
-  Symbols: [RagnarConfigValidator, RagnarConfigValidator, RagnarConfigValidator]
+  Symbols: [RagnarConfigValidator]
   Preview: "namespace Ragnar.Validator; public class RagnarConfigValidator   : AbstractValidator<RagnarConfig> {   /// <summary>Initializes cascade validation rul..."
 - File: Src\Ragnar.Abstractions\Contracts\IApplicationHeader.cs
   Symbols: [IApplicationHeader]
@@ -440,7 +487,7 @@ Architecture:
   Symbols: [IResponseWriter]
   Preview: "namespace Ragnar.Abstractions.Contracts; /// <summary>Persists formatted question responses to disk as files.</summary> /// <example><![CDATA[var path..."
 - File: Src\Ragnar.Abstractions\Embedding\IOllamaClientFactory.cs
-  Symbols: [IOllamaC, of, IOllamaClientFactory]
+  Symbols: [IOllamaC]
   Preview: "namespace Ragnar.Abstractions.Embedding; /// <summary>Interface for creating and caching Ollama API client instances.</summary> /// <example><![CDATA[..."
 - File: Src\Ragnar.Abstractions\Embedding\IQdrantPointFactory.cs
   Symbols: [IQdrantPointFactory]
@@ -474,10 +521,9 @@ Architecture:
 - File: Src\Ragnar.Core\Enums\QuestionCategory.cs
   Preview: "namespace Ragnar.Core.Enums; /// <summary>Represents categories for plugin questions.</summary> public enum QuestionCategory {   /// <summary>Relates ..."
 - File: Src\Ragnar.Core\Models\CodeDocument.cs
-  Symbols: [AsPoint]
   Preview: "namespace Ragnar.Core.Models; /// <summary>Represents a code document with source, metadata, and comments.</summary> public sealed record CodeDocument..."
 - File: Src\Ragnar.Core\Models\CodeDocumentExtensions.cs
-  Symbols: [extension, CodeDocumentExtensions]
+  Symbols: [CodeDocumentExtensions]
   Preview: "namespace Ragnar.Core.Models; /// <summary>Provides extension methods to convert a CodeDocument to a flat dictionary.</summary> /// <example><![CDATA[..."
 - File: Src\Ragnar.Core\Models\EmbeddingContext.cs
   Preview: "namespace Ragnar.Core.Models; /// <summary>Mutable state passed between embedding pipeline stages.</summary> /// <remarks> /// Populated incrementally..."
@@ -507,26 +553,26 @@ Architecture:
 - File: Src\Ragnar.Core\Options\RagnarConfig.cs
   Preview: "namespace Ragnar.Core.Options; /// <summary>Configuration container for application components: options, embeddings, Ollama, and file loading.</summar..."
 - File: Src\Ragnar.Core\Rendering\ConsoleTableBuilder.cs
-  Symbols: [AddColumns, ConsoleTableBuilder, AddRow, Clear, ToTable]
   Preview: "namespace Ragnar.Core.Rendering; /// <summary> /// Mutable builder for a Spectre.Console table. /// </summary> /// <example><![CDATA[var t = new Conso..."
 - File: Src\Ragnar.Core\Rendering\ConsoleTableRenderer.cs
   Symbols: [ConsoleTableR]
   Preview: "namespace Ragnar.Core.Rendering; /// <summary> /// Default renderer that writes a table to the live console. /// </summary> /// <example><![CDATA[rend..."
 - File: Src\Ragnar.Core\Rendering\ITableBuilder.cs
-  Symbols: [ITableBuilder]
   Preview: "namespace Ragnar.Core.Rendering; /// <summary>Fluent builder for constructing Spectre.Console table structures.</summary> /// <example><![CDATA[var t ..."
 - File: Src\Ragnar.Core\Rendering\ITableRenderer.cs
   Symbols: [ITableRenderer]
   Preview: "namespace Ragnar.Core.Rendering; /// <summary>Renders a configured table to the console output.</summary> /// <example><![CDATA[renderer.Render();]]><..."
 - File: Src\Ragnar.Core\Rendering\TableRendererFactory.cs
-  Symbols: [WithRows, WithStyledBorder, WithFullWidth, WithLiveProgress, Render, WithRowSeparators, WithColumns, TableRendererFactory]
   Preview: "namespace Ragnar.Core.Rendering; /// <summary> /// Fluent factory that composes decorators around a base table renderer. /// </summary> /// <example> ..."
 - File: Src\Ragnar.Core\Utils\GeneratorExtensions.cs
-  Symbols: [GeneratorExtensions, AsEmbeddingGenerator, Gen]
+  Symbols: [Gen]
   Preview: "namespace Ragnar.Core.Utils; /// <summary> /// Provides extension methods to convert Ollama API clients into embedding generators. /// </summary> /// ..."
 - File: Src\Ragnar.Core\Utils\Point.cs
   Symbols: [Point]
   Preview: "namespace Ragnar.Core.Utils; /// <summary> /// Provides deterministic ID generation for vector store points. /// </summary> public static class Point ..."
+- File: Src\Ragnar.Core\Validation\EmbeddingOptionsValidator.cs
+  Symbols: [EmbeddingOptionsValidator, EmbeddingOptionsValidator]
+  Preview: "namespace Ragnar.Core.Validation; public class EmbeddingOptionsValidator : AbstractValidator<EmbeddingOptions> {   public EmbeddingOptionsValidator() ..."
 - File: Src\Ragnar.Core\Validation\FileLoadOptionsValidator.cs
   Symbols: [FileLoadOptionsValidator]
   Preview: "namespace Ragnar.Core.Validation; /// <summary>Initialises validation rules for file-loading options.</summary> /// <example><![CDATA[var v = new File..."
@@ -535,13 +581,16 @@ Architecture:
   Preview: "namespace Ragnar.Core.Validation; /// <summary> /// Validates configuration settings for Ollama API connections and timeouts. /// </summary> /// <exam..."
 - File: Src\Ragnar.Core\Validation\QuestionValidator.cs
   Preview: "namespace Ragnar.Core.Validation; /// <summary> /// FluentValidation rules for the Question model (text, filename, category, filter). /// </summary> /..."
+- File: Src\Ragnar.Core\Validation\RagnarConfigValidator.cs
+  Symbols: [RagnarConfigValidator]
+  Preview: "namespace Ragnar.Core.Validation; public class RagnarConfigValidator : AbstractValidator<RagnarConfig> {   public RagnarConfigValidator(     //Applica..."
 - File: Src\Ragnar.Embedding\Chunker\ISyntaxTreeChunker.cs
   Symbols: [ISyntaxTreeChunker]
   Preview: "namespace Ragnar.Embedding.Chunker; /// <summary> /// Chunks a source file into syntax-aware code documents for embedding. /// </summary> public inter..."
 - File: Src\Ragnar.Embedding\Chunker\SyntaxTreeChunker.cs
-  Symbols: [BuildCodeDocument, SyntaxTreeChunker, LoadClass, IsFileAlreadyIndexed, LoadRecord, ChunkSourceFile, LoadInterface, LoadTypeDeclaration, declaration, declaration, ExtractDocComments]
   Preview: "namespace Ragnar.Embedding.Chunker; /// <summary> /// Parses C# syntax trees into CodeDocument chunks for embedding. /// </summary> /// <example><![CD..."
-- File: Src\Ragnar.Embedding\Embedding\EmbeddingPointFactory.cs
+- File: Src\Ragnar.Embedding\Embedding\EmbeddingGeneratorService.cs
+  Symbols: [EmbeddingGeneratorService, GenerateAsync, GenerateBatchAsync, when, catch]
   Preview: "namespace Ragnar.Embedding.Embedding; /// <summary> /// Generates embedding vectors via an Ollama-backed generator with timeout and cancellation. /// ..."
 - File: Src\Ragnar.Embedding\Factory\CodeParserFactory.cs
   Symbols: [CodeParserFactory]
@@ -550,13 +599,13 @@ Architecture:
   Symbols: [IFileParseFactory]
   Preview: "namespace Ragnar.Embedding.Factory; /// <summary> /// Defines the contract for parsing source files into code documents by extension. /// </summary> p..."
 - File: Src\Ragnar.Embedding\Parsers\BaseFileParser.cs
+  Symbols: [ReadFileAsync, when, catch, catch, BaseFileParser]
   Preview: "namespace Ragnar.Embedding.Parsers; /// <summary> /// Read and parse over file to be embedded. /// </summary> /// <param name='logger'>logger for read..."
 - File: Src\Ragnar.Embedding\Parsers\CodeDocumentBuilder.cs
-  Symbols: [CodeDocumentBuilder, Code, Comment, FileName, Element, and, new]
   Preview: "namespace Ragnar.Embedding.Parsers; /// <summary>Fluent builder for constructing <see cref='CodeDocument'/> instances.</summary> /// <example><![CDATA..."
 - File: Src\Ragnar.Embedding\Parsers\FileDiscoveryService.cs
-  Symbols: [FileDiscoveryService, to]
-  Preview: "namespace Ragnar.Embedding.Parsers; /// <summary> /// Static class to call Custom system enumerable. /// </summary> public class FileDiscoveryService ..."
+  Symbols: [GetFilesAsync, FileDiscoveryService, to, ListFiles, EnumerateAsync]
+  Preview: "namespace Ragnar.Embedding.Parsers; /// <summary> /// Static class to call Custom system enumerable. /// </summary> public class FileDiscoveryService(..."
 - File: Src\Ragnar.Embedding\Parsers\FileValidator.cs
   Symbols: [FileValidator]
   Preview: "namespace Ragnar.Embedding.Parsers; /// <summary>Validates files against the provided load options.</summary> /// <example> /// <![CDATA[bool ok = val..."
@@ -567,35 +616,32 @@ Architecture:
   Symbols: [IVectorStoreWriter]
   Preview: "namespace Ragnar.Embedding.Parsers; /// <summary> /// Build text encoding to and insert/update to Qdrant database. /// </summary> /// <example><![CDAT..."
 - File: Src\Ragnar.Embedding\Parsers\MarkdownFileParser.cs
-  Symbols: [SplitIntoParagraphs, BaseFileParser, MarkdownFileParser, ParseAsync]
+  Symbols: [ParseAsync, MarkdownFileParser, BaseFileParser, SplitIntoParagraphs]
   Preview: "namespace Ragnar.Embedding.Parsers; #pragma warning disable SKEXP0050 /// <summary> /// ParseAsync file processing. /// </summary> /// <param name='co..."
 - File: Src\Ragnar.Embedding\Parsers\ParseCSharpFile.cs
-  Symbols: [BaseFileParser, ParseAsync, ParseCSharpFile]
+  Symbols: [ParseCSharpFile]
   Preview: "namespace Ragnar.Embedding.Parsers; /// <summary> /// Parses C# files using syntax tree chunker. /// </summary> /// <example><![CDATA[var parser = new..."
 - File: Src\Ragnar.Embedding\Parsers\PointStructBuilder.cs
   Preview: "//using System.Reflection.Metadata; //namespace Ragnar.Embedding.Parsers; //public record PointStructBuilder //{ //  // Make this init-only or public ..."
 - File: Src\Ragnar.Embedding\Parsers\VectorStoreWriter.cs
   Preview: "namespace Ragnar.Embedding.Parsers; /// <summary>Persists embedding vectors to Qdrant in configured batches.</summary> /// <param name='logger'>logger..."
-- File: Src\Ragnar.Embedding\Pipeline\ApplicationConfigurationExtensions.cs
-  Symbols: [extension, ApplicationConfigurationExtensions, in, LoadQuestionPlugins, catch]
-  Preview: "namespace Ragnar.Embedding.Pipeline; /// <summary>Provides extension methods for DI service registration.</summary> /// <remarks>Encapsulates embeddin..."
 - File: Src\Ragnar.Embedding\Pipeline\IEmbeddingPipelineOrchestrator.cs
   Symbols: [IEmbeddingPipelineOrchestrator]
   Preview: "namespace Ragnar.Embedding.Pipeline; /// <summary> /// Orchestrates the end-to-end embedding pipeline (chunk, embed, upsert). /// </summary> public in..."
+- File: Src\Ragnar.Embedding\Pipeline\QuestionPluginExtensions.cs
+  Preview: "namespace Ragnar.Embedding.Pipeline; /// <summary>Provides extension methods for DI service registration.</summary> /// <remarks>Encapsulates embeddin..."
 - File: Src\Ragnar.Embedding\Pipeline\VectorSetup.cs
-  Symbols: [VectorSetup, EnsureCollectionExistsAsync]
   Preview: "namespace Ragnar.Embedding.Pipeline; /// <summary>Initializes a new instance of the embedding pipeline.</summary> /// <param name = 'logger'> Logger f..."
 - File: Src\Ragnar.Embedding\VectorStore\PointStructFactory.cs
   Preview: "namespace Ragnar.Embedding.VectorStore; /// <summary> /// Builds Qdrant PointStruct instances from embedding vectors and code documents. /// </summary..."
-- File: Src\Ragnar.Questions\Filters\FilterBuilder.cs
-  Symbols: [AddExclusion, AddExceptKeywords, AddMatch, AddRange, Build, FilterBuilder, AddExclusionRange]
-  Preview: "namespace Ragnar.Questions.Filters; /// <summary>Fluent builder for constructing Qdrant filter expressions.</summary> /// <example><![CDATA[var f = ne..."
 - File: Src\Ragnar.Questions\Filters\IFilterStrategy.cs
   Symbols: [IFilterStrategy]
   Preview: "namespace Ragnar.Questions.Filters; /// <summary>Defines filtering rules for vector store queries by category and size.</summary> /// <example><![CDAT..."
 - File: Src\Ragnar.Questions\Filters\NoTestsFilterStrategy.cs
-  Symbols: [NoTestsFilterStrategy]
   Preview: "namespace Ragnar.Questions.Filters; /// <summary>Filters XML comments based on size and content rules.</summary> /// <remarks>Excludes test-related ca..."
+- File: Src\Ragnar.Questions\Filters\QdrantFilterBuilder.cs
+  Symbols: [Build, AddRange, AddMatch, AddExceptKeywords, AddExclusion, QdrantFilterBuilder, AddExclusionRange]
+  Preview: "namespace Ragnar.Questions.Filters; /// <summary>Fluent builder for constructing Qdrant filter expressions.</summary> /// <example><![CDATA[var f = ne..."
 - File: Src\Ragnar.Questions\Filters\XmlCommentFilterStrategy.cs
   Preview: "namespace Ragnar.Questions.Filters; /// <summary>Filters XML comments based on size and content rules.</summary> /// <remarks>Excludes test-related ca..."
 - File: Src\Ragnar.Questions\Interfaces\IConfigurationLoader.cs
@@ -622,25 +668,34 @@ Architecture:
 - File: Src\Ragnar.Questions\Sources\QuestionRecord.cs
   Preview: "namespace Ragnar.Questions.Sources; /// <summary> /// Immutable record representing a single question loaded from CSV or config. /// </summary> /// <e..."
 - File: Tests\Ragnar.UnitTests\Branding\BrandingHeaderTests.cs
-  Symbols: [DisplayWritesExpectedOutputWithVersion, BrandingHeaderTests]
+  Symbols: [BrandingHeaderTests, DisplayWritesExpectedOutputWithVersion]
   Preview: "namespace Ragnar.Tests.Branding; public sealed class BrandingHeaderTests {   [Fact]   public void DisplayWritesExpectedOutputWithVersion()   {     // ..."
 - File: Tests\Ragnar.UnitTests\Embedding\PointTests.cs
-  Symbols: [FromFilePathAndIndexThrowsWhenPathIsNull, PointTests]
+  Symbols: [PointTests, FromFilePathAndIndexThrowsWhenPathIsNull]
   Preview: "namespace Ragnar.Tests.Embedding; public sealed class PointTests {   [Fact]   public void FromFilePathAndIndexThrowsWhenPathIsNull()   {     // Act & ..."
+- File: Tests\Ragnar.UnitTests\Extensions\ApplicationConfigurationExtensionsTests.cs
+  Symbols: [LoadQuestionPluginsReturnsServicesWhenPluginDirDoesNotExist, ApplicationConfigurationExtensionsTests]
+  Preview: "namespace Ragnar.Tests.Extensions; public class ApplicationConfigurationExtensionsTests {   [Fact]   public void LoadQuestionPluginsReturnsServicesWhe..."
+- File: Tests\Ragnar.UnitTests\Extensions\AssemblyExtensionsTests.cs
+  Symbols: [AssemblyExtensionsTests, AssemblyExtensionsTests]
+  Preview: "namespace Ragnar.Tests.Extensions; public class AssemblyExtensionsTests {   private readonly Assembly _asm;   public AssemblyExtensionsTests()   {    ..."
 - File: Tests\Ragnar.UnitTests\Extensions\CodeDocumentExtensionsTests.cs
-  Symbols: [DictionaryReturnsNonEmptyDictionary, CodeDocumentExtensionsTests, Program]
+  Symbols: [DictionaryReturnsNonEmptyDictionary, CodeDocumentExtensionsTests]
   Preview: "namespace Ragnar.Tests.Extensions; public sealed class CodeDocumentExtensionsTests {   [Fact]   public void DictionaryReturnsNonEmptyDictionary()   { ..."
 - File: Tests\Ragnar.UnitTests\Extensions\PathExtensionsTests.cs
-  Symbols: [IsExcludedReturnsExpected, ExpandDirectoryExpandsEnvVarAndThrowsIfMissing, PathExtensionsTests]
+  Symbols: [PathExtensionsTests]
   Preview: "namespace Ragnar.Tests.Extensions; public sealed class PathExtensionsTests {   [Theory]   [InlineData('file.txt', new[] { 'FILE.TXT', 'other.txt' }, t..."
 - File: Tests\Ragnar.UnitTests\Extensions\QuestionCombineBuilderExtensionsTests.cs
+  Symbols: [QuestionCombineBuilderExtensionsTests, SetActiveTrueShouldCallAsActive]
   Preview: "namespace Ragnar.Tests.Extensions; public class QuestionCombineBuilderExtensionsTests {   [Fact]   public void SetActiveTrueShouldCallAsActive()   {  ..."
 - File: Tests\Ragnar.UnitTests\Extensions\StopwatchExtensionsTests.cs
+  Symbols: [StopwatchExtensionsTests, FormatElapsedTimeLessThanOneMinuteShouldReturnMMSS]
   Preview: "namespace Ragnar.Tests.Extensions; public class StopwatchExtensionsTests {   [Fact]   public void FormatElapsedTimeLessThanOneMinuteShouldReturnMMSS()..."
 - File: Tests\Ragnar.UnitTests\Extensions\StringExtensionsTests.cs
+  Symbols: [StringExtensionsTests]
   Preview: "namespace Ragnar.Tests.Extensions; public class StringExtensionsTests {   [Theory]   [InlineData('<c>code</c>', 4)]   [InlineData('Hello <!-- comment ..."
 - File: Tests\Ragnar.UnitTests\Parsing\BaseFileParserTests.cs
-  Symbols: [BaseFileParserTests]
+  Symbols: [ReadFileAsyncValidFileShouldReturnContent, ReadFileAsyncEmptyPathShouldThrowArgumentException, Test, ReadFileAsyncNullPathShouldThrowArgumentException, BaseFileParser, TestFileParser, ReadFileAsyncCancelledTokenShouldThrowOperationCanceled, Dispose, BaseFileParserTests, BaseFileParserTests]
   Preview: "namespace Ragnar.Tests.Parsing; public class BaseFileParserTests : IDisposable {   private readonly Mock<Serilog.ILogger> _loggerMock;   private reado..."
 - File: Tests\Ragnar.UnitTests\Prompts\SummarizePromptProviderTests.cs
   Symbols: [SummarizePromptProviderTests, SummarizePromptProviderTests]
@@ -649,40 +704,37 @@ Architecture:
   Symbols: [CsvFileQuestionProviderTests, CsvFileQuestionProviderTests]
   Preview: "namespace Ragnar.Tests.Providers; public class CsvFileQuestionProviderTests {   private readonly Mock<IRecordParser<QuestionRecord>> _parserMock;   pr..."
 - File: Tests\Ragnar.UnitTests\Services\OllamaClientFactoryTests.cs
-  Symbols: [FindClientInvalidTypeShouldThrowArgumentOutOfRangeException, FindClientSameTypeTwiceShouldReturnCachedInstance, ResolveClientShouldReturnConfiguredModel, ApplicationOptions, OllamaClientFactoryTests, OllamaClientFactoryTests]
+  Symbols: [OllamaClientFactoryTests]
   Preview: "namespace Ragnar.Tests.Services; public class OllamaClientFactoryTests {   private readonly Mock<IHttpClientFactory> _httpClientFactoryMock;   private..."
 - File: Tests\Ragnar.UnitTests\Validation\ApplicationOptionsValidationTests.cs
-  Symbols: [ValidateNullVectorStoreNameShouldFail, ValidateEmptyVectorStoreNameShouldFail, ApplicationOptionsValidationTests, ApplicationOptionsValidationTests, ValidateAllFieldsNullShouldHaveThreeErrors, ValidateNullOutputFolderShouldFail, ValidateVectorStoreNameAtLimitShouldPass, ValidateVectorStoreNameTooLongShouldFail, ValidateVectorVectorStoreNameTooLongShouldFail]
+  Symbols: [ApplicationOptionsValidationTests, ApplicationOptionsValidationTests]
   Preview: "namespace Ragnar.Tests.Validation; public class ApplicationOptionsValidationTests {   private readonly ApplicationOptionsValidator _validator;   publi..."
 - File: Tests\Ragnar.UnitTests\VectorStore\VectorStoreRepositoryTests.cs
-  Symbols: [VectorStoreRepositoryTests, VectorStoreRepositoryTests, UpsertBatchAsyncEmptyDocumentsShouldReturnCompleted, CodeDocument, UpsertBatchAsyncCancelledTokenShouldThrow, OllamaOptions]
+  Symbols: [VectorStoreRepositoryTests]
   Preview: "namespace Ragnar.Tests.VectorStore; public class VectorStoreRepositoryTests {   private readonly Mock<Serilog.ILogger> _loggerMock;   private readonly..."
 - File: Src\Ragnar\Stages\Embedding\ParsingStage.cs
-  Symbols: [ExecuteAsync, ParsingStage]
+  Symbols: [ParsingStage]
   Preview: "namespace Ragnar.Stages.Embedding; /// <summary>Parses discovered files into CodeDocument segments in parallel.</summary> /// <example><![CDATA[await ..."
-- File: Src\Ragnar\Stages\Questions\QuestionExecutionStage.cs
-  Symbols: [QuestionExecutionStage, ExecuteAsync]
+- File: Src\Ragnar\Stages\Questions\QuestionAnswerStage.cs
   Preview: "namespace Ragnar.Stages.Questions; /// <summary>Pipeline stage that loads questions and runs RAG queries against the vector store.</summary> /// <para..."
 - File: Src\Ragnar\Stages\Questions\QuestionLoadStage.cs
-  Symbols: [ExecuteAsync, QuestionLoadStage]
   Preview: "namespace Ragnar.Stages.Questions; /// <summary> /// Loads, filters, and sorts questions from CSV sources before any LLM work begins. /// </summary> /..."
-- File: Src\Ragnar\Stages\Questions\QuestionShowStage.cs
-  Symbols: [QuestionShowStage, ExecuteAsync]
+- File: Src\Ragnar\Stages\Questions\QuestionTableStage.cs
+  Symbols: [QuestionTableStag]
   Preview: "namespace Ragnar.Stages.Questions; /// <summary>Pipeline stage that loads questions and runs RAG queries against the vector store.</summary> /// <exam..."
 - File: Src\Ragnar.Core\Rendering\Decorators\LiveProgressDecorator .cs
   Preview: "namespace Ragnar.Core.Rendering.Decorators; /// <summary> /// Decorator that renders the table inside a Spectre.Console Live context, /// refreshing a..."
 - File: Src\Ragnar.Core\Rendering\Decorators\NumberedRowDecorator.cs
-  Symbols: [for, Render, NumberedRowDecorator]
+  Symbols: [Render, for, for, NumberedRowDecorator]
   Preview: "namespace Ragnar.Core.Rendering.Decorators; /// <summary>Initializes a new row-numbering decorator wrapping an inner renderer.</summary> /// <param na..."
 - File: Src\Ragnar.Core\Rendering\Decorators\StyledBorderDecorator.cs
   Preview: "namespace Ragnar.Core.Rendering.Decorators; /// <summary> /// Decorator that applies a colored border and optional header to the table. /// </summary>..."
 - File: Src\Ragnar.Embedding\Pipeline\Services\OllamaEmbeddingGenerator.cs
   Preview: "namespace Ragnar.Embedding.Pipeline.Services; /// <summary>Generates text-to-vector embeddings via Ollama for Qdrant storage.</summary> /// <param nam..."
 - File: Src\Ragnar.Embedding\Pipeline\Stages\VectorStoreInitStage.cs
-  Symbols: [ExecuteAsync, VectorStoreInitStage]
   Preview: "namespace Ragnar.Embedding.Pipeline.Stages; /// <summary>Ensures the Qdrant vector store collection is initialized before retrieval.</summary> /// <re..."
 - File: Tests\Ragnar.UnitTests\Core\Extensions\StopwatchExtensionsTests.cs
-  Symbols: [StopwatchExtensionsTests, ElapsedTimeStringStoppedWatchShouldReturnZeroSeconds]
+  Symbols: [ElapsedTimeStringStoppedWatchShouldReturnZeroSeconds, StopwatchExtensionsTests]
   Preview: "namespace Ragnar.UnitTests.Core.Extensions {; public class StopwatchExtensionsTests {   [Fact]   public void ElapsedTimeStringStoppedWatchShouldReturn..."
 - File: Tests\Ragnar.UnitTests\Core\Extensions\StringExtensionsTests.cs
   Symbols: [StringExtensionsTests]

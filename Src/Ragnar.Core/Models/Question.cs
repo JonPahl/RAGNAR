@@ -35,8 +35,8 @@ public sealed record class Question(
 
     private static Question Create(bool enabled, string text, string key, QuestionCategory category)
     {
-        Guard.Against.NullOrWhiteSpace(text, nameof(text));
-        Guard.Against.NullOrWhiteSpace(key, nameof(key));
+        Guard.Against.NullOrWhiteSpace(text);
+        Guard.Against.NullOrWhiteSpace(key);
         return new Question(enabled, text, key, category).ValidateQuestion();
     }
 }

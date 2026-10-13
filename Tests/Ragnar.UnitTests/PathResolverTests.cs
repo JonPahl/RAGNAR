@@ -51,6 +51,6 @@ public class PathResolverTests
         var result = _sut.ResolveResponseDirectory(QuestionCategory.General);
 
         // Assert
-        Assert.Contains("General", result);
+        Assert.Contains("General", result, StringComparison.InvariantCultureIgnoreCase);
     }
 }

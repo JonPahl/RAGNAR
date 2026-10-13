@@ -22,7 +22,8 @@ public sealed class PipelineRunner<TContext>(Serilog.ILogger logger)
     /// <param name="stage">The stage to add to the execution sequence.</param>
     /// <returns>The runner instance for fluent chaining.</returns>
     /// <example><![CDATA[runner.AddStage(parsingStage);]]></example>
-    public override IPipeline<TContext> AddStage(IPipelineStage<TContext> stage,
+    public override IPipeline<TContext> AddStage(
+        IPipelineStage<TContext> stage,
         IAsyncPolicy? policy = null)
     {
         Guard.Against.Null(stage);
@@ -32,25 +33,30 @@ public sealed class PipelineRunner<TContext>(Serilog.ILogger logger)
             if (_stages.Any(x => x.Stage.Name == stage.Name))
                 throw new ArgumentException($"Stage '{stage.Name}' is already registered.", nameof(stage));
 
-            _stages.Add(new StageEntry<TContext>(stage)
-            {
-                Policy = policy
-            });
+            _stages.Add(new StageEntry<TContext>(stage, policy));
         }
         return this;
     }
 
+    /// <summary>Gets the ordered list of registered pipeline stage display names.</summary>
     public IReadOnlyList<string> StageNames
     {
         get { lock (_gate) return _stages.ConvertAll(s => s.Stage.Name).AsReadOnly(); }
     }
 
-    public PipelineRunner<TContext> ClearStages()
+    /// <summary>Removes all registered pipeline stages and returns the runner for chaining.</summary>
+    /// <returns>The runner instance with an empty stage list.</returns>
+    public IPipeline<TContext> ClearStages()
     {
         lock (_gate) _stages.Clear();
         return this;
     }
 
+    /// <summary>Replaces an existing stage (matched by name) with a new stage and optional policy.</summary>
+    /// <param name="oldName">Display name of the stage to replace.</param>
+    /// <param name="newStage">The replacement stage instance.</param>
+    /// <param name="policy">Optional retry policy for the new stage.</param>
+    /// <returns>The runner instance for fluent chaining.</returns>
     public IPipeline<TContext> ReplaceStage(string oldName, IPipelineStage<TContext> newStage, IAsyncPolicy? policy = null)
     {
         RemoveStage(oldName);
@@ -61,7 +67,7 @@ public sealed class PipelineRunner<TContext>(Serilog.ILogger logger)
     /// <param name="name">Display name of the stage to remove.</param>
     /// <returns>The runner instance for fluent chaining.</returns>
     /// <example><![CDATA[runner.RemoveStage("Parsing");]]></example>
-    public override PipelineRunner<TContext> RemoveStage(string name)
+    public override IPipeline<TContext> RemoveStage(string name)
     {
         lock (_gate)
             _stages.RemoveAll(s => s.Stage.Name == name);
@@ -74,7 +80,7 @@ public sealed class PipelineRunner<TContext>(Serilog.ILogger logger)
     /// <param name="newIndex">Zero-based target index; clamped to valid range.</param>
     /// <returns>The runner instance for fluent chaining.</returns>
     /// <example><![CDATA[runner.Reorder("Parsing", 0);]]></example>
-    public override PipelineRunner<TContext> Reorder(string fromName, int newIndex)
+    public override IPipeline<TContext> Reorder(string fromName, int newIndex)
     {
         lock (_gate)
         {
@@ -112,8 +118,6 @@ public sealed class PipelineRunner<TContext>(Serilog.ILogger logger)
 
             try
             {
-                var a = snapshot[i].Policy;
-
                 if (snapshot[i].Policy is null)
                 {
                     await stage

@@ -3,52 +3,68 @@
 public class QuestionFilterSelectorTests
 {
     [Fact]
-    public void FindFilterWithXmlCategoryShouldReturnConfiguredFilter()
+    public void FindFilterWithXmlCategoryShouldReturnNonEmptyFilter()
     {
+        IEnumerable<IFilterStrategy> strategies = [];
         // Act
-        var filter = QuestionFilterSelector.FindFilter(QuestionCategory.XML, 100);
+        var x = new QuestionFilterSelector(strategies);
+        var filter = x.FindFilter(QuestionCategory.XML);
 
         // Assert
         Assert.NotNull(filter);
-        Assert.NotEmpty(filter.Must);
+        Assert.False(filter.Must is null || filter.Must.Count == 0);
     }
 
     [Fact]
-    public void FindFilterWithXmlCategoryAndZeroThresholdShouldStillReturnFilter()
+    public void FindFilterWithXmlCategoryAndThresholdShouldReturnFilter()
     {
         // Act
-        var filter = QuestionFilterSelector.FindFilter(QuestionCategory.XML, 0);
+        IEnumerable<IFilterStrategy> u = [];
+        var x = new QuestionFilterSelector(u);
+        var filter = x.FindFilter(QuestionCategory.XML, 100);
 
         // Assert
         Assert.NotNull(filter);
+        // Should have a range condition for CommentLength
+        Assert.Contains(filter.Must, c => c.Field?.Key == "CommentLength");
     }
 
     [Fact]
-    public void FindFilterWithUnsupportedCategoryShouldReturnEmptyFilter()
+    public void FindFilterWithUnknownCategoryShouldReturnEmptyFilter()
     {
-        // Arrange - use a category not registered in the strategy dictionary
-        var unsupportedCategory = (QuestionCategory)9999;
-
         // Act
-        var filter = QuestionFilterSelector.FindFilter(unsupportedCategory, 50);
+        IEnumerable<IFilterStrategy> u = [];
+        var x = new QuestionFilterSelector(u);
+        var filter = x.FindFilter(QuestionCategory.Uncategorized, 50);
 
         // Assert
         Assert.NotNull(filter);
-        Assert.Empty(filter.Must);
-        Assert.Empty(filter.MustNot);
+        // Unknown category returns default (empty) filter
     }
 
     [Fact]
-    public void FindFilterShouldReturnDifferentFiltersForDifferentThresholds()
+    public void FindFilterWithXmlCategoryShouldExcludeTestCategories()
     {
         // Act
-        var filter1 = QuestionFilterSelector.FindFilter(QuestionCategory.XML, 10);
-        var filter2 = QuestionFilterSelector.FindFilter(QuestionCategory.XML, 500);
+        IEnumerable<IFilterStrategy> u = [];
+        var x = new QuestionFilterSelector(u);
+        var filter = x.FindFilter(QuestionCategory.XML, 50);
 
-        // Assert - both should be valid filters with range conditions
-        Assert.NotNull(filter1);
-        Assert.NotNull(filter2);
-        Assert.NotEmpty(filter1.Must);
-        Assert.NotEmpty(filter2.Must);
+        // Assert
+        // Should contain an ExceptKeywords condition for Category
+        Assert.Contains(filter.Must, c =>
+            c.Field?.Match?.ExceptKeywords?.Strings?.Contains("Test") == true);
+    }
+
+    [Fact]
+    public void FindFilterWithDefaultThresholdShouldUseZero()
+    {
+        // Act
+        IEnumerable<IFilterStrategy> u = [];
+        var x = new QuestionFilterSelector(u);
+        var filter = x.FindFilter(QuestionCategory.XML);
+
+        // Assert
+        Assert.NotNull(filter);
     }
 }

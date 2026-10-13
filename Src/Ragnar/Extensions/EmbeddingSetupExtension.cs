@@ -18,6 +18,8 @@ public static class EmbeddingSetupExtension
         {
             services.AddSingleton<IEmbeddingService, OllamaEmbeddingGenerator>();
 
+            services.AddSingleton<QuestionFilterSelector>();
+
             services.AddSingleton<IQdrantPointFactory, PointStructFactory>();
 
             services

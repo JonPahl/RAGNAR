@@ -3,8 +3,9 @@
 public class EmbeddingOptionsTests
 {
     [Fact]
-    public void EmbeddingOptionsShouldStoreAllProperties()
+    public void ShouldStoreAllProperties()
     {
+        // Arrange & Act
         var opts = new EmbeddingOptions
         {
             Host = "localhost",
@@ -15,6 +16,7 @@ public class EmbeddingOptionsTests
             BatchSize = 32
         };
 
+        // Assert
         Assert.Equal("localhost", opts.Host);
         Assert.Equal(8080, opts.Port);
         Assert.Equal("nomic-embed-text", opts.EmbeddingModel);
@@ -24,27 +26,46 @@ public class EmbeddingOptionsTests
     }
 
     [Fact]
-    public void EmbeddingOptionsShouldSupportEquality()
+    public void ShouldSupportImmutability()
     {
-        var a = new EmbeddingOptions
+        // Arrange
+        var original = new EmbeddingOptions
         {
-            Host = "h",
-            Port = 1,
-            EmbeddingModel = "m",
-            Timeout = TimeSpan.FromSeconds(10),
-            Dimension = 128,
-            BatchSize = 4
-        };
-        var b = new EmbeddingOptions
-        {
-            Host = "h",
-            Port = 1,
-            EmbeddingModel = "m",
-            Timeout = TimeSpan.FromSeconds(10),
-            Dimension = 128,
-            BatchSize = 4
+            Host = "localhost",
+            Port = 8080,
+            EmbeddingModel = "model-a",
+            Timeout = TimeSpan.FromSeconds(30),
+            Dimension = 768,
+            BatchSize = 16
         };
 
+        // Act
+        var modified = original with { Port = 9090 };
+
+        // Assert
+        Assert.Equal(8080, original.Port);
+        Assert.Equal(9090, modified.Port);
+    }
+
+    [Fact]
+    public void EqualityShouldWorkWhenAllPropertiesMatch()
+    {
+        // Arrange
+        var a = new EmbeddingOptions { Host = "h", Port = 1, EmbeddingModel = "m", Timeout = TimeSpan.Zero, Dimension = 1, BatchSize = 1 };
+        var b = new EmbeddingOptions { Host = "h", Port = 1, EmbeddingModel = "m", Timeout = TimeSpan.Zero, Dimension = 1, BatchSize = 1 };
+
+        // Act & Assert
         Assert.Equal(a, b);
+    }
+
+    [Fact]
+    public void InequalityShouldWorkWhenDimensionDiffers()
+    {
+        // Arrange
+        var a = new EmbeddingOptions { Host = "h", Port = 1, EmbeddingModel = "m", Timeout = TimeSpan.Zero, Dimension = 768, BatchSize = 16 };
+        var b = new EmbeddingOptions { Host = "h", Port = 1, EmbeddingModel = "m", Timeout = TimeSpan.Zero, Dimension = 1536, BatchSize = 16 };
+
+        // Act & Assert
+        Assert.NotEqual(a, b);
     }
 }

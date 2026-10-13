@@ -86,7 +86,7 @@ public class ResponseWriterTests : IDisposable
         var result = await _sut.WriteResponseAsync(details, CancellationToken.None);
 
         // Assert
-        Assert.Contains("20250115_103045", result);
+        Assert.Contains("20250115_103045", result, StringComparison.InvariantCultureIgnoreCase);
     }
 
     [Fact]
@@ -100,7 +100,7 @@ public class ResponseWriterTests : IDisposable
         var result = await _sut.WriteResponseAsync(details, CancellationToken.None);
 
         // Assert
-        Assert.Contains("Main.cs", result);
+        Assert.Contains("Main.cs", result, StringComparison.InvariantCultureIgnoreCase);
     }
 
     [Fact]
@@ -113,9 +113,8 @@ public class ResponseWriterTests : IDisposable
         var result = await _sut.WriteResponseAsync(details, CancellationToken.None);
 
         // Assert
-        Assert.EndsWith(".md", result);
+        Assert.EndsWith(".md", result, StringComparison.InvariantCultureIgnoreCase);
     }
-
 
     [Fact]
     public async Task WriteResponseAsyncShouldPropagateCancellation()
