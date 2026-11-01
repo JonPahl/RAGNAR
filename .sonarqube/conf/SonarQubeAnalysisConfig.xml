@@ -159,7 +159,7 @@
     <Property Name="sonar.java.jvmframeworkconfig.activate">true</Property>
     <Property Name="sonar.updatecenter.url">https://downloads.sonarsource.com/sonarqube/update/update-center.properties</Property>
     <Property Name="sonar.core.id">243B8A4D-AZ2H5J7mChPbr8RsTGrT</Property>
-    <Property Name="sonar.core.startTime">10/11/2026 6:01:56 PM</Property>
+    <Property Name="sonar.core.startTime">10/30/2026 12:53:39 AM</Property>
   </ServerSettings>
   <LocalSettings>
     <Property Name="sonar.host.url">http://localhost:9000</Property>

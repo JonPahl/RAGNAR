@@ -21,8 +21,7 @@ public class FileParserTests
             },
             EmbeddingOptions = new EmbeddingOptions
             {
-                Host = "localhost",
-                Port = 6334,
+                Host = new Uri("http://localhost:6334"),
                 EmbeddingModel = "nomic-embed-text",
                 Timeout = TimeSpan.FromMinutes(5),
                 Dimension = 768,
@@ -30,8 +29,7 @@ public class FileParserTests
             },
             OllamaOptions = new OllamaOptions
             {
-                Host = "localhost",
-                Port = 11434,
+                Host = new Uri("http://localhost/11434"),
                 LlmModel = "qwen3.8",
                 Timeout = TimeSpan.FromMinutes(30)
             },

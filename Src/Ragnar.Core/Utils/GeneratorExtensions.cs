@@ -12,6 +12,7 @@ public static class GeneratorExtensions
     /// </summary>
     /// <exception cref="ArgumentNullException"><paramref name="api"/> is null.</exception>
     /// <exception cref="InvalidCastException">The client does not implement <see cref="IEmbeddingGenerator{TInput,TEmbedding}"/>.</exception>
+    /// <returns>An IEmbeddingGenerator<string, Embedding<float>></float>>> instance.</returns>
     /// <example><![CDATA[var gen = ollamaClient.AsEmbeddingGenerator();]]>
     /// </example>
     public static IEmbeddingGenerator<string, Embedding<float>> AsEmbeddingGenerator(this IOllamaApiClient api)

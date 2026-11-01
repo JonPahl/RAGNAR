@@ -9,5 +9,8 @@ public sealed record OllamaClientOptions
     public int? ContextWindow { get; init; }
     public bool UseFunctionInvocation { get; init; } = true;
     public bool UseStreaming { get; init; } = true;
+    public Uri Url { get; init; }
+    public TimeSpan Timeout { get; init; } = TimeSpan.FromMinutes(30);
+
     public IReadOnlyList<Func<IChatClient, IChatClient>>? Middleware { get; init; }
 }

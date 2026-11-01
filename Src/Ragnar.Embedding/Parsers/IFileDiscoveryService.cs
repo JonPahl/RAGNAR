@@ -10,5 +10,5 @@ public interface IFileDiscoveryService
     /// <param name="cancellationToken">Token to cancel enumeration.</param>
     /// <returns>Async sequence of qualifying file paths.</returns>
     /// <example><![CDATA[await foreach(var f in svc.GetFilesAsync(".", o, ct)){ }]]></example>
-    IAsyncEnumerable<string> GetFilesAsync(string directory, FileLoadOptions filter, CancellationToken cancellationToken);
+    IAsyncEnumerable<string> GetFilesAsync(string directory, IOptions<RagnarConfig> options, CancellationToken cancellationToken);
 }

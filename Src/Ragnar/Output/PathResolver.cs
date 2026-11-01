@@ -21,7 +21,9 @@ public sealed class PathResolver(
     {
         var baseDir = category is null ? nameof(QuestionCategory.Uncategorized) : category.ToString();
 
-        return Path.Join(_applicationOptions.SourceDirectory, _applicationOptions.OutputFolder, baseDir);
+        var dir = Path.Join(_applicationOptions.SourceDirectory, _applicationOptions.OutputFolder, baseDir);
+
+        return dir;
     }
 
     /// <summary>Ensures the resolved directory exists (idempotent).</summary>

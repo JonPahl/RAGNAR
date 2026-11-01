@@ -18,16 +18,16 @@ public static class FileSystemEntryExtensions
     /// ]]>
     /// </example>
     public static bool HasAllowedExtension(
-        this FileSystemEntry entry,
+        this FileSystemInfo entry,
         IReadOnlyCollection<string> allowedExtensions)
     {
         Guard.Against.Null(allowedExtensions);
 
-        if (entry.IsDirectory)
+        if (entry is DirectoryInfo)
             return false;
 
-        var extension = Path.GetExtension(entry.FileName);
+        var extension = Path.GetExtension(entry.Name);
 
-        return allowedExtensions.Contains(extension.ToString(), StringComparer.OrdinalIgnoreCase);
+        return allowedExtensions.Contains(extension, StringComparer.OrdinalIgnoreCase);
     }
 }

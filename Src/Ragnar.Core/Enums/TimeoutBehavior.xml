@@ -1,0 +1,6 @@
+<doc><summary>This enum represents the behavior of a timeout.</summary>
+<list type="bullet">
+	<li>Throw: Throw an exception when a timeout occurs.</li>
+	<li>Skip: Skip the current operation and continue with the next one.</li>
+	<li>ReturnContext: Return the context to the caller without throwing or skipping.</li>
+</list></doc>

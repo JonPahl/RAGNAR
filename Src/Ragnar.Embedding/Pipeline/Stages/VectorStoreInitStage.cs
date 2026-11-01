@@ -2,7 +2,7 @@
 
 /// <summary>Ensures the Qdrant vector store collection is initialized before retrieval.</summary>
 /// <remarks>Creates the collection if it does not already exist in the target cluster.</remarks>
-/// <param name="vectorSetup">The IVectorSetup service that manages collection lifecycle.</param>
+/// <param name="vectorSetup">The IVectorSetup service that manages collection life-cycle.</param>
 /// <param name="writer">Console output writer for status messages.</param>
 /// <example><![CDATA[vectorSetup.AddStage(new VectorStoreInitStage(setup, w));]]></example>
 public class VectorStoreInitStage(IVectorSetup vectorSetup, IOutputWriter writer)

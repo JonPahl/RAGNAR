@@ -12,6 +12,6 @@ public interface ISyntaxTreeChunker
     /// <param name="codeText">Raw text content of the source file to chunk.</param>
     /// <returns>A list of code documents, or null if parsing yields no chunks.</returns>
     /// <exception cref="ArgumentNullException">Thrown when <paramref name="codeText"/> is null.</exception>
-    /// <example><![CDATA[var docs = await chunker.ChunkSourceFile("a.cs", code);]]></example>
-    Task<IList<CodeDocument>?> ChunkSourceFile(string filename, string codeText);
+    /// <example><![CDATA[var docs = await chunker.ParseAsync("a.cs", code);]]></example>
+    Task<IList<CodeDocument>?> ParseAsync(string filename, string codeText);
 }

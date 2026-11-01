@@ -27,15 +27,50 @@ public sealed class ResponseWriter(
             .ResolveResponseDirectory(record.Question.Category);
         pathResolver.EnsureDirectoryExists(directory);
 
-        var stamp = clock.UtcNow.ToString("yyyyMMdd_HHmmss");
+        var stamp = clock.UtcNow.ToString("yyyyMMdd_HHmmss", General.Culture);
 
-        var fileName = $"{record.Question.Filename}_{stamp}.{formatter.FileExtension}";
+        var name = record.Question.Filename.Trim('"');
+        var fileName = $"{name}_{stamp}.{formatter.FileExtension}";
 
         var fullPath = Path.Join(directory, fileName);
+
+        var isValid = IsValidFilePath(fullPath);
+
+        if (!isValid)
+        {
+            fullPath = string.Format(@"C:\Test\{0}.{1}", stamp, formatter.FileExtension);
+        }
 
         var content = formatter.FormatResponse(record);
 
         await fileWriter.WriteAsync(fullPath, content, cancellationToken).ConfigureAwait(false);
         return fullPath;
     }
+
+    private static bool IsValidFilePath(string path)
+    {
+        if (string.IsNullOrWhiteSpace(path))
+            return false;
+
+        try
+        {
+            // This will throw an exception if the path contains invalid characters, 
+            // is too long, or has an invalid format.
+            string fullPath = Path.GetFullPath(path);
+
+            // Optional: Ensure it has a valid root (e.g., "C:\" or UNC path) if you require absolute paths
+            // return Path.IsPathFullyQualified(fullPath); 
+
+            return true;
+        }
+        catch (Exception ex) when (ex is ArgumentException or
+                                   PathTooLongException or
+                                   NotSupportedException)
+        {
+            return false;
+        }
+    }
+
+
+
 }

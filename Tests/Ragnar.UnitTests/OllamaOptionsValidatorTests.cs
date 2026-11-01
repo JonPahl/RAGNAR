@@ -10,8 +10,7 @@ public class OllamaOptionsValidatorTests
         // Arrange
         var options = new OllamaOptions
         {
-            Host = "localhost",
-            Port = 11434,
+            Host = new Uri("http://localhost:11434/"),
             LlmModel = "qwen3.8",
             Timeout = TimeSpan.FromMinutes(30)
         };
@@ -29,8 +28,7 @@ public class OllamaOptionsValidatorTests
         // Arrange
         var options = new OllamaOptions
         {
-            Host = "",
-            Port = 11434,
+            Host = new Uri(""),
             LlmModel = "qwen3.8",
             Timeout = TimeSpan.FromMinutes(30)
         };
@@ -49,8 +47,7 @@ public class OllamaOptionsValidatorTests
         // Arrange
         var options = new OllamaOptions
         {
-            Host = null!,
-            Port = 11434,
+            Host = new Uri(null!),
             LlmModel = "qwen3.8",
             Timeout = TimeSpan.FromMinutes(30)
         };
@@ -64,76 +61,12 @@ public class OllamaOptionsValidatorTests
     }
 
     [Fact]
-    public void PortBelowRangeShouldProduceError()
-    {
-        // Arrange
-        var options = new OllamaOptions
-        {
-            Host = "localhost",
-            Port = 0,
-            LlmModel = "qwen3.8",
-            Timeout = TimeSpan.FromMinutes(30)
-        };
-
-        // Act
-        var result = _validator.Validate(options);
-
-        // Assert
-        Assert.False(result.IsValid);
-        Assert.Contains(result.Errors, e => e.PropertyName == nameof(OllamaOptions.Port));
-    }
-
-    [Fact]
-    public void PortAboveRangeShouldProduceError()
-    {
-        // Arrange
-        var options = new OllamaOptions
-        {
-            Host = "localhost",
-            Port = 65536,
-            LlmModel = "qwen3.8",
-            Timeout = TimeSpan.FromMinutes(30)
-        };
-
-        // Act
-        var result = _validator.Validate(options);
-
-        // Assert
-        Assert.False(result.IsValid);
-        Assert.Contains(result.Errors, e => e.PropertyName == nameof(OllamaOptions.Port));
-    }
-
-    [Theory]
-    [InlineData(1)]
-    [InlineData(80)]
-    [InlineData(443)]
-    [InlineData(65535)]
-    public void ValidPortShouldNotProducePortError(int port)
-    {
-        // Arrange
-        var options = new OllamaOptions
-        {
-            Host = "localhost",
-            Port = port,
-            LlmModel = "qwen3.8",
-            Timeout = TimeSpan.FromMinutes(30)
-        };
-
-        // Act
-        var result = _validator.Validate(options);
-
-        // Assert
-        Assert.DoesNotContain(result.Errors, e => e.PropertyName == nameof(OllamaOptions.Port));
-    }
-
-    [Fact]
     public void ZeroTimeoutShouldProduceError()
     {
         // Arrange
         var options = new OllamaOptions
         {
-            Host = "localhost",
-            Port = 11434,
+            Host = new Uri("http://localhost:11434/"),
             LlmModel = "qwen3.8",
             Timeout = TimeSpan.Zero
         };
@@ -152,8 +85,7 @@ public class OllamaOptionsValidatorTests
         // Arrange
         var options = new OllamaOptions
         {
-            Host = "localhost",
-            Port = 11434,
+            Host = new Uri("http://localhost:11434/"),
             LlmModel = "qwen3.8",
             Timeout = TimeSpan.FromSeconds(-1)
         };
@@ -172,8 +104,7 @@ public class OllamaOptionsValidatorTests
         // Arrange
         var options = new OllamaOptions
         {
-            Host = "localhost",
-            Port = 11434,
+            Host = new Uri("http://localhost:11434/"),
             LlmModel = "",
             Timeout = TimeSpan.FromMinutes(30)
         };
@@ -192,8 +123,7 @@ public class OllamaOptionsValidatorTests
         // Arrange
         var options = new OllamaOptions
         {
-            Host = "localhost",
-            Port = 11434,
+            Host = new Uri("http://localhost:11434/"),
             LlmModel = null!,
             Timeout = TimeSpan.FromMinutes(30)
         };
@@ -212,8 +142,7 @@ public class OllamaOptionsValidatorTests
         // Arrange
         var options = new OllamaOptions
         {
-            Host = "",
-            Port = 0,
+            Host = new Uri(""),
             LlmModel = "",
             Timeout = TimeSpan.Zero
         };
@@ -223,6 +152,6 @@ public class OllamaOptionsValidatorTests
 
         // Assert
         Assert.False(result.IsValid);
-        Assert.Equal(4, result.Errors.Count);
+        Assert.Equal(5, result.Errors.Count);
     }
 }

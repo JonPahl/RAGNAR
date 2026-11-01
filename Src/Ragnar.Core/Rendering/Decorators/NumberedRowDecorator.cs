@@ -1,8 +1,9 @@
 ﻿namespace Ragnar.Core.Rendering.Decorators;
 
 /// <summary>Initializes a new row-numbering decorator wrapping an inner renderer.</summary>
-/// <param name="inner">The next renderer in the decoration chain.</param>
-/// <param name="columnHeader">Header label for the index column; defaults to "#".</param>
+/// <param name = "inner">The next renderer in the decoration chain.</param>
+/// <param name = "columnHeader">Header label for the index column; defaults to "#".</param>
+/// <example><![CDATA[decorator.Render();]]></example>
 public sealed class NumberedRowDecorator(
     ITableRenderer inner,
     string columnHeader = "#")

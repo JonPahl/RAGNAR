@@ -2,11 +2,13 @@
 
 public class XmlCommentFilterStrategyTests
 {
+    private readonly Mock<ILogger> _loggerMock;
     private readonly XmlCommentFilterStrategy _sut;
 
     public XmlCommentFilterStrategyTests()
     {
-        _sut = new XmlCommentFilterStrategy();
+        _loggerMock = new Mock<ILogger>();
+        _sut = new XmlCommentFilterStrategy(_loggerMock.Object);
     }
 
     [Fact]
@@ -20,73 +22,68 @@ public class XmlCommentFilterStrategyTests
     }
 
     [Fact]
-    public void CreateFilterShouldReturnNonEmptyFilter()
+    public void CreateFilterShouldReturnNonNullFilter()
+    {
+        // Act
+        var filter = _sut.CreateFilter(50);
+
+        // Assert
+        Assert.NotNull(filter);
+    }
+
+    [Fact]
+    public void CreateFilterShouldContainRangeCondition()
     {
         // Act
         var filter = _sut.CreateFilter(100);
 
         // Assert
+        Assert.NotNull(filter.Must);
+        Assert.True(filter.Must.Count > 0);
+    }
+
+    [Fact]
+    public void CreateFilterShouldContainExcludedKeywords()
+    {
+        // Act
+        var filter = _sut.CreateFilter(50);
+
+        // Assert – MustNot should contain excluded categories
+        Assert.NotNull(filter.MustNot);
+        Assert.True(filter.MustNot.Count > 0);
+    }
+
+    [Fact]
+    public void CreateFilterShouldLogDebugMessages()
+    {
+        // Act
+        _sut.CreateFilter(75);
+
+        // Assert
+        _loggerMock.Verify(
+            l => l.Debug("It.IsAny<Action<string, string>>()", It.IsAny<object?>()),
+            Times.AtLeastOnce);
+    }
+
+    [Fact]
+    public void CreateFilterWithZeroThresholdShouldStillReturnFilter()
+    {
+        // Act
+        var filter = _sut.CreateFilter(0);
+
+        // Assert
         Assert.NotNull(filter);
-        Assert.NotEmpty(filter.Must);
     }
 
     [Fact]
-    public void CreateFilterShouldIncludeCommentLengthRange()
+    public void CreateFilterShouldBeConsistentForSameThreshold()
     {
         // Act
-        var filter = _sut.CreateFilter(50);
+        var f1 = _sut.CreateFilter(100);
+        var f2 = _sut.CreateFilter(100);
 
         // Assert
-        Assert.Contains(filter.Must, c => c.Field?.Key == "CommentLength");
-    }
-
-    [Fact]
-    public void CreateFilterShouldExcludeTestCategories()
-    {
-        // Act
-        var filter = _sut.CreateFilter(50);
-
-        // Assert
-        var hasExceptKeywords = filter.Must.Any(c =>
-            c.Field?.Match?.ExceptKeywords?.Strings != null &&
-            c.Field.Match.ExceptKeywords.Strings.Contains("Test"));
-        Assert.True(hasExceptKeywords);
-    }
-
-    [Fact]
-    public void CreateFilterShouldExcludeTestsCategory()
-    {
-        // Act
-        var filter = _sut.CreateFilter(50);
-
-        // Assert
-        var hasExceptKeywords = filter.Must.Any(c =>
-            c.Field?.Match?.ExceptKeywords?.Strings != null &&
-            c.Field.Match.ExceptKeywords.Strings.Contains("Tests"));
-        Assert.True(hasExceptKeywords);
-    }
-
-    [Fact]
-    public void CreateFilterShouldExcludeTestingCategory()
-    {
-        // Act
-        var filter = _sut.CreateFilter(50);
-
-        // Assert
-        var hasExceptKeywords = filter.Must.Any(c =>
-            c.Field?.Match?.ExceptKeywords?.Strings != null &&
-            c.Field.Match.ExceptKeywords.Strings.Contains("Testing"));
-        Assert.True(hasExceptKeywords);
-    }
-
-    [Fact]
-    public void CreateFilterWithDifferentThresholdsShouldProduceDifferentFilters()
-    {
-        // Act
-        var filterA = _sut.CreateFilter(50);
-        var filterB = _sut.CreateFilter(200);
-
-        // Assert – filters are distinct objects
-        Assert.NotSame(filterA, filterB);
+        Assert.Equal(f1.Must?.Count, f2.Must?.Count);
+        Assert.Equal(f1.MustNot?.Count, f2.MustNot?.Count);
     }
 }

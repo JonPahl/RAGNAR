@@ -9,6 +9,7 @@ public record ApplicationOptions
     /// <summary>Gets or sets whether to prepend the original prompt in output.</summary>
     /// <returns>True to include the prompt; false to omit.</returns>
     /// <example><![CDATA[opts.IncludeOriginalPrompt = true;]]></example>
+    [Range(typeof(bool), "false", "true")]  // no-op, but documents intent
     public bool IncludeOriginalPrompt { get; init; }
 
     [Range(10, 10_000)]
@@ -17,7 +18,9 @@ public record ApplicationOptions
     /// <summary>Gets or sets the directory containing source files to process.</summary>
     /// <returns>The expanded absolute path to the source directory.</returns>
     /// <example><![CDATA[opts.SourceDirectory = @"C:\src\Ragnar";]]></example>
-
+    [Required(ErrorMessage = "SourceDirectory is required.")]
+    [StringLength(4096, MinimumLength = 1,
+        ErrorMessage = "SourceDirectory must be a non-empty path (≤ 4096 chars).")]
     public required string SourceDirectory { get; set; } = default!;
 
     /// <summary>Gets the name of the vector collection for storing embeddings.</summary>

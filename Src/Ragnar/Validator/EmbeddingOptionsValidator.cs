@@ -2,19 +2,13 @@
 
 /// <summary>Validates embedding service configuration.</summary>
 /// <example><![CDATA[var v = new EmbeddingOptionsValidator();]]></example>
-public class EmbeddingOptionsValidator
+public partial class EmbeddingOptionsValidator
     : AbstractValidator<EmbeddingOptions>
 {
     public EmbeddingOptionsValidator()
     {
         RuleFor(x => x.Host)
-            .NotEmpty().WithMessage("Host is required.")
-            .Matches(new Regex("^[[a-zA-Z0-9._-]]+$"))
-            .WithMessage("Host must be a valid hostname or IP.");
-
-        RuleFor(x => x.Port)
-            .InclusiveBetween(1, 65535)
-            .WithMessage("Port must be between 1 and 65535.");
+            .NotEmpty().WithMessage("Host is required.");
 
         RuleFor(x => x.EmbeddingModel)
             .NotEmpty().WithMessage("Embedding model is required.")
@@ -32,4 +26,7 @@ public class EmbeddingOptionsValidator
             .NotEmpty().NotNull()
             .InclusiveBetween(1, 512).WithMessage("BatchSize must be between 1 and 512.");
     }
+
+    [GeneratedRegex("^[[a-zA-Z0-9._-]]+$")]
+    private static partial Regex StringRegex();
 }

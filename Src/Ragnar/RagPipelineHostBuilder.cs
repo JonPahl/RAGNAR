@@ -18,12 +18,15 @@ public static partial class RagPipelineHostBuilder
         return Host.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration(cfg =>
         {
-            // TODO How do I add an interactive mode allowing the user to ask custom questions?
+            /// TODO How do I add an interactive mode allowing the user to ask custom questions?
 
-            // TODO How do I make changing what appsettings file to use easier.
+            /// TODO How do I make changing what appsettings file to use easier.
 
-            const string X = "Ragnar";
+            //const string X = "Ragnar";
             //const string X = "Bank";
+            //const string X = "Shepherd_Api";
+            const string X = "ObitLoader";
+
             cfg.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
            .AddJsonFile($"appsettings.{X}.json", optional: true, reloadOnChange: true);
         })
@@ -52,6 +55,7 @@ public static partial class RagPipelineHostBuilder
         s.AddSingleton<IApplicationHeader, ApplicationHeader>();
         s.AddSingleton<IResponseSummarizer, SummaryService>();
         s.AddSingleton<IResponseWriter, ResponseWriter>();
+        s.AddSingleton<IRagPromptBuilder, RagPromptBuilder>();
         s.AddSingleton<IOutputWriter, AnsiConsoleOutputWriter>();
         s.AddSingleton<IClock, SystemClock>();
         s.AddSingleton<IWriter, FileWriter>();
@@ -70,7 +74,7 @@ public static partial class RagPipelineHostBuilder
         s.AddSingleton<IQdrantClient>(sp =>
         {
             var opt = sp.GetRequiredService<IOptions<RagnarConfig>>().Value.EmbeddingOptions;
-            return new QdrantClient(opt.Host, opt.Port, https: false);
+            return new QdrantClient(opt.Host.Host, opt.Host.Port, https: false);
         });
 
         s.AddSingleton<IOllamaChatClientBuilder, OllamaChatClientBuilder>();
@@ -98,31 +102,21 @@ public static partial class RagPipelineHostBuilder
 
             var options = sp.GetRequiredService<IOptions<RagnarConfig>>();
 
-            var fileDiscoveryService = sp.GetRequiredService<IFileDiscoveryService>();
-
-            var fileParseFactory = sp
-            .GetRequiredService<IFileParseFactory>();
-
             var header = sp.GetRequiredService<IApplicationHeader>();
 
-            var vectorStoreWriter = sp.
-           GetRequiredService<IVectorStoreWriter>();
+            var qdrantClient = sp.GetRequiredService<IQdrantClient>();
 
-            var qdrantClient = sp.
-            GetRequiredService<IQdrantClient>();
+            var vectorSetup = sp.GetRequiredService<IVectorSetup>();
 
-            var vectorSetup = sp.
-            GetRequiredService<IVectorSetup>();
-
-            var fileloader = sp.GetService<IFileDiscoveryService>();
+            var fileLoader = sp.GetService<IFileDiscoveryService>();
             var outputWriter = sp.GetService<IOutputWriter>();
             var repository = sp.GetService<IVectorStoreWriter>();
             var parseFactory = sp.GetService<IFileParseFactory>();
 
             return new PipelineRunner<EmbeddingContext>(logger)
-                .AddStage(new BrandingStage(header))
+                .AddStage(new BrandingStage(logger, header))
                 .AddStage(new VectorStoreInitStage(vectorSetup, outputWriter))
-                .AddStage(new DiscoveryStage(options, fileloader, logger, outputWriter))
+                .AddStage(new DiscoveryStage(options, fileLoader, logger, outputWriter))
                 .AddStage(new ParsingStage(parseFactory, logger))
                 .AddStage(new UpsertStage(repository, logger, options, outputWriter))
                 .AddStage(new StoredFileListStage(options, qdrantClient, logger));

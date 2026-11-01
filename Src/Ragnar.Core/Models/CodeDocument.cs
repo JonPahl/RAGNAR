@@ -43,6 +43,8 @@ public sealed record CodeDocument
     /// <example><![CDATA[int len = doc.CommentLength;]]></example>
     public required int CommentLength { get; set; }
 
+    public string ContentHash { get; init; } = string.Empty;
+
     /// <summary>Derives a deterministic PointId from the filename and element name.</summary>
     /// <returns>The computed <see cref="PointId"/> for the vector store.</returns>
     /// <example><![CDATA[PointId id = doc.AsPoint();]]></example>

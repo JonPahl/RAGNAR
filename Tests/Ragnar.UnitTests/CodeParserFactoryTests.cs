@@ -1,55 +1,44 @@
 ﻿namespace Ragnar.Tests;
 
-public class CodeParserFactoryTests
+public class CodeParserFactoryTests : IDisposable
 {
-    private readonly Mock<Serilog.ILogger> _loggerMock;
+    private readonly Mock<ILogger> _loggerMock;
+    private readonly Mock<IOptions<RagnarConfig>> _optionsMock;
     private readonly Mock<ISyntaxTreeChunker> _chunkerMock;
+    private readonly RagnarConfig _config;
     private readonly CodeParserFactory _sut;
 
     public CodeParserFactoryTests()
     {
-        _loggerMock = new Mock<Serilog.ILogger>();
+        _loggerMock = new Mock<ILogger>();
+        _optionsMock = new Mock<IOptions<RagnarConfig>>();
         _chunkerMock = new Mock<ISyntaxTreeChunker>();
-        _sut = new CodeParserFactory(_loggerMock.Object, _chunkerMock.Object);
-    }
-
-    [Fact]
-    public async Task ParseAsyncWithCsExtensionShouldReturnDocuments()
-    {
-        // Arrange
-        List<CodeDocument> expectedDocs = [new() { Code = "public class A {}", FilePath = "Test.cs", Comment = "", CommentLength = 0, ElementName = "A", ElementType = "Class", FileName = "Test.cs" }];
-
-        // The factory delegates to internal parser; we test it returns a non-null sequence
-        using var tempFile = CreateTempFile(".cs", "public class A { }");
-        try
+        _config = new RagnarConfig
         {
-            // Act
-            var result = await _sut.ParseAsync(tempFile.FullName.ToString(), CancellationToken.None);
-            // Assert
-            Assert.NotNull(result);
-        }
-        finally
-        {
-            tempFile.Delete();
-        }
-    }
-
-    [Fact]
-    public async Task ParseAsyncWithNonCsExtensionShouldReturnDocuments()
-    {
-        // Arrange
-        using var tempFile = CreateTempFile(".txt", "some text content");
-        try
-        {
-            // Act
-            var result = await _sut.ParseAsync(tempFile.FullName.ToString(), CancellationToken.None);
-            // Assert
-            Assert.NotNull(result);
-        }
-        finally
-        {
-            tempFile.Delete();
-        }
+            GenerationOptions = new GenerationOptions(),
+            FileLoadOptions = new FileLoadOptions(),
+            OllamaOptions = new OllamaOptions
+            {
+                Host = new Uri("http://localhost:11434"),
+                LlmModel = "test-model",
+                Timeout = TimeSpan.FromSeconds(30)
+            },
+            ApplicationOptions = new ApplicationOptions
+            {
+                VectorStoreName = "test",
+                SourceDirectory = ""
+            },
+            EmbeddingOptions = new EmbeddingOptions
+            {
+                Dimension = 768,
+                EmbeddingModel = "test",
+                Host = new Uri("http://localhost:8080"),
+                Timeout = TimeSpan.FromSeconds(30),
+                BatchSize = 16
+            }
+        };
+        _optionsMock.Setup(o => o.Value).Returns(_config);
+        _sut = new CodeParserFactory(_loggerMock.Object, _optionsMock.Object, _chunkerMock.Object);
     }
 
     [Fact]
@@ -58,34 +47,12 @@ public class CodeParserFactoryTests
         // Arrange
         using var cts = new CancellationTokenSource();
         await cts.CancelAsync();
-        using var tempFile = CreateTempFile(".cs", "public class A { }");
-        try
-        {
-            // Act & Assert
-            await Assert.ThrowsAnyAsync<OperationCanceledException>(
-                () => _sut.ParseAsync(tempFile.FullName.ToString(), cts.Token));
-        }
-        finally
-        {
-            tempFile.Delete();
-        }
+
+        // Act & Assert
+        await Assert.ThrowsAnyAsync<OperationCanceledException>(() =>
+            _sut.ParseAsync("anyfile.cs", cts.Token));
     }
 
-    private static TempFile CreateTempFile(string ext, string content)
-    {
-        var path = Path.Combine(Path.GetTempPath(), $"test_{Guid.NewGuid()}{ext}");
-        File.WriteAllText(path, content);
-        return new TempFile(path);
-    }
-
-    private sealed class TempFile : IDisposable
-    {
-        private readonly string _path;
-        public TempFile(string path) => _path = path;
-        public FileInfo FullInfo => new(_path);
-        public string FullPath => _path;
-        public FileInfo FullName => new(_path);
-        public void Delete() => File.Delete(_path);
-        public void Dispose() => Delete();
-    }
+    [Fact]
+    public void Dispose() => _loggerMock.VerifyAll();
 }

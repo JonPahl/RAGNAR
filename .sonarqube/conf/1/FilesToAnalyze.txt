@@ -16,3 +16,5 @@ C:\Users\jp325\source\Ragnar\Src\Ragnar.Abstractions\IPipelineStage.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Abstractions\IRagOrchestrator.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Abstractions\IVectorSetup.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Abstractions\Rendering\IChatPromptProvider.cs
+C:\Users\jp325\source\Ragnar\.editorconfig
+C:\Users\jp325\source\Ragnar\.roslynatorconfig

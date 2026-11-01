@@ -5,7 +5,7 @@
 /// </summary>
 /// <example><![CDATA[var parser = new ParseCSharpFile();]]>
 /// </example>
-internal sealed class ParseCSharpFile(
+public sealed class ParseCSharpFile(
     Serilog.ILogger logger,
     ISyntaxTreeChunker codeChunker) : BaseFileParser(logger)
 {
@@ -13,7 +13,7 @@ internal sealed class ParseCSharpFile(
     {
         var fileContent = await ReadFileAsync(filePath, cancellationToken).ConfigureAwait(false);
 
-        var response = await codeChunker.ChunkSourceFile(filePath, fileContent).ConfigureAwait(false);
+        var response = await codeChunker.ParseAsync(filePath, fileContent).ConfigureAwait(false);
 
         return response is null ? [] : [.. response];
     }

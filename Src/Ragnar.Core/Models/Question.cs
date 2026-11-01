@@ -21,22 +21,22 @@ public sealed record class Question(
 
     /// <summary>Creates an active question.</summary>
     /// <param name="text">The question text.</param>
-    /// <param name="key">The key identifier.</param>
+    /// <param name="key">The FileName identifier.</param>
     /// <param name="category">The category.</param>
     /// <returns>A new active question instance.</returns>
     public static Question IsActive(string text, string key, QuestionCategory category) => Create(true, text, key, category);
 
     /// <summary>Creates an active question.</summary>
     /// <param name="text">The question text.</param>
-    /// <param name="key">The key identifier.</param>
+    /// <param name="key">The FileName identifier.</param>
     /// <param name="category">The category.</param>
     /// <returns>A new Inactive question instance.</returns>
     public static Question IsDisabled(string text, string key, QuestionCategory category) => Create(false, text, key, category);
 
-    private static Question Create(bool enabled, string text, string key, QuestionCategory category)
+    private static Question Create(bool enabled, string text, string fileName, QuestionCategory category)
     {
         Guard.Against.NullOrWhiteSpace(text);
-        Guard.Against.NullOrWhiteSpace(key);
-        return new Question(enabled, text, key, category).ValidateQuestion();
+        Guard.Against.NullOrWhiteSpace(fileName);
+        return new Question(enabled, text, fileName, category).ValidateQuestion();
     }
 }

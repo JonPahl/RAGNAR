@@ -1,12 +1,11 @@
-namespace Ragnar.Questions.Sources;
+﻿namespace Ragnar.Questions.Sources;
 
 /// <summary>Parses a CSV file into QuestionRecord entities via CsvHelper.</summary>
 /// <remarks>Registers QuestionMap for column and enum conversions.</remarks>
 /// <example><![CDATA[var records = await parser.ParseAsync("q.csv", ct);]]></example>
-public sealed class CsvRecordParser
+public sealed class CsvRecordParser(Serilog.ILogger logger)
     : IRecordParser<QuestionRecord>
 {
-
     /// <summary>Reads and deserialises a CSV file into a list of QuestionRecords.</summary>
     /// <param name="filePath">Absolute or relative path to the .csv file.</param>
     /// <param name="cancellationToken">Token to cancel the read operation.</param>
@@ -16,21 +15,22 @@ public sealed class CsvRecordParser
     public async Task<IEnumerable<QuestionRecord>> ParseAsync(string filePath, CancellationToken cancellationToken)
     {
         Guard.Against.NullOrEmpty(filePath);
+        logger.Information("Parsing CSV file: {FilePath}", filePath);
 
-        var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+        var sw = Stopwatch.StartNew();
+
+        CsvReaderOptions? options = new()
         {
-            HasHeaderRecord = true,
-            TrimOptions = TrimOptions.Trim,
+            MalformedData = CsvMalformedDataHandling.Recover,
+            Encoding = System.Text.Encoding.UTF8,
+
         };
 
-        using var reader = new StreamReader(filePath);
+        var x = CsvReader.FromFile(filePath, options);
+        var records = await x.GetRecordsAsync<QuestionRecord>(cancellationToken).ToListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
-        using var csv = new CsvReader(reader, config);
-        csv.Context.RegisterClassMap<QuestionMap>();
-
-        return await csv
-            .GetRecordsAsync<QuestionRecord>(cancellationToken)
-            .ToListAsync(cancellationToken: cancellationToken)
-            .ConfigureAwait(false);
+        sw.Stop();
+        logger.Information("Parsed {Count} records from {FilePath} in {Elapsed}", records.Count, filePath, sw.Elapsed);
+        return records;
     }
 }

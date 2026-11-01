@@ -31,7 +31,7 @@ public class CsvFileQuestionProviderTests
             .ReturnsAsync(records);
 
         // Act
-        var questions = (await _sut.LoadQuestionsAsync("test.csv", CancellationToken.None).ConfigureAwait(false)).ToList();
+        var questions = (await _sut.LoadQuestionsAsync("test.csv", CancellationToken.None)).ToList();
 
         // Assert
         Assert.Equal(2, questions.Count);
@@ -50,7 +50,7 @@ public class CsvFileQuestionProviderTests
             .ReturnsAsync([]);
 
         // Act
-        var questions = await _sut.LoadQuestionsAsync("empty.csv", CancellationToken.None).ConfigureAwait(false);
+        var questions = await _sut.LoadQuestionsAsync("empty.csv", CancellationToken.None);
 
         // Assert
         Assert.Empty(questions);
@@ -66,6 +66,6 @@ public class CsvFileQuestionProviderTests
 
         // Act & Assert
         await Assert.ThrowsAsync<FileNotFoundException>(() =>
-            _sut.LoadQuestionsAsync("missing.csv", CancellationToken.None)).ConfigureAwait(false);
+            _sut.LoadQuestionsAsync("missing.csv", CancellationToken.None));
     }
 }

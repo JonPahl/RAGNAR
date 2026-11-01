@@ -16,7 +16,11 @@ public class VectorStoreBuilderTests
             GenerationOptions = new GenerationOptions(),
             FileLoadOptions = new FileLoadOptions(),
             OllamaOptions = new OllamaOptions()
-            { Host = "", LlmModel = "", Port = 0, Timeout = TimeSpan.FromMinutes(30) },
+            {
+                Host = new Uri("http://localhost/11434"),
+                LlmModel = "",
+                Timeout = TimeSpan.FromMinutes(30)
+            },
             ApplicationOptions = new ApplicationOptions
             {
                 VectorStoreName = "test_collection",
@@ -26,8 +30,7 @@ public class VectorStoreBuilderTests
             {
                 Dimension = 768,
                 EmbeddingModel = "",
-                Host = "",
-                Port = 0,
+                Host = new Uri("http://localhost/11434"),
                 Timeout = TimeSpan.FromSeconds(30),
                 BatchSize = 16
             }

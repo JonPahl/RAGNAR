@@ -7,6 +7,12 @@
 	  <EnableNETAnalyzers>true</EnableNETAnalyzers>
   </PropertyGroup>
   <PropertyGroup>
+    <EnableMSTestRunnerAutomatically>false</EnableMSTestRunnerAutomatically>
+    <!-- If using NUnit or xUnit runners explicitly: -->
+    <EnableNUnitRunner>false</EnableNUnitRunner>
+    <EnableXUnitRunner>false</EnableXUnitRunner>
+  </PropertyGroup>
+  <PropertyGroup>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <AnalysisLevel>latest</AnalysisLevel>
     <AnalysisMode>AllEnabledByDefault</AnalysisMode>
@@ -27,12 +33,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.401">
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.403">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="OllamaSharp" Version="5.5.0" />
-    <PackageReference Include="Qdrant.Client" Version="1.19.0" />
+    <PackageReference Include="Qdrant.Client" Version="1.20.0" />
     <PackageReference Include="Roslynator.Analyzers" Version="5.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -49,5 +55,7 @@
     <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
     <PackageReference Include="Spectre.Console" Version="0.57.2" />
   </ItemGroup>
+
+  <Import Project="..\..\Ragnar.Plugins\Ragnar.Plugins.projitems" Label="Shared" />
 
 </Project>

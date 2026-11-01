@@ -3,7 +3,7 @@
 /// <summary>
 /// Parses C# syntax trees into CodeDocument chunks for embedding.
 /// </summary>
-/// <example><![CDATA[var docs = new SyntaxTreeChunker().ChunkSourceFile("Program.cs", code);]]></example>
+/// <example><![CDATA[var docs = new SyntaxTreeChunker().ParseAsync("Program.cs", code);]]></example>
 public class SyntaxTreeChunker(
     Serilog.ILogger logger,
     IQdrantClient client,
@@ -18,9 +18,9 @@ public class SyntaxTreeChunker(
     /// <param name="filename">Source file path.</param>
     /// <param name="codeText">Full source code text.</param>
     /// <remarks>Uses Roslyn syntax tree traversal to extract top-level classes.</remarks>
-    /// <example><![CDATA[var docs = new SyntaxTreeChunker().ChunkSourceFile("Program.cs", code);]]></example>
+    /// <example><![CDATA[var docs = new SyntaxTreeChunker().ParseAsync("Program.cs", code);]]></example>
     /// <returns>List of CodeDocuments or null on parse failure.</returns>
-    public async Task<IList<CodeDocument>?> ChunkSourceFile(string filename, string codeText)
+    public async Task<IList<CodeDocument>?> ParseAsync(string filename, string codeText)
     {
         var response = new List<CodeDocument>();
 

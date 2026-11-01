@@ -40,87 +40,6 @@ csharp_style_var_for_built_in_types = true:suggestion
 csharp_using_directive_placement = outside_namespace:suggestion
 dotnet_style_null_propagation = true:suggestion
 
-## ------------------------------------------
-## Naming Conventions (Roslyn Analyzers)
-## ------------------------------------------
-#
-## 1. Define the symbol group for parameters
-#dotnet_naming_symbols.parameter_symbols.applicable_kinds = parameter
-#dotnet_naming_symbols.parameter_symbols.applicable_accessibilities = *
-#
-## 3. Create the rule linking symbols and style
-#dotnet_naming_rule.parameters_should_be_camel_case.symbols = parameter_symbols
-#dotnet_naming_rule.parameters_should_be_camel_case.style = camel_case_style
-#dotnet_naming_rule.parameters_should_be_camel_case.severity = warning
-#
-## 1. Define the Naming Style (PascalCase)
-#dotnet_naming_style.pascal_case_style.capitalization = pascal_case
-#
-## 2. Define the Symbol Group (All constant fields)
-#dotnet_naming_symbols.constant_fields_group.applicable_kinds = field
-#dotnet_naming_symbols.constant_fields_group.applicable_accessibilities = *
-#dotnet_naming_symbols.constant_fields_group.required_modifiers = const
-#
-## 3. Link them together with a Naming Rule
-#dotnet_naming_rule.constant_fields_must_be_pascal_case.symbols = constant_fields_group
-#dotnet_naming_rule.constant_fields_must_be_pascal_case.style = pascal_case_style
-#dotnet_naming_rule.constant_fields_must_be_pascal_case.severity = warning
-#
-## 1. Target private fields
-#dotnet_naming_symbols.private_fields_group.applicable_kinds = field
-#dotnet_naming_symbols.private_fields_group.applicable_accessibilities = private
-#
-## 2. Define style (leading underscore + camelCase)
-#dotnet_naming_style.underscore_camel_case_style.capitalization = camel_case
-#dotnet_naming_style.underscore_camel_case_style.required_prefix = _
-#
-## 3. Apply the rule
-#dotnet_naming_rule.private_fields_must_have_underscore.symbols = private_fields_group
-#dotnet_naming_rule.private_fields_must_have_underscore.style = underscore_camel_case_style
-#dotnet_naming_rule.private_fields_must_have_underscore.severity = warning
-#
-## Public types & members: PascalCase
-#dotnet_naming_rule.public_types_members_pascal.severity = suggestion
-#dotnet_naming_rule.public_types_members_pascal.symbols = public_symbols
-#dotnet_naming_rule.public_types_members_pascal.style = pascal_case
-#
-##local camelcase
-#dotnet_naming_symbols.local_variables.applicable_kinds
-#dotnet_naming_symbols.local_variables.applicable_accessibilities = local
-#
-## 2. Define the camel_case naming style
-#dotnet_naming_style.camel_case_style.capitalization = camel_case
-#
-## 3. Combine symbols and style into a naming rule
-#dotnet_naming_rule.local_variables_should_be_camel_case.symbols = local_variables
-#dotnet_naming_rule.local_variables_should_be_camel_case.style = camel_case_style
-#dotnet_naming_rule.local_variables_should_be_camel_case.severity = suggestion
-#
-## Private fields: _camelCase
-##dotnet_naming_rule.private_fields_underscore_camel.severity = suggestion
-#dotnet_naming_symbols.private_fields_underscore_camel.applicable_accessibilities = private
-#dotnet_naming_rule.private_fields_underscore_camel.symbols = private_field_symbols
-#dotnet_naming_rule.private_fields_underscore_camel.style = underscore_camel_case
-#
-## Local variables & parameters: camelCase
-#dotnet_naming_symbols.locals_params_camel.applicable_kinds = local
-#dotnet_naming_symbols.locals_params_camel.applicable_accessibilities = *
-#dotnet_naming_rule.locals_params_camel.symbols = local_symbols
-#dotnet_naming_rule.locals_params_camel.style = camel_case
-#
-## Interfaces: IPascalCase
-#dotnet_naming_symbols.interfaces_ipascal.applicable_kinds = interface
-#dotnet_naming_rule.interfaces_ipascal.symbols = interface_symbols
-#dotnet_naming_rule.interfaces_ipascal.style = ipascal_case
-#
-## Style Definitions
-#dotnet_naming_style.pascal_case.capitalization = pascal_case
-#dotnet_naming_style.underscore_camel_case.required_prefix = _
-#dotnet_naming_style.underscore_camel_case.capitalization = camel_case
-#dotnet_naming_style.camel_case.capitalization = camel_case
-#dotnet_naming_style.ipascal_case.required_prefix = I
-#dotnet_naming_style.ipascal_case.capitalization = pascal_case
-
 # Disallow multiple blank lines
 dotnet_style_allow_multiple_blank_lines_experimental = false
 
@@ -138,7 +57,6 @@ dotnet_naming_symbols.public_members.applicable_modifiers       = public, protec
 dotnet_naming_symbols.public_members.applicable_kinds           = property, method, field, local_function
 
 dotnet_naming_style.pascal_style.capitalization                 = pascal_case
-
 
 # ==========================================
 # 1. Define Naming Styles
@@ -239,6 +157,9 @@ dotnet_diagnostic.SA1649.severity = error
 dotnet_diagnostic.DI0001.severity = error
 dotnet_diagnostic.DI003.severity = error
 dotnet_diagnostic.DI013.severity = error
+
+# SA1649: File name should match first type name
+dotnet_diagnostic.SA1649.severity = error
 
 [{*.csproj,*.props,*.targets}]
 indent_size = 2

@@ -1,11 +1,11 @@
 ﻿namespace Ragnar.Stages;
 
 /// <summary>Renders Ragnar branding, tagline, and version to the console.</summary>
+/// <param name="logger">Serilog logger.</param>
 /// <param name="header">Application header service that draws the banner.</param>
 /// <remarks>First pipeline stage executed at application startup.</remarks>
 /// <example><![CDATA[await stage.ExecuteAsync(ct);]]></example>
-public class BrandingStage(IApplicationHeader header)
-    : IPipelineStage<EmbeddingContext>
+public class BrandingStage(Serilog.ILogger logger, IApplicationHeader header) : IPipelineStage<EmbeddingContext>
 {
 
     /// <summary>Gets the human-readable name of this branding pipeline stage.</summary>
@@ -15,6 +15,8 @@ public class BrandingStage(IApplicationHeader header)
     public string Name => "Branding Stage";
 
     /// <summary>Always null; this display stage requires no retry logic.</summary>
+    /// <returns>A null retry policy.</returns>
+    /// <example><![CDATA[AsyncRetryPolicy? p = stage.RetryPolicy; // null]]></example>
     public AsyncRetryPolicy? RetryPolicy => null;
 
     /// <summary>Indicates the branding stage should always execute in the pipeline.</summary>
@@ -29,7 +31,9 @@ public class BrandingStage(IApplicationHeader header)
     /// <example><![CDATA[await stage.ExecuteAsync(ctx, ct);]]></example>
     public Task ExecuteAsync(EmbeddingContext context, CancellationToken cancellationToken)
     {
+        logger.Debug("Branding stage: rendering application header.");
         header.RenderBranding();
+        logger.Debug("Branding stage: header rendered.");
         return Task.CompletedTask;
     }
 }

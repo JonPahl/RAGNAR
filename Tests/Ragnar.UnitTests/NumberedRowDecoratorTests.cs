@@ -3,15 +3,17 @@
 public class NumberedRowDecoratorTests
 {
     private readonly Mock<ITableRenderer> _innerMock;
+    private readonly Mock<ConsoleTableBuilder> _tableMock;
 
     public NumberedRowDecoratorTests()
     {
+        _tableMock = new Mock<ConsoleTableBuilder>();
         _innerMock = new Mock<ITableRenderer>();
-        _innerMock.SetupGet(r => r.Table).Returns(new ConsoleTableBuilder());
+        _innerMock.Setup(i => i.Table).Returns(_tableMock.Object);
     }
 
     [Fact]
-    public void TablePropertyShouldReturnInnerTable()
+    public void TableShouldReturnInnerTable()
     {
         // Arrange
         var sut = new NumberedRowDecorator(_innerMock.Object);
@@ -20,40 +22,39 @@ public class NumberedRowDecoratorTests
         var table = sut.Table;
 
         // Assert
-        // Table delegates to inner.Table
-        Assert.NotNull(sut);
+        Assert.Same(_tableMock.Object, table);
     }
 
     [Fact]
-    public void RenderShouldCallInnerRender()
+    public void RenderShouldNotDoubleNumber()
+    {
+        // Arrange
+        var sut = new NumberedRowDecorator(_innerMock.Object, "#");
+        var columns = new List<string> { "#", "Name" };
+        _tableMock.SetupGet(t => t.Columns).Returns(columns);
+        _tableMock.Setup(t => t.Columns.Contains("#", StringComparer.OrdinalIgnoreCase)).Returns(true);
+
+        // Act – call twice
+        sut.Render();
+        sut.Render();
+
+        // Assert – inner Render called twice (no exception)
+        _innerMock.Verify(i => i.Render(), Times.Exactly(2));
+    }
+
+    [Fact]
+    public void RenderShouldDelegateToInnerRenderer()
     {
         // Arrange
         var sut = new NumberedRowDecorator(_innerMock.Object);
+        var columns = new List<string> { "#", "Col" };
+        _tableMock.SetupGet(t => t.Columns).Returns(columns);
+        _tableMock.Setup(t => t.Columns.Contains("#", StringComparer.OrdinalIgnoreCase)).Returns(true);
 
         // Act
         sut.Render();
 
         // Assert
-        _innerMock.Verify(r => r.Render(), Times.Once);
-    }
-
-    [Fact]
-    public void DefaultColumnHeaderShouldBeHash()
-    {
-        // Arrange
-        var sut = new NumberedRowDecorator(_innerMock.Object);
-
-        // Assert – the default parameter is "#"
-        Assert.NotNull(sut);
-    }
-
-    [Fact]
-    public void CustomColumnHeaderShouldBeAccepted()
-    {
-        // Arrange
-        var sut = new NumberedRowDecorator(_innerMock.Object, "No.");
-
-        // Assert
-        Assert.NotNull(sut);
+        _innerMock.Verify(i => i.Render(), Times.Once);
     }
 }

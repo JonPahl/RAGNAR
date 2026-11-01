@@ -11,10 +11,10 @@ C:\Users\jp325\source\Ragnar\Src\Ragnar.Questions\QuestionFilterSelector.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Questions\Sources\CsvQuestionSource.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Questions\Sources\CsvRecordParser.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Questions\Sources\DefaultQuestionCatalogLoader.cs
+C:\Users\jp325\source\Ragnar\Src\Ragnar.Questions\Sources\EnumConverter.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Questions\Sources\FileConfigLoader.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Questions\Sources\QuestionConfig.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Questions\Sources\QuestionFactoryDelegate.cs
-C:\Users\jp325\source\Ragnar\Src\Ragnar.Questions\Sources\QuestionMap.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Questions\Sources\QuestionRecord.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Questions\Plugins\FileQuestionProvider.dll
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Questions\Plugins\General.csv

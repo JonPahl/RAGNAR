@@ -31,7 +31,7 @@ public class QuestionBuilder : IQuestionBuilder
     /// <example><![CDATA[builder.WithFileName("Program.cs");]]></example>
     public QuestionBuilder WithFileName(string key)
     {
-        _key = key;
+        _key = key?.TrimStart().TrimEnd().Trim('"') ?? key;
         return this;
     }
 
