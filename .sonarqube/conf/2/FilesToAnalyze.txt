@@ -1,5 +1,6 @@
 ﻿C:\Users\jp325\source\Ragnar\Src\Ragnar.Questions\Filters\IFilterStrategy.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Questions\Filters\NoTestsFilterStrategy.cs
+C:\Users\jp325\source\Ragnar\Src\Ragnar.Questions\Filters\QdrantConditionExtensions.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Questions\Filters\QdrantFilterBuilder.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Questions\Filters\XmlCommentFilterStrategy.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Questions\GlobalUsings.cs

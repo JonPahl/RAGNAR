@@ -162,8 +162,7 @@ public class SyntaxTreeChunker(
         var comments = ExtractDocComments(leadingTrivia);
 
         var x = string.Join(" ", comments);
-        var commentLength = 0;
-        // FIXME Call Ragnar.Extensions.StringExtensions.GetWordCount(x);
+        var commentLength = x.CharacterCount();
 
         var fileName = Path.GetFileName(filePath);
 

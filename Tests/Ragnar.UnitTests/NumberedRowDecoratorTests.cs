@@ -2,59 +2,29 @@
 
 public class NumberedRowDecoratorTests
 {
-    private readonly Mock<ITableRenderer> _innerMock;
-    private readonly Mock<ConsoleTableBuilder> _tableMock;
-
-    public NumberedRowDecoratorTests()
+    [Fact]
+    public void TableShouldDelegateToInnerRenderer()
     {
-        _tableMock = new Mock<ConsoleTableBuilder>();
-        _innerMock = new Mock<ITableRenderer>();
-        _innerMock.Setup(i => i.Table).Returns(_tableMock.Object);
+        var inner = new Mock<ITableRenderer>();
+        var builder = new ConsoleTableBuilder();
+        inner.SetupGet(r => r.Table).Returns(builder);
+
+        var decorator = new NumberedRowDecorator(inner.Object);
+
+        Assert.Same(builder, decorator.Table);
     }
 
     [Fact]
-    public void TableShouldReturnInnerTable()
+    public void RenderShouldCallInnerRenderExactlyOnce()
     {
-        // Arrange
-        var sut = new NumberedRowDecorator(_innerMock.Object);
+        var inner = new Mock<ITableRenderer>();
+        inner.SetupGet(r => r.Table).Returns(new ConsoleTableBuilder());
 
-        // Act
-        var table = sut.Table;
+        var decorator = new NumberedRowDecorator(inner.Object);
 
-        // Assert
-        Assert.Same(_tableMock.Object, table);
-    }
+        decorator.Render();
+        decorator.Render(); // second call should be a no-op
 
-    [Fact]
-    public void RenderShouldNotDoubleNumber()
-    {
-        // Arrange
-        var sut = new NumberedRowDecorator(_innerMock.Object, "#");
-        var columns = new List<string> { "#", "Name" };
-        _tableMock.SetupGet(t => t.Columns).Returns(columns);
-        _tableMock.Setup(t => t.Columns.Contains("#", StringComparer.OrdinalIgnoreCase)).Returns(true);
-
-        // Act – call twice
-        sut.Render();
-        sut.Render();
-
-        // Assert – inner Render called twice (no exception)
-        _innerMock.Verify(i => i.Render(), Times.Exactly(2));
-    }
-
-    [Fact]
-    public void RenderShouldDelegateToInnerRenderer()
-    {
-        // Arrange
-        var sut = new NumberedRowDecorator(_innerMock.Object);
-        var columns = new List<string> { "#", "Col" };
-        _tableMock.SetupGet(t => t.Columns).Returns(columns);
-        _tableMock.Setup(t => t.Columns.Contains("#", StringComparer.OrdinalIgnoreCase)).Returns(true);
-
-        // Act
-        sut.Render();
-
-        // Assert
-        _innerMock.Verify(i => i.Render(), Times.Once);
+        inner.Verify(r => r.Render(), Times.Once);
     }
 }

@@ -24,4 +24,5 @@ public class EmbeddingContext
 
     /// <summary>Optional category filter carried through the pipeline.</summary>
     public QuestionCategory? CategoryFilter { get; init; }
+    public int SkippedCount { get; set; }
 }

@@ -38,7 +38,7 @@ public class VectorStoreBuilderTests
 
         _sut = new VectorStoreBuilder(
             _loggerMock.Object,
-            Options.Create(_config),
+            Microsoft.Extensions.Options.Options.Create(_config),
             _qdrantMock.Object);
     }
 

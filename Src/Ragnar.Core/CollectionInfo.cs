@@ -1,7 +1,7 @@
 ﻿namespace Ragnar.Core;
 
 /// <summary>Immutable snapshot of a Qdrant collection's metadata.</summary>
-/// <example><![[CDATA[[var info = new CollectionInfo { Name = "ragnar", Dimension = 768 };]]]]></example>
+/// <example><![CDATA[var info = new CollectionInfo { Name = "ragnar", Dimension = 768 };]]></example>
 public sealed record CollectionInfo
 {
     /// <summary>Name of the vector collection.</summary>

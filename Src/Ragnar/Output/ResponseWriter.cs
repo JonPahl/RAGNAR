@@ -56,10 +56,7 @@ public sealed class ResponseWriter(
         {
             // This will throw an exception if the path contains invalid characters, 
             // is too long, or has an invalid format.
-            string fullPath = Path.GetFullPath(path);
-
-            // Optional: Ensure it has a valid root (e.g., "C:\" or UNC path) if you require absolute paths
-            // return Path.IsPathFullyQualified(fullPath); 
+            var fullPath = Path.GetFullPath(path);
 
             return true;
         }
@@ -70,7 +67,4 @@ public sealed class ResponseWriter(
             return false;
         }
     }
-
-
-
 }

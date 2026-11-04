@@ -1,16 +1,15 @@
-﻿global using System.Diagnostics;
+﻿global using System.ComponentModel.DataAnnotations;
+global using System.Diagnostics;
 global using System.Reflection;
 
 global using FluentValidation.TestHelper;
 
-global using Microsoft.CodeAnalysis;
 global using Microsoft.Extensions.AI;
 global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Options;
 
 global using Moq;
 
-global using Polly;
 global using Polly.Retry;
 
 global using Qdrant.Client;
@@ -32,11 +31,15 @@ global using Ragnar.Core.Rendering.Decorators;
 global using Ragnar.Core.Utils;
 global using Ragnar.Core.Validation;
 global using Ragnar.Embedding.Chunker;
+global using Ragnar.Embedding.Factory;
 global using Ragnar.Embedding.Parsers;
 global using Ragnar.Embedding.Pipeline;
+global using Ragnar.Embedding.Pipeline.Services;
+global using Ragnar.Embedding.VectorStore;
 global using Ragnar.Exceptions;
 global using Ragnar.Extensions;
 global using Ragnar.Factory;
+global using Ragnar.Middleware;
 global using Ragnar.Output;
 global using Ragnar.Pipeline;
 global using Ragnar.Plugins;
@@ -47,7 +50,6 @@ global using Ragnar.Questions.Sources;
 global using Ragnar.Stages;
 global using Ragnar.Stages.Questions;
 global using Ragnar.Utils;
-global using Ragnar.Validator;
 
 global using Serilog;
 
@@ -55,8 +57,7 @@ global using Spectre.Console;
 global using Spectre.Console.Rendering;
 
 global using AssemblyExtensions = Ragnar.Branding.AssemblyExtensions;
-global using global::Ragnar.Embedding.Pipeline.Services;
-global using global::Ragnar.Embedding.VectorStore;
-global using Ragnar.Embedding.Factory;
-global using Ragnar.Middleware;
-global using System.ComponentModel.DataAnnotations;
+global using Polly;
+global using Ragnar.Validator;
+global using ValidationResult = System.ComponentModel.DataAnnotations.ValidationResult;
+global using CsvHelper;

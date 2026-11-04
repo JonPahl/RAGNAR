@@ -45,7 +45,7 @@ public class VectorStoreRepositoryTests
             _embeddingMock.Object,
             _qdrantMock.Object,
             _generatorMock.Object,
-            Options.Create(_config));
+            Microsoft.Extensions.Options.Options.Create(_config));
     }
 
     [Fact]

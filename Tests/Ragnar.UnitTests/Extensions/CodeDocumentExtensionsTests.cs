@@ -22,7 +22,7 @@ public sealed class CodeDocumentExtensionsTests
         var dict = doc.Dictionary;
 
         // Assert
-        Assert.Equal(7, dict.Count);
+        Assert.Equal(8, dict.Count);
         Assert.Equal("Program.cs", dict[nameof(CodeDocument.FileName)]);
         Assert.Equal("Refactor", dict[nameof(CodeDocument.Category)]);
     }

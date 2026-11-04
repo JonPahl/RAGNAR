@@ -33,7 +33,7 @@ public class ShowFileStageTests
             { Host = new Uri("http://localhost/11434"), LlmModel = "ollama-model", Timeout = TimeSpan.FromSeconds(30) }
         };
 
-        _sut = new StoredFileListStage(Options.Create(config), _clientMock.Object, _loggerMock.Object);
+        _sut = new StoredFileListStage(Microsoft.Extensions.Options.Options.Create(config), _clientMock.Object, _loggerMock.Object);
     }
 
     [Fact]

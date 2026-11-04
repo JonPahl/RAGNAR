@@ -4,11 +4,9 @@
 /// <param name="logger"></param>
 /// <remarks>Thread-safe stage registration; supports reorder, remove, and per-stage retry policies.</remarks>
 /// <example><![CDATA[await runner.AddStage(s).ExecuteAsync(ctx, ct);]]></example>
-public sealed partial class PipelineRunner<TContext>(Serilog.ILogger logger)
-    : BasePipeline<TContext>
-    where TContext : class
+public sealed class PipelineRunner<TContext>(Serilog.ILogger logger)
+    : BasePipeline<TContext> where TContext : class
 {
-
     private readonly List<Func<StageExecutionContext<TContext>, Func<Task>, CancellationToken, Task>> _middlewares = [];
 
     public PipelineRunner<TContext> UseMiddleware(
@@ -30,7 +28,6 @@ public sealed partial class PipelineRunner<TContext>(Serilog.ILogger logger)
         UseMiddleware((ctx, next, ct) => timing.Invoke(ctx, next, ct));
 
     // --- Internal: build the composed delegate for one stage execution ---
-
     private async Task ExecuteStageWithMiddlewareAsync(
         StageExecutionContext<TContext> ctx,
         Func<Task> coreExecution,
@@ -72,8 +69,7 @@ public sealed partial class PipelineRunner<TContext>(Serilog.ILogger logger)
 
         lock (_gate)
         {
-            if (_stages.Any(x => x.PipelineStage.Name == stage.Name))
-                throw new ArgumentException($"Stage '{stage.Name}' is already registered.", nameof(stage));
+            if (_stages.Any(x => x.PipelineStage.Name == stage.Name)) throw new ArgumentException($"Stage '{stage.Name}' is already registered.", nameof(stage));
 
             _stages.Add(new StageEntry<TContext>(stage, policy));
         }
@@ -157,7 +153,7 @@ public sealed partial class PipelineRunner<TContext>(Serilog.ILogger logger)
         for (var i = 0; i < snapshot.Count; i++)
         {
             var entry = snapshot[i];
-            var stage = snapshot[i].PipelineStage;
+            var stage = entry.PipelineStage;
             if (!stage.ShouldRun(context))
             {
                 logger.Information("Skipping stage [{Index}]: {Name}", i, stage.Name);
@@ -189,24 +185,9 @@ public sealed partial class PipelineRunner<TContext>(Serilog.ILogger logger)
             catch (OperationCanceledException) when (ct.IsCancellationRequested) { throw; }
             catch (Exception ex)
             {
-                logger.Fatal(ex, "Stage [[{Index}]] {Name} failed", i, stage.Name);
+                logger.Fatal(ex, "Stage [{Index}] {Name} failed", i, stage.Name);
                 throw new PipelineStageException(stage.Name, ex);
             }
-
-            //try {
-            //if (snapshot[i].AsyncPolicy is null) {
-            // await stage.ExecuteAsync(context, ct)
-            // .ConfigureAwait(false); } else {
-            //        await snapshot[i].AsyncPolicy
-            //        .ExecuteAsync(
-            //        async () => await stage
-            //        .ExecuteAsync(context, ct)
-            //        .ConfigureAwait(false))
-            //        .ConfigureAwait(false);
-            //    }}
-            //catch (OperationCanceledException) when (ct.IsCancellationRequested) { throw; }
-            //catch (Exception ex) {
-            // logger.Fatal(ex, "Stage [{Index}] {Name} failed", i, stage.Name); throw new PipelineStageException(stage.Name, ex); }
         }
 
         logger.Information("Pipeline finished in {Total}", totalSw.Elapsed);

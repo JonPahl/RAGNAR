@@ -8,10 +8,10 @@ public static class General
     /// <summary>
     /// The culture used for formatting dates, numbers, and other string representations.
     /// </summary>
-    public static CultureInfo Culture { get; } = new("en-US");
+    public static System.Globalization.CultureInfo Culture { get; } = new("en-US");
 
     /// <summary>
     /// A culture that is invariant across different systems and locales.
     /// </summary>
-    public static CultureInfo InvariantCulture { get; } = CultureInfo.InvariantCulture;
+    public static System.Globalization.CultureInfo InvariantCulture { get; } = System.Globalization.CultureInfo.InvariantCulture;
 }

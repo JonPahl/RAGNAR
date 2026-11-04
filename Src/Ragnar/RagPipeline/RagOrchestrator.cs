@@ -34,9 +34,11 @@ public sealed class RagOrchestrator(
     {
         var sw = Stopwatch.StartNew();
 
-        promptBuilder.WithQuestion(question);
+        var finalPrompt = promptBuilder
+            .WithQuestion(question)
+            .WithContext(contextText)
+            .Build();
 
-        var finalPrompt = promptBuilder.Build(contextText);
         //$"Context:\n{contextText}\n\nQuestion:\n{question.Text}\n\nAnswer:";
 
         var ollamaClient = ollamaClientFactory.ResolveClient(OllamaServiceType.Ollama);

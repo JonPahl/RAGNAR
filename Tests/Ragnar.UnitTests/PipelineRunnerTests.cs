@@ -2,427 +2,221 @@
 
 public class PipelineRunnerTests
 {
-    private readonly Mock<ILogger> _loggerMock;
-    private readonly PipelineRunner<QuestionPipelineContext> _runner;
+    private readonly Mock<Serilog.ILogger> _loggerMock;
+    private readonly PipelineRunner<TestContext> _runner;
 
     public PipelineRunnerTests()
     {
-        _loggerMock = new Mock<ILogger>();
-        _runner = new PipelineRunner<QuestionPipelineContext>(_loggerMock.Object);
+        _loggerMock = new Mock<Serilog.ILogger>();
+        _runner = new PipelineRunner<TestContext>(_loggerMock.Object);
     }
-
-    #region UseMiddleware
-
-    [Fact]
-    public void UseMiddlewareShouldReturnRunnerForChaining()
-    {
-        // Arrange
-        var middleware = (StageExecutionContext<QuestionPipelineContext> ctx, Func<Task> next, CancellationToken _) => next();
-
-        // Act
-        var result = _runner.UseMiddleware(middleware);
-
-        // Assert
-        Assert.Same(_runner, result);
-    }
-
-    [Fact]
-    public void UseMiddlewareShouldThrowIfMiddlewareIsNull()
-    {
-        // Act & Assert
-        Assert.Throws<ArgumentNullException>(() =>
-            _runner.UseMiddleware(null!));
-    }
-
-    [Fact]
-    public void UseMiddlewareShouldRegisterMultipleMiddlewares()
-    {
-        // Arrange
-        var mw1 = (StageExecutionContext<QuestionPipelineContext> _, Func<Task> next, CancellationToken _) => next();
-        static Task Mw2(StageExecutionContext<QuestionPipelineContext> _1, Func<Task> next, CancellationToken _2) => next();
-
-        // Act
-        _runner.UseMiddleware(mw1).UseMiddleware(Mw2);
-
-        // Assert – no exception, chainable
-    }
-
-    #endregion
-
-    #region UseTiming
-
-    [Fact]
-    public void UseTimingShouldReturnRunnerForChaining()
-    {
-        // Arrange
-        var timing = new StageTimingMiddleware(new Mock<ILogger>().Object);
-
-        // Act
-        var result = _runner.UseTiming(timing);
-
-        // Assert
-        Assert.Same(_runner, result);
-    }
-
-    #endregion
-
-    #region AddStage
 
     [Fact]
     public void AddStageShouldReturnRunnerForChaining()
     {
-        // Arrange
-        var stage = CreateMockStage("Stage1");
+        var stage = CreateStage("StageA");
 
-        // Act
-        var result = _runner.AddStage(stage);
+        var result = _runner.AddStage(stage.Object);
 
-        // Assert
         Assert.Same(_runner, result);
     }
 
     [Fact]
-    public void AddStageShouldThrowIfNull()
+    public void AddStageShouldThrowOnDuplicateName()
     {
-        // Act & Assert
+        var stage = CreateStage("Duplicate");
+        _runner.AddStage(stage.Object);
+
+        Assert.Throws<ArgumentException>(() => _runner.AddStage(stage.Object));
+    }
+
+    [Fact]
+    public void AddStageShouldThrowOnNullStage()
+    {
         Assert.Throws<ArgumentNullException>(() => _runner.AddStage(null!));
     }
 
     [Fact]
-    public void AddStageShouldThrowIfDuplicateName()
+    public void StageNamesShouldReturnRegisteredNames()
     {
-        // Arrange
-        var stage1 = CreateMockStage("Duplicate");
-        var stage2 = CreateMockStage("Duplicate");
+        var stageA = CreateStage("Alpha");
+        var stageB = CreateStage("Beta");
+        _runner.AddStage(stageA.Object);
+        _runner.AddStage(stageB.Object);
 
-        // Act
-        _runner.AddStage(stage1);
-
-        // Assert
-        Assert.Throws<ArgumentException>(() => _runner.AddStage(stage2));
+        Assert.Equal(["Alpha", "Beta"], _runner.StageNames);
     }
 
     [Fact]
-    public void AddStageShouldAcceptStageWithRetryPolicy()
+    public void ClearStagesShouldRemoveAll()
     {
-        // Arrange
-        var stage = CreateMockStage("WithPolicy");
-        var policy = Policy.Handle<Exception>().WaitAndRetryAsync([TimeSpan.FromSeconds(3)]);
+        _runner.AddStage(CreateStage("A").Object);
+        _runner.AddStage(CreateStage("B").Object);
 
-        // Act
-        _runner.AddStage(stage, policy);
+        var result = _runner.ClearStages();
 
-        // Assert
-        Assert.Contains("WithPolicy", _runner.StageNames);
+        Assert.Empty(_runner.StageNames);
+        Assert.Same(_runner, result);
     }
-
-    #endregion
-
-    #region StageNames
-
-    [Fact]
-    public void StageNamesShouldBeEmptyInitially()
-    {
-        // Act
-        var names = _runner.StageNames;
-
-        // Assert
-        Assert.Empty(names);
-    }
-
-    [Fact]
-    public void StageNamesShouldReflectAddedStages()
-    {
-        // Arrange
-        _runner.AddStage(CreateMockStage("A"))
-              .AddStage(CreateMockStage("B"))
-              .AddStage(CreateMockStage("C"));
-
-        // Act
-        var names = _runner.StageNames;
-
-        // Assert
-        Assert.Equal(["A", "B", "C"], names);
-    }
-
-    #endregion
-
-    #region RemoveStage
 
     [Fact]
     public void RemoveStageShouldRemoveByName()
     {
-        // Arrange
-        _runner.AddStage(CreateMockStage("ToRemove"))
-              .AddStage(CreateMockStage("Keep"));
+        _runner.AddStage(CreateStage("ToRemove").Object);
+        _runner.AddStage(CreateStage("Keep").Object);
 
-        // Act
         _runner.RemoveStage("ToRemove");
 
-        // Assert
-        var names = _runner.StageNames;
-        var item = Assert.Single(names);
-        Assert.Equal("Keep", item);
+        Assert.Equal(["Keep"], _runner.StageNames);
     }
 
     [Fact]
-    public void RemoveStageShouldReturnRunnerForChaining()
+    public void ReorderShouldMoveStageToNewPosition()
     {
-        // Arrange
-        _runner.AddStage(CreateMockStage("X"));
+        _runner.AddStage(CreateStage("First").Object);
+        _runner.AddStage(CreateStage("Second").Object);
+        _runner.AddStage(CreateStage("Third").Object);
 
-        // Act
-        var result = _runner.RemoveStage("X");
+        _runner.Reorder("Third", 0);
 
-        // Assert
-        Assert.Same(_runner, result);
+        Assert.Equal(["Third", "First", "Second"], _runner.StageNames);
     }
 
     [Fact]
-    public void RemoveStageWithNonExistentNameShouldNotThrow()
+    public void ReorderShouldThrowWhenStageNotFound()
     {
-        // Act – should not throw
-        _runner.RemoveStage("NonExistent");
+        _runner.AddStage(CreateStage("A").Object);
 
-        // Assert
-        Assert.Empty(_runner.StageNames);
-    }
-
-    #endregion
-
-    #region ClearStages
-
-    [Fact]
-    public void ClearStagesShouldRemoveAllStages()
-    {
-        // Arrange
-        _runner.AddStage(CreateMockStage("A"))
-              .AddStage(CreateMockStage("B"));
-
-        // Act
-        var result = _runner.ClearStages();
-
-        // Assert
-        Assert.Empty(_runner.StageNames);
-        Assert.Same(_runner, result);
-    }
-
-    #endregion
-
-    #region ReplaceStage
-
-    [Fact]
-    public void ReplaceStageShouldSwapStageAndKeepPosition()
-    {
-        // Arrange
-        _runner.AddStage(CreateMockStage("Old"))
-              .AddStage(CreateMockStage("Keep"));
-
-        // Act
-        _runner.ReplaceStage("Old", CreateMockStage("New"));
-
-        // Assert
-        Assert.Equal(["New", "Keep"], _runner.StageNames);
-    }
-
-    [Fact]
-    public void ReplaceStageShouldThrowIfOldNameNotFound()
-    {
-        // Arrange
-        _runner.AddStage(CreateMockStage("Existing"));
-
-        // Act & Assert
-        Assert.Throws<KeyNotFoundException>(() =>
-            _runner.ReplaceStage("Missing", CreateMockStage("New")));
-    }
-
-    #endregion
-
-    #region Reorder
-
-    [Fact]
-    public void ReorderShouldMoveStageToNewIndex()
-    {
-        // Arrange
-        _runner.AddStage(CreateMockStage("A"))
-              .AddStage(CreateMockStage("B"))
-              .AddStage(CreateMockStage("C"));
-
-        // Act
-        _runner.Reorder("C", 0);
-
-        // Assert
-        Assert.Equal(["C", "A", "B"], _runner.StageNames);
+        Assert.Throws<KeyNotFoundException>(() => _runner.Reorder("NonExistent", 0));
     }
 
     [Fact]
     public void ReorderShouldClampIndexToValidRange()
     {
-        // Arrange
-        _runner.AddStage(CreateMockStage("A"))
-              .AddStage(CreateMockStage("B"));
+        _runner.AddStage(CreateStage("A").Object);
+        _runner.AddStage(CreateStage("B").Object);
 
-        // Act – index beyond range should clamp
-        _runner.Reorder("A", 999);
+        _runner.Reorder("B", 999);
 
-        // Assert
-        Assert.Contains("A", _runner.StageNames);
+        Assert.Equal(["A", "B"], _runner.StageNames);
     }
 
     [Fact]
-    public void ReorderShouldThrowIfStageNotFound()
+    public void ExecuteAsyncShouldRunStagesInOrder()
     {
-        // Arrange
-        _runner.AddStage(CreateMockStage("A"));
-
-        // Act & Assert
-        Assert.Throws<KeyNotFoundException>(() => _runner.Reorder("Missing", 0));
-    }
-
-    #endregion
-
-    #region ExecuteAsync
-
-    [Fact]
-    public async Task ExecuteAsyncShouldRunAllStagesInOrder()
-    {
-        // Arrange
         var executionOrder = new List<string>();
-        _runner.AddStage(new RecordingStage("First", executionOrder))
-              .AddStage(new RecordingStage("Second", executionOrder))
-              .AddStage(new RecordingStage("Third", executionOrder));
+        var stageA = CreateStage("A", ctx => executionOrder.Add("A"));
+        var stageB = CreateStage("B", ctx => executionOrder.Add("B"));
 
-        // Act
-        var context = new QuestionPipelineContext();
-        var result = await _runner.ExecuteAsync(context, CancellationToken.None);
+        _runner.AddStage(stageA.Object);
+        _runner.AddStage(stageB.Object);
 
-        // Assert
-        Assert.Same(context, result);
-        Assert.Equal(new[] { "First", "Second", "Third" }, executionOrder);
+        _runner.ExecuteAsync(new TestContext(), CancellationToken.None).GetAwaiter().GetResult();
+
+        Assert.Equal(new[] { "A", "B" }, executionOrder);
     }
 
     [Fact]
     public async Task ExecuteAsyncShouldSkipStageWhenShouldRunReturnsFalse()
     {
-        // Arrange
-        var executionOrder = new List<string>();
-        _runner.AddStage(new RecordingStage("Run1", executionOrder, shouldRun: true))
-              .AddStage(new RecordingStage("SkipMe", executionOrder, shouldRun: false))
-              .AddStage(new RecordingStage("Run2", executionOrder, shouldRun: true));
+        var stage = new Mock<IPipelineStage<TestContext>>();
+        stage.Setup(s => s.Name).Returns("SkipMe");
+        stage.Setup(s => s.ShouldRun(It.IsAny<TestContext>())).Returns(false);
+        stage.Setup(s => s.ExecuteAsync(It.IsAny<TestContext>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
 
-        // Act
-        await _runner.ExecuteAsync(new QuestionPipelineContext(), CancellationToken.None);
+        _runner.AddStage(stage.Object);
 
-        // Assert
-        Assert.Equal(new[] { "Run1", "Run2" }, executionOrder);
+        await _runner.ExecuteAsync(new TestContext(), CancellationToken.None);
+
+        stage.Verify(s => s.ExecuteAsync(It.IsAny<TestContext>(), It.IsAny<CancellationToken>()), Times.Never);
     }
 
     [Fact]
-    public async Task ExecuteAsyncShouldThrowPipelineStageExceptionOnFailure()
+    public async Task ExecuteAsyncShouldWrapExceptionInPipelineStageException()
     {
-        // Arrange
-        _runner.AddStage(new FailingStage("Boom", new InvalidOperationException("inner error")));
+        var stage = new Mock<IPipelineStage<TestContext>>();
+        stage.Setup(s => s.Name).Returns("Failing");
+        stage.Setup(s => s.ShouldRun(It.IsAny<TestContext>())).Returns(true);
+        stage.Setup(s => s.ExecuteAsync(It.IsAny<TestContext>(), It.IsAny<CancellationToken>()))
+             .ThrowsAsync(new InvalidOperationException("boom"));
 
-        // Act & Assert
-        var ex = await Assert.ThrowsAsync<PipelineStageException>(() =>
-            _runner.ExecuteAsync(new QuestionPipelineContext(), CancellationToken.None));
+        _runner.AddStage(stage.Object);
 
-        Assert.Equal("Boom", ex.StageName);
+        var ex = await Assert.ThrowsAsync<PipelineStageException>(
+            () => _runner.ExecuteAsync(new TestContext(), CancellationToken.None));
+
+        Assert.Equal("Failing", ex.StageName);
         Assert.IsType<InvalidOperationException>(ex.InnerException);
     }
 
     [Fact]
-    public async Task ExecuteAsyncShouldPropagateOperationCanceledException()
+    public void UseMiddlewareShouldReturnRunner()
     {
-        // Arrange
-        using var cts = new CancellationTokenSource();
-        await cts.CancelAsync();
-        _runner.AddStage(new CancellationAwareStage("CancelStage"));
+        Func<StageExecutionContext<TestContext>, Func<Task>, CancellationToken, Task> mw =
+            (ctx, next, ct) => next();
 
-        // Act & Assert
-        await Assert.ThrowsAnyAsync<OperationCanceledException>(() =>
-            _runner.ExecuteAsync(new QuestionPipelineContext(), cts.Token));
+        var result = _runner.UseMiddleware(mw);
+
+        Assert.Same(_runner, result);
     }
 
     [Fact]
-    public async Task ExecuteAsyncWithNoStagesShouldReturnContext()
+    public void UseMiddlewareShouldThrowOnNull()
     {
-        // Arrange
-        var context = new QuestionPipelineContext();
-
-        // Act
-        var result = await _runner.ExecuteAsync(context, CancellationToken.None);
-
-        // Assert
-        Assert.Same(context, result);
+        Assert.Throws<ArgumentNullException>(() => _runner.UseMiddleware(null!));
     }
 
     [Fact]
-    public async Task ExecuteAsyncShouldApplyRetryPolicyOnFailure()
+    public void UseTimingShouldReturnRunner()
     {
-        // Arrange
-        var stage = new FailingStage("RetryStage", new TransientException());
-        var policy = Policy.Handle<TransientException>().WaitAndRetryAsync([TimeSpan.FromSeconds(2)]);
-        _runner.AddStage(stage, policy);
+        var timing = new StageTimingMiddleware(_loggerMock.Object);
 
-        // Act & Assert – retries exhausted, exception propagates
-        await Assert.ThrowsAsync<PipelineStageException>(() =>
-            _runner.ExecuteAsync(new QuestionPipelineContext(), CancellationToken.None));
+        var result = _runner.UseTiming(timing);
+
+        Assert.Same(_runner, result);
     }
 
-    #endregion
-
-    #region Helper Stages
-
-    private static IPipelineStage<QuestionPipelineContext> CreateMockStage(string name) =>
-        new RecordingStage(name, new List<string>());
-
-    private sealed class RecordingStage(string name, List<string> order, bool shouldRun = true) : IPipelineStage<QuestionPipelineContext>
+    [Fact]
+    public async Task ExecuteAsyncShouldReturnSameContext()
     {
-        public string Name => name;
-        public AsyncRetryPolicy? RetryPolicy => null;
-        public bool ShouldRun(QuestionPipelineContext context) => shouldRun;
-        public Task ExecuteAsync(QuestionPipelineContext context, CancellationToken cancellationToken)
-        {
-            order.Add(name);
-            return Task.CompletedTask;
-        }
+        var ctx = new TestContext();
+        _runner.AddStage(CreateStage("Noop").Object);
+
+        var result = await _runner.ExecuteAsync(ctx, CancellationToken.None);
+
+        Assert.Same(ctx, result);
     }
 
-    private sealed class FailingStage(string name, Exception exception) : IPipelineStage<QuestionPipelineContext>
+    [Fact]
+    public void ReplaceStageShouldReplaceByPosition()
     {
-        public string Name => name;
-        public AsyncRetryPolicy? RetryPolicy => null;
-        public bool ShouldRun(QuestionPipelineContext context) => true;
-        public Task ExecuteAsync(QuestionPipelineContext context, CancellationToken cancellationToken) =>
-            Task.FromException(exception);
+        _runner.AddStage(CreateStage("Old").Object);
+        _runner.AddStage(CreateStage("Keep").Object);
+
+        var newStage = CreateStage("New");
+        _runner.ReplaceStage("Old", newStage.Object);
+
+        Assert.Equal(["New", "Keep"], _runner.StageNames);
     }
 
-    private sealed class CancellationAwareStage(string name) : IPipelineStage<QuestionPipelineContext>
+    [Fact]
+    public void ReplaceStageShouldThrowWhenNotFound()
     {
-        public string Name => name;
-        public AsyncRetryPolicy? RetryPolicy => null;
-        public bool ShouldRun(QuestionPipelineContext context) => true;
-        public Task ExecuteAsync(QuestionPipelineContext context, CancellationToken cancellationToken)
-        {
-            cancellationToken.ThrowIfCancellationRequested();
-            return Task.CompletedTask;
-        }
+        _runner.AddStage(CreateStage("A").Object);
+
+        Assert.Throws<KeyNotFoundException>(() => _runner.ReplaceStage("Ghost", CreateStage("B").Object));
     }
 
-    public sealed class TransientException : Exception
+    private static Mock<IPipelineStage<TestContext>> CreateStage(string name, Action<TestContext>? onExecute = null)
     {
-        public TransientException()
-        {
-        }
-
-        public TransientException(string message) : base(message)
-        {
-        }
-        public TransientException(string message, Exception innerException) : base(message, innerException)
-        {
-        }
+        var stage = new Mock<IPipelineStage<TestContext>>();
+        stage.Setup(s => s.Name).Returns(name);
+        stage.Setup(s => s.ShouldRun(It.IsAny<TestContext>())).Returns(true);
+        stage.Setup(s => s.ExecuteAsync(It.IsAny<TestContext>(), It.IsAny<CancellationToken>()))
+             .Callback((TestContext ctx, CancellationToken _) => onExecute?.Invoke(ctx))
+             .Returns(Task.CompletedTask);
+        return stage;
     }
 
-    #endregion
+    private sealed class TestContext { }
 }

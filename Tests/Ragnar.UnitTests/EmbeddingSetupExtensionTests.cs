@@ -3,6 +3,73 @@
 public class EmbeddingSetupExtensionTests
 {
     [Fact]
+    public void EmbeddingSetupShouldRegisterOllamaEmbeddingGenerator()
+    {
+        var services = new ServiceCollection();
+        services.AddLogging();
+
+        services.EmbeddingSetup();
+
+        var sp = services.BuildServiceProvider();
+        var instance = sp.GetService<IEmbeddingService>();
+        Assert.NotNull(instance);
+        Assert.IsType<OllamaEmbeddingGenerator>(instance);
+    }
+
+    [Fact]
+    public void EmbeddingSetupShouldRegisterPointStructFactory()
+    {
+        var services = new ServiceCollection();
+        services.AddLogging();
+
+        services.EmbeddingSetup();
+
+        var sp = services.BuildServiceProvider();
+        var instance = sp.GetService<IQdrantPointFactory>();
+        Assert.NotNull(instance);
+        Assert.IsType<PointStructFactory>(instance);
+    }
+
+    [Fact]
+    public void EmbeddingSetupShouldRegisterVectorSetup()
+    {
+        var services = new ServiceCollection();
+        services.AddLogging();
+
+        services.EmbeddingSetup();
+
+        var sp = services.BuildServiceProvider();
+        var instance = sp.GetService<IVectorSetup>();
+        Assert.NotNull(instance);
+        Assert.IsType<VectorSetup>(instance);
+    }
+
+    [Fact]
+    public void EmbeddingSetupShouldRegisterVectorStoreWriter()
+    {
+        var services = new ServiceCollection();
+        services.AddLogging();
+
+        services.EmbeddingSetup();
+
+        var sp = services.BuildServiceProvider();
+        var instance = sp.GetService<IVectorStoreWriter>();
+        Assert.NotNull(instance);
+        Assert.IsType<VectorStoreWriter>(instance);
+    }
+
+    [Fact]
+    public void EmbeddingSetupShouldReturnSameServicesCollection()
+    {
+        var services = new ServiceCollection();
+        services.AddLogging();
+
+        var result = services.EmbeddingSetup();
+
+        Assert.Same(services, result);
+    }
+
+    [Fact]
     public void EmbeddingSetupShouldRegisterIEmbeddingService()
     {
         // Arrange

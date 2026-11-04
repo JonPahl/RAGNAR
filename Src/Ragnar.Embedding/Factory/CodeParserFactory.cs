@@ -20,6 +20,8 @@ public class CodeParserFactory(
     /// </example>
     public async Task<IEnumerable<CodeDocument>> ParseAsync(string file, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         logger.Debug("Dispatching parse for file: {File}", file);
         var fileInfo = new FileInfo(file);
         var docs = fileInfo.Extension switch

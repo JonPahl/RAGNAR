@@ -6,7 +6,6 @@
   <SonarScannerWorkingDirectory>C:\Users\jp325\source\Ragnar</SonarScannerWorkingDirectory>
   <JavaExePath>C:\Users\jp325\.sonar\cache\39c5e23f3ce4d420663afba8ffde28034b72e2b3e240943dc2321bc1f912eef9\OpenJDK21U-jre_x64_windows_hotspot_21.0.9_10.zip_extracted\jdk-21.0.9+10-jre\bin\java.exe</JavaExePath>
   <EngineJarPath>C:\Users\jp325\.sonar\cache\39dee3273a4ff432de0b3b588cc75bf40c7c30b03cbe8409728ead765f5f2d9b\sonar-scanner-engine-shaded-26.4.0.121862-all.jar</EngineJarPath>
-  <UseSonarScannerCli>false</UseSonarScannerCli>
   <ScanAllAnalysis>true</ScanAllAnalysis>
   <HasBeginStepCommandLineCredentials>true</HasBeginStepCommandLineCredentials>
   <HasBeginStepCommandLineTruststorePassword>false</HasBeginStepCommandLineTruststorePassword>
@@ -15,11 +14,9 @@
   <SonarProjectKey>Ragnar</SonarProjectKey>
   <AdditionalConfig>
     <ConfigSetting Id="BuildUri" />
-    <ConfigSetting Id="TfsUri" />
-    <ConfigSetting Id="VsCoverageConverterToolPath" />
     <ConfigSetting Id="UnchangedFilesPath" />
     <ConfigSetting Id="sonar.pullrequest.cache.basepath" Value="C:\Users\jp325\source\Ragnar" />
-    <ConfigSetting Id="settings.file.path" Value="C:\Users\jp325\.dotnet\tools\.store\dotnet-sonarscanner\11.3.0\dotnet-sonarscanner\11.3.0\tools\netcoreapp3.1\any\SonarQube.Analysis.xml" />
+    <ConfigSetting Id="settings.file.path" Value="C:\Users\jp325\.dotnet\tools\.store\dotnet-sonarscanner\12.0.0\dotnet-sonarscanner\12.0.0\tools\netcoreapp3.1\any\SonarQube.Analysis.xml" />
   </AdditionalConfig>
   <ServerSettings>
     <Property Name="sonar.cs.ignoreHeaderComments">true</Property>
@@ -159,7 +156,7 @@
     <Property Name="sonar.java.jvmframeworkconfig.activate">true</Property>
     <Property Name="sonar.updatecenter.url">https://downloads.sonarsource.com/sonarqube/update/update-center.properties</Property>
     <Property Name="sonar.core.id">243B8A4D-AZ2H5J7mChPbr8RsTGrT</Property>
-    <Property Name="sonar.core.startTime">10/30/2026 12:53:39 AM</Property>
+    <Property Name="sonar.core.startTime">11/3/2026 9:35:30 PM</Property>
   </ServerSettings>
   <LocalSettings>
     <Property Name="sonar.host.url">http://localhost:9000</Property>

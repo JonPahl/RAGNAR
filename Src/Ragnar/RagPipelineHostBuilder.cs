@@ -18,14 +18,14 @@ public static partial class RagPipelineHostBuilder
         return Host.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration(cfg =>
         {
-            /// TODO How do I add an interactive mode allowing the user to ask custom questions?
+            // TODO How do I add an interactive mode allowing the user to ask custom questions?
 
-            /// TODO How do I make changing what appsettings file to use easier.
+            // TODO How do I make changing what appsettings file to use easier.
 
-            //const string X = "Ragnar";
+            const string X = "Ragnar";
             //const string X = "Bank";
             //const string X = "Shepherd_Api";
-            const string X = "ObitLoader";
+            //const string X = "ObitLoader";
 
             cfg.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
            .AddJsonFile($"appsettings.{X}.json", optional: true, reloadOnChange: true);
@@ -118,6 +118,7 @@ public static partial class RagPipelineHostBuilder
                 .AddStage(new VectorStoreInitStage(vectorSetup, outputWriter))
                 .AddStage(new DiscoveryStage(options, fileLoader, logger, outputWriter))
                 .AddStage(new ParsingStage(parseFactory, logger))
+                .AddStage(new SegmentDeltaStage(logger, qdrantClient, options))
                 .AddStage(new UpsertStage(repository, logger, options, outputWriter))
                 .AddStage(new StoredFileListStage(options, qdrantClient, logger));
         });

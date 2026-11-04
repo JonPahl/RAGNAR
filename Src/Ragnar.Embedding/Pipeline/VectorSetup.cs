@@ -25,7 +25,8 @@ public class VectorSetup(
             ("file_extension", PayloadSchemaType.Keyword),
             ("file_size", PayloadSchemaType.Integer),
             ("created_at", PayloadSchemaType.Datetime),
-            ("modified_at", PayloadSchemaType.Datetime)
+            ("modified_at", PayloadSchemaType.Datetime),
+            ("ContentHash", PayloadSchemaType.Keyword)
         ];
 
         var collectionExists = await vectorStoreBuilder.BuildAsync(fields, cancellationToken).ConfigureAwait(false);

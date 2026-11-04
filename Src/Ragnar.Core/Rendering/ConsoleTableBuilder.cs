@@ -5,8 +5,7 @@
 /// </summary>
 /// <example><![CDATA[var t = new ConsoleTableBuilder().AddColumns("A","B").AddRow("1","2").ToTable();]]>
 /// </example>
-public sealed class ConsoleTableBuilder
-    : ITableBuilder
+public sealed class ConsoleTableBuilder : ITableBuilder
 {
     /// <summary>Cached expected cell count per row, locked on the first <c>AddRow</c> call.</summary>
     private int? _expectedCellCount;

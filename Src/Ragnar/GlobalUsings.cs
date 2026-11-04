@@ -80,3 +80,6 @@ global using Ragnar.Exceptions;
 global using System.Globalization;
 global using Ragnar.Middleware;
 global using Ragnar.Plugins.Utils;
+global using System.Collections.ObjectModel;
+global using System.Security.Cryptography;
+global using System.Text.Json;

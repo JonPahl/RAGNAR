@@ -68,13 +68,6 @@ public sealed class OllamaChatClientBuilderConfigured(OllamaClientOptions option
     /// </summary>
     public IChatClient Build()
     {
-        // "http://localhost:11434"
-
-        //var client = (IChatClient)_factory.ResolveClient(OllamaServiceType.Ollama);
-
-        var u = options.Url;
-        // new Uri("http://localhost:11434")
-
         var http = new HttpClient
         {
             Timeout = options.Timeout,

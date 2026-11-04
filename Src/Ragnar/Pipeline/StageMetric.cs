@@ -5,7 +5,8 @@
 public sealed record StageMetric
 {
     /// <summary>Name of the pipeline stage this metric belongs to.</summary>
-    /// <example><![CDATA[string n = metric.StageName; // "Parsing"]]></example>
+    /// <example><![CDATA[string n = metric.StageName; // "Parsing"]]>
+    /// </example>
     public string StageName { get; init; } = string.Empty;
 
     /// <summary>Wall-clock duration of the stage execution.</summary>

@@ -3,7 +3,7 @@
 /// <summary>
 /// Provides system clock access for local and UTC timestamps.
 /// </summary>
-/// <example><![CDATA[[DateTime now = clock.Now;]]]]></example>
+/// <example><![CDATA[DateTime now = clock.Now;]]></example>
 public record SystemClock : IClock
 {
     /// <summary>Gets the current local date and time.</summary>

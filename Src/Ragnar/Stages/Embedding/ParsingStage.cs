@@ -26,6 +26,7 @@ public sealed class ParsingStage(
     /// <example><![CDATA[await stage.ExecuteAsync(ctx, ct);]]></example>
     public async Task ExecuteAsync(EmbeddingContext context, CancellationToken cancellationToken)
     {
+        Guard.Against.Null(context);
         var files = context.DiscoveredFiles;
         if (files.Count == 0)
         {
@@ -53,7 +54,21 @@ public sealed class ParsingStage(
                     {
                         var elements = await parseFactory.ParseAsync(filePath, token).ConfigureAwait(false);
                         foreach (var element in elements)
+                        {
+                            #region Test move me
+
+                            var jsonBytes = JsonSerializer.SerializeToUtf8Bytes(element);
+
+                            // Compute the deterministic cryptographic hash
+                            var hash = SHA256.HashData(jsonBytes);
+
+                            element.ContentHash = Convert.ToHexString(hash);
+
+                            #endregion
+
                             documents.Add(element);
+                        }
+
                         task.Increment(1);
                     }).ConfigureAwait(false);
             }).ConfigureAwait(false);

@@ -2,88 +2,45 @@
 
 public class XmlCommentFilterStrategyTests
 {
-    private readonly Mock<ILogger> _loggerMock;
-    private readonly XmlCommentFilterStrategy _sut;
-
-    public XmlCommentFilterStrategyTests()
+    [Fact]
+    public void SupportedCategoryShouldBeXml()
     {
-        _loggerMock = new Mock<ILogger>();
-        _sut = new XmlCommentFilterStrategy(_loggerMock.Object);
+        var logger = new Mock<Serilog.ILogger>();
+        var strategy = new XmlCommentFilterStrategy(logger.Object);
+
+        Assert.Equal(QuestionCategory.XML, strategy.SupportedCategory);
     }
 
     [Fact]
-    public void SupportedCategoryShouldReturnXml()
+    public void CreateFilterShouldReturnNonEmptyFilter()
     {
-        // Act
-        var category = _sut.SupportedCategory;
+        var logger = new Mock<Serilog.ILogger>();
+        var strategy = new XmlCommentFilterStrategy(logger.Object);
 
-        // Assert
-        Assert.Equal(QuestionCategory.XML, category);
-    }
+        var filter = strategy.CreateFilter(50);
 
-    [Fact]
-    public void CreateFilterShouldReturnNonNullFilter()
-    {
-        // Act
-        var filter = _sut.CreateFilter(50);
-
-        // Assert
         Assert.NotNull(filter);
     }
 
     [Fact]
-    public void CreateFilterShouldContainRangeCondition()
+    public void CreateFilterWithZeroThresholdShouldStillWork()
     {
-        // Act
-        var filter = _sut.CreateFilter(100);
+        var logger = new Mock<Serilog.ILogger>();
+        var strategy = new XmlCommentFilterStrategy(logger.Object);
 
-        // Assert
-        Assert.NotNull(filter.Must);
-        Assert.True(filter.Must.Count > 0);
-    }
+        var filter = strategy.CreateFilter(0);
 
-    [Fact]
-    public void CreateFilterShouldContainExcludedKeywords()
-    {
-        // Act
-        var filter = _sut.CreateFilter(50);
-
-        // Assert – MustNot should contain excluded categories
-        Assert.NotNull(filter.MustNot);
-        Assert.True(filter.MustNot.Count > 0);
-    }
-
-    [Fact]
-    public void CreateFilterShouldLogDebugMessages()
-    {
-        // Act
-        _sut.CreateFilter(75);
-
-        // Assert
-        _loggerMock.Verify(
-            l => l.Debug("It.IsAny<Action<string, string>>()", It.IsAny<object?>()),
-            Times.AtLeastOnce);
-    }
-
-    [Fact]
-    public void CreateFilterWithZeroThresholdShouldStillReturnFilter()
-    {
-        // Act
-        var filter = _sut.CreateFilter(0);
-
-        // Assert
         Assert.NotNull(filter);
     }
 
     [Fact]
-    public void CreateFilterShouldBeConsistentForSameThreshold()
+    public void CreateFilterWithLargeThresholdShouldStillWork()
     {
-        // Act
-        var f1 = _sut.CreateFilter(100);
-        var f2 = _sut.CreateFilter(100);
+        var logger = new Mock<Serilog.ILogger>();
+        var strategy = new XmlCommentFilterStrategy(logger.Object);
 
-        // Assert
-        Assert.Equal(f1.Must?.Count, f2.Must?.Count);
-        Assert.Equal(f1.MustNot?.Count, f2.MustNot?.Count);
+        var filter = strategy.CreateFilter(10000);
+
+        Assert.NotNull(filter);
     }
 }

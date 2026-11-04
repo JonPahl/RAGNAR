@@ -1,5 +1,6 @@
 ﻿C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Chunker\ISyntaxTreeChunker.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Chunker\SyntaxTreeChunker.cs
+C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\CountExtensions.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Factory\CodeParserFactory.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Factory\IFileParseFactory.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\GlobalUsings.cs

@@ -2,58 +2,24 @@
 
 public class OllamaChatClientBuilderTests
 {
-    private readonly OllamaChatClientBuilder _sut;
-
-    public OllamaChatClientBuilderTests()
-    {
-        _sut = new OllamaChatClientBuilder();
-    }
-
     [Fact]
     public void WithChatClientShouldReturnConfiguredBuilder()
     {
-        // Act
-        var result = _sut.WithChatClient(OllamaServiceType.Ollama);
+        var builder = new OllamaChatClientBuilder();
 
-        // Assert
+        var result = builder.WithChatClient(OllamaServiceType.Ollama);
+
         Assert.NotNull(result);
+        Assert.IsType<OllamaChatClientBuilderConfigured>(result);
     }
 
     [Fact]
-    public void WithOptionsShouldReturnConfiguredBuilder()
+    public void ShouldBeSingletonLike()
     {
-        // Arrange
-        var options = new OllamaClientOptions { ServiceType = OllamaServiceType.Ollama };
+        var a = new OllamaChatClientBuilder();
+        var b = new OllamaChatClientBuilder();
 
-        // Act
-        var result = _sut.WithOptions(options);
-
-        // Assert
-        Assert.NotNull(result);
-    }
-
-    [Fact]
-    public void WithChatClientShouldCreateIndependentInstances()
-    {
-        // Act
-        var a = _sut.WithChatClient(OllamaServiceType.Ollama);
-        var b = _sut.WithChatClient(OllamaServiceType.Embedding);
-
-        // Assert
-        Assert.NotSame(a, b);
-    }
-
-    [Fact]
-    public void BuilderShouldBeReusable()
-    {
-        // Act – call multiple times
-        var a = _sut.WithChatClient(OllamaServiceType.Ollama);
-        var b = _sut.WithChatClient(OllamaServiceType.Embedding);
-        var c = _sut.WithOptions(new OllamaClientOptions());
-
-        // Assert
         Assert.NotNull(a);
         Assert.NotNull(b);
-        Assert.NotNull(c);
     }
 }

@@ -14,7 +14,10 @@ public class OllamaOptionsValidator : AbstractValidator<OllamaOptions>
         const RegexOptions options = default;
 
         RuleFor(x => x.Host)
-            .NotEmpty().WithMessage("Host is required.");
+            .NotNull()
+            .NotEmpty().WithMessage("Ollama endpoint is required.")
+            .Must(uri => uri.IsAbsoluteUri && (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps))
+    .WithMessage("Ollama endpoint must be a valid HTTP or HTTPS absolute URI.");
 
         RuleFor(x => x.LlmModel)
             .NotEmpty().WithMessage("Model name is required.")

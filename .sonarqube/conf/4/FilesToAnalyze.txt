@@ -4,11 +4,11 @@ C:\Users\jp325\source\Ragnar\Src\Ragnar\Branding\AssemblyExtensions.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Builder\IOllamaChatClientBuilder.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Builder\IQuestionSourceBuilder.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Builder\IRagPromptBuilder.cs
-C:\Users\jp325\source\Ragnar\Src\Ragnar\Builder\IRagPromptBuilder1.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Builder\OllamaChatClientBuilder.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Builder\OllamaChatClientBuilderConfigured.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Builder\QuestionAggregator.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Builder\QuestionBuilderStateExtensions.cs
+C:\Users\jp325\source\Ragnar\Src\Ragnar\Builder\RagPromptBuilder.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\ContextRetriever.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Exceptions\PipelineStageException.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Extensions\EmbeddingSetupExtension.cs
@@ -41,7 +41,7 @@ C:\Users\jp325\source\Ragnar\Src\Ragnar\Output\SystemClock.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\PipelineStageEntry.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Pipeline\PipelineContextBase.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Pipeline\PipelineRunner.cs
-C:\Users\jp325\source\Ragnar\Src\Ragnar\Pipeline\PipelineRunner.StageEntry.cs
+C:\Users\jp325\source\Ragnar\Src\Ragnar\Pipeline\StageEntry.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Pipeline\StageMetric.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Pipeline\StageOptions.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Program.cs
@@ -55,6 +55,7 @@ C:\Users\jp325\source\Ragnar\Src\Ragnar\Services\PromptTemplateProvider.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Stages\BrandingStage.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Stages\DiscoveryStage.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Stages\Embedding\ParsingStage.cs
+C:\Users\jp325\source\Ragnar\Src\Ragnar\Stages\Embedding\SegmentDeltaStage.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Stages\Questions\QuestionAnswerStage.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Stages\Questions\QuestionLoadStage.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Stages\Questions\QuestionTableStage.cs
@@ -62,7 +63,6 @@ C:\Users\jp325\source\Ragnar\Src\Ragnar\Stages\StoredFileListStage.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Stages\SummarizationStage.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Stages\UpsertStage.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Utils\FileValidator.cs
-C:\Users\jp325\source\Ragnar\Src\Ragnar\Utils\General.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Utils\PathExtensions.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Utils\Styles.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Validator\ApplicationOptionsValidator.cs
@@ -70,6 +70,7 @@ C:\Users\jp325\source\Ragnar\Src\Ragnar\Validator\EmbeddingOptionsValidator.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Validator\RagnarConfigValidator.cs
 C:\Users\jp325\source\Ragnar\Ragnar.Plugins\DomainDefaults.cs
 C:\Users\jp325\source\Ragnar\Ragnar.Plugins\PromptFormatting.cs
+C:\Users\jp325\source\Ragnar\Ragnar.Plugins\Utils\General.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Resources.resx
 C:\Users\jp325\.nuget\packages\dependencyinjection.lifetime.analyzers\3.10.1\contentFiles\any\any\profiles\brownfield-adoption.editorconfig
 C:\Users\jp325\.nuget\packages\dependencyinjection.lifetime.analyzers\3.10.1\contentFiles\any\any\profiles\default.editorconfig
@@ -87,8 +88,6 @@ C:\Users\jp325\source\Ragnar\Src\Ragnar\appsettings.Shepherd_Api.json
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Dockerfile
 C:\Users\jp325\source\Ragnar\Src\Ragnar\LICENSE.txt
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Properties\launchSettings.json
-C:\Users\jp325\source\Ragnar\Src\Ragnar\Ragnar.csproj.Backup.tmp
-C:\Users\jp325\source\Ragnar\Src\Ragnar\Utils\General.xml
 C:\Users\jp325\source\Ragnar\Src\.editorconfig
 C:\Users\jp325\source\Ragnar\Src\.roslynatorconfig
 C:\Users\jp325\source\Ragnar\Ragnar.Plugins\Directory.Build.props

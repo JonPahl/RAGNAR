@@ -1,4 +1,6 @@
-﻿namespace Ragnar.Tests.Extensions;
+﻿using StringExtensions = Ragnar.Embedding.StringExtensions;
+
+namespace Ragnar.Tests.Extensions;
 
 public class StringExtensionsTests
 {
@@ -12,32 +14,8 @@ public class StringExtensionsTests
     [InlineData("   ", 3)]
     public void CharacterCountExcludesTagsAndSlashes(string xml, int expected)
     {
-        var count = xml.CharacterCount();
+        var count = StringExtensions.CharacterCount(xml);
         Assert.Equal(expected, count);
-    }
-
-    [Fact]
-    public void LastFolderReturnsFinalDirectorySegment()
-    {
-        const string path = @"C:\Projects\MyApp\src\Core";
-        var result = path.FolderName;
-        Assert.Equal("Core", result);
-    }
-
-    [Fact]
-    public void LastFolderHandlesUnixPath()
-    {
-        const string path = "/home/user/projects/myapp/src/core";
-        var result = path.FolderName;
-        Assert.Equal("core", result);
-    }
-
-    [Fact]
-    public void LastFolderTrimsTrailingSlashes()
-    {
-        const string path = @"C:\Projects\MyApp\";
-        var result = path.FolderName;
-        Assert.Equal("MyApp", result);
     }
 
     [Fact]

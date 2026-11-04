@@ -36,10 +36,15 @@ C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Utils\GeneratorExtensions.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Utils\Point.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Validation\EmbeddingOptionsValidator.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Validation\FileLoadOptionsValidator.cs
+C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Validation\FluentValidationExtensions.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Validation\OllamaOptionsValidator.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Validation\QuestionValidator.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Validation\RagnarConfigValidator.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\VectorStoreBuilder.cs
+C:\Users\jp325\source\Ragnar\Ragnar.Plugins\DomainDefaults.cs
+C:\Users\jp325\source\Ragnar\Ragnar.Plugins\Utils\General.cs
+C:\Users\jp325\source\Ragnar\Ragnar.Plugins\PromptFormatting.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Enums\TimeoutBehavior.xml
 C:\Users\jp325\source\Ragnar\Src\.editorconfig
 C:\Users\jp325\source\Ragnar\Src\.roslynatorconfig
+C:\Users\jp325\source\Ragnar\Ragnar.Plugins\Directory.Build.props

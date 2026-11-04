@@ -22,5 +22,5 @@ public abstract record PipelineContextBase
     /// A collection of structured metrics that can be used to monitor pipeline performance
     /// without coupling to a specific Application Performance Monitoring (APM) tool.
     /// </summary>
-    public List<StageMetric> Metrics { get; } = [];
+    public Collection<StageMetric> Metrics { get; } = [];
 }

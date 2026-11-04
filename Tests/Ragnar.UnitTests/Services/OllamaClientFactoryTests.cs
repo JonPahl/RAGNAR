@@ -35,7 +35,7 @@ public class OllamaClientFactoryTests
         };
         _sut = new OllamaClientFactory(
             _httpClientFactoryMock.Object,
-            Options.Create(_config));
+            Microsoft.Extensions.Options.Options.Create(_config));
     }
 
     [Theory]
