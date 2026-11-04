@@ -18,8 +18,7 @@ public class PathResolverTests
             },
             EmbeddingOptions = new EmbeddingOptions
             {
-                Host = "localhost",
-                Port = 6334,
+                Host = new Uri("http://localhost:6334"),
                 EmbeddingModel = "test",
                 Timeout = TimeSpan.FromMinutes(5),
                 Dimension = 768,
@@ -27,8 +26,7 @@ public class PathResolverTests
             },
             OllamaOptions = new OllamaOptions
             {
-                Host = "localhost",
-                Port = 11434,
+                Host = new Uri("http://localhost/11434"),
                 LlmModel = "test",
                 Timeout = TimeSpan.FromMinutes(30)
             },

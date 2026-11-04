@@ -3,6 +3,7 @@
 /// <summary>Initializes a new instance of the embedding pipeline.</summary>
 /// <param name = "logger"> Logger for diagnostic messages.</param>
 /// <param name = "writer"> Output writer for console feedback.</param>
+/// <example><![CDATA[await vectorSetup.EnsureCollectionExistsAsync(ct);]]></example>
 public class VectorSetup(
     Serilog.ILogger logger,
     IVectorStoreBuilder vectorStoreBuilder,
@@ -24,12 +25,11 @@ public class VectorSetup(
             ("file_extension", PayloadSchemaType.Keyword),
             ("file_size", PayloadSchemaType.Integer),
             ("created_at", PayloadSchemaType.Datetime),
-            ("modified_at", PayloadSchemaType.Datetime)
+            ("modified_at", PayloadSchemaType.Datetime),
+            ("ContentHash", PayloadSchemaType.Keyword)
         ];
 
         var collectionExists = await vectorStoreBuilder.BuildAsync(fields, cancellationToken).ConfigureAwait(false);
-
-        //.BuildAsync(cancellationToken).ConfigureAwait(false);
 
         if (!collectionExists)
         {

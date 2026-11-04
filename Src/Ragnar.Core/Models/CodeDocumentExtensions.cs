@@ -21,7 +21,8 @@ public static class CodeDocumentExtensions
             { nameof(CodeDocument.Comment), doc.Comment ?? string.Empty },
             { nameof(CodeDocument.CommentLength), doc.CommentLength },
             { nameof(CodeDocument.Code), doc.Code ?? string.Empty },
-            { nameof(CodeDocument.Category), doc.Category ?? "General" },
+            { nameof(CodeDocument.Category), doc.Category ?? nameof(QuestionCategory.General) },
+            { nameof(CodeDocument.ContentHash), doc.ContentHash ?? string.Empty },
         };
     }
 }

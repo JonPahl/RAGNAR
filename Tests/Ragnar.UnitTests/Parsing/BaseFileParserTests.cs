@@ -18,10 +18,10 @@ public class BaseFileParserTests : IDisposable
     {
         // Arrange
         const string content = "public class Test { }";
-        await File.WriteAllTextAsync(_tempFile, content, TestContext.Current.CancellationToken).ConfigureAwait(false);
+        await File.WriteAllTextAsync(_tempFile, content, TestContext.Current.CancellationToken);
 
         // Act
-        var result = await _sut.ReadFileAsync(_tempFile, CancellationToken.None).ConfigureAwait(false);
+        var result = await _sut.ReadFileAsync(_tempFile, CancellationToken.None);
 
         // Assert
         Assert.Equal(content, result);
@@ -32,14 +32,14 @@ public class BaseFileParserTests : IDisposable
     {
         // Act & Assert
         await Assert.ThrowsAnyAsync<ArgumentException>(() =>
-            _sut.ReadFileAsync(null!, CancellationToken.None)).ConfigureAwait(false);
+            _sut.ReadFileAsync(null!, CancellationToken.None));
     }
 
     [Fact]
     public async Task ReadFileAsyncEmptyPathShouldThrowArgumentException()
     {
         // Act & Assert
-        await Assert.ThrowsAnyAsync<ArgumentException>(() => _sut.ReadFileAsync("", CancellationToken.None)).ConfigureAwait(false);
+        await Assert.ThrowsAnyAsync<ArgumentException>(() => _sut.ReadFileAsync("", CancellationToken.None));
     }
 
     [Fact]

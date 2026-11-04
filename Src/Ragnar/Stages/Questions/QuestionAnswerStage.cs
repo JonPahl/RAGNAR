@@ -55,7 +55,7 @@ public class QuestionAnswerStage(
             writer.WriteLine();
             writer.Write(new Rule());
 
-            logger.Information("Processing question [{QuestionId}] from user [{UserId}] with {ContextLength} chars", question.Text, Environment.UserName, contextText.Length.ToString("N0"));
+            logger.Information("Processing question [{QuestionId}] from user [{UserId}] with {ContextLength} chars", question.Text, Environment.UserName, contextText.Length.ToString("N0", General.Culture));
 
             await ragOrchestrator.ExecuteAsync(question, contextText, cancellationToken).ConfigureAwait(false);
             processedCount++;

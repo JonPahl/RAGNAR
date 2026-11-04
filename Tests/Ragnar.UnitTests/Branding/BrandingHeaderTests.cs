@@ -2,12 +2,14 @@
 
 public sealed class BrandingHeaderTests
 {
+    private readonly Mock<ILogger> _logger = new();
+
     [Fact]
     public void DisplayWritesExpectedOutputWithVersion()
     {
         // Arrange
         var writerMock = new Mock<IOutputWriter>();
-        var display = new ApplicationHeader(writerMock.Object);
+        var display = new ApplicationHeader(_logger.Object, writerMock.Object);
 
         // Act
         display.RenderBranding();

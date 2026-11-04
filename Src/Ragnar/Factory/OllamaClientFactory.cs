@@ -64,16 +64,16 @@ public class OllamaClientFactory(
     /// <example><![CDATA[var http = factory.CreateHttpClient(OllamaServiceType.Ollama);]]></example>
     private HttpClient CreateHttpClient(OllamaServiceType type)
     {
-        var host = NormalizeHost(_config.OllamaOptions.Host);
-        var port = ValidatePort(_config.OllamaOptions.Port);
+        //var host = NormalizeHost(_config.OllamaOptions.Host);
+        //var port = ValidatePort(_config.OllamaOptions.Port);
 
         var client = httpClientFactory.CreateClient(nameof(Ollama));
-        client.BaseAddress = new Uri($"{host}:{port}");
+        client.BaseAddress = _config.OllamaOptions.Host;
         client.Timeout = type switch
         {
             OllamaServiceType.Ollama => _config.OllamaOptions.Timeout,
             OllamaServiceType.Embedding => _config.EmbeddingOptions.Timeout,
-            _ => TimeSpan.FromMinutes(5)
+            _ => TimeSpan.FromMinutes(30)
         };
 
         return client;

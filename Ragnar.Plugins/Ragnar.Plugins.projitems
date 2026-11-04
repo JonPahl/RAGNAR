@@ -10,9 +10,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)DomainDefaults.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\General.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)PromptFormatting.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)Directory.Build.props" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Utils\" />
   </ItemGroup>
 </Project>

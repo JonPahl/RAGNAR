@@ -101,13 +101,16 @@ public sealed class QuestionPipelineRunner(
                 }
                 else
                 {
-                    var a = snapshot[i].CachedPolicy;
-
                     await snapshot[i].CachedPolicy.ExecuteAsync(
-                        async () => await stage.ExecuteAsync(context, ct)
-                        .ConfigureAwait(false)
-                        ).ConfigureAwait(false);
+                        async () => await stage.ExecuteAsync(context, ct).ConfigureAwait(false))
+                        .ConfigureAwait(false);
                 }
+            }
+            catch (TaskCanceledException ex)
+            {
+                logger.Fatal(ex, "Stage [{Index}] {Name} failed after {Elapsed}", i, stage.Name, stageSw.Elapsed);
+
+                return context;
             }
             catch (OperationCanceledException) when (ct.IsCancellationRequested)
             {
@@ -125,7 +128,7 @@ public sealed class QuestionPipelineRunner(
                     i, stage.Name, stageSw.Elapsed);
                 throw new PipelineStageException(stage.Name, ex);
             }
-
+            stageSw.Stop();
             logger.Information("Completed stage [{Index}] {Name} in {Time}",
                 i, stage.Name, stageSw.FormatElapsedTime());
         }

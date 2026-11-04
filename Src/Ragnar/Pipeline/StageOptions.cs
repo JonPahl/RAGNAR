@@ -16,5 +16,3 @@ public sealed record StageOptions
     /// <summary>Optional max duration for the entire stage.</summary>
     public TimeSpan? MaxDuration { get; init; }
 }
-
-public enum TimeoutBehavior { Throw, Skip, ReturnContext }

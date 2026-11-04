@@ -30,7 +30,11 @@ public sealed class UpsertStage(
     /// </summary>
     /// <returns>True when the stage should participate in the pipeline.</returns>
     /// <example><![CDATA[bool run = stage.ShouldRun;]]></example>
-    public bool ShouldRun(EmbeddingContext context) => context.Documents.Any();
+    public bool ShouldRun(EmbeddingContext context)
+    {
+        Guard.Against.Null(context);
+        return context.Documents.Any();
+    }
 
     /// <summary>
     /// Executes the upsert operation on the provided context.

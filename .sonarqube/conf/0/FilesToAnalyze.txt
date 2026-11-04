@@ -4,6 +4,7 @@ C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\ConsoleWriter\IOutputWriter.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\ConsoleWriter\StylesExtensions.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Enums\OllamaServiceType.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Enums\QuestionCategory.cs
+C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Enums\TimeoutBehavior.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\GlobalUsings.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\IQuestionSource.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\IVectorStoreBuilder.cs
@@ -14,6 +15,7 @@ C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Models\EmbeddingData.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Models\Question.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Models\QuestionExtensions.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Models\QuestionPipelineContext.cs
+C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Models\QuestionsExtensions.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Models\ResponseRecord.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Options\ApplicationOptions.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Options\EmbeddingOptions.cs
@@ -34,9 +36,15 @@ C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Utils\GeneratorExtensions.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Utils\Point.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Validation\EmbeddingOptionsValidator.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Validation\FileLoadOptionsValidator.cs
+C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Validation\FluentValidationExtensions.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Validation\OllamaOptionsValidator.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Validation\QuestionValidator.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Validation\RagnarConfigValidator.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\VectorStoreBuilder.cs
+C:\Users\jp325\source\Ragnar\Ragnar.Plugins\DomainDefaults.cs
+C:\Users\jp325\source\Ragnar\Ragnar.Plugins\Utils\General.cs
+C:\Users\jp325\source\Ragnar\Ragnar.Plugins\PromptFormatting.cs
+C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Enums\TimeoutBehavior.xml
 C:\Users\jp325\source\Ragnar\Src\.editorconfig
 C:\Users\jp325\source\Ragnar\Src\.roslynatorconfig
+C:\Users\jp325\source\Ragnar\Ragnar.Plugins\Directory.Build.props

@@ -21,9 +21,8 @@ public class VectorStoreRepositoryTests
             FileLoadOptions = new FileLoadOptions(),
             OllamaOptions = new OllamaOptions()
             {
-                Host = "",
+                Host = new Uri("http://localhost/11434"),
                 LlmModel = "",
-                Port = 0,
                 Timeout = TimeSpan.FromMinutes(30)
             },
             ApplicationOptions = new ApplicationOptions
@@ -35,8 +34,7 @@ public class VectorStoreRepositoryTests
             {
                 Dimension = 768,
                 EmbeddingModel = "",
-                Host = "",
-                Port = 0,
+                Host = new Uri("http://localhost/11434"),
                 Timeout = TimeSpan.FromSeconds(30),
                 BatchSize = 16
             }
@@ -47,14 +45,14 @@ public class VectorStoreRepositoryTests
             _embeddingMock.Object,
             _qdrantMock.Object,
             _generatorMock.Object,
-            Options.Create(_config));
+            Microsoft.Extensions.Options.Options.Create(_config));
     }
 
     [Fact]
     public async Task UpsertBatchAsyncEmptyDocumentsShouldReturnCompleted()
     {
         // Act
-        var result = await _sut.UpsertBatchAsync([], CancellationToken.None).ConfigureAwait(false);
+        var result = await _sut.UpsertBatchAsync([], CancellationToken.None);
 
         // Assert
         Assert.Equal(UpdateStatus.Completed, result.Status);
@@ -65,11 +63,11 @@ public class VectorStoreRepositoryTests
     {
         // Arrange
         var cts = new CancellationTokenSource();
-        await cts.CancelAsync().ConfigureAwait(false);
+        await cts.CancelAsync();
 
         // Act & Assert
         await Assert.ThrowsAnyAsync<OperationCanceledException>(() =>
-            _sut.UpsertBatchAsync([new CodeDocument() { Code = "", FilePath = "", Comment = "", CommentLength = 0, ElementName = "", ElementType = "", FileName = "" }], cts.Token)).ConfigureAwait(false);
+            _sut.UpsertBatchAsync([new CodeDocument() { Code = "", FilePath = "", Comment = "", CommentLength = 0, ElementName = "", ElementType = "", FileName = "" }], cts.Token));
 
         cts.Dispose();
     }

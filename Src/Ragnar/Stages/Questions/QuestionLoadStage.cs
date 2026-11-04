@@ -51,7 +51,7 @@ public sealed class QuestionLoadStage(
         {
             if (sort.Category == QuestionCategory.XML)
             {
-                var xmlFilter = new XmlCommentFilterStrategy();
+                var xmlFilter = new XmlCommentFilterStrategy(logger);
                 var y = sort.SetFilter(xmlFilter.CreateFilter(120));
                 updated.Add(y);
             }
@@ -71,7 +71,7 @@ public sealed class QuestionLoadStage(
 
         #endregion
 
-        context.Questions = updated;
+        context.SetQuestions(updated);
 
         logger.Information("Loaded {Count} enabled question(s).", updated.Count);
     }

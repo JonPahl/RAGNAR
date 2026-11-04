@@ -48,7 +48,7 @@ public sealed class DiscoveryStage(
         }
 
         var discoveredFiles = await fileLoader
-            .GetFilesAsync(sourceDir, options.Value.FileLoadOptions, cancellationToken)
+            .GetFilesAsync(sourceDir, options, cancellationToken)
             .ToListAsync(cancellationToken).ConfigureAwait(false);
 
         writer.MarkupLine($"[[green]]Discovered {discoveredFiles.Count} source file(s).[[/]]");

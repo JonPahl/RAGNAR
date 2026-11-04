@@ -2,149 +2,110 @@
 
 public class FileDiscoveryServiceTests : IDisposable
 {
+    private readonly string _tempDir;
+    private readonly Mock<Serilog.ILogger> _loggerMock;
+    private readonly Mock<IFileEligibilityValidator> _validatorMock;
+    private readonly Mock<IOptions<RagnarConfig>> _optionsMock;
     private readonly FileDiscoveryService _sut;
-    private readonly string _tempRoot;
 
     public FileDiscoveryServiceTests()
     {
-        FileLoadOptions options = new();
-        IFileEligibilityValidator validator = new FileValidator(options);
-        _sut = new FileDiscoveryService(validator);
-        _tempRoot = Path.Combine(Path.GetTempPath(), $"filetest_{Guid.NewGuid()}");
-        Directory.CreateDirectory(_tempRoot);
+        _tempDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(_tempDir);
+
+        _loggerMock = new Mock<Serilog.ILogger>();
+        _validatorMock = new Mock<IFileEligibilityValidator>();
+        _optionsMock = new Mock<IOptions<RagnarConfig>>();
+
+        var config = new RagnarConfig
+        {
+            ApplicationOptions = new ApplicationOptions() { SourceDirectory = "", VectorStoreName = "" },
+            EmbeddingOptions = new EmbeddingOptions() { BatchSize = 0, Dimension = 0, EmbeddingModel = "", Host = new Uri("http://localhost"), Timeout = TimeSpan.FromSeconds(30) },
+            GenerationOptions = new GenerationOptions(),
+            OllamaOptions = new OllamaOptions() { Host = new Uri("http://localhost"), Timeout = TimeSpan.FromSeconds(30), LlmModel = "" },
+
+            FileLoadOptions = new FileLoadOptions { AllowedExtensions = [".cs"] }
+        };
+        _optionsMock.Setup(o => o.Value).Returns(config);
+
+        _sut = new FileDiscoveryService(_loggerMock.Object, _validatorMock.Object);
     }
 
     public void Dispose()
     {
-        if (Directory.Exists(_tempRoot))
-            Directory.Delete(_tempRoot, recursive: true);
+        if (Directory.Exists(_tempDir))
+            Directory.Delete(_tempDir, true);
     }
 
-    //[Fact]
-    //public async Task GetFilesAsyncWithNullFilterShouldThrowArgumentNullException()
-    //{
-    //    // Act & Assert
-    //    await Assert.ThrowsAnyAsync<ArgumentNullException>(
-    //        () => _sut.GetFilesAsync(_tempRoot, null!, cancellationToken: CancellationToken.None)
-    //        .ToListAsync());
-    //}
-
-    //[Fact]
-    //public async Task GetFilesAsyncWithEmptyDirectoryPathShouldThrow()
-    //{
-    //    // Act & Assert
-    //    await Assert.ThrowsAnyAsync<ArgumentNullException>(
-    //        () => _sut.GetFilesAsync("", new FileLoadOptions(), CancellationToken.None).ToListAsync());
-    //}
-
     [Fact]
-    public async Task GetFilesAsyncWithNonExistentDirectoryShouldThrowDirectoryNotFoundException()
+    public async Task GetFilesAsyncShouldThrowWhenDirectoryDoesNotExist()
     {
-        // Arrange
-        var opts = new FileLoadOptions { AllowedExtensions = [".cs"], ExcludedDirectories = [] };
-
-        // Act & Assert
         await Assert.ThrowsAsync<DirectoryNotFoundException>(
-            async () => await _sut.GetFilesAsync("/nonexistent/path/xyz", opts, CancellationToken.None).ToListAsync(cancellationToken: TestContext.Current.CancellationToken).ConfigureAwait(false));
+            () => CollectAllAsync("/nonexistent/path/xyz", CancellationToken.None));
     }
 
     [Fact]
-    public async Task GetFilesAsyncShouldReturnMatchingFiles()
+    public async Task GetFilesAsyncShouldThrowOnNullDirectory()
     {
-        // Arrange
-        CreateFile("Program.cs", "class A {}");
-        CreateFile("Helper.cs", "class B {}");
-        CreateFile("README.md", "hello");
-
-        var opts = new FileLoadOptions { AllowedExtensions = [".cs"], ExcludedDirectories = [] };
-
-        // Act
-        var results = new List<string>();
-        await foreach (var f in _sut.GetFilesAsync(_tempRoot, opts, CancellationToken.None))
-            results.Add(f);
-
-        // Assert
-        Assert.Equal(2, results.Count);
-        Assert.All(results, f => Assert.EndsWith(".cs", f, StringComparison.InvariantCultureIgnoreCase));
+        await Assert.ThrowsAnyAsync<ArgumentException>(
+            () => CollectAllAsync(null!, CancellationToken.None));
     }
 
     [Fact]
-    public async Task GetFilesAsyncShouldExcludeSpecifiedDirectories()
+    public async Task GetFilesAsyncShouldThrowIfTokenCancelled()
     {
-        // Arrange
-        Directory.CreateDirectory(Path.Combine(_tempRoot, "ExcludedDir"));
-        CreateFile("Good.cs", "class A {}");
-        CreateFile(Path.Combine("ExcludedDir", "Bad.cs"), "class B {}");
-
-        var opts = new FileLoadOptions
-        {
-            AllowedExtensions = [".cs"],
-            ExcludedDirectories = ["ExcludedDir"]
-        };
-
-        // Act
-        var results = new List<string>();
-        await foreach (var f in _sut.GetFilesAsync(_tempRoot, opts, CancellationToken.None).ConfigureAwait(false))
-            results.Add(f);
-
-        // Assert
-        Assert.Single(results);
-        Assert.EndsWith("Good.cs", results[0], StringComparison.InvariantCultureIgnoreCase);
-    }
-
-    [Fact]
-    public async Task GetFilesAsyncShouldRespectCancellation()
-    {
-        // Arrange
-        CreateFile("A.cs", "x");
-        CreateFile("B.cs", "x");
-        var opts = new FileLoadOptions { AllowedExtensions = [".cs"], ExcludedDirectories = [] };
         using var cts = new CancellationTokenSource();
         await cts.CancelAsync();
 
-        // Act & Assert
         await Assert.ThrowsAnyAsync<OperationCanceledException>(
-            async () => await _sut.GetFilesAsync(_tempRoot, opts, cts.Token).ToListAsync(cancellationToken: TestContext.Current.CancellationToken).ConfigureAwait(false));
+            () => CollectAllAsync(_tempDir, cts.Token));
     }
 
     [Fact]
-    public async Task GetFilesAsyncWithNoMatchingExtensionsShouldReturnEmpty()
+    public async Task GetFilesAsyncShouldYieldEligibleFiles()
     {
-        // Arrange
-        CreateFile("Doc.pdf", "data");
-        var opts = new FileLoadOptions { AllowedExtensions = [".cs"], ExcludedDirectories = [] };
+        var filePath = Path.Combine(_tempDir, "Program.cs");
+        await File.WriteAllTextAsync(filePath, "class A {}", TestContext.Current.CancellationToken);
 
-        // Act
-        var results = new List<string>();
-        await foreach (var f in _sut.GetFilesAsync(_tempRoot, opts, CancellationToken.None).ConfigureAwait(false))
-            results.Add(f);
+        _validatorMock.Setup(v => v.IsValid(It.IsAny<FileInfo>(), It.IsAny<FileLoadOptions>())).Returns(true);
 
-        // Assert
+        var results = await CollectAllAsync(_tempDir, CancellationToken.None);
+
+        Assert.Single(results);
+        Assert.Equal(filePath, results[0]);
+    }
+
+    [Fact]
+    public async Task GetFilesAsyncShouldSkipIneligibleFiles()
+    {
+        var filePath = Path.Combine(_tempDir, "notes.txt");
+        await File.WriteAllTextAsync(filePath, "hello", TestContext.Current.CancellationToken);
+
+        _validatorMock.Setup(v => v.IsValid(It.IsAny<FileInfo>(), It.IsAny<FileLoadOptions>())).Returns(false);
+
+        var results = await CollectAllAsync(_tempDir, CancellationToken.None);
+
         Assert.Empty(results);
     }
 
     [Fact]
-    public async Task GetFilesAsyncWithCaseInsensitiveExtensionShouldMatch()
+    public async Task GetFilesAsyncShouldVerifyValidatorIsCalled()
     {
-        // Arrange
-        CreateFile("TEST.CS", "class A {}");
-        var opts = new FileLoadOptions { AllowedExtensions = [".cs"], ExcludedDirectories = [] };
+        var filePath = Path.Combine(_tempDir, "App.cs");
+        await File.WriteAllTextAsync(filePath, "class B {}", TestContext.Current.CancellationToken);
 
-        // Act
-        var results = new List<string>();
-        await foreach (var f in _sut.GetFilesAsync(_tempRoot, opts, CancellationToken.None).ConfigureAwait(false))
-            results.Add(f);
+        _validatorMock.Setup(v => v.IsValid(It.IsAny<FileInfo>(), It.IsAny<FileLoadOptions>())).Returns(true);
 
-        // Assert
-        Assert.Single(results);
+        await CollectAllAsync(_tempDir, CancellationToken.None);
+
+        _validatorMock.Verify(v => v.IsValid(It.IsAny<FileInfo>(), It.IsAny<FileLoadOptions>()), Times.Once);
     }
 
-    private void CreateFile(string relativePath, string content)
+    private async Task<List<string>> CollectAllAsync(string dir, CancellationToken ct)
     {
-        var fullPath = Path.Combine(_tempRoot, relativePath);
-        var dir = Path.GetDirectoryName(fullPath);
-        if (!string.IsNullOrEmpty(dir))
-            Directory.CreateDirectory(dir);
-        File.WriteAllText(fullPath, content);
+        var list = new List<string>();
+        await foreach (var f in _sut.GetFilesAsync(dir, _optionsMock.Object, ct).ConfigureAwait(false))
+            list.Add(f);
+        return list;
     }
 }

@@ -20,15 +20,13 @@ public class OllamaClientFactoryTests
             FileLoadOptions = new FileLoadOptions(),
             OllamaOptions = new OllamaOptions
             {
-                Host = "localhost",
-                Port = 11434,
+                Host = new Uri("http://localhost/11434"),
                 LlmModel = "qwen3.8",
                 Timeout = TimeSpan.FromMinutes(30)
             },
             EmbeddingOptions = new EmbeddingOptions
             {
-                Host = "localhost",
-                Port = 6334,
+                Host = new Uri("http://localhost:6334"),
                 EmbeddingModel = "nomic-embed-text",
                 Dimension = 768,
                 Timeout = TimeSpan.FromMinutes(5),
@@ -37,7 +35,7 @@ public class OllamaClientFactoryTests
         };
         _sut = new OllamaClientFactory(
             _httpClientFactoryMock.Object,
-            Options.Create(_config));
+            Microsoft.Extensions.Options.Options.Create(_config));
     }
 
     [Theory]

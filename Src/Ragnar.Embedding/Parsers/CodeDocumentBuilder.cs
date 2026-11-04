@@ -54,7 +54,7 @@ public sealed class CodeDocumentBuilder
     /// <summary>Sets the comment text and auto-computes its length.</summary>
     /// <param name="text">The XML comment text.</param>
     /// <returns>The builder for chaining.</returns>
-    /// <example><![[CDATA[[builder.Comment("Does a thing.");]]]]></example>
+    /// <example><![CDATA[builder.Comment("Does a thing.");]]></example>
     public CodeDocumentBuilder Comment(string text)
     {
         _doc.Comment = text;

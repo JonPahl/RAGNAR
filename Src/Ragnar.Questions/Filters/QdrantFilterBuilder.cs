@@ -10,6 +10,8 @@ public sealed class QdrantFilterBuilder
     /// <summary>Negative (must-not-match) filter conditions.</summary>
     private readonly List<Condition> _mustNot = [];
 
+    private readonly List<Condition> _should = [];
+
     /// <summary>Adds a keyword match-exclusion condition.</summary>
     /// <param name="field">The payload field to match.</param>
     /// <param name="value">The keyword value to exclude.</param>
@@ -106,8 +108,13 @@ public sealed class QdrantFilterBuilder
         return this;
     }
 
+    public QdrantFilterBuilder Clear()
+    { _must.Clear(); _mustNot.Clear(); _should.Clear(); return this; }
+
     /// <summary>Indicates whether no filter conditions have been added yet.</summary>
-    public bool IsEmpty => _must.Count == 0 && _mustNot.Count == 0;
+    public bool IsEmpty => _must.Count == 0 && _mustNot.Count == 0 && _should.Count == 0;
+
+    private static Condition CloneCondition(Condition c) => c.Clone();
 
     /// <summary>Builds and returns the final Qdrant <see cref="Filter"/> instance.</summary>
     /// <returns>A composed filter with must and mustNot conditions.</returns>
@@ -123,7 +130,8 @@ public sealed class QdrantFilterBuilder
         return new Filter
         {
             Must = { _must },
-            MustNot = { _mustNot }
+            MustNot = { _mustNot },
+            Should = { _should }
         };
     }
 }

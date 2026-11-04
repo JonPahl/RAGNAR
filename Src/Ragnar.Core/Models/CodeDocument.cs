@@ -28,8 +28,7 @@ public sealed record CodeDocument
     /// <summary>Gets the associated comment string.
     /// </summary>
     /// <returns>The XML documentation comment associated with the element.</returns>
-    /// <example><![[CDATA[[string cm = doc.Comment;]]]]>
-    /// </example>
+    /// <example><![CDATA[string cm = doc.Comment;]]></example>
     public required string Comment { get; set; }
 
     /// <summary>Gets the optional category tag for this document.</summary>
@@ -42,6 +41,8 @@ public sealed record CodeDocument
     /// <returns>Character count of the associated comment text.</returns>
     /// <example><![CDATA[int len = doc.CommentLength;]]></example>
     public required int CommentLength { get; set; }
+
+    public string ContentHash { get; set; } = string.Empty;
 
     /// <summary>Derives a deterministic PointId from the filename and element name.</summary>
     /// <returns>The computed <see cref="PointId"/> for the vector store.</returns>

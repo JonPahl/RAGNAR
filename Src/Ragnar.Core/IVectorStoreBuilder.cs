@@ -19,7 +19,7 @@ public interface IVectorStoreBuilder
     /// <returns><c>true</c> if the collection is available after the call.</returns>
     /// <example><![CDATA[bool ok = await builder.BuildAsync(ct);]]></example>
     Task<bool> BuildAsync(IEnumerable<(string Field, PayloadSchemaType Schema)>? indexes = null,
-        CancellationToken ct = default);
+        CancellationToken cancellationToken = default);
 
     /// <summary>Checks whether the target collection already exists in Qdrant.</summary>
     /// <param name="cancellationToken">Token to cancel the existence check.</param>

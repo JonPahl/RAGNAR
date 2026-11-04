@@ -18,11 +18,11 @@ public class ResponseMarkdownFormatter(IClock clock)
     public string FormatResponse(ResponseRecord details)
     {
         var response = new StringBuilder();
-        response.AppendLine($"{details.Question.MarkdownHeader}");
-        response.AppendLine($"> **Date Generated**: {clock.Now.ToString("G")}");
+        response.AppendLine(General.Culture, $"{details.Question.MarkdownHeader}");
+        response.AppendLine(General.Culture, $"> **Date Generated**: {clock.Now.ToString("G")}");
         response.AppendLine("> ## Question: ");
-        response.AppendLine($"> {details.Question.Text}");
-        response.Append($"> **Method Call Duration**: {details.ElapsedTime}");
+        response.AppendLine(General.Culture, $"> {details.Question.Text}");
+        response.Append(General.Culture, $"> **Method Call Duration**: {details.ElapsedTime}");
         response.AppendLine();
         response.AppendLine(" ## Response: ");
         response.AppendLine(details.Answer);

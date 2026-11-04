@@ -1,6 +1,6 @@
 ﻿namespace Ragnar.Extensions;
 
-/// <summary>StopwatchExtensions: Provides extension methods for formatting elapsed time.</summary>
+/// <summary>Provides extension methods for formatting elapsed time.</summary>
 /// <remarks>Helper class for console output timing and performance tracking.</remarks>
 /// <example><![CDATA[string s = Stopwatch.StartNew().FormatElapsedTime();]]></example>
 public static class StopwatchExtensions

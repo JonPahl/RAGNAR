@@ -8,6 +8,7 @@ public record RagnarConfig
 {
     /// <summary>Gets or sets the main application options.</summary>
     /// <example><![CDATA[ApplicationOptions? opts = config.ApplicationOptions;]]></example>
+    [Required(ErrorMessage = "ApplicationOptions is required.")]
     public required ApplicationOptions ApplicationOptions { get; init; }
 
     public required GenerationOptions GenerationOptions { get; init; }
@@ -16,6 +17,7 @@ public record RagnarConfig
     /// <example>
     /// <![CDATA[EmbeddingOptions? opts = config.EmbeddingOptions;]]>
     /// </example>
+    [Required(ErrorMessage = "EmbeddingOptions is required.")]
     public required EmbeddingOptions EmbeddingOptions { get; init; }
 
     /// <summary>Gets or sets Ollama-specific configuration settings.
@@ -23,6 +25,7 @@ public record RagnarConfig
     /// <example>
     /// <![CDATA[OllamaOptions? opts = config.OllamaOptions;]]>
     /// </example>
+    [Required(ErrorMessage = "OllamaOptions is required.")]
     public required OllamaOptions OllamaOptions { get; init; }
 
     /// <summary>Gets or sets file loading behavior and validation options.
@@ -30,5 +33,6 @@ public record RagnarConfig
     /// <example>
     /// <![CDATA[FileLoadOptions opts = config.FileLoadOptions;]]>
     /// </example>
+    [Required(ErrorMessage = "FileLoadOptions is required.")]
     public required FileLoadOptions FileLoadOptions { get; init; }
 }

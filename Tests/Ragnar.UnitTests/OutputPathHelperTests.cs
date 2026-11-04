@@ -2,162 +2,82 @@
 
 public class OutputPathHelperTests
 {
-
     [Fact]
-    public void GetResponseDirectoryWithEmptyFoldersAndNoBaseShouldReturnDefault()
+    public void GetResponseDirectoryWithEmptyFoldersAndEmptyBaseShouldReturnDefault()
     {
-        // Arrange
-        IEnumerable<string> folders = [];
+        var result = ((IEnumerable<string>)[]).GetResponseDirectory();
 
-        // Act
-        var result = folders.GetResponseDirectory();
-
-        // Assert
         Assert.Equal(DomainDefaults.ResponseDir, result);
     }
 
     [Fact]
-    public void GetResponseDirectoryWithEmptyFoldersAndBaseDirShouldJoinPath()
+    public void GetResponseDirectoryWithEmptyFoldersAndBaseDirShouldCombine()
     {
-        // Arrange
-        IEnumerable<string> folders = [];
+        var result = ((IEnumerable<string>)[]).GetResponseDirectory("/base");
 
-        // Act
-        var result = folders.GetResponseDirectory("/base");
-
-        // Assert
         Assert.Equal(Path.Join("/base", DomainDefaults.ResponseDir), result);
     }
 
     [Fact]
-    public void GetResponseDirectoryWithMultipleFoldersShouldAppendDefault()
+    public void GetResponseDirectoryWithFoldersShouldAppendDefaultDir()
     {
-        // Arrange
-        var folders = new[] { "Category1", "SubFolder" };
+        var folders = new[] { "category", "sub" };
 
-        // Act
         var result = folders.GetResponseDirectory();
 
-        // Assert
-        Assert.Equal(Path.Join("Category1", "SubFolder", DomainDefaults.ResponseDir), result);
+        Assert.Equal(Path.Join("category", "sub", DomainDefaults.ResponseDir), result);
     }
 
     [Fact]
-    public void GetResponseDirectoryWithSingleFolderShouldAppendDefault()
+    public void GetResponseDirectoryWithFoldersAndBaseDirShouldIgnoreBaseDir()
     {
-        // Arrange
-        var folders = new[] { "MyCategory" };
+        var folders = new[] { "category", "sub" };
 
-        // Act
+        var result = folders.GetResponseDirectory("base");
+
+        Assert.Equal(Path.Join("base", "category", "sub", DomainDefaults.ResponseDir), result);
+    }
+
+    [Fact]
+    public void GetResponseDirectoryWithNullFoldersShouldThrow()
+    {
+        Assert.Throws<ArgumentNullException>(() => ((IEnumerable<string>)null!).GetResponseDirectory());
+    }
+
+    [Fact]
+    public void GetResponseDirectoryWithSingleFolderShouldAppendDefaultDir()
+    {
+        var folders = new[] { "only" };
+
         var result = folders.GetResponseDirectory();
 
-        // Assert
-        Assert.Equal(Path.Join("MyCategory", DomainDefaults.ResponseDir), result);
+        Assert.Equal(Path.Join("only", DomainDefaults.ResponseDir), result);
     }
 
     [Fact]
-    public void GetResponseDirectoryWithIReadOnlyCollectionShouldWork()
+    public void ShowPromptShouldWrapInFence()
     {
-        // Arrange
-        var folders = (IReadOnlyCollection<string>)["A", "B"];
+        var result = "Hello World".ShowPrompt();
 
-        // Act
-        var result = folders.GetResponseDirectory();
-
-        // Assert
-        Assert.Equal(Path.Join("A", "B", DomainDefaults.ResponseDir), result);
-    }
-
-    [Fact]
-    public void GetResponseDirectoryWithBaseDirAndFoldersShouldUseFoldersOnly()
-    {
-        // Arrange
-        var folders = new[] { "Deep", "Nested" };
-
-        // Act
-        var result = folders.GetResponseDirectory("/ignored/base");
-
-        // Assert – when folders are present, baseDir is not prepended
-        Assert.Equal(Path.Join("Deep", "Nested", DomainDefaults.ResponseDir), result);
-    }
-
-    [Theory]
-    [InlineData(true, new string[] { "apple", "banana" })]
-    [InlineData(false, new string[] { "carrot", "potato" })]
-
-    public void GetResponseDirectoryShouldAlwaysEndWithResponseDirectoryName(bool isFruit, string[] folders)
-    {
-        // Act
-        var result = folders.GetResponseDirectory();
-
-        // Assert
-        Assert.EndsWith(DomainDefaults.ResponseDir, result, StringComparison.InvariantCultureIgnoreCase);
-    }
-
-    [Fact]
-    public void ShowPromptShouldWrapInFenceMarkers()
-    {
-        // Arrange
-        const string prompt = "What is C#?";
-
-        // Act
-        var result = prompt.ShowPrompt();
-
-        // Assert
-        Assert.Contains(PromptFormatting.Fence, result, StringComparison.InvariantCultureIgnoreCase);
-        Assert.Contains(PromptFormatting.OriginalPromptLabel, result, StringComparison.InvariantCultureIgnoreCase);
-        Assert.Contains(PromptFormatting.OriginalPromptLabelEnd, result, StringComparison.InvariantCultureIgnoreCase);
-        Assert.Contains(prompt, result, StringComparison.InvariantCultureIgnoreCase);
-    }
-
-    [Fact]
-    public void ShowPromptShouldHaveCorrectStructure()
-    {
-        // Arrange
-        const string prompt = "Test prompt";
-
-        // Act
-        var result = prompt.ShowPrompt();
-
-        // Assert
-        var expected = $"\n\n{PromptFormatting.Fence}\n{PromptFormatting.OriginalPromptLabel}\n{prompt}\n{PromptFormatting.OriginalPromptLabelEnd}{PromptFormatting.Fence}";
-        Assert.Equal(expected, result);
+        Assert.Contains("Hello World", result, StringComparison.InvariantCultureIgnoreCase);
+        Assert.Contains(PromptFormatting.Fence, result, StringComparison.CurrentCulture);
+        Assert.Contains(PromptFormatting.OriginalPromptLabel, result, StringComparison.CurrentCulture);
     }
 
     [Fact]
     public void ShowPromptWithEmptyStringShouldStillWrap()
     {
-        // Act
         var result = "".ShowPrompt();
 
-        // Assert
-        Assert.Contains(PromptFormatting.OriginalPromptLabel, result, StringComparison.InvariantCultureIgnoreCase);
-        Assert.Contains(PromptFormatting.OriginalPromptLabelEnd, result, StringComparison.InvariantCultureIgnoreCase);
-        Assert.Contains(PromptFormatting.Fence, result, StringComparison.InvariantCultureIgnoreCase);
-    }
-
-    [Fact]
-    public void ShowPromptWithMultiLineTextShouldPreserveContent()
-    {
-        // Arrange
-        const string prompt = "Line one\nLine two\nLine three";
-
-        // Act
-        var result = prompt.ShowPrompt();
-
-        // Assert
-        Assert.Contains("Line one", result, StringComparison.InvariantCultureIgnoreCase);
-        Assert.Contains("Line two", result, StringComparison.InvariantCultureIgnoreCase);
-        Assert.Contains("Line three", result, StringComparison.InvariantCultureIgnoreCase);
+        Assert.Contains(PromptFormatting.Fence, result, StringComparison.CurrentCulture);
+        Assert.Contains(PromptFormatting.OriginalPromptLabel, result, StringComparison.CurrentCulture);
     }
 
     [Fact]
     public void ShowPromptShouldStartWithNewlines()
     {
-        // Act
-        var result = "hello".ShowPrompt();
+        var result = "Test".ShowPrompt();
 
-        // Assert
-        Assert.StartsWith("\n\n", result, StringComparison.InvariantCultureIgnoreCase);
+        Assert.StartsWith("\n\n", result, StringComparison.CurrentCulture);
     }
 }

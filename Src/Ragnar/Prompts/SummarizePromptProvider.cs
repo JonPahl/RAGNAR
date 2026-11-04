@@ -16,7 +16,7 @@ public class SummarizePromptProvider : IChatPromptProvider
     /// <param name="content">The code or response text to summarise.</param>
     /// <param name="question">The specific question guiding the summary.</param>
     /// <returns>A formatted prompt string with content followed by the question line.</returns>
-    /// <example><![CDATA[string p = provider.GetTemplate(code, "Summarise");]]></example>
+    /// <example><![CDATA[string p = provider.GetTemplate(code, "Summarize");]]></example>
     public string GetTemplate(string content, string question)
     {
         return $"{content}\r\nQuestion: {question}\r\n";

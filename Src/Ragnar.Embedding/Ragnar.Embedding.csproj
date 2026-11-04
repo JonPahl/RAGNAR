@@ -7,6 +7,12 @@
 	  <EnableNETAnalyzers>true</EnableNETAnalyzers>	  
   </PropertyGroup>
   <PropertyGroup>
+    <EnableMSTestRunnerAutomatically>false</EnableMSTestRunnerAutomatically>
+    <!-- If using NUnit or xUnit runners explicitly: -->
+    <EnableNUnitRunner>false</EnableNUnitRunner>
+    <EnableXUnitRunner>false</EnableXUnitRunner>
+  </PropertyGroup>
+  <PropertyGroup>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
     <AnalysisLevel>latest</AnalysisLevel>
     <AnalysisMode>AllEnabledByDefault</AnalysisMode>
@@ -29,14 +35,14 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.9.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.401">
+    <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="10.0.403">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.12" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.14" />
     <PackageReference Include="Microsoft.SemanticKernel" Version="1.81.0" />
     <PackageReference Include="OllamaSharp" Version="5.5.0" />
-    <PackageReference Include="Qdrant.Client" Version="1.19.0" />
+    <PackageReference Include="Qdrant.Client" Version="1.20.0" />
     <PackageReference Include="Roslynator.Analyzers" Version="5.0.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -56,6 +62,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Ragnar.Abstractions\Ragnar.Abstractions.csproj" />
     <ProjectReference Include="..\Ragnar.Core\Ragnar.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Embedding\" />
   </ItemGroup>
 
 </Project>

@@ -5,7 +5,7 @@
 public class ApplicationOptionsValidator
     : AbstractValidator<ApplicationOptions>
 {
-    private static readonly Regex _validFolderName = new(@"^[\w.-]+$", RegexOptions.Compiled);
+    private static readonly Regex _validFolderName = new(@"^[\w.-]+$", RegexOptions.Compiled, TimeSpan.FromSeconds(10));
 
     public ApplicationOptionsValidator()
     {
@@ -20,6 +20,6 @@ public class ApplicationOptionsValidator
 
         RuleFor(x => x.VectorStoreName)
             .NotEmpty().WithMessage("VectorStoreName is required.")
-            .Matches(@"^[[a-zA-Z0-9_]]+$").WithMessage("VectorStoreName must be alphanumeric with underscores.");
+            .Matches("^[[a-zA-Z0-9_]]+$").WithMessage("VectorStoreName must be alphanumeric with underscores.");
     }
 }

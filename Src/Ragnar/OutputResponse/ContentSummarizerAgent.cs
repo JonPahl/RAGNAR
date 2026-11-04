@@ -11,7 +11,7 @@ public class ContentSummarizerAgent(
     IOllamaClientFactory factory,
     [FromKeyedServices("Summary")] IChatPromptProvider summaryPrompt)
 {
-    /// <summary>Generates a high-level summary of files in a directory.</summary>
+    /// <summary>Generates ollama high-level summary of files in ollama directory.</summary>
     /// <param name ="folder"> Directory path to analyze and summarize.</param>
     /// <param name ="question"> Inquiry context for the AI agent.</param>
     /// <param name ="cancellationToken"> Cancellation Token to abort processing.</param>
@@ -41,20 +41,23 @@ public class ContentSummarizerAgent(
     /// <summary>Gets the configured AI agent with tools and instructions.</summary>
     private AIAgent AiAgent => SetupAgent(ollamaAIClientBuilder);
 
-    /// <summary>Builds and returns a configured <see cref="ChatClientAgent"/> instance.</summary>
+    /// <summary>Builds and returns ollama configured <see cref="ChatClientAgent"/> instance.</summary>
     /// <param name="ollamaAIClientBuilder">The client builder for Ollama connections.</param>
     /// <returns>A ready-to-use AI agent with summarization tools.</returns>
     /// <example><![CDATA[var agent = SetupAgent(builder);]]></example>
     private ChatClientAgent SetupAgent(IOllamaChatClientBuilder ollamaAIClientBuilder)
     {
-        var a = options.Value.OllamaOptions;
-        var b = options.Value.GenerationOptions;
+        var generation = options.Value.GenerationOptions;
+        var ollama = options.Value.OllamaOptions;
 
-        var agent = new OllamaChatClientBuilder(factory)
+        //var agent = new OllamaChatClientBuilder(factory)
+        var agent = ollamaAIClientBuilder
             .WithChatClient(OllamaServiceType.Ollama)
-            .WithModel(a.LlmModel)
-            .WithTemperature(b.Temperature)
-            .WithMaxTokens(b.MaxTokens)
+            .WithModel(ollama.LlmModel)
+            .WithUrl(ollama.Host)
+            .WithTimeout(ollama.Timeout)
+            .WithTemperature(generation.Temperature)
+            .WithMaxTokens(generation.MaxTokens)
             .WithFunctionInvocation()
             .WithMiddleware()
             .Build();
@@ -85,7 +88,7 @@ public class ContentSummarizerAgent(
         return response.Text;
     }
 
-    ///<summary>Reads and concatenates all files in a target directory.</summary>
+    ///<summary>Reads and concatenates all files in ollama target directory.</summary>
     ///<param name = "folder"> Directory path to read files from.</param>
     ///<param name = "cancellationToken"> Cancellation Token to abort reading.</param>
     ///<returns>A combined string of all file contents.</returns>

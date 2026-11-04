@@ -11,7 +11,7 @@ public static class RagPipelineExtensions
         /// <example><![CDATA[services.AddHttpClients();]]></example>
         public IServiceCollection AddHttpClients()
         {
-            var registerClient = (string name, Action<HttpClient> configure) =>
+            void RegisterClient(string name, Action<HttpClient> configure)
             {
                 services.AddHttpClient(name).AddStandardResilienceHandler(opt =>
                 {
@@ -23,12 +23,10 @@ public static class RagPipelineExtensions
                         SamplingDuration = TimeSpan.FromMinutes(5)
                     };
                 });
-            };
+            }
 
-            registerClient(nameof(OllamaServiceType.Embedding), _ =>
-            {
-
-            });
+            RegisterClient(nameof(OllamaServiceType.Embedding), _ =>
+            { });
 
             return services;
         }

@@ -3,14 +3,14 @@
 /// <summary>Validates file access using extension, name, and directory rules.</summary>
 /// <remarks>Performs ordinal, case-insensitive comparisons against load options.</remarks>
 /// <example><![CDATA[bool ok = validator.IsValid(file, in options);]]></example>
-public class FileValidator(FileLoadOptions options)
+public class FileValidator(IOptions<RagnarConfig> options)
     : IFileEligibilityValidator
 {
-    private readonly HashSet<string> _excludedFiles = new(options.ExcludedFiles, StringComparer.OrdinalIgnoreCase);
+    private readonly HashSet<string> _excludedFiles = new(options.Value.FileLoadOptions.ExcludedDirectories, StringComparer.OrdinalIgnoreCase);
 
-    private readonly HashSet<string> _excludedDirectories = new(options.ExcludedDirectories, StringComparer.OrdinalIgnoreCase);
+    private readonly HashSet<string> _excludedDirectories = new(options.Value.FileLoadOptions.ExcludedDirectories, StringComparer.OrdinalIgnoreCase);
 
-    private readonly string[] _allowedExtensions = [.. options.AllowedExtensions];
+    private readonly string[] _allowedExtensions = [.. options.Value.FileLoadOptions.AllowedExtensions];
 
     /// <summary>Checks whether a file satisfies all configured load-option rules.</summary>
     /// <param name="file">The file to validate against the filter.</param>

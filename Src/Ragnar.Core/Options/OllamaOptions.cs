@@ -8,18 +8,15 @@ public record OllamaOptions
 {
     /// <summary>
     /// Gets ollama Uri Host.
-    /// </summary>    
-    public required string Host { get; init; }
-
-    /// <summary>
-    /// Gets port number for host.
     /// </summary>
-    [Range(1, 65000)]
-    public required int Port { get; init; }
+    [Required]
+    public required Uri Host { get; init; }
 
     /// <summary>
     /// Gets lLM Model used when generating request.
     /// </summary>
+    [Required]
+    [Length(2, 256, ErrorMessage = "Model name must be between 2 and 256 characters.")]
     public required string LlmModel { get; init; }
 
     /// <summary>

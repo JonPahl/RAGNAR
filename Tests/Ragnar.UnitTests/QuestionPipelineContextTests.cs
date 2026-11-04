@@ -3,108 +3,62 @@
 public class QuestionPipelineContextTests
 {
     [Fact]
-    public void QuestionsShouldDefaultToEmptyList()
+    public void QuestionsShouldBeNullBeforeSet()
     {
-        // Arrange & Act
         var ctx = new QuestionPipelineContext();
 
-        // Assert
+        Assert.Null(ctx.Questions);
+    }
+
+    [Fact]
+    public void SetQuestionsWithEmptyListShouldReturnEmpty()
+    {
+        var ctx = new QuestionPipelineContext();
+
+        ctx.SetQuestions([]);
+
         Assert.NotNull(ctx.Questions);
         Assert.Empty(ctx.Questions);
     }
 
     [Fact]
-    public void QuestionsShouldBeSettable()
+    public void ResponsesShouldStartEmpty()
     {
-        // Arrange
-        var ctx = new QuestionPipelineContext();
-        var questions = new List<Question>
-        {
-            new(true, "Q1","", QuestionCategory.XML),
-            new(true, "Q2","", QuestionCategory.XML)
-        };
-
-        // Act
-        ctx.Questions = questions;
-
-        // Assert
-        Assert.Equal(2, ctx.Questions.Count);
-    }
-
-    [Fact]
-    public void ResponsesShouldDefaultToEmptyConcurrentDictionary()
-    {
-        // Arrange & Act
         var ctx = new QuestionPipelineContext();
 
-        // Assert
-        Assert.NotNull(ctx.Responses);
         Assert.Empty(ctx.Responses);
     }
 
     [Fact]
-    public void ResponsesShouldSupportAddAndGet()
+    public void ResponsesShouldSupportAddAndRetrieve()
     {
-        // Arrange
         var ctx = new QuestionPipelineContext();
-        var id = Guid.NewGuid();
+        var qid = Guid.NewGuid();
 
-        // Act
-        ctx.Responses[id] = "Answer text";
+        ctx.Responses[qid] = "Hello";
 
-        // Assert
-        Assert.True(ctx.Responses.ContainsKey(id));
-        Assert.Equal("Answer text", ctx.Responses[id]);
+        Assert.True(ctx.Responses.ContainsKey(qid));
+        Assert.Equal("Hello", ctx.Responses[qid]);
     }
 
     [Fact]
-    public void TimingsShouldDefaultToEmptyConcurrentDictionary()
+    public void TimingsShouldStartEmpty()
     {
-        // Arrange & Act
         var ctx = new QuestionPipelineContext();
 
-        // Assert
-        Assert.NotNull(ctx.Timings);
         Assert.Empty(ctx.Timings);
     }
 
     [Fact]
-    public void TimingsShouldSupportAddAndGet()
+    public void TimingsShouldSupportAddAndRetrieve()
     {
-        // Arrange
         var ctx = new QuestionPipelineContext();
-        var id = Guid.NewGuid();
-        var duration = TimeSpan.FromMilliseconds(42);
+        var qid = Guid.NewGuid();
+        var duration = TimeSpan.FromSeconds(1.5);
 
-        // Act
-        ctx.Timings[id] = duration;
+        ctx.Timings[qid] = duration;
 
-        // Assert
-        Assert.True(ctx.Timings.ContainsKey(id));
-        Assert.Equal(duration, ctx.Timings[id]);
-    }
-
-    [Fact]
-    public void ContextShouldSupportMultipleQuestionsAndResponses()
-    {
-        // Arrange
-        var ctx = new QuestionPipelineContext();
-        var id1 = Guid.NewGuid();
-        var id2 = Guid.NewGuid();
-
-        // Act
-        ctx.Questions = [
-            new Question(true, "A","", QuestionCategory.Other),
-            new Question(true, "B","", QuestionCategory.Other)
-        ];
-        ctx.Responses[id1] = "resp1";
-        ctx.Responses[id2] = "resp2";
-        ctx.Timings[id1] = TimeSpan.FromSeconds(1);
-        ctx.Timings[id2] = TimeSpan.FromSeconds(2);
-
-        // Assert
-        Assert.Equal(2, ctx.Questions.Count);
-        Assert.Equal(2, ctx.Responses.Count);
-        Assert.Equal(2, ctx.Timings.Count);
+        Assert.True(ctx.Timings.ContainsKey(qid));
+        Assert.Equal(duration, ctx.Timings[qid]);
     }
 }

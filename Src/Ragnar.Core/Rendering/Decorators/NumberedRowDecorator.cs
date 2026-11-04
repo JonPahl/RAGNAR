@@ -1,8 +1,11 @@
-﻿namespace Ragnar.Core.Rendering.Decorators;
+﻿using System.Collections.Immutable;
+
+namespace Ragnar.Core.Rendering.Decorators;
 
 /// <summary>Initializes a new row-numbering decorator wrapping an inner renderer.</summary>
-/// <param name="inner">The next renderer in the decoration chain.</param>
-/// <param name="columnHeader">Header label for the index column; defaults to "#".</param>
+/// <param name = "inner">The next renderer in the decoration chain.</param>
+/// <param name = "columnHeader">Header label for the index column; defaults to "#".</param>
+/// <example><![CDATA[decorator.Render();]]></example>
 public sealed class NumberedRowDecorator(
     ITableRenderer inner,
     string columnHeader = "#")
@@ -18,39 +21,70 @@ public sealed class NumberedRowDecorator(
     /// <summary>Renders the wrapped table with a numbered index column prepended to the header.</summary>
     /// <example><![CDATA[decorator.Render();]]>
     /// </example>
+    //public void Render()
+    //{
+    //    if (_numbered)
+    //    {
+    //        inner.Render();
+    //        return;
+    //    }
+    //    _numbered = true;
+
+    //    var table = inner.Table;
+
+    //    // 1. Ensure the index column exists
+    //    if (!table.Columns.Contains(columnHeader, StringComparer.OrdinalIgnoreCase))
+    //        table.AddColumns(columnHeader);
+
+    //    // 2. Prepend a 1-based index to every existing row
+    //    //var existing = table.Rows.Select(r => r.ToArray()).ToList();
+
+    //    var original = table.Rows
+    //        .Select(r => r.Select(c => c).ToList())
+    //        .ToList();
+
+    //    var x = table.ToTable();
+
+    //    var y = x.UpdateCell();
+    //    table = 
+
+    //    for (var i = 0; i < existing.Count; i++)
+    //    {
+    //        var indexed = new string[table.Columns.Count];
+    //        indexed[0] = (i + 1).ToString();
+    //        for (var c = 0; c < existing[i].Length; c++)
+    //        {
+    //            indexed[c + 1] = existing[i][c];
+    //        }
+
+    //        KeyValuePair<int, List<TableCell>> row = new(i, [.. indexed.Select(cell => new TableCell(cell))]);
+
+    //        // table.Rows[[i]] = indexed.Select(c => new TableCell(c)).ToList(); // ← replace, don't add
+    //        table.AddRow(row);
+    //    }
+
+    //    // 3. Delegate final rendering (borders, colors, etc.) to inner
+    //    inner.Render();
+    //}
+
     public void Render()
     {
-        if (_numbered)
-        {
-            inner.Render();
-            return;
-        }
+        if (_numbered) { inner.Render(); return; }
         _numbered = true;
 
         var table = inner.Table;
-
-        // 1. Ensure the index column exists
         if (!table.Columns.Contains(columnHeader, StringComparer.OrdinalIgnoreCase))
             table.AddColumns(columnHeader);
 
-        // 2. Prepend a 1-based index to every existing row
-        var existing = table.Rows.Select(r => r.ToArray()).ToList();
-
-        for (var i = 0; i < existing.Count; i++)
-        {
-            var indexed = new string[table.Columns.Count];
-            indexed[0] = (i + 1).ToString();
-            for (var c = 0; c < existing[i].Length; c++)
+        var rows = table.Rows
+            .Select((r, idx) => new
             {
-                indexed[c + 1] = existing[i][c];
-            }
+                Index = (idx + 1).ToString(),
+                Cells = r.ToArray()
+            })
+            .Select(x => new TableCell(x.Index))
+            .ToList();
 
-            KeyValuePair<int, List<TableCell>> row = new(i, [.. indexed.Select(cell => new TableCell(cell))]);
-
-            table.AddRow(row);
-        }
-
-        // 3. Delegate final rendering (borders, colors, etc.) to inner
         inner.Render();
     }
 }

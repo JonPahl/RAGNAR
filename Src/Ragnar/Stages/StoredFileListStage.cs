@@ -22,6 +22,8 @@ public sealed class StoredFileListStage(
     /// <summary>Indicates whether this stage should execute in the current pipeline run.</summary>
     /// <value>False by default; this stage is opt-in via pipeline configuration.</value>
     /// <example><![CDATA[bool run = stage.ShouldRun;]]></example>
+
+    // FIXME How do I add stage control options to set if a stage should be run inside of appsettings.json
     public bool ShouldRun(EmbeddingContext context) => true;
 
     /// <summary>Scrolls all stored file entries and renders them in a console table.</summary>
@@ -59,6 +61,8 @@ public sealed class StoredFileListStage(
 
     /// <summary>Scrolls all points in the vector store and collects their file names.</summary>
     /// <param name="client">The IQdrantClient used for the scroll query.</param>
+    /// <param name="pageSize">Page size</param>
+    /// <param name="cancellationToken">Token to abort the scroll operation.</param>
     /// <returns>A list of file name strings found in the collection.</returns>
     /// <example><![CDATA[var files = await stage.EnumerateStoredFiles(client);]]></example>
     private async Task<List<string>> EnumerateStoredFiles(
@@ -78,7 +82,8 @@ public sealed class StoredFileListStage(
 
             var response = await client.ScrollAsync(collectionName,
                 limit: pageSize,
-                offset: nextOffset, cancellationToken: cancellationToken)
+                offset: nextOffset,
+                cancellationToken: cancellationToken)
                 .ConfigureAwait(false);
 
             // 4. Process the returned points
@@ -90,7 +95,6 @@ public sealed class StoredFileListStage(
 
             // 5. Update the offset for the next page iteration
             nextOffset = response.NextPageOffset;
-
         } while (nextOffset is not null);
 
         return items;

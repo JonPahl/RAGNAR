@@ -26,3 +26,5 @@ global using Ragnar.Core.Validation;
 global using Spectre.Console;
 global using Spectre.Console.Rendering;
 global using Ragnar.Core.Enums;
+global using System.Text.RegularExpressions;
+global using System.Globalization;

@@ -11,7 +11,6 @@ public sealed class QuestionAggregator(
     IOptions<RagnarConfig> options)
     : IQuestionSourceBuilder
 {
-
     /// <summary>Internal mutable list of questions accumulated by builder methods.</summary>
     /// <returns>Mutable list of <see cref="Question"/> objects.</returns>
     /// <example><![CDATA[builder.Questions.Add(new Question());]]></example>

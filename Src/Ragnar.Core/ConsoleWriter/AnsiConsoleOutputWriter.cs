@@ -5,14 +5,17 @@
 /// </summary>
 public class AnsiConsoleOutputWriter : IOutputWriter
 {
-    /// <inheritdoc/>
-    public void Markup(string text, Style? style = null) => AnsiConsole.Markup(text, style.EnsureValidStyle());
+
+    private readonly CultureInfo _provider = CultureInfo.InvariantCulture;
 
     /// <inheritdoc/>
-    public void MarkupLine(string text, Style? style = null) => AnsiConsole.MarkupLine(text, style.EnsureValidStyle());
+    public void Markup(string text, Style? style = null) => AnsiConsole.Markup(provider: _provider, text, style.EnsureValidStyle());
 
     /// <inheritdoc/>
-    public void Write(string text, Style? style = null) => AnsiConsole.Write(text, style.EnsureValidStyle());
+    public void MarkupLine(string text, Style? style = null) => AnsiConsole.MarkupLine(provider: _provider, text, style.EnsureValidStyle());
+
+    /// <inheritdoc/>
+    public void Write(string text, Style? style = null) => AnsiConsole.Write(provider: _provider, text, style.EnsureValidStyle());
 
     /// <summary>Writes a renderable element (table, panel, rule) to the console.</summary>
     /// <example><![CDATA[writer.Write(new Panel("Hello"));]]></example>
@@ -27,7 +30,7 @@ public class AnsiConsoleOutputWriter : IOutputWriter
     /// <example><![CDATA[writer.WriteLine();]]></example>
     public void WriteLine() => AnsiConsole.WriteLine();
 
-    public void WriteLine(string text, Style? style = null) => AnsiConsole.WriteLine(text, style.EnsureValidStyle());
+    public void WriteLine(string text, Style? style = null) => AnsiConsole.WriteLine(provider: _provider, text, style.EnsureValidStyle());
 
     /// <inheritdoc/>
     public void WriteRule() => AnsiConsole.Write(new Rule());

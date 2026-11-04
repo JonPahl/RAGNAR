@@ -30,7 +30,7 @@ public enum QuestionCategory
     /// <summary>Relates to XML documentation or processing.</summary>
     XML,
 
-    XML_RAW,
+    XmlRaw,
 
     /// <summary>Relates to modernizing legacy code patterns.</summary>
     Modernization,
@@ -46,5 +46,5 @@ public enum QuestionCategory
     Diagram,
     Uncategorized,
     Summary,
-
+    Plan
 }

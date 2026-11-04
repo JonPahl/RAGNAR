@@ -1,8 +1,8 @@
 ﻿namespace Ragnar.Output;
 
-/// <summary>
-/// Interface for content formatter, providing a standardized way to format output.
-/// </summary>
+/// <summary> Interface for content formatter, providing a standardized way to format output. </summary>
+/// <example><![CDATA[string md = formatter.Format(record);]]>
+/// </example>
 public interface IContentFormatter
 {
     /// <summary>Gets the file extension used by this formatter.</summary>

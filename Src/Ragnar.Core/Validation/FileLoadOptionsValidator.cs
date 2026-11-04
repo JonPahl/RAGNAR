@@ -1,6 +1,6 @@
 ﻿namespace Ragnar.Core.Validation;
 
-/// <summary>Initialises validation rules for file-loading options.</summary>
+/// <summary>Initializes validation rules for file-loading options.</summary>
 /// <example><![CDATA[var v = new FileLoadOptionsValidator();]]></example>
 public class FileLoadOptionsValidator
     : AbstractValidator<FileLoadOptions>
@@ -20,7 +20,7 @@ public class FileLoadOptionsValidator
 
         RuleFor(x => x.ExcludedDirectories)
             .Must(dirs => dirs.All(d => !string.IsNullOrWhiteSpace(d)
-              && !d.Contains('\\') && !d.Contains('/')))
+              && !d.Contains('\\', StringComparison.InvariantCulture) && !d.Contains('/', StringComparison.InvariantCulture)))
                 .WithMessage("ExcludedDirectories must contain folder names only (no path separators).");
     }
 }

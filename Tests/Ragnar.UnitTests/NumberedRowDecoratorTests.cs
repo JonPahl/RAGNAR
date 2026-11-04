@@ -2,58 +2,29 @@
 
 public class NumberedRowDecoratorTests
 {
-    private readonly Mock<ITableRenderer> _innerMock;
-
-    public NumberedRowDecoratorTests()
+    [Fact]
+    public void TableShouldDelegateToInnerRenderer()
     {
-        _innerMock = new Mock<ITableRenderer>();
-        _innerMock.SetupGet(r => r.Table).Returns(new ConsoleTableBuilder());
+        var inner = new Mock<ITableRenderer>();
+        var builder = new ConsoleTableBuilder();
+        inner.SetupGet(r => r.Table).Returns(builder);
+
+        var decorator = new NumberedRowDecorator(inner.Object);
+
+        Assert.Same(builder, decorator.Table);
     }
 
     [Fact]
-    public void TablePropertyShouldReturnInnerTable()
+    public void RenderShouldCallInnerRenderExactlyOnce()
     {
-        // Arrange
-        var sut = new NumberedRowDecorator(_innerMock.Object);
+        var inner = new Mock<ITableRenderer>();
+        inner.SetupGet(r => r.Table).Returns(new ConsoleTableBuilder());
 
-        // Act
-        var table = sut.Table;
+        var decorator = new NumberedRowDecorator(inner.Object);
 
-        // Assert
-        // Table delegates to inner.Table
-        Assert.NotNull(sut);
-    }
+        decorator.Render();
+        decorator.Render(); // second call should be a no-op
 
-    [Fact]
-    public void RenderShouldCallInnerRender()
-    {
-        // Arrange
-        var sut = new NumberedRowDecorator(_innerMock.Object);
-
-        // Act
-        sut.Render();
-
-        // Assert
-        _innerMock.Verify(r => r.Render(), Times.Once);
-    }
-
-    [Fact]
-    public void DefaultColumnHeaderShouldBeHash()
-    {
-        // Arrange
-        var sut = new NumberedRowDecorator(_innerMock.Object);
-
-        // Assert – the default parameter is "#"
-        Assert.NotNull(sut);
-    }
-
-    [Fact]
-    public void CustomColumnHeaderShouldBeAccepted()
-    {
-        // Arrange
-        var sut = new NumberedRowDecorator(_innerMock.Object, "No.");
-
-        // Assert
-        Assert.NotNull(sut);
+        inner.Verify(r => r.Render(), Times.Once);
     }
 }
