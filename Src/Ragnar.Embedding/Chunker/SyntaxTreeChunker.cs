@@ -5,7 +5,7 @@
 /// </summary>
 /// <example><![CDATA[var docs = new SyntaxTreeChunker().ParseAsync("Program.cs", code);]]></example>
 public class SyntaxTreeChunker(
-    Serilog.ILogger logger,
+    ILogger logger,
     IQdrantClient client,
     IOptions<RagnarConfig> options)
     : ISyntaxTreeChunker

@@ -5,12 +5,12 @@
 /// </summary>
 public class PipelineRunnerIntegrationTests
 {
-    private readonly Mock<Serilog.ILogger> _loggerMock;
+    private readonly Mock<Microsoft.Extensions.Logging.ILogger> _loggerMock;
     private readonly PipelineRunner<QuestionPipelineContext> _runner;
 
     public PipelineRunnerIntegrationTests()
     {
-        _loggerMock = new Mock<Serilog.ILogger>();
+        _loggerMock = new Mock<Microsoft.Extensions.Logging.ILogger>();
         _runner = new PipelineRunner<QuestionPipelineContext>(_loggerMock.Object);
     }
 

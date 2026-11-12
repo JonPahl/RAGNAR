@@ -12,7 +12,7 @@ public class QuestionAnswerStage(
     IOptions<RagnarConfig> ragnarConfig,
     IOutputWriter writer,
     IContextRetriever questionEmbedding,
-    Serilog.ILogger logger)
+    ILogger logger)
     : IPipelineStage<QuestionPipelineContext>
 {
     /// <summary>Gets the human-readable stage name for progress display.</summary>
@@ -55,7 +55,7 @@ public class QuestionAnswerStage(
             writer.WriteLine();
             writer.Write(new Rule());
 
-            logger.Information("Processing question [{QuestionId}] from user [{UserId}] with {ContextLength} chars", question.Text, Environment.UserName, contextText.Length.ToString("N0", General.Culture));
+            logger.LogInformation("Processing question [{QuestionId}] from user [{UserId}] with {ContextLength} chars", question.Text, Environment.UserName, contextText.Length.ToString("N0", General.Culture));
 
             await ragOrchestrator.ExecuteAsync(question, contextText, cancellationToken).ConfigureAwait(false);
             processedCount++;

@@ -4,7 +4,6 @@
 /// <example><![CDATA[await runner.ExecuteAsync(new QuestionPipelineContext(), ct);]]></example>
 public class QuestionPipelineContext
 {
-
     private IReadOnlyList<Question>? _questions;
 
     /// <summary>Loaded and filtered questions (populated by <see cref="QuestionLoadStage"/>).</summary>
@@ -12,18 +11,20 @@ public class QuestionPipelineContext
     /// <example><![CDATA[var q = ctx.Questions;]]></example>
     public IReadOnlyList<Question>? Questions => _questions;
 
-    /// <summary>Called exclusively by <see cref="QuestionLoadStage"/>.</summary>
-    public void SetQuestions(IReadOnlyList<Question> questions)
-        => _questions = questions;
+    /// <summary>Called exclusively by <see cref="QuestionLoadStage"/>. </summary>
+    /// <param name="questions">The filtered list of questions to store.</param>
+    /// <returns>Void; mutates internal state.</returns>
+    /// <example><![CDATA[ctx.SetLoadedQuestions(loadedQuestions);]]></example>
+    public void SetLoadedQuestions(IReadOnlyList<Question> questions) => _questions = questions;
 
     /// <summary>Accumulated LLM responses keyed by question ID.</summary>
     /// <returns>Dictionary of LLM answers keyed by question GUID.</returns>
-    /// <example><![CDATA[string a = ctx.Responses[[qid]];]]></example>
-    public ConcurrentDictionary<Guid, string> Responses { get; } = new();
+    /// <example><![CDATA[string a = ctx.Answers[[qid]];]]></example>
+    public ConcurrentDictionary<Guid, string> Answers { get; } = new();
 
     /// <summary>Per-question wall-clock timings.</summary>
     /// <returns>Dictionary of per-question execution durations keyed by GUID.</returns>
-    /// <example><![CDATA[TimeSpan t = ctx.Timings[qid];]]>
+    /// <example><![CDATA[TimeSpan t = ctx.QuestionTimings[qid];]]>
     /// </example>
-    public ConcurrentDictionary<Guid, TimeSpan> Timings { get; } = new();
+    public ConcurrentDictionary<Guid, TimeSpan> QuestionTimings { get; } = new();
 }

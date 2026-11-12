@@ -1,15 +1,15 @@
 ﻿namespace Ragnar.Builder;
 
 /// <summary>Builds configured Ollama chat client instances via a factory.</summary>
-/// <example><![CDATA[var c = new OllamaChatClientBuilder(factory).WithChatClient(type);]]></example>
+/// <example><![CDATA[var c = new OllamaChatClientBuilder(factory).ForService(type);]]></example>
 public sealed class OllamaChatClientBuilder()
     : IOllamaChatClientBuilder
 {
     /// <summary>Creates a configured builder targeting the specified Ollama service type.</summary>
     /// <param name = "type">The service type (Ollama or Embedding).</param>
     /// <returns>A configured builder instance.</returns>
-    /// <example><![CDATA[var b = builder.WithChatClient(OllamaServiceType.Ollama);]]></example>
-    public OllamaChatClientBuilderConfigured WithChatClient(OllamaServiceType type)
+    /// <example><![CDATA[var b = builder.ForService(OllamaServiceType.Ollama);]]></example>
+    public OllamaChatClientBuilderConfigured ForService(OllamaServiceType type)
         => new(new OllamaClientOptions { ServiceType = type });
 
     /// <summary>Creates a configured builder with explicit Ollama client options.</summary>

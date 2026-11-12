@@ -64,27 +64,6 @@ public sealed class FileLoadOptionsTests
         Assert.Single(options.AllowedExtensions); // original unchanged
     }
 
-    //[Fact]
-    //public void RecordEqualityShouldCompareByValue()
-    //{
-    //    var a = new FileLoadOptions
-    //    {
-    //        AllowedExtensions = [".cs"],
-    //        ExcludedFiles = ["skip.cs"],
-    //        ExcludedDirectories = ["bin"]
-    //    };
-
-    //    var b = new FileLoadOptions
-    //    {
-    //        AllowedExtensions = [".cs"],
-    //        ExcludedFiles = ["skip.cs"],
-    //        ExcludedDirectories = ["bin"]
-    //    };
-
-    //    Assert.Equal(a, b);
-    //    Assert.Equal(a.GetHashCode(), b.GetHashCode());
-    //}
-
     [Fact]
     public void RecordEqualityShouldDifferWhenExtensionsDiffer()
     {
@@ -121,35 +100,6 @@ public sealed class FileLoadOptionsTests
 
         Assert.Empty(results.Errors);
     }
-
-    //[Fact]
-    //public void ValidationExcludedFilesNoEmptyEntriesPasses()
-    //{
-    //    var options = new FileLoadOptions
-    //    {
-    //        ExcludedFiles = ["file1.cs", "file2.cs"]
-    //    };
-
-    //    var validator = new FileLoadOptionsValidator();
-
-    //    var results = validator.Validate(options);
-
-    //    Assert.Empty(results.Errors);
-    //}
-
-    //[Fact]
-    //public void ValidationExcludedDirectoriesNoPathSeparatorsPasses()
-    //{
-    //    var options = new FileLoadOptions
-    //    {
-    //        ExcludedDirectories = ["bin", "obj", "node_modules"]
-    //    };
-
-    //    var validator = new FileLoadOptionsValidator();
-    //    var results = validator.Validate(options);
-
-    //    Assert.Empty(results.Errors);
-    //}
 
     [Fact]
     public void ValidationExcludedDirectoriesContainsBackslashFails()

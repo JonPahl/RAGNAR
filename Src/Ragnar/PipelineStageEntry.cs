@@ -21,4 +21,3 @@ public sealed record PipelineStageEntry<T>(IPipelineStage<T> Stage)
     /// <example><![CDATA[AsyncRetryPolicy? p = entry.CachedPolicy;]]></example>
     public AsyncRetryPolicy? CachedPolicy { get; set; }
 }
-

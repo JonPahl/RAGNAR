@@ -17,6 +17,6 @@ public sealed class NoTestsFilterStrategy
     /// <returns>The configured filter instance.</returns>
     /// <example><![CDATA[var f = strategy.CreateFilter(50);]]></example>
     public Filter CreateFilter(int sizeThreshold) => new QdrantFilterBuilder()
-        .AddExclusion("Category", "Testing")
+        .AddMustNotMatch("Category", "Testing")
         .Build();
 }

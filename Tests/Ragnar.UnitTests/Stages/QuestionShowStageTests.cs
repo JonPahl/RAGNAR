@@ -6,7 +6,8 @@ public class QuestionShowStageTests
 
     public QuestionShowStageTests()
     {
-        _sut = new QuestionTableStage();
+        var writer = new Mock<IOutputWriter>();
+        _sut = new QuestionTableStage(writer.Object);
     }
 
     [Fact]
@@ -16,7 +17,7 @@ public class QuestionShowStageTests
     }
 
     [Theory]
-    [InlineData(typeof(QuestionPipelineContext))] // valid context
+    [InlineData(typeof(QuestionPipelineContext))] // valid testContext
     [InlineData(typeof(object))]            // null (cast via null!)
     public void ShouldRunShouldAlwaysReturnTrue(Type unused)
     {
@@ -29,7 +30,7 @@ public class QuestionShowStageTests
     [Fact]
     public void ShouldRunWithNullContextShouldStillReturnTrue()
     {
-        // ShouldRun is defined as always true regardless of context
+        // ShouldRun is defined as always true regardless of testContext
         Assert.True(_sut.ShouldRun(null!));
     }
 
@@ -46,7 +47,7 @@ public class QuestionShowStageTests
         using var cts = new CancellationTokenSource();
         await cts.CancelAsync();
         var context = new QuestionPipelineContext();
-        context.SetQuestions([]);
+        context.SetLoadedQuestions([]);
 
         // Act & Assert
         await Assert.ThrowsAnyAsync<OperationCanceledException>(async () => await _sut.ExecuteAsync(context, cts.Token).ConfigureAwait(false));

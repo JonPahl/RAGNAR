@@ -1,0 +1,13 @@
+<Project>
+  <PropertyGroup>
+    <!-- Equivalent to sonar-project.properties configurations -->
+    <SonarProjectKey>sqp_b842a1c4b24fc00902df466ff1feeeb35b152b45</SonarProjectKey>
+    <SonarProjectName>Ragnar</SonarProjectName>
+    <SonarHostUrl>http://localhost:9000</SonarHostUrl>    
+    <!-- Exclude test projects automatically from main source code counts -->
+    <SonarExpression Condition="$(MSBuildProjectName.EndsWith('.Tests'))">
+      <SonarTest>true</SonarTest>
+    </SonarExpression>
+	<SonarCsOpencoverReportsPaths>**/coverage.xml</SonarCsOpencoverReportsPaths>
+  </PropertyGroup>
+</Project>

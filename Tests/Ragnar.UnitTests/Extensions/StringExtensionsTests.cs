@@ -1,4 +1,4 @@
-﻿using StringExtensions = Ragnar.Embedding.StringExtensions;
+﻿
 
 namespace Ragnar.Tests.Extensions;
 

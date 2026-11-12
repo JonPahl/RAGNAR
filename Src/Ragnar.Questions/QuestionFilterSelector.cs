@@ -1,33 +1,41 @@
 ﻿namespace Ragnar.Questions;
 
 /// <summary>Initializes the selector with a collection of filter strategies.</summary>
-/// <param name="strategies">Strategies keyed by supported question category.</param>
 /// <example><![CDATA[var f = QuestionFilterSelector.FindFilter(QuestionCategory.XML, 100);]]></example>
 public sealed class QuestionFilterSelector
 {
     private readonly Dictionary<QuestionCategory, IFilterStrategy> _strategies;
-    private readonly Serilog.ILogger _logger;
+    private readonly ILogger _logger;
 
-    public QuestionFilterSelector(Serilog.ILogger logger, IEnumerable<IFilterStrategy> strategies)
+    /// <summary>Initializes the selector with a logger and a collection of filter strategies.</summary>
+    /// <param name="logger">Serilog logger for diagnostic output.</param>
+    /// <param name="strategies">Strategies keyed by supported question category.</param>
+    /// <example><![CDATA[var sel = new QuestionFilterSelector(log, strategies);]]></example>
+    public QuestionFilterSelector(ILogger logger, IEnumerable<IFilterStrategy> strategies)
     {
         _logger = logger;
         _strategies = strategies.ToDictionary(s => s.SupportedCategory);
 
-        // Register built-in strategies ONCE, at construction time.
         if (!_strategies.ContainsKey(QuestionCategory.XML))
             _strategies[QuestionCategory.XML] = new XmlCommentFilterStrategy(logger);
     }
 
-    public Filter FindFilter(QuestionCategory category, int commentLengthThreshold = 0)
+    /// <summary>Returns a Qdrant Filter built by the strategy registered for the given category.</summary>
+    /// <param name="category">The question category to look up.</param>
+    /// <param name="commentLengthThreshold">Optional minimum comment-length bound for the filter.</param>
+    /// <returns>The configured Qdrant Filter instance.</returns>
+    /// <example><![CDATA[var f = selector.FindFilter(QuestionCategory.XML, 100);]]></example>
+    public Filter FindFilter(
+        QuestionCategory category,
+        int commentLengthThreshold = 0)
     {
-        _logger.Debug("Finding filter for {Category}, threshold {Threshold}", category, commentLengthThreshold);
+        if (!_strategies.TryGetValue(category, out var strategy))
+        {
+            throw new NotSupportedException(
+                $"No IFilterStrategy registered for '{category}'. " +
+                $"Registered: {string.Join(", ", _strategies.Keys)}");
+        }
 
-        var filter = _strategies.TryGetValue(category, out var strategy)
-            ? strategy.CreateFilter(commentLengthThreshold)
-            : new Filter();
-
-        _logger.Debug("Filter resolved for {Category}: {MustCount} must, {MustNotCount} mustNot",
-                      category, filter.Must?.Count ?? 0, filter.MustNot?.Count ?? 0);
-        return filter;
+        return strategy.CreateFilter(commentLengthThreshold);
     }
 }

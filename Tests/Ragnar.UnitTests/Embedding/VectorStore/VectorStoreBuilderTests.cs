@@ -3,14 +3,14 @@
 public class VectorStoreBuilderTests
 {
     private readonly Mock<IQdrantClient> _qdrantMock;
-    private readonly Mock<Serilog.ILogger> _loggerMock;
+    private readonly Mock<Microsoft.Extensions.Logging.ILogger> _loggerMock;
     private readonly RagnarConfig _config;
     private readonly VectorStoreBuilder _sut;
 
     public VectorStoreBuilderTests()
     {
         _qdrantMock = new Mock<IQdrantClient>();
-        _loggerMock = new Mock<Serilog.ILogger>();
+        _loggerMock = new Mock<Microsoft.Extensions.Logging.ILogger>();
         _config = new RagnarConfig
         {
             GenerationOptions = new GenerationOptions(),

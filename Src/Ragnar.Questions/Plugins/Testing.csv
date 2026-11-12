@@ -1,10 +1,8 @@
 ﻿IsEnabled,Text,FileName,Category
-"0","Please generate unit tests using (xunit and moq) for all public methods that are currently missing unit tests.","UnitTestCreate",Testing
-"0","Please modify existing unit tests using xunit and moq for all public methods that are invalid.","UnitTestModify",Testing
+"1","Please generate new, update update existing or remove or merge outdated unit tests using (xunit and moq) for all public methods that are currently missing unit tests.","UnitTest",Testing
 "0","Please suggest any existing unit tests that should either merged or removed if duplicated.", "UnitTestRemove", Testing
 "0","Please provide a script to automatically reorder all tests into a better folder layout", "TestFolder", Testing
 "0","Please list all integration test that are not needed based on previous questions.", "IntegrationTestRemove",Testing
 "0","Please modify existing integration tests using xunit and moq for all public methods where applicable.", "IntegrationTestModify", Testing
-"0","Please create integration tests using (xunit and moq) for all public methods where applicable.", "IntegrationTestCreate",Testing
-"1","Please rewrite and replace the current CLI interface with Avalonia.","Avalonia",Testing
-"1","Recommend how do I rework to use MassTransit in this application?","MassTransit",Testing
+"1","Please create or modify integration tests using (xunit and moq) for all public methods where applicable.", "IntegrationTestCreate",Testing
+"0","How do I prepare this project to be deployed as a nuget package?","Nuget",Testing

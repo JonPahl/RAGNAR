@@ -2,14 +2,12 @@
 
 public class BrandingStageTests
 {
-    private readonly Mock<ILogger> _loggerMock;
-    private readonly Mock<IApplicationHeader> _headerMock;
+    private readonly Mock<ILogger> _loggerMock = new();
+    private readonly Mock<IApplicationHeader> _headerMock = new();
     private readonly BrandingStage _sut;
 
     public BrandingStageTests()
     {
-        _loggerMock = new Mock<ILogger>();
-        _headerMock = new Mock<IApplicationHeader>();
         _sut = new BrandingStage(_loggerMock.Object, _headerMock.Object);
     }
 
@@ -35,9 +33,6 @@ public class BrandingStageTests
         using var cts = new CancellationTokenSource();
         await cts.CancelAsync();
 
-        // BrandingStage.ExecuteAsync checks cancellation via logger/debug path;
-        // if it doesn't explicitly check, we verify it completes or throws.
-        // Based on the implementation it does NOT check ct, so we assert it completes.
         await _sut.ExecuteAsync(new EmbeddingContext(), cts.Token);
         _headerMock.Verify(h => h.RenderBranding(), Times.Once);
     }
@@ -109,7 +104,7 @@ public class BrandingStageTests
 
         // Assert
         _loggerMock.Verify(
-            l => l.Debug(It.IsAny<string>(), It.IsAny<object?>()),
+            l => l.LogDebug(It.IsAny<string>(), It.IsAny<object?>()),
             Times.AtLeast(2));
     }
 

@@ -21,7 +21,7 @@ public class FilterBuilderEdgeCaseTests
     public void AddExclusionRangeShouldThrowWhenBothBoundsAreNull()
     {
         // Act & Assert
-        Assert.Throws<ArgumentException>(() => _sut.AddExclusionRange("Field"));
+        Assert.Throws<ArgumentException>(() => _sut.AddMustNotRange("Field"));
     }
 
     [Fact]
@@ -50,7 +50,7 @@ public class FilterBuilderEdgeCaseTests
     public void BuildWithOnlyMustNotConditionsShouldReturnFilterWithEmptyMust()
     {
         // Arrange
-        _sut.AddExclusion("Field", "Value");
+        _sut.AddMustNotMatch("Field", "Value");
 
         // Act
         var result = _sut.Build();
@@ -65,11 +65,11 @@ public class FilterBuilderEdgeCaseTests
     {
         // Act
         var result = _sut
-            .AddMatch("A", "1")
-            .AddExclusion("B", "2")
+            .AddMustMatch("A", "1")
+            .AddMustNotMatch("B", "2")
             .AddRange("C", gte: 1.0, lte: 100.0)
             .AddExceptKeywords("D", "X", "Y")
-            .AddExclusionRange("E", gte: 5.0);
+            .AddMustNotRange("E", gte: 5.0);
 
         // Assert
         Assert.Same(_sut, result);

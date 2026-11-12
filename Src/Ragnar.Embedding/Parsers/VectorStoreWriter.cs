@@ -8,7 +8,7 @@
 /// <param name="config">Application-wide Ragnar configuration wrapper.</param>
 /// <remarks>Initializes with the resolved ApplicationOptions for store name.</remarks>
 public sealed class VectorStoreWriter(
-    Serilog.ILogger logger,
+    ILogger logger,
     IEmbeddingService embeddingService,
     IQdrantClient qdrantClient,
     IQdrantPointFactory generatorService,
@@ -59,7 +59,7 @@ public sealed class VectorStoreWriter(
             catch (OperationCanceledException) { throw; }
             catch (Exception ex)
             {
-                logger.Error(ex, "Batch {Start}-{End} upsert failed.", i, i + batch.Length);
+                logger.LogError(ex, "Batch {Start}-{End} upsert failed.", i, i + batch.Length);
                 failed.AddRange(batch.Select((d, idx) => (i + idx, ex)));
                 // continue with next batch instead of aborting everything
             }
@@ -67,7 +67,7 @@ public sealed class VectorStoreWriter(
 
         if (failed.Count > 0)
         {
-            logger.Error("Upsert incomplete: {Succeeded} ok, {Failed} failed. First: {Msg}",
+            logger.LogError("Upsert incomplete: {Succeeded} ok, {Failed} failed. First: {Msg}",
                 succeeded, failed.Count, failed[0].Ex.Message);
         }
 

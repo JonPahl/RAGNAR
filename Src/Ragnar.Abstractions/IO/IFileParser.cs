@@ -4,6 +4,11 @@
 /// <example><![CDATA[var p = new CSharpFileParser(logger);]]></example>
 public interface IFileParser
 {
+    /// <summary>Gets the list of file extensions this parser can handle.</summary>
+    /// <returns>A list of extension strings (e.g. ".cs", ".md").</returns>
+    /// <example><![CDATA[IList<string> exts = parser.SupportedExtensions;]]></example>
+    IList<string> SupportedExtensions { get; init; }
+
     /// <summary>Parses a file into discrete code document segments for embedding.</summary>
     /// <param name="filePath">Path to the source file to parse.</param>
     /// <param name="cancellationToken">Token to cancel the parse operation.</param>

@@ -32,3 +32,4 @@ global using Ragnar.Embedding.Chunker;
 global using Ragnar.Embedding.Parsers;
 
 global using Spectre.Console;
+global using Microsoft.Extensions.Logging;

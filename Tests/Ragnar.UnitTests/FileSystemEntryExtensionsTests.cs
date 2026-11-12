@@ -3,54 +3,58 @@
 public class FileSystemEntryExtensionsTests
 {
     [Fact]
-    public void HasAllowedExtensionShouldReturnTrueForMatch()
+    public void HasAllowedExtensionShouldReturnTrueForMatchingExtension()
     {
-        var entry = new FileInfo("document.cs");
-        var allowed = new[] { ".cs", ".json" };
+        var fi = new FileInfo("document.cs");
 
-        Assert.True(entry.HasAllowedExtension(allowed));
-    }
-
-    [Fact]
-    public void HasAllowedExtensionShouldReturnFalseForMismatch()
-    {
-        var entry = new FileInfo("document.pdf");
-        var allowed = new[] { ".cs", ".json" };
-
-        Assert.False(entry.HasAllowedExtension(allowed));
+        Assert.True(fi.HasAllowedExtension([".cs", ".json"]));
     }
 
     [Fact]
     public void HasAllowedExtensionShouldBeCaseInsensitive()
     {
-        var entry = new FileInfo("DOCUMENT.CS");
-        var allowed = new[] { ".cs" };
+        var fi = new FileInfo("document.CS");
 
-        Assert.True(entry.HasAllowedExtension(allowed));
+        Assert.True(fi.HasAllowedExtension([".cs", ".json"]));
     }
 
     [Fact]
-    public void HasAllowedExtensionShouldReturnFalseForDirectory()
+    public void HasAllowedExtensionShouldReturnFalseForNonMatchingExtension()
     {
-        var dir = new DirectoryInfo("somefolder");
+        var fi = new FileInfo("document.pdf");
 
-        Assert.False(dir.HasAllowedExtension([".cs"]));
+        Assert.False(fi.HasAllowedExtension([".cs", ".json"]));
     }
 
     [Fact]
-    public void HasAllowedExtensionShouldThrowOnNullCollection()
+    public void HasAllowedExtensionShouldReturnFalseForDirectoryInfo()
     {
-        var entry = new FileInfo("test.cs");
+        var di = new DirectoryInfo("some_folder");
 
-        Assert.Throws<ArgumentNullException>(() => entry.HasAllowedExtension(null!));
+        Assert.False(di.HasAllowedExtension([".cs", ".json"]));
     }
 
     [Fact]
-    public void HasAllowedExtensionWithNoExtensionShouldReturnFalse()
+    public void HasAllowedExtensionShouldReturnFalseForFileWithoutExtension()
     {
-        var entry = new FileInfo("README");
-        var allowed = new[] { ".cs" };
+        var fi = new FileInfo("README");
 
-        Assert.False(entry.HasAllowedExtension(allowed));
+        Assert.False(fi.HasAllowedExtension([".cs"]));
+    }
+
+    [Fact]
+    public void HasAllowedExtensionWithNullOrEmptyAllowedShouldReturnFalse()
+    {
+        var fi = new FileInfo("document.cs");
+
+        Assert.False(fi.HasAllowedExtension([]));
+    }
+
+    [Fact]
+    public void HasAllowedExtensionWithNullAllowedShouldThrow()
+    {
+        var fi = new FileInfo("document.cs");
+
+        Assert.Throws<ArgumentNullException>(() => fi.HasAllowedExtension(null!));
     }
 }

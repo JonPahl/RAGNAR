@@ -7,7 +7,7 @@
 /// <param name="configWrapper">Wrapped configuration objects.</param>
 public sealed class MarkdownFileParser(
     IOptions<RagnarConfig> configWrapper,
-    Serilog.ILogger logger) : BaseFileParser(logger)
+    Microsoft.Extensions.Logging.ILogger logger) : BaseFileParser(logger, [".md", "*.*"])
 {
     /// <summary>Gets the resolved embedding configuration for batch and dimension settings.</summary>
     /// <example><![CDATA[// Read-only internal accessor for embedding options.]]></example>

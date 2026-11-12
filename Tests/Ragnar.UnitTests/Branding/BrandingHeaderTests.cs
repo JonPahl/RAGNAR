@@ -2,7 +2,7 @@
 
 public sealed class BrandingHeaderTests
 {
-    private readonly Mock<ILogger> _logger = new();
+    private readonly Mock<Microsoft.Extensions.Logging.ILogger> _logger = new();
 
     [Fact]
     public void DisplayWritesExpectedOutputWithVersion()

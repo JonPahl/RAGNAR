@@ -2,9 +2,9 @@
 
 /// <summary>Validates file access using extension, name, and directory rules.</summary>
 /// <remarks>Performs ordinal, case-insensitive comparisons against load options.</remarks>
-/// <example><![CDATA[bool ok = validator.IsValid(file, in options);]]></example>
+/// <example><![CDATA[bool ok = validator.ShouldInclude(file, in options);]]></example>
 public class FileValidator(IOptions<RagnarConfig> options)
-    : IFileEligibilityValidator
+    : IFileInclusionFilter
 {
     private readonly HashSet<string> _excludedFiles = new(options.Value.FileLoadOptions.ExcludedDirectories, StringComparer.OrdinalIgnoreCase);
 
@@ -16,8 +16,8 @@ public class FileValidator(IOptions<RagnarConfig> options)
     /// <param name="file">The file to validate against the filter.</param>
     /// <param name="fileLoadOptions">Allowed extensions and exclusion patterns.</param>
     /// <returns><c>true</c> when the file passes every validation rule.</returns>
-    /// <example><![CDATA[bool ok = sut.IsValid(info, in opts);]]></example>
-    public bool IsValid(FileInfo file, in FileLoadOptions fileLoadOptions)
+    /// <example><![CDATA[bool ok = sut.ShouldInclude(info, in opts);]]></example>
+    public bool ShouldInclude(FileInfo file, in FileLoadOptions fileLoadOptions)
     {
         var ext = file.Extension;
 

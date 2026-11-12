@@ -5,60 +5,104 @@ public class QuestionPipelineContextTests
     [Fact]
     public void QuestionsShouldBeNullBeforeSet()
     {
+        // Arrange
         var ctx = new QuestionPipelineContext();
 
+        // Act & Assert
         Assert.Null(ctx.Questions);
     }
 
     [Fact]
-    public void SetQuestionsWithEmptyListShouldReturnEmpty()
+    public void SetQuestionsShouldStoreAndExposeQuestions()
     {
+        // Arrange
+        var ctx = new QuestionPipelineContext();
+        var questions = new[] { new Question(true, "", "") };
+
+        // Act
+        ctx.SetLoadedQuestions(questions);
+
+        // Assert
+        Assert.NotNull(ctx.Questions);
+        Assert.Single(ctx.Questions);
+    }
+
+    [Fact]
+    public void SetQuestionsWithEmptyListShouldReturnEmptyCollection()
+    {
+        // Arrange
         var ctx = new QuestionPipelineContext();
 
-        ctx.SetQuestions([]);
+        // Act
+        ctx.SetLoadedQuestions([]);
 
+        // Assert
         Assert.NotNull(ctx.Questions);
         Assert.Empty(ctx.Questions);
     }
 
     [Fact]
-    public void ResponsesShouldStartEmpty()
+    public void SetLoadedQuestionsShouldOverwritePreviousValue()
     {
+        // Arrange
         var ctx = new QuestionPipelineContext();
+        var first = new[] { new Question(true, "", "") };
+        var second = new[] { new Question(true, "", ""), new Question(true, "", "") };
+        ctx.SetLoadedQuestions(first);
 
-        Assert.Empty(ctx.Responses);
+        // Act
+        ctx.SetLoadedQuestions(second);
+
+        // Assert
+        Assert.Equal(2, ctx.Questions!.Count);
     }
 
     [Fact]
-    public void ResponsesShouldSupportAddAndRetrieve()
+    public void ResponsesShouldBeEmptyByDefault()
     {
+        // Arrange
+        var ctx = new QuestionPipelineContext();
+
+        // Act & Assert
+        Assert.Empty(ctx.Answers);
+    }
+
+    [Fact]
+    public void ResponsesShouldStoreAndRetrieveValues()
+    {
+        // Arrange
         var ctx = new QuestionPipelineContext();
         var qid = Guid.NewGuid();
 
-        ctx.Responses[qid] = "Hello";
+        // Act
+        ctx.Answers[qid] = "hello";
 
-        Assert.True(ctx.Responses.ContainsKey(qid));
-        Assert.Equal("Hello", ctx.Responses[qid]);
+        // Assert
+        Assert.Equal("hello", ctx.Answers[qid]);
     }
 
     [Fact]
-    public void TimingsShouldStartEmpty()
+    public void TimingsShouldBeEmptyByDefault()
     {
+        // Arrange
         var ctx = new QuestionPipelineContext();
 
-        Assert.Empty(ctx.Timings);
+        // Act & Assert
+        Assert.Empty(ctx.QuestionTimings);
     }
 
     [Fact]
-    public void TimingsShouldSupportAddAndRetrieve()
+    public void TimingsShouldStoreAndRetrieveValues()
     {
+        // Arrange
         var ctx = new QuestionPipelineContext();
         var qid = Guid.NewGuid();
-        var duration = TimeSpan.FromSeconds(1.5);
+        var elapsed = TimeSpan.FromMilliseconds(42);
 
-        ctx.Timings[qid] = duration;
+        // Act
+        ctx.QuestionTimings[qid] = elapsed;
 
-        Assert.True(ctx.Timings.ContainsKey(qid));
-        Assert.Equal(duration, ctx.Timings[qid]);
+        // Assert
+        Assert.Equal(elapsed, ctx.QuestionTimings[qid]);
     }
 }

@@ -10,7 +10,7 @@
 public sealed class QuestionLoadStage(
     IQuestionSource questionSource,
     IQuestionSourceBuilder questionBuilder,
-    Serilog.ILogger logger)
+    Microsoft.Extensions.Logging.ILogger logger)
     : IPipelineStage<QuestionPipelineContext>
 {
     /// <summary>Human-readable name shown in progress output.</summary>
@@ -30,7 +30,7 @@ public sealed class QuestionLoadStage(
         Guard.Against.Null(questionSource);
         Guard.Against.Null(questionBuilder);
 
-        logger.Information("Loading questions from {Source}", questionSource.SourceName);
+        logger.LogInformation("Loading questions from {Source}", questionSource.SourceName);
 
         questionBuilder.GetCategories()
             .GetFileConfig();
@@ -71,8 +71,8 @@ public sealed class QuestionLoadStage(
 
         #endregion
 
-        context.SetQuestions(updated);
+        context.SetLoadedQuestions(updated);
 
-        logger.Information("Loaded {Count} enabled question(s).", updated.Count);
+        logger.LogInformation("Loaded {Count} enabled question(s).", updated.Count);
     }
 }

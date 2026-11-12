@@ -3,7 +3,7 @@
 /// <summary>Orchestrates LLM summarization of response folders into markdown.</summary>
 /// <example><![CDATA[await svc.SummarizeAllResponsesAsync(ct);]]></example>
 public class SummaryService(
-    Serilog.ILogger logger,
+    ILogger logger,
     IPathResolver pathResolver,
     IOutputWriter writer,
     IOllamaChatClientBuilder ollamaAIClientBuilder,
@@ -68,7 +68,7 @@ public class SummaryService(
         var csvFile = Path.Join(AppContext.BaseDirectory, "Plugins", fileName);
         if (!File.Exists(csvFile))
         {
-            logger.Warning("Summary CSV not found: {CsvFile}", csvFile);
+            logger.LogWarning("Summary CSV not found: {CsvFile}", csvFile);
             throw new FileNotFoundException("File not found", csvFile);
         }
 
@@ -144,7 +144,7 @@ public class SummaryService(
         }
         catch (Exception ex)
         {
-            logger.Fatal(ex, ex.Message);
+            logger.LogCritical(ex, ex.Message);
         }
     }
 }

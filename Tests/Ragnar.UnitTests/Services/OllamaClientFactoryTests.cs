@@ -47,7 +47,7 @@ public class OllamaClientFactoryTests
         var mockClient = new HttpClient(new HttpClientHandler());
         _httpClientFactoryMock.Setup(f => f.CreateClient(It.IsAny<string>())).Returns(mockClient);
 
-        var result = _sut.ResolveClient(type);
+        var result = _sut.GetClient(type);
 
         Assert.NotNull(result);
         Assert.Equal(expectedModel, result.SelectedModel);
@@ -59,7 +59,7 @@ public class OllamaClientFactoryTests
     {
         // Act & Assert
         var ex = Assert.Throws<ArgumentOutOfRangeException>(
-            () => _sut.ResolveClient((OllamaServiceType)999));
+            () => _sut.GetClient((OllamaServiceType)999));
         Assert.Contains("Unsupported OllamaServiceType", ex.Message, StringComparison.InvariantCultureIgnoreCase);
     }
 
@@ -73,8 +73,8 @@ public class OllamaClientFactoryTests
             .Returns(mockClient);
 
         // Act
-        var first = _sut.ResolveClient(OllamaServiceType.Ollama);
-        var second = _sut.ResolveClient(OllamaServiceType.Ollama);
+        var first = _sut.GetClient(OllamaServiceType.Ollama);
+        var second = _sut.GetClient(OllamaServiceType.Ollama);
 
         // Assert
         Assert.Same(first, second);

@@ -3,13 +3,13 @@
 public class ShowFileStageTests
 {
     private readonly Mock<IQdrantClient> _clientMock;
-    private readonly Mock<Serilog.ILogger> _loggerMock;
+    private readonly Mock<Microsoft.Extensions.Logging.ILogger> _loggerMock;
     private readonly StoredFileListStage _sut;
 
     public ShowFileStageTests()
     {
         _clientMock = new Mock<IQdrantClient>();
-        _loggerMock = new Mock<Serilog.ILogger>();
+        _loggerMock = new Mock<Microsoft.Extensions.Logging.ILogger>();
 
         var config = new RagnarConfig
         {

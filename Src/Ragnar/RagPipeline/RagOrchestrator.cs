@@ -10,7 +10,7 @@
 /// <param name="ollamaProvider">Ollama question calling operations.</param>
 /// <example><![CDATA[await new RagPipeline().ExecuteAsync(q, ctx, ct);]]></example>
 public sealed class RagOrchestrator(
-    Serilog.ILogger logger,
+    ILogger logger,
     IOutputWriter writer,
     IOptions<RagnarConfig> configWrapper,
     [FromKeyedServices("Common")] IChatPromptProvider
@@ -28,7 +28,7 @@ public sealed class RagOrchestrator(
     /// <example><![CDATA[await pipeline.ExecuteAsync(question, ctx, ct);]]></example>
     /// <returns>Returns a task.</returns>
     public async Task ExecuteAsync(
-      Core.Models.Question question,
+      Question question,
       string contextText,
       CancellationToken cancellationToken)
     {
@@ -39,12 +39,11 @@ public sealed class RagOrchestrator(
             .WithContext(contextText)
             .Build();
 
-        //$"Context:\n{contextText}\n\nQuestion:\n{question.Text}\n\nAnswer:";
+        var ollamaClient = ollamaClientFactory.GetClient(OllamaServiceType.Ollama);
+        logger.LogDebug("Resolved Ollama client: {ClientType}, Model: {Model}", ollamaClient.GetType().Name, ollamaClient.SelectedModel);
 
-        var ollamaClient = ollamaClientFactory.ResolveClient(OllamaServiceType.Ollama);
-        logger.Debug("Resolved Ollama client: {ClientType}, Model: {Model}", ollamaClient.GetType().Name, ollamaClient.SelectedModel);
+        var generationOptions = configWrapper.Value.GenerationOptions;
 
-        var generationOptions = configWrapper.Value.GenerationOptions; // or a dedicated IOptions<GenerationOptions>
         var request = new GenerateRequest
         {
             Model = ollamaClient.SelectedModel,
@@ -65,20 +64,20 @@ public sealed class RagOrchestrator(
         }
         catch (Exception ex) when (ex is not OperationCanceledException)
         {
-            logger.Error(ex, "RAG generation failed for {Question}", question.Text);
+            logger.LogError(ex, "RAG generation failed for {Question}", question.Text);
             response = "⚠️  Generation failed. Check the Ollama service and retry.";
         }
 
         sw.Stop();
 
-        logger.Information("RAG generation completed in {Elapsed}", sw.Elapsed);
+        logger.LogInformation("RAG generation completed in {Elapsed}", sw.Elapsed);
 
         if (configWrapper.Value.ApplicationOptions.IncludeOriginalPrompt)
         {
             response += finalPrompt.ShowPrompt();
             response += Environment.NewLine;
             response += request.System;
-            logger.Debug("Original prompt appended to response (IncludeOriginalPrompt = true).");
+            logger.LogDebug("Original prompt appended to response (IncludeOriginalPrompt = true).");
         }
 
         await SaveResponseAsync(new ResponseRecord(question, response, sw.FormatElapsedTime()), cancellationToken).ConfigureAwait(false);
@@ -91,10 +90,10 @@ public sealed class RagOrchestrator(
     /// <example><![CDATA[await SaveResponseAsync(new ResponseRecord(q, txt, "1.2s"), ct);]]></example>
     private async Task SaveResponseAsync(ResponseRecord details, CancellationToken cancellationToken)
     {
-        logger.Debug("Saving response for question {QuestionId}", details.Question.Filename);
+        logger.LogDebug("Saving response for question {QuestionId}", details.Question.Filename);
         var path = await saveService.WriteResponseAsync(details, cancellationToken)
             .ConfigureAwait(false);
-        logger.Information("Response saved to: {Path}", path);
+        logger.LogInformation("Response saved to: {Path}", path);
         writer.WriteLine();
         writer.MarkupLine($"[red underline]{path}[/]");
     }
@@ -107,10 +106,10 @@ public sealed class RagOrchestrator(
     /// <returns>Generated text.</returns>
     private async Task<string> GenerateAsync(GenerateRequest request, CancellationToken cancellationToken)
     {
-        logger.Debug("Invoking Ollama generation with model {Model}", request.Model);
+        logger.LogDebug("Invoking Ollama generation with model {Model}", request.Model);
 
         var response = await ollamaProvider.GenerateResponse(request, cancellationToken).ConfigureAwait(false);
-        logger.Debug("Ollama generation returned {Length} characters", response?.Length ?? 0);
+        logger.LogDebug("Ollama generation returned {Length} characters", response?.Length ?? 0);
         return response ?? "No response returned.";
     }
 }

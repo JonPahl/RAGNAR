@@ -19,12 +19,12 @@ global using Qdrant.Client;
 global using Qdrant.Client.Grpc;
 
 global using Ragnar.Core.Options;
-global using Ragnar.Core.Rendering.Decorators;
 global using Ragnar.Core.Utils;
 global using Ragnar.Core.Validation;
 
 global using Spectre.Console;
 global using Spectre.Console.Rendering;
 global using Ragnar.Core.Enums;
-global using System.Text.RegularExpressions;
 global using System.Globalization;
+global using Ragnar.Plugins.Utils;
+global using Microsoft.Extensions.Logging;

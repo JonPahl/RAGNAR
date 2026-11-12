@@ -1,8 +1,7 @@
 ﻿namespace Ragnar.Abstractions;
 
-/// <summary>Defines the contract for orchestrating the RAG question-to-answer pipeline.</summary>
-/// <remarks>Implemented by RagOrchestrator to embed, retrieve, and generate responses.</remarks>
-/// <example><![CDATA[var p = sp.GetRequiredService<IRagOrchestrator>();]]></example>
+/// <summary>Orchestrates the full RAG pipeline: prompt building, Ollama generation, and response persistence.</summary>
+/// <example><![CDATA[await pipeline.ExecuteAsync(question, ctx, ct);]]></example>
 public interface IRagOrchestrator
 {
     /// <summary>Executes the RAG pipeline for a Question.</summary>

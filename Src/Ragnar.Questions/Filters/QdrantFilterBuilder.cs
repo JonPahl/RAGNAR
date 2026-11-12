@@ -12,15 +12,19 @@ public sealed class QdrantFilterBuilder
 
     private readonly List<Condition> _should = [];
 
+    private static void GuardField(string field) =>
+    Guard.Against.NullOrWhiteSpace(field);
+
     /// <summary>Adds a keyword match-exclusion condition.</summary>
     /// <param name="field">The payload field to match.</param>
     /// <param name="value">The keyword value to exclude.</param>
     /// <returns>The builder for chaining.</returns>
-    /// <example><![CDATA[builder.AddExclusion("category", "skip");]]></example>
-    public QdrantFilterBuilder AddExclusion(string field, string value)
+    /// <example><![CDATA[builder.AddMustNotMatch("category", "skip");]]></example>
+    public QdrantFilterBuilder AddMustNotMatch(string field, string value)
     {
+        GuardField(field);
+        Guard.Against.Null(value);
         _mustNot.Add(Conditions.MatchKeyword(field, value));
-
         return this;
     }
 
@@ -28,11 +32,12 @@ public sealed class QdrantFilterBuilder
     /// <param name="field">The payload field to match against.</param>
     /// <param name="value">The keyword value that must be present.</param>
     /// <returns>The builder instance for fluent chaining.</returns>
-    /// <example><![CDATA[[builder.AddMatch("Category", "XML");]]></example>
-    public QdrantFilterBuilder AddMatch(string field, string value)
+    /// <example><![CDATA[[builder.AddMustMatch("Category", "XML");]]></example>
+    public QdrantFilterBuilder AddMustMatch(string field, string value)
     {
+        GuardField(field);
+        Guard.Against.Null(value);
         _must.Add(Conditions.MatchKeyword(field, value));
-
         return this;
     }
 
@@ -44,6 +49,8 @@ public sealed class QdrantFilterBuilder
     /// <example><![CDATA[builder.AddRange("CommentLength", 50, 500);]]></example>
     public QdrantFilterBuilder AddRange(string field, double? gte = null, double? lte = null)
     {
+        GuardField(field);
+
         var range = new Range();
 
         if (gte is null && lte is null)
@@ -94,8 +101,11 @@ public sealed class QdrantFilterBuilder
     /// <param name="gte">Greater-than-or-equal bound (optional).</param>
     /// <param name="lte">Less-than-or-equal bound (optional).</param>
     /// <returns>The builder instance for fluent chaining.</returns>
-    public QdrantFilterBuilder AddExclusionRange(string field, double? gte = null, double? lte = null)
+    /// <example><![CDATA[builder.AddMustNotRange("CommentLength", null, 500);]]></example>
+    public QdrantFilterBuilder AddMustNotRange(string field, double? gte = null, double? lte = null)
     {
+        GuardField(field);
+
         if (gte is null && lte is null)
             throw new ArgumentException("At least one of gte or lte must be provided.");
 
@@ -108,13 +118,80 @@ public sealed class QdrantFilterBuilder
         return this;
     }
 
+    /// <summary>Adds a keyword match condition to the positive "should" filter set.</summary>
+    /// <param name="field">The payload field to match against.</param>
+    /// <param name="value">The keyword value that may be present.</param>
+    /// <returns>The builder instance for fluent chaining.</returns>
+    /// <example><![CDATA[builder.AddShouldMatch("Category", "XML");]]></example>
+    public QdrantFilterBuilder AddShouldMatch(string field, string value)
+    {
+        GuardField(field);
+        _should.Add(Conditions.MatchKeyword(field, value));
+        return this;
+    }
+
+    /// <summary>Adds an is-null condition requiring the field to be absent.</summary>
+    /// <param name="field">The payload field expected to be null.</param>
+    /// <returns>The builder instance for fluent chaining.</returns>
+    /// <example><![CDATA[builder.AddIsNull("CommentText");]]></example>
+    public QdrantFilterBuilder AddIsNull(string field)
+    {
+        GuardField(field);
+        _must.Add(new Condition { IsNull = new IsNullCondition { Key = field } });
+        return this;
+    }
+
+    /// <summary>Adds an is-not-null condition requiring the field to be present.</summary>
+    /// <param name="field">The payload field expected to have a value.</param>
+    /// <returns>The builder instance for fluent chaining.</returns>
+    /// <example><![CDATA[builder.AddIsNotNull("SourceFile");]]></example>
+    public QdrantFilterBuilder AddIsNotNull(string field)
+    {
+        GuardField(field);
+
+        _mustNot.Add(new Condition
+        {
+            IsNull = new IsNullCondition { Key = field }
+        });
+
+        return this;
+    }
+
+    /// <summary>Adds an except-keywords condition excluding the given values from a field.</summary>
+    /// <param name="field">The payload field containing keywords.</param>
+    /// <param name="keywords">Enumerable of keyword values to exclude.</param>
+    /// <returns>The builder instance for fluent chaining.</returns>
+    /// <example><![CDATA[builder.AddExceptKeywords("Category", new[]{"Test","Tests"});]]></example>
+    public QdrantFilterBuilder AddExceptKeywords(string field, IEnumerable<string> keywords)
+    {
+        GuardField(field);
+        var list = keywords as IReadOnlyCollection<string> ?? [.. keywords];
+        if (list.Count == 0) return this;
+        _must.Add(new Condition
+        {
+            Field = new FieldCondition
+            {
+                Key = field,
+                Match = new Match { ExceptKeywords = new RepeatedStrings { Strings = { list } } }
+            }
+        });
+        return this;
+    }
+
+    /// <summary>Removes all accumulated must, mustNot, and should filter conditions.</summary>
+    /// <returns>The builder instance for fluent chaining.</returns>
+    /// <example><![CDATA[builder.Clear();]]></example>
     public QdrantFilterBuilder Clear()
-    { _must.Clear(); _mustNot.Clear(); _should.Clear(); return this; }
+    {
+        _must.Clear();
+        _mustNot.Clear();
+        _should.Clear();
+        return this;
+    }
 
     /// <summary>Indicates whether no filter conditions have been added yet.</summary>
+    /// <example><![CDATA[bool empty = builder.IsEmpty;]]></example>
     public bool IsEmpty => _must.Count == 0 && _mustNot.Count == 0 && _should.Count == 0;
-
-    private static Condition CloneCondition(Condition c) => c.Clone();
 
     /// <summary>Builds and returns the final Qdrant <see cref="Filter"/> instance.</summary>
     /// <returns>A composed filter with must and mustNot conditions.</returns>
@@ -134,4 +211,18 @@ public sealed class QdrantFilterBuilder
             Should = { _should }
         };
     }
+
+    /// <summary>Non-throwing variant; returns <c>false</c> if the builder is empty.</summary>
+    /// <param name="filter">The composed filter, or null if the builder is empty.</param>
+    /// <returns><c>true</c> if a filter was produced; <c>false</c> if the builder is empty.</returns>
+    /// <example><![CDATA[if (builder.TryBuild(out var f)) { use f; }]]></example>
+    public bool TryBuild(out Filter filter)
+    {
+        if (IsEmpty) { filter = null!; return false; }
+        filter = Build();
+        return true;
+    }
+
+    public override string ToString() =>
+        $"QdrantFilterBuilder[must:{_must.Count} mustNot:{_mustNot.Count} should:{_should.Count}]";
 }

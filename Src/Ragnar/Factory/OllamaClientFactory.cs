@@ -6,7 +6,7 @@
 /// <param name="httpClientFactory">DI factory for creating configured HttpClient instances.</param>
 /// <param name="ragnarConfig">Ragnar config with host, port, model, and timeout values.</param>
 /// <remarks>Clients are cached per OllamaServiceType to avoid repeated construction.</remarks>
-/// <example><![CDATA[var client = factory.ResolveClient(OllamaServiceType.Ollama);]]></example>
+/// <example><![CDATA[var client = factory.GetClient(OllamaServiceType.Ollama);]]></example>
 public class OllamaClientFactory(
     IHttpClientFactory httpClientFactory, IOptions<RagnarConfig> ragnarConfig)
     : IOllamaClientFactory
@@ -14,7 +14,7 @@ public class OllamaClientFactory(
 
     /// <summary>Caches resolved OllamaApiClient instances keyed by service type.</summary>
     /// <value>A ConcurrentDictionary mapping OllamaServiceType to OllamaApiClient.</value>
-    /// <example><![CDATA[// Internal; populated via ResolveClient.]]></example>
+    /// <example><![CDATA[// Internal; populated via GetClient.]]></example>
     private readonly ConcurrentDictionary<OllamaServiceType, OllamaApiClient> _cache = new();
 
     /// <summary>Holds the RagnarConfig snapshot captured at construction time.</summary>
@@ -29,9 +29,9 @@ public class OllamaClientFactory(
     /// <returns>An implementation of <see cref="OllamaApiClient"/>.</returns>
     /// <exception cref="ArgumentOutOfRangeException">Thrown when an unsupported OllamaServiceType is provided.</exception>
     /// <example>
-    /// <![CDATA[ var client = factory.ResolveClient(OllamaServiceType.Ollama); ]]>
+    /// <![CDATA[ var client = factory.GetClient(OllamaServiceType.Ollama); ]]>
     /// </example>
-    public IOllamaApiClient ResolveClient(OllamaServiceType serviceType)
+    public IOllamaApiClient GetClient(OllamaServiceType serviceType)
     {
         return _cache.GetOrAdd(serviceType, (t, self) => t switch
         {
@@ -64,9 +64,6 @@ public class OllamaClientFactory(
     /// <example><![CDATA[var http = factory.CreateHttpClient(OllamaServiceType.Ollama);]]></example>
     private HttpClient CreateHttpClient(OllamaServiceType type)
     {
-        //var host = NormalizeHost(_config.OllamaOptions.Host);
-        //var port = ValidatePort(_config.OllamaOptions.Port);
-
         var client = httpClientFactory.CreateClient(nameof(Ollama));
         client.BaseAddress = _config.OllamaOptions.Host;
         client.Timeout = type switch
@@ -77,36 +74,5 @@ public class OllamaClientFactory(
         };
 
         return client;
-    }
-
-    /// <summary>Ensures the host string is a valid absolute URI.</summary>
-    /// <param name="host">Host value from configuration.</param>
-    /// <returns>A normalized absolute URI string.</returns>
-    /// <exception cref="ArgumentException">Thrown when host is empty or invalid.</exception>
-    /// <example><![CDATA[var uri = OllamaClientFactory.NormalizeHost("localhost");]]></example>
-    private static string NormalizeHost(string host)
-    {
-        ArgumentException.ThrowIfNullOrEmpty(host);
-
-        var normalized = host.StartsWith("http", StringComparison.OrdinalIgnoreCase)
-            ? host
-            : $"http://{host}";
-
-        if (!Uri.TryCreate(normalized, UriKind.Absolute, out _))
-            throw new ArgumentException($"Cannot create a valid URI from host: '{host}'.");
-
-        return normalized;
-    }
-
-    /// <summary>Validates that a port number is within the 1–65535 range.</summary>
-    /// <param name="port">The port value from configuration to validate.</param>
-    /// <returns>The validated port number.</returns>
-    /// <exception cref="ArgumentOutOfRangeException">Thrown when port is out of range.</exception>
-    /// <example><![CDATA[int p = OllamaClientFactory.ValidatePort(11434);]]></example>
-    private static int ValidatePort(int port)
-    {
-        if (port is < 1 or > 65535)
-            throw new ArgumentOutOfRangeException(nameof(port), port, "Port must be between 1 and 65535.");
-        return port;
     }
 }

@@ -1,6 +1,4 @@
-﻿using Ragnar.Plugins.Utils;
-
-namespace Ragnar.Core.Models;
+﻿namespace Ragnar.Core.Models;
 
 public static class QuestionExtensions
 {

@@ -2,15 +2,15 @@
 
 /// <summary>Validates files against the provided load options.</summary>
 /// <example>
-/// <![CDATA[bool ok = validator.IsValid(fileInfo, loadOptions);]]></example>
-internal sealed class FileValidator : IFileEligibilityValidator
+/// <![CDATA[bool ok = validator.ShouldInclude(fileInfo, loadOptions);]]></example>
+internal sealed class FileValidator : IFileInclusionFilter
 {
     /// <summary>Determines whether a file passes extension and exclusion rules.</summary>
     /// <param name="file">The file system entry to validate.</param>
     /// <param name="fileLoadOptions">Configured extensions and exclusion lists.</param>
     /// <returns><c>true</c> if the file is allowed; otherwise <c>false</c>.</returns>
-    /// <example><![CDATA[bool ok = svc.IsValid(new FileInfo("a.cs"), opts);]]></example>
-    public bool IsValid(FileInfo file, in FileLoadOptions fileLoadOptions)
+    /// <example><![CDATA[bool ok = svc.ShouldInclude(new FileInfo("a.cs"), opts);]]></example>
+    public bool ShouldInclude(FileInfo file, in FileLoadOptions fileLoadOptions)
     {
         var dir = file.DirectoryName ?? string.Empty;
         var fileName = file.Name;

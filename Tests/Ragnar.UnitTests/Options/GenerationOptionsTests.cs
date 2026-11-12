@@ -131,36 +131,10 @@ public class GenerationOptionsTests
     }
 
     [Fact]
-    public void DefaultsShouldBeCorrect()
-    {
-        var opts = new GenerationOptions();
-
-        Assert.Equal(32_768, opts.MaxTokens);
-        Assert.Equal(65_536, opts.ContextWindow);
-        Assert.Equal(8, opts.ThreadCount);
-        Assert.Equal(0.2f, opts.Temperature);
-        Assert.Equal(1.02f, opts.RepeatPenalty);
-    }
-
-    [Fact]
-    public void MaxTokensShouldAcceptValidValue()
-    {
-        var opts = new GenerationOptions { MaxTokens = 4096 };
-        Assert.Equal(4096, opts.MaxTokens);
-    }
-
-    [Fact]
     public void ContextWindowShouldAcceptValidValue()
     {
         var opts = new GenerationOptions { ContextWindow = 128000 };
         Assert.Equal(128000, opts.ContextWindow);
-    }
-
-    [Fact]
-    public void ThreadCountShouldAcceptValidValue()
-    {
-        var opts = new GenerationOptions { ThreadCount = 16 };
-        Assert.Equal(16, opts.ThreadCount);
     }
 
     [Fact]

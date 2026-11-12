@@ -19,7 +19,7 @@ public class FilterBuilderTests
     public void AddMatchShouldAddToMustConditions()
     {
         // Act
-        var result = _sut.AddMatch("Category", "XML");
+        var result = _sut.AddMustMatch("Category", "XML");
 
         // Assert
         Assert.Same(_sut, result);
@@ -30,7 +30,7 @@ public class FilterBuilderTests
     public void AddExclusionShouldAddToMustNotConditions()
     {
         // Act
-        var result = _sut.AddExclusion("Category", "Skip");
+        var result = _sut.AddMustNotMatch("Category", "Skip");
 
         // Assert
         Assert.Same(_sut, result);
@@ -91,7 +91,7 @@ public class FilterBuilderTests
     public void AddExclusionRangeShouldAddToMustNot()
     {
         // Act
-        var result = _sut.AddExclusionRange("Length", gte: 50, lte: 200);
+        var result = _sut.AddMustNotRange("Length", gte: 50, lte: 200);
 
         // Assert
         Assert.Same(_sut, result);
@@ -108,7 +108,7 @@ public class FilterBuilderTests
     public void BuildWithConditionsShouldReturnFilter()
     {
         // Arrange
-        _sut.AddMatch("Field", "Value");
+        _sut.AddMustMatch("Field", "Value");
 
         // Act
         var result = _sut.Build();
@@ -122,7 +122,7 @@ public class FilterBuilderTests
     public void BuildWithExclusionsShouldIncludeMustNot()
     {
         // Arrange
-        _sut.AddExclusion("Field", "BadValue");
+        _sut.AddMustNotMatch("Field", "BadValue");
 
         // Act
         var result = _sut.Build();
@@ -136,9 +136,9 @@ public class FilterBuilderTests
     public void BuildWithMultipleConditionsShouldIncludeAll()
     {
         // Arrange
-        _sut.AddMatch("A", "1")
-           .AddMatch("B", "2")
-           .AddExclusion("C", "3");
+        _sut.AddMustMatch("A", "1")
+           .AddMustMatch("B", "2")
+           .AddMustNotMatch("C", "3");
 
         // Act
         var result = _sut.Build();

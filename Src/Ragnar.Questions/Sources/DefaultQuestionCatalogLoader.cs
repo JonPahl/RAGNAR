@@ -11,7 +11,7 @@
 /// var questions = loader.LoadQuestions(true, categories);
 /// </code>
 /// </example>
-public class DefaultQuestionCatalogLoader(Serilog.ILogger logger, IOutputWriter writer)
+public class DefaultQuestionCatalogLoader(ILogger logger, IOutputWriter writer)
     : IQuestionCatalogLoader
 {
 
@@ -57,7 +57,7 @@ public class DefaultQuestionCatalogLoader(Serilog.ILogger logger, IOutputWriter 
             return LoadQuestionCategories.All();
         }
 
-        logger.Information("📊 Processing categories: ({Cat})", string.Join(", ", _categories));
+        logger.LogInformation("📊 Processing categories: ({Cat})", string.Join(", ", _categories));
 
         return _categories.Count == 0
         ? LoadQuestionCategories.All()

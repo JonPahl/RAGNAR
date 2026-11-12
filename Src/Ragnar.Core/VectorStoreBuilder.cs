@@ -1,12 +1,17 @@
-﻿namespace Ragnar.Core;
+﻿
+
+namespace Ragnar.Core;
 
 /// <summary>Builds and manages a Qdrant vector store collection with indices.</summary>
 /// <remarks>Ensures collection existence, creates it if absent, and generates payload indices.</remarks>
 /// <example><![CDATA[await new VectorStoreBuilder(log, opts, qdrant).BuildAsync(ct);]]></example>
-public sealed class VectorStoreBuilder(Serilog.ILogger logger, IOptions<RagnarConfig> options, IQdrantClient qdrant)
+public sealed class VectorStoreBuilder(
+    ILogger logger,
+    IOptions<RagnarConfig> options,
+    IQdrantClient qdrant)
     : IVectorStoreBuilder
 {
-    private readonly Serilog.ILogger _logger = Guard.Against.Null(logger);
+    private readonly ILogger _logger = Guard.Against.Null(logger);
     private readonly IQdrantClient _qdrant = Guard.Against.Null(qdrant);
 
     private bool _exists;
@@ -25,7 +30,7 @@ public sealed class VectorStoreBuilder(Serilog.ILogger logger, IOptions<RagnarCo
         if (!_exists)
         {
             await CreateAsync(ct).ConfigureAwait(false);
-            _logger.Information("Collection {Name} created.", VectorStoreName);
+            _logger.LogInformation("Collection {Name} created.", VectorStoreName);
         }
         return this;
     }
@@ -78,7 +83,7 @@ public sealed class VectorStoreBuilder(Serilog.ILogger logger, IOptions<RagnarCo
         {
             await CreateAsync(cancellationToken)
                 .ConfigureAwait(false);
-            _logger.Information("Collection {Name} created.", VectorStoreName);
+            _logger.LogInformation("Collection {Name} created.", VectorStoreName);
         }
 
         if (indexes is not null)
