@@ -3,7 +3,7 @@
 public class FileParserTests
 {
     private readonly Mock<IOptions<RagnarConfig>> _configMock;
-    private readonly Mock<ILogger> _loggerMock;
+    private readonly Mock<Microsoft.Extensions.Logging.ILogger> _loggerMock = new();
     private readonly MarkdownFileParser _sut;
     private readonly RagnarConfig _config;
 
@@ -44,7 +44,6 @@ public class FileParserTests
         _configMock = new Mock<IOptions<RagnarConfig>>();
         _configMock.Setup(o => o.Value).Returns(_config);
 
-        _loggerMock = new Mock<ILogger>();
         _sut = new MarkdownFileParser(_configMock.Object, _loggerMock.Object);
     }
 

@@ -5,7 +5,9 @@
 /// <param name="writer">Console output writer used for branding display.</param>
 /// <remarks>Caches version string on initialization for rendering performance.</remarks>
 /// <example><![CDATA[header.RenderBranding();]]></example>
-public sealed class ApplicationHeader(Serilog.ILogger logger, IOutputWriter writer)
+public sealed class ApplicationHeader(
+    ILogger logger,
+    IOutputWriter writer)
     : IApplicationHeader
 {
     /// <summary>Caches the current assembly informational version string.</summary>
@@ -16,17 +18,14 @@ public sealed class ApplicationHeader(Serilog.ILogger logger, IOutputWriter writ
     /// <example><![CDATA[header.RenderBranding();]]></example>
     public void RenderBranding()
     {
-        logger.Debug("Rendering application branding, version {Version}", _versionNumber);
+        logger.LogDebug("Rendering application branding, version {Version}", _versionNumber);
 
-        var TITLE = Resources.Title; //"Ragnar";
-        var TAGLINE = Resources.Tagline; //"Smart, recursive code reasoning — from query to solution.";
-
-        var tagLine2 = new Text(TAGLINE, Styles.BoldSteelBlue) { Justification = Justify.Center };
+        var tagLine2 = new Text(Resources.Tagline, Styles.BoldSteelBlue) { Justification = Justify.Center };
 
         var versionText = $"Version {_versionNumber}";
         var version = new Text(versionText, new Style(Color.Grey)) { Justification = Justify.Center };
 
-        writer.Write(new Text($"{TITLE} ({TAGLINE})", Styles.BoldBlue));
+        writer.Write(new Text($"{Resources.Title} ({Resources.Tagline})", Styles.BoldBlue));
         writer.Write(version);
         writer.WriteLine();
         writer.Write(tagLine2);
@@ -34,6 +33,6 @@ public sealed class ApplicationHeader(Serilog.ILogger logger, IOutputWriter writ
         writer.WriteRule();
         writer.WriteLine();
 
-        logger.Debug("Application branding rendered.");
+        logger.LogDebug("Application branding rendered.");
     }
 }

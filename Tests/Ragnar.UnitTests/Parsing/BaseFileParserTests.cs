@@ -2,13 +2,12 @@
 
 public class BaseFileParserTests : IDisposable
 {
-    private readonly Mock<Serilog.ILogger> _loggerMock;
+    private readonly Mock<Microsoft.Extensions.Logging.ILogger> _loggerMock = new();
     private readonly TestFileParser _sut;
     private string _tempFile;
 
     public BaseFileParserTests()
     {
-        _loggerMock = new Mock<Serilog.ILogger>();
         _sut = new TestFileParser(_loggerMock.Object);
         _tempFile = Path.GetTempFileName();
     }
@@ -61,9 +60,10 @@ public class BaseFileParserTests : IDisposable
     {
         if (File.Exists(_tempFile))
             File.Delete(_tempFile);
+        GC.SuppressFinalize(this);
     }
 
-    private sealed class TestFileParser(ILogger logger) : BaseFileParser(logger)
+    private sealed class TestFileParser(Microsoft.Extensions.Logging.ILogger logger) : BaseFileParser(logger, [".test"])
     {
         public override Task<IEnumerable<CodeDocument>> ParseAsync(string filePath, CancellationToken cancellationToken)
             => Task.FromResult<IEnumerable<CodeDocument>>([]);

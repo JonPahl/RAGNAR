@@ -4,7 +4,7 @@
 /// <example><![CDATA[await stage.ExecuteAsync(ctx, ct);]]></example>
 public sealed class ParsingStage(
     IFileParseFactory parseFactory,
-    Serilog.ILogger logger)
+    ILogger logger)
     : IPipelineStage<EmbeddingContext>
 {
     /// <summary>Gets the human-readable stage name for progress display.</summary>
@@ -30,7 +30,7 @@ public sealed class ParsingStage(
         var files = context.DiscoveredFiles;
         if (files.Count == 0)
         {
-            logger.Information("No files to parse. Skipping.");
+            logger.LogInformation("No files to parse. Skipping.");
             return;
         }
 
@@ -74,6 +74,6 @@ public sealed class ParsingStage(
             }).ConfigureAwait(false);
 
         context.Documents = [.. documents];
-        logger.Information("Parsed {Count} code document(s).", context.Documents.Count);
+        logger.LogInformation("Parsed {Count} code document(s).", context.Documents.Count);
     }
 }

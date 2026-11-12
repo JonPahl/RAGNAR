@@ -2,7 +2,7 @@
 
 public class VectorStoreRepositoryTests
 {
-    private readonly Mock<Serilog.ILogger> _loggerMock;
+    private readonly Mock<Microsoft.Extensions.Logging.ILogger> _loggerMock = new();
     private readonly Mock<IEmbeddingService> _embeddingMock;
     private readonly Mock<IQdrantClient> _qdrantMock;
     private readonly Mock<IQdrantPointFactory> _generatorMock;
@@ -11,7 +11,6 @@ public class VectorStoreRepositoryTests
 
     public VectorStoreRepositoryTests()
     {
-        _loggerMock = new Mock<Serilog.ILogger>();
         _embeddingMock = new Mock<IEmbeddingService>();
         _qdrantMock = new Mock<IQdrantClient>();
         _generatorMock = new Mock<IQdrantPointFactory>();

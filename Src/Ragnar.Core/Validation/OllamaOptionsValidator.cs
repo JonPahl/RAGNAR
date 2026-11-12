@@ -11,8 +11,6 @@ public class OllamaOptionsValidator : AbstractValidator<OllamaOptions>
     /// </example>
     public OllamaOptionsValidator()
     {
-        const RegexOptions options = default;
-
         RuleFor(x => x.Host)
             .NotNull()
             .NotEmpty().WithMessage("Ollama endpoint is required.")

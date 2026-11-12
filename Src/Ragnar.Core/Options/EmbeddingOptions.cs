@@ -1,6 +1,7 @@
 ﻿namespace Ragnar.Core.Options;
 
 /// <summary>Provides configuration options for embedding service connectivity and behavior.</summary>
+/// <example><![CDATA[var o = new EmbeddingOptions { Host = new Uri("http://localhost") };]]></example>
 public record EmbeddingOptions
 {
     /// <summary>The host URL for the embedding service endpoint.</summary>

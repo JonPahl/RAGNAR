@@ -49,7 +49,6 @@ public class EmbeddingSetupExtensionTests
     {
         var services = new ServiceCollection();
         services.AddLogging();
-
         services.EmbeddingSetup();
 
         var sp = services.BuildServiceProvider();
@@ -190,6 +189,7 @@ public class EmbeddingSetupExtensionTests
 
         // Act
         services.EmbeddingSetup();
+        services.AddLogging();
         services.EmbeddingSetup();
 
         // Assert – no crash, descriptors still resolvable

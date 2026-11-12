@@ -41,7 +41,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.14" />
     <PackageReference Include="Microsoft.SemanticKernel" Version="1.81.0" />
-    <PackageReference Include="OllamaSharp" Version="5.5.0" />
+    <PackageReference Include="OllamaSharp" Version="5.5.2" />
     <PackageReference Include="Qdrant.Client" Version="1.20.0" />
     <PackageReference Include="Roslynator.Analyzers" Version="5.0.1">
       <PrivateAssets>all</PrivateAssets>
@@ -57,6 +57,8 @@
     </PackageReference>
     <PackageReference Include="Serilog" Version="4.4.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="10.0.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
   </ItemGroup>
 
   <ItemGroup>

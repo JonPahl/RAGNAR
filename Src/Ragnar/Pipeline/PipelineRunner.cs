@@ -1,41 +1,47 @@
 ﻿namespace Ragnar.Pipeline;
 
 /// <summary>Orchestrates sequential execution of pipeline stages with retry and progress tracking.</summary>
-/// <param name="logger"></param>
+/// <param name="logger">The logger used to record pipeline and stage execution events.</param>
 /// <remarks>Thread-safe stage registration; supports reorder, remove, and per-stage retry policies.</remarks>
 /// <example><![CDATA[await runner.AddStage(s).ExecuteAsync(ctx, ct);]]></example>
-public sealed class PipelineRunner<TContext>(Serilog.ILogger logger)
+public sealed class PipelineRunner<TContext>(ILogger logger)
     : BasePipeline<TContext> where TContext : class
 {
-    private readonly List<Func<StageExecutionContext<TContext>, Func<Task>, CancellationToken, Task>> _middlewares = [];
+    private readonly List<Func<StageExecutionContext<TContext>, Func<Task>, CancellationToken, Task>> _middlewareChain = [];
 
-    public PipelineRunner<TContext> UseMiddleware(
+    /// <summary>Registers middleware to wrap the execution of each pipeline stage.</summary>
+    /// <param name="middleware">The delegate that runs before and/or after the next middleware or stage.</param>
+    /// <returns>This runner for fluent chaining.</returns>
+    /// <example><![CDATA[runner.UseMiddleware((ctx, next, ct) => next());]]></example>
+    public override IPipeline<TContext> UseMiddleware(
         Func<StageExecutionContext<TContext>, Func<Task>, CancellationToken, Task> middleware)
     {
         Guard.Against.Null(middleware);
-        lock (_gate)
-        {
-            _middlewares.Add(middleware);
-        }
+        lock (_registrationLock)
+            _middlewareChain.Add(middleware);
         return this;
     }
 
-    /// <summary>
-    /// Convenience overload that accepts a <see cref="StageTimingMiddleware"/> instance directly.
-    /// </summary>
-    /// <example><![CDATA[runner.UseTiming();]]></example>
-    public PipelineRunner<TContext> UseTiming(StageTimingMiddleware timing) =>
-        UseMiddleware((ctx, next, ct) => timing.Invoke(ctx, next, ct));
+    /// <summary>Registers timing middleware to measure stage execution duration.</summary>
+    /// <param name="middleware">The timing middleware instance to apply to each stage.</param>
+    /// <returns>This runner for fluent chaining.</returns>
+    /// <example><![CDATA[runner.UseTiming(timingMiddleware);]]></example>
+    public IPipeline<TContext> UseTiming(StageTimingMiddleware middleware) => UseMiddleware((ctx, next, ct) => middleware.Invoke(ctx, next, ct));
 
-    // --- Internal: build the composed delegate for one stage execution ---
-    private async Task ExecuteStageWithMiddlewareAsync(
+    /// <summary>Executes a single stage with all registered middleware applied.</summary>
+    /// <param name="ctx">The stage execution context for the current stage.</param>
+    /// <param name="coreExecution">The innermost delegate that runs the stage logic.</param>
+    /// <param name="ct">Cancellation token propagated through the middleware chain.</param>
+    /// <returns>A task that completes when all middleware and the stage finish.</returns>
+    /// <example><![CDATA[await runner.ExecuteStageAsync(ctx, core, ct);]]></example>
+    private async Task ExecuteStageAsync(
         StageExecutionContext<TContext> ctx,
         Func<Task> coreExecution,
         CancellationToken ct)
     {
         List<Func<StageExecutionContext<TContext>, Func<Task>, CancellationToken, Task>> snapshot;
-        lock (_gate)
-            snapshot = [.. _middlewares];
+        lock (_registrationLock)
+            snapshot = [.. _middlewareChain];
 
         // Build the onion: last middleware wraps the actual stage call.
         var pipeline = coreExecution;
@@ -50,15 +56,16 @@ public sealed class PipelineRunner<TContext>(Serilog.ILogger logger)
     }
 
     /// <summary>Mutual-exclusion lock protecting concurrent stage registration and reordering.</summary>
-    /// <example><![CDATA[lock (runner._gate) { runner._stages.Add(stage); }]]></example>
-    private readonly Lock _gate = new();
+    /// <example><![CDATA[lock (runner._registrationLock) { runner._stages.Add(stage); }]]></example>
+    private readonly Lock _registrationLock = new();
 
     /// <summary>Ordered list of registered pipeline stage entries with retry policies.</summary>
     /// <example><![CDATA[foreach (var s in runner._stages) { ... }]]></example>
-    private readonly List<StageEntry<TContext>> _stages = [];
+    private readonly List<StageDescriptor<TContext>> _stages = [];
 
     /// <summary>Registers a pipeline stage, enforcing unique names.</summary>
     /// <param name="stage">The stage to add to the execution sequence.</param>
+    /// <param name="policy">Optional asynchronous policy for retrying the stage when execution fails.</param>
     /// <returns>The runner instance for fluent chaining.</returns>
     /// <example><![CDATA[runner.AddStage(parsingStage);]]></example>
     public override IPipeline<TContext> AddStage(
@@ -67,26 +74,29 @@ public sealed class PipelineRunner<TContext>(Serilog.ILogger logger)
     {
         Guard.Against.Null(stage);
 
-        lock (_gate)
+        lock (_registrationLock)
         {
             if (_stages.Any(x => x.PipelineStage.Name == stage.Name)) throw new ArgumentException($"Stage '{stage.Name}' is already registered.", nameof(stage));
 
-            _stages.Add(new StageEntry<TContext>(stage, policy));
+            _stages.Add(new StageDescriptor<TContext>(stage, policy));
         }
         return this;
     }
 
     /// <summary>Gets the ordered list of registered pipeline stage display names.</summary>
+    /// <returns>A read-only list of registered stage display names in order.</returns>
+    /// <example><![CDATA[var names = runner.StageNames;]]></example>
     public IReadOnlyList<string> StageNames
     {
-        get { lock (_gate) return _stages.ConvertAll(s => s.PipelineStage.Name).AsReadOnly(); }
+        get { lock (_registrationLock) return _stages.ConvertAll(s => s.PipelineStage.Name).AsReadOnly(); }
     }
 
     /// <summary>Removes all registered pipeline stages and returns the runner for chaining.</summary>
     /// <returns>The runner instance with an empty stage list.</returns>
+    /// <example><![CDATA[runner.ClearStages();]]></example>
     public IPipeline<TContext> ClearStages()
     {
-        lock (_gate) _stages.Clear();
+        lock (_registrationLock) _stages.Clear();
         return this;
     }
 
@@ -95,6 +105,7 @@ public sealed class PipelineRunner<TContext>(Serilog.ILogger logger)
     /// <param name="newStage">The replacement stage instance.</param>
     /// <param name="policy">Optional retry policy for the new stage.</param>
     /// <returns>The runner instance for fluent chaining.</returns>
+    /// <example><![CDATA[runner.ReplaceStage("OldStage", newStage, policy);]]></example>
     public IPipeline<TContext> ReplaceStage(string oldName, IPipelineStage<TContext> newStage, IAsyncPolicy? policy = null)
     {
         var oldIdx = _stages.IndexOf(_stages.Find(x => x.PipelineStage.Name == oldName));
@@ -115,7 +126,7 @@ public sealed class PipelineRunner<TContext>(Serilog.ILogger logger)
     /// <example><![CDATA[runner.RemoveStage("Parsing");]]></example>
     public override IPipeline<TContext> RemoveStage(string name)
     {
-        lock (_gate)
+        lock (_registrationLock)
             _stages.RemoveAll(s => s.PipelineStage.Name == name);
 
         return this;
@@ -128,7 +139,7 @@ public sealed class PipelineRunner<TContext>(Serilog.ILogger logger)
     /// <example><![CDATA[runner.Reorder("Parsing", 0);]]></example>
     public override IPipeline<TContext> Reorder(string fromName, int newIndex)
     {
-        lock (_gate)
+        lock (_registrationLock)
         {
             var entry = _stages.FirstOrDefault(s => s.PipelineStage.Name == fromName)
                         ?? throw new KeyNotFoundException(fromName);
@@ -147,8 +158,8 @@ public sealed class PipelineRunner<TContext>(Serilog.ILogger logger)
     public override async Task<TContext> ExecuteAsync(TContext context, CancellationToken ct)
     {
         var totalSw = Stopwatch.StartNew();
-        List<StageEntry<TContext>> snapshot;
-        lock (_gate) snapshot = [.. _stages];
+        List<StageDescriptor<TContext>> snapshot;
+        lock (_registrationLock) snapshot = [.. _stages];
 
         for (var i = 0; i < snapshot.Count; i++)
         {
@@ -156,41 +167,41 @@ public sealed class PipelineRunner<TContext>(Serilog.ILogger logger)
             var stage = entry.PipelineStage;
             if (!stage.ShouldRun(context))
             {
-                logger.Information("Skipping stage [{Index}]: {Name}", i, stage.Name);
+                logger.LogInformation("Skipping stage [{Index}]: {Name}", i, stage.Name);
                 continue;
             }
 
-            logger.Information("Starting stage [{Index}/{Total}]: {Name}", i + 1, snapshot.Count, stage.Name);
+            logger.LogInformation("Starting stage [{Index}/{Total}]: {Name}", i + 1, snapshot.Count, stage.Name);
 
             var execCtx = new StageExecutionContext<TContext>(stage, context, i, snapshot.Count);
 
-            Func<Task> core = async () =>
+            async Task Core()
             {
-                if (entry.AsyncPolicy is null)
+                if (entry.RetryPolicy is null)
                 {
                     await stage.ExecuteAsync(context, ct).ConfigureAwait(false);
                 }
                 else
                 {
-                    await entry.AsyncPolicy.ExecuteAsync(
+                    await entry.RetryPolicy.ExecuteAsync(
                         async () => await stage.ExecuteAsync(context, ct).ConfigureAwait(false)
                     ).ConfigureAwait(false);
                 }
-            };
+            }
 
             try
             {
-                await ExecuteStageWithMiddlewareAsync(execCtx, core, ct).ConfigureAwait(false); // ✅ middleware runs
+                await ExecuteStageAsync(execCtx, Core, ct).ConfigureAwait(false); // ✅ middleware runs
             }
             catch (OperationCanceledException) when (ct.IsCancellationRequested) { throw; }
             catch (Exception ex)
             {
-                logger.Fatal(ex, "Stage [{Index}] {Name} failed", i, stage.Name);
+                logger.LogCritical(ex, "Stage [{Index}] {Name} failed", i, stage.Name);
                 throw new PipelineStageException(stage.Name, ex);
             }
         }
 
-        logger.Information("Pipeline finished in {Total}", totalSw.Elapsed);
+        logger.LogInformation("Pipeline finished in {Total}", totalSw.Elapsed);
         return context;
     }
 }

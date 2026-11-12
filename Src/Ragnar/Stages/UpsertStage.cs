@@ -1,13 +1,13 @@
 ﻿namespace Ragnar.Stages;
 
-/// <summary>Initializes a new upsert stage with its dependencies.</summary>
+/// <summary>Uploads embedded documents to the vector store in batches.</summary>
 /// <param name="repository">The vector-store writer for batch upserts.</param>
 /// <param name="logger">Structured logger for stage diagnostics.</param>
 /// <param name="options">Application options including batch size.</param>
 /// <param name="writer">Console output writer for status messages.</param>
 public sealed class UpsertStage(
     IVectorStoreWriter repository,
-    Serilog.ILogger logger,
+    ILogger logger,
     IOptions<RagnarConfig> options,
     IOutputWriter writer)
     : IPipelineStage<EmbeddingContext>
@@ -21,6 +21,10 @@ public sealed class UpsertStage(
     /// <example><![CDATA[string n = stage.Name;]]></example>
     public string Name => "Embedding & upserting…";
 
+    /// <summary>
+    /// Gets the retry policy for transient HTTP and timeout failures during upsert.
+    /// </summary>
+    /// <returns>A policy that retries up to three times with exponential delays, or <see langword="null"/> when no policy is configured.</returns>
     public AsyncRetryPolicy? RetryPolicy => Policy.Handle<HttpRequestException>()
              .Or<TimeoutException>()
              .WaitAndRetryAsync(3, a => TimeSpan.FromSeconds(Math.Pow(2, a)));
@@ -28,8 +32,9 @@ public sealed class UpsertStage(
     /// <summary>
     /// Determines whether this stage should be executed.
     /// </summary>
+    /// <param name="context">The embedding context to inspect.</param>
     /// <returns>True when the stage should participate in the pipeline.</returns>
-    /// <example><![CDATA[bool run = stage.ShouldRun;]]></example>
+    /// <example><![CDATA[bool run = stage.ShouldRun(context);]]></example>
     public bool ShouldRun(EmbeddingContext context)
     {
         Guard.Against.Null(context);
@@ -42,13 +47,13 @@ public sealed class UpsertStage(
     /// <param name="context">The embedding context.</param>
     /// <param name="cancellationToken">A token to cancel the operation.</param>
     /// <example><![CDATA[await stage.ExecuteAsync(ctx, ct);]]></example>
-    /// <exception cref="OperationCanceledException">When the token is cancelled mid-batch.</exception>
+    /// <exception cref="OperationCanceledException">The token is cancelled before a batch is upserted.</exception>
     public async Task ExecuteAsync(EmbeddingContext context, CancellationToken cancellationToken)
     {
         var documents = context.Documents;
         if (documents.Count == 0)
         {
-            logger.Information("No documents to upsert. Skipping.");
+            logger.LogInformation("No documents to upsert. Skipping.", General.Culture);
             return;
         }
 
@@ -66,7 +71,7 @@ public sealed class UpsertStage(
                     lastResult = await repository.UpsertBatchAsync(batch, cancellationToken).ConfigureAwait(false);
 
                     if (lastResult.Status != UpdateStatus.Completed)
-                        logger.Error("Upsert failed for batch: {Status}", lastResult.Status);
+                        logger.LogError("Upsert failed for batch: {Status}", lastResult.Status);
 
                     task.Increment(batch.Length);
                     ctx.Refresh();

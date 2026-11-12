@@ -4,7 +4,7 @@
 /// <remarks>Applies token limits, temperature, and real-time panel updates.</remarks>
 /// <example><![CDATA[var text = await response.GenerateResponse(req, ct);]]></example>
 public class OllamaChatService(
-    Serilog.ILogger logger,
+    ILogger logger,
     IOptions<RagnarConfig> options,
     IOllamaClientFactory clientFactory)
     : IOllamaGenerationService
@@ -12,7 +12,7 @@ public class OllamaChatService(
     /// <summary>Holds the pre-resolved Ollama API client for chat generation calls.</summary>
     /// <value>An OllamaApiClient configured with the LLM service endpoint.</value>
     /// <example><![CDATA[// Resolved once at construction via the client factory.]]></example>
-    private readonly IOllamaApiClient _ollamaClient = clientFactory.ResolveClient(OllamaServiceType.Ollama);
+    private readonly IOllamaApiClient _ollamaClient = clientFactory.GetClient(OllamaServiceType.Ollama);
 
     /// <summary>Generates a chat response using configured Ollama options.</summary>
     /// <param name="request">The generation request containing prompt and system info.</param>
@@ -22,6 +22,8 @@ public class OllamaChatService(
 
     public async Task<string> GenerateResponse(GenerateRequest request, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+        Guard.Against.Null(request);
         request.Options = BuildOptions(options.Value);
 
         var model = options.Value.OllamaOptions.LlmModel;
@@ -53,25 +55,49 @@ public class OllamaChatService(
             ctx.Refresh();
             try
             {
-                client.Think = ThinkValue.Medium;
+                client.Think = ThinkValue.Low;
+
                 client.OnThink += (sender, token) =>
                 {
-                    headerText = new PanelHeader("Thinking");
-                    var clean = Markup.Escape(token);
-                    thinkingText.Append(clean);
 
-                    panelText = new Markup(thinkingText.ToString(), Styles.Red);
+                    AnsiConsole.Progress()
+                    .IncludeVerticalPadding()
+                    .Columns(
+                        new TaskDescriptionColumn(),
+                        new ProgressBarColumn()
+                        {
+                            CompletedStyle = new Style(Color.Green),
+                            FinishedStyle = new Style(Color.Lime),
+                            RemainingStyle = new Style(Color.Grey)
+                        },
+                        new PercentageColumn())
+                    .Start(ctx =>
+                    {
+                        var task = ctx.AddTask("Building project").IsIndeterminate();
 
-                    ctx.UpdateTarget(panel);
-                    ctx.UpdateTarget(panelText);
-                    ctx.Refresh();
+                        while (!ctx.IsFinished)
+                        {
+                            task.Increment(1);
+                            Thread.Sleep(40);
+                        }
+                        ctx.RemoveTask(task);
+                    });
+
+                    //headerText = new PanelHeader("Thinking");
+                    //var clean = Markup.Escape(token);
+                    //thinkingText.Append(clean);
+
+                    //panelText = new Markup(thinkingText.ToString(), Styles.Red);
+
+                    //ctx.UpdateTarget(panel);
+                    //ctx.UpdateTarget(panelText);
+                    //ctx.Refresh();
                 };
             }
             catch (Exception ex) when (ex is not OperationCanceledException)
             {
-                logger?.Fatal(ex, "Thinking stream failed: {Msg}", ex.Message);
+                logger?.LogCritical(ex, "Thinking stream failed: {Msg}", ex.Message);
                 completeText.Append($"\n\n[ERROR] Thinking stream interrupted: {ex.Message}\n");
-                // Optionally re-throw or mark the response as degraded
             }
 
             try
@@ -95,13 +121,13 @@ public class OllamaChatService(
             }
             catch (TaskCanceledException ex)
             {
-                logger.Fatal(ex, ex.Message);
+                logger.LogCritical(ex, ex.Message);
                 var cancelMsg = $"\n\n[INFO] Generation canceled: {ex.Message}\n";
                 completeText.Insert(0, cancelMsg);
             }
             catch (Exception ex)
             {
-                logger.Fatal(ex, ex.Message);
+                logger.LogCritical(ex, ex.Message);
                 throw;
             }
         }).ConfigureAwait(false);

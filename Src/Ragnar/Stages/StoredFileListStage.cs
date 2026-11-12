@@ -9,7 +9,7 @@
 public sealed class StoredFileListStage(
     IOptions<RagnarConfig> options,
     IQdrantClient client,
-    Serilog.ILogger logger)
+    ILogger logger)
     : IPipelineStage<EmbeddingContext>
 {
     /// <summary>Gets the human-readable stage name for progress display.</summary>
@@ -17,11 +17,14 @@ public sealed class StoredFileListStage(
     /// <example><![CDATA[string n = stage.Name;]]></example>
     public string Name => "Show files…";
 
+    /// <summary>Gets the retry policy for this stage.</summary>
+    /// <value>Always <see langword="null"/>; stage execution is not retried.</value>
     public AsyncRetryPolicy? RetryPolicy => null;
 
     /// <summary>Indicates whether this stage should execute in the current pipeline run.</summary>
-    /// <value>False by default; this stage is opt-in via pipeline configuration.</value>
-    /// <example><![CDATA[bool run = stage.ShouldRun;]]></example>
+    /// <param name="context">The embedding pipeline context.</param>
+    /// <returns><see langword="true"/>; this stage always runs when included in the pipeline.</returns>
+    /// <example><![CDATA[bool run = stage.ShouldRun(context);]]></example>
 
     // FIXME How do I add stage control options to set if a stage should be run inside of appsettings.json
     public bool ShouldRun(EmbeddingContext context) => true;
@@ -29,7 +32,7 @@ public sealed class StoredFileListStage(
     /// <summary>Scrolls all stored file entries and renders them in a console table.</summary>
     /// <param name="context">The embedding pipeline context (unused directly).</param>
     /// <param name="cancellationToken">Token to abort the scroll operation.</param>
-    /// <returns>A completed task once the table is rendered.</returns>
+    /// <returns>A task that completes after stored file paths are retrieved and rendered.</returns>
     /// <example><![CDATA[await stage.ExecuteAsync(ctx, ct);]]></example>
     public async Task ExecuteAsync(EmbeddingContext context, CancellationToken cancellationToken)
     {
@@ -59,12 +62,12 @@ public sealed class StoredFileListStage(
         AnsiConsole.Write(table);
     }
 
-    /// <summary>Scrolls all points in the vector store and collects their file names.</summary>
+    /// <summary>Scrolls the configured vector store collection and collects file names from its points.</summary>
     /// <param name="client">The IQdrantClient used for the scroll query.</param>
-    /// <param name="pageSize">Page size</param>
+    /// <param name="pageSize">The maximum number of points to retrieve per page.</param>
     /// <param name="cancellationToken">Token to abort the scroll operation.</param>
     /// <returns>A list of file name strings found in the collection.</returns>
-    /// <example><![CDATA[var files = await stage.EnumerateStoredFiles(client);]]></example>
+    /// <example><![CDATA[var files = await stage.EnumerateStoredFiles(client, pageSize, cancellationToken);]]></example>
     private async Task<List<string>> EnumerateStoredFiles(
         IQdrantClient client,
         uint pageSize,

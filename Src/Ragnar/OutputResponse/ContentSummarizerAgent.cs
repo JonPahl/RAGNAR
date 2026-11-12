@@ -52,7 +52,7 @@ public class ContentSummarizerAgent(
 
         //var agent = new OllamaChatClientBuilder(factory)
         var agent = ollamaAIClientBuilder
-            .WithChatClient(OllamaServiceType.Ollama)
+            .ForService(OllamaServiceType.Ollama)
             .WithModel(ollama.LlmModel)
             .WithUrl(ollama.Host)
             .WithTimeout(ollama.Timeout)

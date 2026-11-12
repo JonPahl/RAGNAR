@@ -15,3 +15,4 @@ global using Ragnar.Questions.Filters;
 global using Ragnar.Questions.Interfaces;
 
 global using Range = Qdrant.Client.Grpc.Range;
+global using Microsoft.Extensions.Logging;

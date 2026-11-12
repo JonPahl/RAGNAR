@@ -5,7 +5,7 @@
 /// <param name="qdrantClient"> Qdrant client.</param>
 /// <returns>Question embedding instance.</returns>
 public class ContextRetriever(
-    Serilog.ILogger logger,
+    ILogger logger,
     IQdrantClient qdrantClient) : IContextRetriever
 {
     /// <summary>
@@ -18,7 +18,8 @@ public class ContextRetriever(
     /// <example><![CDATA[string ctx = await RetrieveContextAsync("docs", qVec, ct);]]></example>
     public async Task<string> RetrieveContextAsync(
         string vectorStoreName,
-        CancellationToken cancellationToken, Filter? filter = null)
+        CancellationToken cancellationToken,
+        Filter? filter = null)
     {
         List<RetrievedPoint> allPoints = [];
         PointId? nextOffset = null;
@@ -60,7 +61,7 @@ public class ContextRetriever(
 
             var code = match.TryGetValue(codes, out var cd) ? cd.StringValue ?? string.Empty : string.Empty;
 
-            sb.AppendLine($"File Name: {filename.Trim()}  Description: {comment.Trim()} Code: {Environment.NewLine} {code.Trim()}");
+            sb.AppendLine(General.Culture, $"File Name: {filename.Trim()}  Description: {comment.Trim()} Code: {Environment.NewLine} {code.Trim()}");
         }
 
         return sb.ToString();

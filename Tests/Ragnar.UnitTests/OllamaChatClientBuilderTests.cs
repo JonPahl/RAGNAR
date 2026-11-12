@@ -2,24 +2,38 @@
 
 public class OllamaChatClientBuilderTests
 {
+    private readonly OllamaChatClientBuilder _sut = new();
+
     [Fact]
     public void WithChatClientShouldReturnConfiguredBuilder()
     {
-        var builder = new OllamaChatClientBuilder();
+        // Act
+        var result = _sut.ForService(OllamaServiceType.Ollama);
 
-        var result = builder.WithChatClient(OllamaServiceType.Ollama);
-
+        // Assert
         Assert.NotNull(result);
-        Assert.IsType<OllamaChatClientBuilderConfigured>(result);
     }
 
     [Fact]
-    public void ShouldBeSingletonLike()
+    public void WithChatClientForEmbeddingShouldReturnConfiguredBuilder()
     {
-        var a = new OllamaChatClientBuilder();
-        var b = new OllamaChatClientBuilder();
+        // Act
+        var result = _sut.ForService(OllamaServiceType.Embedding);
 
-        Assert.NotNull(a);
-        Assert.NotNull(b);
+        // Assert
+        Assert.NotNull(result);
+    }
+
+    [Fact]
+    public void WithOptionsShouldReturnConfiguredBuilder()
+    {
+        // Arrange
+        var options = new OllamaClientOptions { ServiceType = OllamaServiceType.Ollama };
+
+        // Act
+        var result = _sut.WithOptions(options);
+
+        // Assert
+        Assert.NotNull(result);
     }
 }

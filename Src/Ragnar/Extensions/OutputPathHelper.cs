@@ -3,23 +3,29 @@
 /// <summary>
 /// Extension methods for saving file.
 /// </summary>
+/// <example><![CDATA[string dir = folders.GetResponseDirectory(basePath);]]></example>
 public static class OutputPathHelper
 {
     /// <summary>
     /// Builds a response-directory path.
     /// </summary>
     /// <param name="folders">Ordered path segments (category, sub-folder, …).</param>
-    /// <param name="baseDir">
-    /// Optional root prefix.  Applied **only** when <paramref name="folders"/> is empty,
-    /// to avoid silently discarding an explicit path.
-    /// </param>
+    /// <param name="baseDir">Optional root prefix.  Applied **only** when <paramref name="folders"/> is empty,
+    /// to avoid silently discarding an explicit path.</param>
+    /// <returns>A combined directory path ending with the response sub-directory name.</returns>
+    /// <example><![CDATA[string dir = folders.GetResponseDirectory(basePath);]]></example>
     public static string GetResponseDirectory(this IEnumerable<string> folders, string baseDir = "")
     {
         Guard.Against.Null(folders);
         var parts = folders as IReadOnlyCollection<string> ?? [.. folders];
-        var root = string.IsNullOrWhiteSpace(baseDir) ? "" : baseDir.TrimEnd(Path.DirectorySeparatorChar);
 
-        return Path.Join([.. (root.Length > 0 ? new[] { root } : []), .. parts, DomainDefaults.ResponseDir]);
+        var segments = new List<string>(parts.Count + 2);
+        if (!string.IsNullOrWhiteSpace(baseDir))
+            segments.Add(baseDir.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
+        segments.AddRange(parts);
+        segments.Add(DomainDefaults.ResponseDir);
+
+        return Path.Combine([.. segments]);
     }
 
     /// <summary>Wraps a prompt string in markdown fence markers for display.</summary>

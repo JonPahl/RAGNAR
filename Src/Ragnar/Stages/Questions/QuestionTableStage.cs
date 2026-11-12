@@ -2,7 +2,7 @@
 
 /// <summary>Pipeline stage that loads questions and runs RAG queries against the vector store.</summary>
 /// <example><![CDATA[await stage.ExecuteAsync(context, ct);]]></example>
-public class QuestionTableStage
+public class QuestionTableStage(IOutputWriter writer)
     : IPipelineStage<QuestionPipelineContext>
 {
     /// <summary>Gets the human-readable stage name for progress display.</summary>
@@ -27,12 +27,19 @@ public class QuestionTableStage
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        TableRendererFactory.Create()
-            .WithColumns("#", "Category", "Text")
-            .WithRows(context.Questions.Select((f, i) => new[] { (i + 1).ToString(), f.Category.ToString(), f.Text }))
-            .WithRowSeparators()
-            .WithFullWidth()
-            .WithStyledBorder(Color.Green, "Questions")
-            .Render();
+        var table = new Table()
+            .Expand()
+            .ShowRowSeparators()
+            .BorderStyle(Color.Green4)
+            .RoundedBorder()
+            .AddColumns("#", "Category", "Text");
+
+        foreach (var row in context.Questions.Select((f, i) => new[] { (i + 1).ToString(), f.Category.ToString(), f.Text }))
+        {
+            table.AddRow(row);
+        }
+
+        writer.Write(table);
+        writer.WriteLine();
     }
 }

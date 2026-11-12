@@ -2,12 +2,12 @@
 
 public class PipelineRunnerAdvancedTests
 {
-    private readonly Mock<Serilog.ILogger> _loggerMock;
+    private readonly Mock<Microsoft.Extensions.Logging.ILogger> _loggerMock;
     private readonly PipelineRunner<QuestionPipelineContext> _sut;
 
     public PipelineRunnerAdvancedTests()
     {
-        _loggerMock = new Mock<Serilog.ILogger>();
+        _loggerMock = new Mock<Microsoft.Extensions.Logging.ILogger>();
         _sut = new PipelineRunner<QuestionPipelineContext>(_loggerMock.Object);
     }
 

@@ -2,10 +2,11 @@
 
 /// <summary>Orchestrates sequential execution of pipeline stages with retry policies.</summary>
 /// <example><![CDATA[await runner.AddStage(s).ExecuteAsync(ctx, ct);]]></example>
-public interface IPipeline<T>
+public interface IPipeline<T> where T : class
 {
     /// <summary>Registers a stage, throwing if a duplicate name already exists.</summary>
     /// <param name="stage">The pipeline stage to register.</param>
+    /// <param name="policy"></param>
     /// <returns>The runner instance for fluent chaining.</returns>
     /// <example><![CDATA[runner.AddStage(new ParsingStage(factory, logger));]]></example>
     IPipeline<T> AddStage(IPipelineStage<T> stage, IAsyncPolicy? policy = null);
@@ -32,6 +33,9 @@ public interface IPipeline<T>
     /// <![CDATA[runner.SetRetryPolicy("Embedding", 5, a => TimeSpan.FromSeconds(a * 2));]]>
     /// </example>
     IPipeline<T> SetRetryPolicy(string stageName, int maxAttempts, Func<int, TimeSpan> backOff);
+
+    IPipeline<T> UseMiddleware(
+        Func<StageExecutionContext<T>, Func<Task>, CancellationToken, Task> middleware);
 
     /// <summary>Executes all stages in order, applying retries and logging progress.</summary>
     /// <param name="context">Shared embedding context passed through each stage.</param>

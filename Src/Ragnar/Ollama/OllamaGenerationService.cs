@@ -12,7 +12,7 @@
 public class OllamaGenerationService(IOllamaClientFactory clientFactory)
     : IOllamaGenerationService
 {
-    private readonly IOllamaApiClient _ollamaClient = clientFactory.ResolveClient(OllamaServiceType.Ollama);
+    private readonly IOllamaApiClient _ollamaClient = clientFactory.GetClient(OllamaServiceType.Ollama);
 
     /// <summary>Streams and collects full LLM response into a string.</summary>
     /// <param name="request">Generation request with prompt/options.</param>

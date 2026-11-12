@@ -4,7 +4,7 @@ public class CsvRecordParserTests : IDisposable
 {
     private readonly CsvRecordParser _sut;
     private readonly string _tempFilePath;
-    private readonly Mock<ILogger> _logger = new();
+    private readonly Mock<Microsoft.Extensions.Logging.ILogger> _logger = new();
 
     public CsvRecordParserTests()
     {

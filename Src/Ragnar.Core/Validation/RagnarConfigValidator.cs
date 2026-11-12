@@ -1,7 +1,7 @@
 ﻿namespace Ragnar.Core.Validation;
 
-/// <summary>Validates RagnarConfig and its nested option objects via FluentValidation.</summary>
-/// <example><![CDATA[var v = new RagnarConfigValidator(embed, ollama, file);]]></example>
+/// <summary>Validates all RagnarConfig child option records in a single cascade.</summary>
+/// <example><![CDATA[var v = new RagnarConfigValidator(appV, embV, ollV, fileV);]]></example>
 public class RagnarConfigValidator : AbstractValidator<RagnarConfig>
 {
 

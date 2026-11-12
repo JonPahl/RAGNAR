@@ -22,6 +22,7 @@ public static partial class RagPipelineHostBuilder
 
             // TODO How do I make changing what appsettings file to use easier.
 
+            //const string X = "Pipeline";
             const string X = "Ragnar";
             //const string X = "Bank";
             //const string X = "Shepherd_Api";
@@ -30,13 +31,21 @@ public static partial class RagPipelineHostBuilder
             cfg.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
            .AddJsonFile($"appsettings.{X}.json", optional: true, reloadOnChange: true);
         })
-            .UseSerilog((ctx, cfg) => cfg.ReadFrom.Configuration(ctx.Configuration).WriteTo.Console())
+            .UseSerilog((ctx, cfg) => cfg.ReadFrom.Configuration(ctx.Configuration))
             .ConfigureServices((ctx, services) =>
             {
+                services.AddSingleton<Microsoft.Extensions.Logging.ILogger>(sp =>
+                {
+                    var log = sp.GetRequiredService<Microsoft.Extensions.Logging.ILoggerFactory>()
+                    .CreateLogger("Ragnar");
+                    return log;
+                });
+
                 services.AddValidatorsFromAssembly(typeof(Program).Assembly);
                 services.RegisterOptions(ctx);
                 services.AddHttpClients();
                 services.LoadQuestionPlugins();
+                services.CodeParser();
                 services.EmbeddingSetup();
 
                 services.AddCoreServices();
@@ -63,7 +72,7 @@ public static partial class RagPipelineHostBuilder
         s.AddSingleton<IOutputFormatter, ResponseMarkdownFormatter>();
         s.AddSingleton<IFileDiscoveryService, FileDiscoveryService>();
         s.AddSingleton<IFileParseFactory, CodeParserFactory>();
-        s.AddSingleton<IFileEligibilityValidator, FileValidator>();
+        s.AddSingleton<IFileInclusionFilter, FileValidator>();
 
         s.AddSingleton<ISyntaxTreeChunker, SyntaxTreeChunker>();
         s.AddSingleton<IVectorStoreBuilder, VectorStoreBuilder>();
@@ -86,6 +95,14 @@ public static partial class RagPipelineHostBuilder
 
     private static void AddEmbeddingPipeline(this IServiceCollection s)
     {
+        s.AddSingleton<IFileFingerprintStore, JsonFileFingerprintStore>();
+        s.AddSingleton(sp =>
+        {
+            var log = sp.GetRequiredService<ILogger>();
+
+            return new JsonFileFingerprintStore(log, sp.GetRequiredService<IOptions<RagnarConfig>>());
+        });
+
         s.AddSingleton(sp =>
         {
             var options = sp.GetRequiredService<IOptions<RagnarConfig>>().Value;
@@ -98,7 +115,7 @@ public static partial class RagPipelineHostBuilder
 
         s.AddSingleton<IPipeline<EmbeddingContext>>(sp =>
         {
-            var logger = sp.GetRequiredService<Serilog.ILogger>();
+            var logger = sp.GetRequiredService<Microsoft.Extensions.Logging.ILogger>();
 
             var options = sp.GetRequiredService<IOptions<RagnarConfig>>();
 
@@ -113,14 +130,28 @@ public static partial class RagPipelineHostBuilder
             var repository = sp.GetService<IVectorStoreWriter>();
             var parseFactory = sp.GetService<IFileParseFactory>();
 
-            return new PipelineRunner<EmbeddingContext>(logger)
-                .AddStage(new BrandingStage(logger, header))
+            var fingerprintStore = sp.GetRequiredService<IFileFingerprintStore>();
+
+            var vectorWriter = sp.GetRequiredService<IVectorStoreWriter>();
+
+            var runner = new PipelineRunner<EmbeddingContext>(logger);
+
+            runner
+            .UseMiddleware(new ExceptionHandlingMiddleware(logger).Invoke)
+            .UseMiddleware(new StageTimingMiddleware(logger).Invoke)
+            .UseMiddleware(new RetryMiddleware(logger).Invoke)
+            .UseMiddleware(new ProgressMiddleware(outputWriter).Invoke);
+
+            runner.AddStage(new BrandingStage(logger, header))
                 .AddStage(new VectorStoreInitStage(vectorSetup, outputWriter))
                 .AddStage(new DiscoveryStage(options, fileLoader, logger, outputWriter))
                 .AddStage(new ParsingStage(parseFactory, logger))
-                .AddStage(new SegmentDeltaStage(logger, qdrantClient, options))
+                .AddStage(new DeltaEmbedStage(logger, fingerprintStore, vectorWriter, options))
                 .AddStage(new UpsertStage(repository, logger, options, outputWriter))
                 .AddStage(new StoredFileListStage(options, qdrantClient, logger));
+
+            return runner;
+
         });
     }
 
@@ -136,23 +167,37 @@ public static partial class RagPipelineHostBuilder
         s.AddSingleton<IRagOrchestrator, RagOrchestrator>();
         s.AddSingleton(new QuestionPipelineContext());
 
-        s.AddSingleton(s.AddSingleton<IPipeline<QuestionPipelineContext>, QuestionPipelineRunner>(sp => new QuestionPipelineRunner(sp.GetRequiredService<Serilog.ILogger>())
-            .AddStage(new QuestionLoadStage(
+        //s.AddSingleton(s.AddSingleton<IPipeline<QuestionPipelineContext>, QuestionPipelineRunner>(sp =>
+
+        s.AddSingleton<IPipeline<QuestionPipelineContext>>(sp =>
+        {
+            var logger = sp.GetRequiredService<Microsoft.Extensions.Logging.ILogger>();
+            var writer = sp.GetRequiredService<IOutputWriter>();
+
+            var runner = new PipelineRunner<QuestionPipelineContext>(logger);
+
+            runner.UseMiddleware(new ExceptionHandlingMiddleware(logger).Invoke)
+            .UseMiddleware(new StageTimingMiddleware(logger).Invoke)
+            .UseMiddleware(new RetryMiddleware(logger).Invoke)
+            .UseMiddleware(new ProgressMiddleware(writer).Invoke);
+
+            runner.AddStage(new QuestionLoadStage(
                sp.GetRequiredService<IQuestionSource>(),
                sp.GetRequiredService<IQuestionSourceBuilder>(),
-               sp.GetRequiredService<Serilog.ILogger>()))
-            .AddStage(new QuestionTableStage())
+               sp.GetRequiredService<ILogger>()))
+            .AddStage(new QuestionTableStage(sp.GetRequiredService<IOutputWriter>()))
             .AddStage(new QuestionAnswerStage(
                 sp.GetRequiredService<IRagOrchestrator>(),
                 sp.GetRequiredService<IOptions<RagnarConfig>>(),
                 sp.GetRequiredService<IOutputWriter>(),
                 sp.GetRequiredService<IContextRetriever>(),
-                sp.GetRequiredService<Serilog.ILogger>()))
+                sp.GetRequiredService<ILogger>()))
             .AddStage(new SummarizationStage(
                 sp.GetRequiredService<IResponseSummarizer>(),
                 sp.GetRequiredService<IOutputWriter>()
-                )
-            )
-            ));
+                ));
+
+            return runner;
+        });
     }
 }

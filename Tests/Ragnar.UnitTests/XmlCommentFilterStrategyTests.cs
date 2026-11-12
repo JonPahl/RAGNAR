@@ -1,46 +1,71 @@
-﻿namespace Ragnar.Tests;
+﻿
+
+namespace Ragnar.Tests;
 
 public class XmlCommentFilterStrategyTests
 {
-    [Fact]
-    public void SupportedCategoryShouldBeXml()
-    {
-        var logger = new Mock<Serilog.ILogger>();
-        var strategy = new XmlCommentFilterStrategy(logger.Object);
+    private readonly Mock<ILogger> _loggerMock = new();
+    private readonly XmlCommentFilterStrategy _sut;
 
-        Assert.Equal(QuestionCategory.XML, strategy.SupportedCategory);
+    public XmlCommentFilterStrategyTests()
+    {
+        _sut = new XmlCommentFilterStrategy(_loggerMock.Object);
     }
 
     [Fact]
-    public void CreateFilterShouldReturnNonEmptyFilter()
+    public void SupportedCategoryShouldReturnXml()
     {
-        var logger = new Mock<Serilog.ILogger>();
-        var strategy = new XmlCommentFilterStrategy(logger.Object);
-
-        var filter = strategy.CreateFilter(50);
-
-        Assert.NotNull(filter);
+        Assert.Equal(QuestionCategory.XML, _sut.SupportedCategory);
     }
 
     [Fact]
-    public void CreateFilterWithZeroThresholdShouldStillWork()
+    public void CreateFilterWithZeroThresholdShouldReturnFilterWithRange()
     {
-        var logger = new Mock<Serilog.ILogger>();
-        var strategy = new XmlCommentFilterStrategy(logger.Object);
+        // Act
+        var filter = _sut.CreateFilter(0);
 
-        var filter = strategy.CreateFilter(0);
-
+        // Assert
         Assert.NotNull(filter);
+        Assert.NotEmpty(filter.Must);
+        //Assert.Contains(filter.Must, c => c.MatchKeyword == "CommentLength");
     }
 
     [Fact]
-    public void CreateFilterWithLargeThresholdShouldStillWork()
+    public void CreateFilterWithThresholdShouldReturnFilterWithRange()
     {
-        var logger = new Mock<Serilog.ILogger>();
-        var strategy = new XmlCommentFilterStrategy(logger.Object);
+        // Act
+        var filter = _sut.CreateFilter(50);
 
-        var filter = strategy.CreateFilter(10000);
-
+        // Assert
         Assert.NotNull(filter);
+        Assert.NotEmpty(filter.Must);
+    }
+
+    [Fact]
+    public void CreateFilterShouldExcludeTestRelatedKeywords()
+    {
+        // Act
+        var filter = _sut.CreateFilter(100);
+
+        // Assert – MustNot should contain exclusion conditions
+        Assert.NotNull(filter.MustNot);
+        Assert.NotEmpty(filter.MustNot);
+    }
+
+    [Fact]
+    public void CreateFilterShouldLogDebugMessages()
+    {
+        // Act
+        _sut.CreateFilter(42);
+
+        // Assert
+        _loggerMock.Verify(
+            l => l.Log(
+                It.IsAny<LogLevel>(),
+                It.IsAny<EventId>(),
+                It.Is<It.IsAnyType>((v, t) => v.ToString()!.Contains("Creating XML comment filter")),
+                It.IsAny<Exception?>(), null), Times.AtLeastOnce);
+
+        // It.IsAny<Func<It.IsAnyType, Exception?, string>> ?), Times.AtLeastOnce);
     }
 }

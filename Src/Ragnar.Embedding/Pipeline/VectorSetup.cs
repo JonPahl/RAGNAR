@@ -5,7 +5,7 @@
 /// <param name = "writer"> Output writer for console feedback.</param>
 /// <example><![CDATA[await vectorSetup.EnsureCollectionExistsAsync(ct);]]></example>
 public class VectorSetup(
-    Serilog.ILogger logger,
+    ILogger logger,
     IVectorStoreBuilder vectorStoreBuilder,
     IOutputWriter writer)
     : IVectorSetup
@@ -34,10 +34,10 @@ public class VectorSetup(
         if (!collectionExists)
         {
             writer.MarkupLine("[green] ☑ Collection Created [/]");
-            logger.Information("Collection Created.");
+            logger.LogInformation("Collection Created.");
         }
 
         writer.MarkupLine("[green] ☑ Collection Exists [/]");
-        logger.Information("Collection Exists.");
+        logger.LogInformation("Collection Exists.");
     }
 }

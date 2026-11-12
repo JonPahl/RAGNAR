@@ -10,7 +10,7 @@
 public sealed class DiscoveryStage(
     IOptions<RagnarConfig> options,
     IFileDiscoveryService fileLoader,
-    Serilog.ILogger logger,
+    ILogger logger,
     IOutputWriter writer)
     : IPipelineStage<EmbeddingContext>
 {
@@ -18,13 +18,11 @@ public sealed class DiscoveryStage(
     /// <value>The string "Discovering discoveredFiles…".</value>
     /// <example><![CDATA[string n = stage.Name;]]>
     /// </example>
-    public string Name => "Discovering discoveredFiles…";
+    public string Name => "Discovering discovered Files…";
 
-    public AsyncPolicy? RetryPolicy => Policy.Handle<HttpRequestException>()
+    AsyncRetryPolicy? IPipelineStage<EmbeddingContext>.RetryPolicy => Policy.Handle<HttpRequestException>()
              .Or<TimeoutException>()
              .WaitAndRetryAsync(3, a => TimeSpan.FromSeconds(Math.Pow(2, a)));
-
-    AsyncRetryPolicy? IPipelineStage<EmbeddingContext>.RetryPolicy => throw new NotImplementedException();
 
     /// <summary>Indicates whether this stage should execute in the current pipeline run.</summary>
     /// <value>True to include this stage; false to skip it.</value>
@@ -43,15 +41,15 @@ public sealed class DiscoveryStage(
 
         if (!Directory.Exists(sourceDir))
         {
-            logger.Warning("Source directory not found: {Dir}", sourceDir);
+            logger.LogWarning("Source directory not found: {Dir}", sourceDir);
             return;
         }
 
         var discoveredFiles = await fileLoader
-            .GetFilesAsync(sourceDir, options, cancellationToken)
+            .EnumerateFilesAsync(sourceDir, options, cancellationToken)
             .ToListAsync(cancellationToken).ConfigureAwait(false);
 
-        writer.MarkupLine($"[[green]]Discovered {discoveredFiles.Count} source file(s).[[/]]");
+        writer.MarkupLine($"[green]Discovered [yellow]{discoveredFiles.Count}[/] source file(s).[/]");
 
         context.DiscoveredFiles = discoveredFiles;
     }

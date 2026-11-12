@@ -3,7 +3,7 @@
 /// <summary>Abstract base class providing a thread-safe, ordered pipeline of typed stages.</summary>
 /// <typeparam name="T">The context type flowing through pipeline stages.</typeparam>
 /// <example><![CDATA[var p = new MyPipeline(); p.AddStage(s1).AddStage(s2);]]></example>
-public abstract class BasePipeline<T> : IPipeline<T>
+public abstract class BasePipeline<T> : IPipeline<T> where T : class
 {
     /// <summary>Mutual-exclusion gate protecting the internal stage list.</summary>
     private readonly Lock _gate = new();
@@ -13,6 +13,7 @@ public abstract class BasePipeline<T> : IPipeline<T>
 
     /// <summary>Adds a pipeline stage to the execution sequence.</summary>
     /// <param name="stage">The stage to append.</param>
+    /// <param name="policy"></param>
     /// <returns>The pipeline runner for further configuration.</returns>
     /// <example><![CDATA[runner.AddStage(new ParseStage(logger));]]></example>
     public abstract IPipeline<T> AddStage(
@@ -65,4 +66,8 @@ public abstract class BasePipeline<T> : IPipeline<T>
         }
         return this;
     }
+
+    public abstract IPipeline<T> UseMiddleware(
+        Func<StageExecutionContext<T>, Func<Task>, CancellationToken, Task> middleware);
+
 }

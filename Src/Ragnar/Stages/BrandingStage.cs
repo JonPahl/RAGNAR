@@ -5,9 +5,8 @@
 /// <param name="header">Application header service that draws the banner.</param>
 /// <remarks>First pipeline stage executed at application startup.</remarks>
 /// <example><![CDATA[await stage.ExecuteAsync(ct);]]></example>
-public class BrandingStage(Serilog.ILogger logger, IApplicationHeader header) : IPipelineStage<EmbeddingContext>
+public class BrandingStage(ILogger logger, IApplicationHeader header) : IPipelineStage<EmbeddingContext>
 {
-
     /// <summary>Gets the human-readable name of this branding pipeline stage.</summary>
     /// <returns>The string "Branding Stage".</returns>
     /// <example><![CDATA[string n = stage.Name;]]>
@@ -21,6 +20,7 @@ public class BrandingStage(Serilog.ILogger logger, IApplicationHeader header) : 
 
     /// <summary>Indicates the branding stage should always execute in the pipeline.</summary>
     /// <returns>Always true, ensuring the banner renders on every run.</returns>
+    /// <param name="context">The shared embedding context (unused by this stage).</param>
     /// <example><![CDATA[bool run = stage.ShouldRun(ctx); // true]]></example>
     public bool ShouldRun(EmbeddingContext context) => true;
 
@@ -31,9 +31,9 @@ public class BrandingStage(Serilog.ILogger logger, IApplicationHeader header) : 
     /// <example><![CDATA[await stage.ExecuteAsync(ctx, ct);]]></example>
     public Task ExecuteAsync(EmbeddingContext context, CancellationToken cancellationToken)
     {
-        logger.Debug("Branding stage: rendering application header.");
+        logger.LogDebug("Branding stage: rendering application header.");
         header.RenderBranding();
-        logger.Debug("Branding stage: header rendered.");
+        logger.LogDebug("Branding stage: header rendered.");
         return Task.CompletedTask;
     }
 }

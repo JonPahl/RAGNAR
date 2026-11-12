@@ -7,14 +7,14 @@
 /// <remarks>Implements IEmbeddingService for single and batch text-to-vector ops.</remarks>
 /// <example><![CDATA[var v = await svc.GenerateAsync("hello", ct);]]></example>
 public class OllamaEmbeddingGenerator(
-    Serilog.ILogger logger,
+    ILogger logger,
     IOllamaClientFactory clientFactory,
     IOptions<RagnarConfig> config) : IEmbeddingService, IDisposable
 {
     private readonly TimeSpan _timeout = config?.Value?.EmbeddingOptions?.Timeout ?? TimeSpan.FromMinutes(5);
 
     /// <summary>Ollama embedding generator resolved from the client factory.</summary>
-    private readonly IEmbeddingGenerator<string, Embedding<float>> _generator = clientFactory.ResolveClient(OllamaServiceType.Embedding).AsEmbeddingGenerator();
+    private readonly IEmbeddingGenerator<string, Embedding<float>> _generator = clientFactory.GetClient(OllamaServiceType.Embedding).AsEmbeddingGenerator();
 
     /// <summary>Timeout CTS governing the maximum duration for embedding generation requests.
     /// </summary>
@@ -52,7 +52,7 @@ public class OllamaEmbeddingGenerator(
         }
         catch (Exception ex)
         {
-            logger.Fatal(ex, ex.Message);
+            logger.LogCritical(ex, ex.Message);
             throw;
         }
     }
@@ -81,7 +81,7 @@ public class OllamaEmbeddingGenerator(
         }
         catch (Exception ex)
         {
-            logger.Fatal(ex, ex.Message);
+            logger.LogCritical(ex, ex.Message);
             throw;
         }
     }

@@ -8,7 +8,7 @@ public class StageEntryTests
         var stage = new Mock<IPipelineStage<object>>();
         stage.Setup(s => s.Name).Returns("MyStage");
 
-        var entry = new StageEntry<object>(stage.Object);
+        var entry = new StageDescriptor<object>(stage.Object);
 
         Assert.Same(stage.Object, entry.PipelineStage);
     }
@@ -18,14 +18,14 @@ public class StageEntryTests
     {
         var stage = new Mock<IPipelineStage<object>>();
 
-        var entry = new StageEntry<object>(stage.Object);
+        var entry = new StageDescriptor<object>(stage.Object);
 
-        Assert.Null(entry.AsyncPolicy);
+        Assert.Null(entry.RetryPolicy);
     }
 
     [Fact]
     public void StageEntryShouldThrowOnNullStage()
     {
-        Assert.Throws<ArgumentNullException>(() => new StageEntry<object>(null!));
+        Assert.Throws<ArgumentNullException>(() => new StageDescriptor<object>(null!));
     }
 }

@@ -4,9 +4,12 @@
 /// Read and parse over file to be embedded.
 /// </summary>
 /// <param name="logger">logger for read-error diagnostics.</param>
+/// <param name="supportedExtensions"></param>
 /// <example><![CDATA[var parser = new CSharpFileParser(logger);]]></example>
-public abstract class BaseFileParser(Serilog.ILogger logger) : IFileParser
+public abstract class BaseFileParser(ILogger logger, IList<string> supportedExtensions) : IFileParser
 {
+    public IList<string> SupportedExtensions { get; init; } = supportedExtensions;
+
     /// <summary>Parses the target file into discrete CodeDocument segments.</summary>
     /// <param name="filePath">Path to the file to be parsed.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
@@ -42,12 +45,12 @@ public abstract class BaseFileParser(Serilog.ILogger logger) : IFileParser
         }
         catch (FileNotFoundException ex)
         {
-            logger.Error(ex, "File not found: {FilePath}", filePath);
+            logger.LogError(ex, "File not found: {FilePath}", filePath);
             throw;
         }
         catch (Exception ex)
         {
-            logger.Error(ex, "Failed to read file: {FilePath}", filePath);
+            logger.LogError(ex, "Failed to read file: {FilePath}", filePath);
             throw new InvalidOperationException($"Could not read file '{filePath}'.", ex);
         }
     }

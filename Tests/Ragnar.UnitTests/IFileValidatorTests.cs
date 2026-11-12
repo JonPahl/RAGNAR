@@ -2,16 +2,16 @@
 
 public class IFileValidatorTests
 {
-    private sealed class TestFileValidator : IFileEligibilityValidator
+    private sealed class TestFileValidator : IFileInclusionFilter
     {
-        public bool IsValid(FileInfo file, in FileLoadOptions fileLoadOptions)
+        public bool ShouldInclude(FileInfo file, in FileLoadOptions fileLoadOptions)
         {
             ArgumentNullException.ThrowIfNull(file);
             return fileLoadOptions.AllowedExtensions.Contains(file.Extension, StringComparer.OrdinalIgnoreCase);
         }
     }
 
-    private readonly IFileEligibilityValidator _validator = new TestFileValidator();
+    private readonly IFileInclusionFilter _validator = new TestFileValidator();
 
     [Fact]
     public void IsValidWithNullFileShouldThrowArgumentNullException()
@@ -20,7 +20,7 @@ public class IFileValidatorTests
         var opts = new FileLoadOptions { AllowedExtensions = [".cs"], ExcludedDirectories = [] };
 
         // Act & Assert
-        Assert.Throws<ArgumentNullException>(() => _validator.IsValid(null!, opts));
+        Assert.Throws<ArgumentNullException>(() => _validator.ShouldInclude(null!, opts));
     }
 
     [Fact]
@@ -31,7 +31,7 @@ public class IFileValidatorTests
         var opts = new FileLoadOptions { AllowedExtensions = [".cs", ".json"], ExcludedDirectories = [] };
 
         // Act
-        var result = _validator.IsValid(tempFile.Info, opts);
+        var result = _validator.ShouldInclude(tempFile.Info, opts);
 
         // Assert
         Assert.True(result);
@@ -45,7 +45,7 @@ public class IFileValidatorTests
         var opts = new FileLoadOptions { AllowedExtensions = [".cs"], ExcludedDirectories = [] };
 
         // Act
-        var result = _validator.IsValid(tempFile.Info, opts);
+        var result = _validator.ShouldInclude(tempFile.Info, opts);
 
         // Assert
         Assert.False(result);
