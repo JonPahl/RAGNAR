@@ -25,7 +25,7 @@ public class StageTimingMiddlewareTests
         stage.Setup(s => s.ExecuteAsync(It.IsAny<TestContext>(), It.IsAny<CancellationToken>()))
              .Returns(Task.CompletedTask);
 
-        var context = new StageExecutionContext<TestContext>(stage.Object, _testContext, 0, 1);
+        var context = new Middleware.StageExecutionContext<TestContext>(stage.Object, _testContext, 0, 1);
         var nextCalled = false;
 
         // Act
