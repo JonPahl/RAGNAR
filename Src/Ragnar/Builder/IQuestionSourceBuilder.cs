@@ -37,6 +37,6 @@ public interface IQuestionSourceBuilder
 
     /// <summary>Filters the question list to a specific set of categories.</summary>
     /// <returns>The builder instance for chaining.</returns>
-    /// <example><![CDATA[builder.WithCategoryFilter();]]></example>
-    IQuestionSourceBuilder WithCategoryFilter();
+    /// <example><![CDATA[builder.FilteredByCategory();]]></example>
+    IQuestionSourceBuilder FilteredByCategory();
 }

@@ -17,20 +17,29 @@ public sealed class CsvRecordParser(ILogger logger)
     {
         Guard.Against.NullOrEmpty(filePath);
 
+        List<QuestionRecord> records;
+
         var sw = Stopwatch.StartNew();
 
         CsvReaderOptions? options = new()
         {
             MalformedData = CsvMalformedDataHandling.Recover,
             Encoding = System.Text.Encoding.UTF8,
-
         };
 
-        var x = CsvReader.FromFile(filePath, options);
-        var records = await x.GetRecordsAsync<QuestionRecord>(cancellationToken).ToListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+        try
+        {
+            var csvPath = CsvReader.FromFile(filePath, options);
+            records = await csvPath.GetRecordsAsync<QuestionRecord>(cancellationToken).ToListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
 
-        sw.Stop();
-        logger.LogInformation("Parsed {Count} records from {FilePath} in {Elapsed}", records.Count, filePath, sw.Elapsed);
-        return records;
+            sw.Stop();
+            logger.LogInformation("Parsed {Count} records from {FilePath} in {Elapsed}", records.Count, filePath, sw.Elapsed);
+            return records;
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Failed to parse CSV file {FilePath}", filePath);
+            throw;
+        }
     }
 }

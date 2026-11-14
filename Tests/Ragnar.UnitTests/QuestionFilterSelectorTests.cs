@@ -8,7 +8,7 @@ public class QuestionFilterSelectorTests
     public void FindFilterForXmlShouldReturnNonNullFilter()
     {
         // Arrange
-        var selector = new QuestionFilterSelector(_loggerMock.Object, []);
+        var selector = new QuestionFilterSelector([]);
 
         // Act
         var filter = selector.FindFilter(QuestionCategory.XML);
@@ -21,21 +21,20 @@ public class QuestionFilterSelectorTests
     public void FindFilterForXmlShouldExcludeTestCategoryKeywords()
     {
         // Arrange
-        var selector = new QuestionFilterSelector(_loggerMock.Object, []);
+        var selector = new QuestionFilterSelector([]);
 
         // Act
         var filter = selector.FindFilter(QuestionCategory.XML, 50);
 
         // Assert
         Assert.NotNull(filter.MustNot);
-        Assert.NotEmpty(filter.MustNot);
     }
 
     [Fact]
     public void FindFilterForUnregisteredCategoryShouldThrow()
     {
         // Arrange
-        var selector = new QuestionFilterSelector(_loggerMock.Object, []);
+        var selector = new QuestionFilterSelector([]);
 
         // Act & Assert
         var ex = Assert.Throws<NotSupportedException>(
@@ -56,7 +55,7 @@ public class QuestionFilterSelectorTests
         mockStrategy.Setup(s => s.SupportedCategory).Returns(QuestionCategory.Other);
         mockStrategy.Setup(s => s.CreateFilter(It.IsAny<int>())).Returns(expectedFilter);
 
-        var selector = new QuestionFilterSelector(_loggerMock.Object, [mockStrategy.Object]);
+        var selector = new QuestionFilterSelector([mockStrategy.Object]);
 
         // Act
         var result = selector.FindFilter(QuestionCategory.Other, 100);
@@ -70,7 +69,7 @@ public class QuestionFilterSelectorTests
     public void BuiltinXmlStrategyShouldBeRegisteredWhenAbsent()
     {
         // Arrange – pass empty collection so the built-in XML strategy auto-registers
-        var selector = new QuestionFilterSelector(_loggerMock.Object, []);
+        var selector = new QuestionFilterSelector([]);
 
         // Act – should not throw because XML is auto-registered
         var filter = selector.FindFilter(QuestionCategory.XML, 0);

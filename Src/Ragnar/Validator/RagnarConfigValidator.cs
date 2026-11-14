@@ -8,15 +8,13 @@ public class RagnarConfigValidator
     /// <param name="appValidator">Validator for ApplicationOptions.</param>
     /// <param name="embedValidator">Validator for EmbeddingOptions.</param>
     /// <param name="ollamaValidator">Validator for OllamaOptions.</param>
-    /// <param name="fileValidator">Validator for FileLoadOptions.</param>
     /// <example>
     /// <![CDATA[var v = new RagnarConfigValidator(appV, embV, ollV, fileV);]]>
     /// </example>
     public RagnarConfigValidator(
         ApplicationOptionsValidator appValidator,
         EmbeddingOptionsValidator embedValidator,
-        OllamaOptionsValidator ollamaValidator,
-        FileLoadOptionsValidator fileValidator)
+        OllamaOptionsValidator ollamaValidator)
     {
         RuleFor(x => x.ApplicationOptions).NotNull().WithMessage("ApplicationOptions is required.");
         RuleFor(x => x.EmbeddingOptions).NotNull().WithMessage("EmbeddingOptions is required.");
@@ -31,8 +29,5 @@ public class RagnarConfigValidator
 
         RuleFor(x => x.OllamaOptions)
             .SetValidator(ollamaValidator);
-
-        RuleFor(x => x.FileLoadOptions)
-            .SetValidator(fileValidator);
     }
 }

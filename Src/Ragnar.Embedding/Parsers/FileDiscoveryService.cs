@@ -4,10 +4,9 @@
 /// Static class to call Custom system enumerable.
 /// </summary>
 /// <example><![CDATA[await foreach(var f in svc.EnumerateFilesAsync(dir, opts, ct)){...}]]></example>
-public class FileDiscoveryService(ILogger logger, IFileInclusionFilter validator) : IFileDiscoveryService
+public class FileDiscoveryService(ILogger logger) : IFileDiscoveryService
 {
-    /// <summary>
-    /// Yields filtered file paths asynchronously.
+    /// <summary> Yields filtered file paths asynchronously.
     /// </summary>
     /// <param name="directory">Search root.</param>
     /// <param name="cancellationToken">Cancellation cancellationToken.</param>
@@ -23,15 +22,16 @@ public class FileDiscoveryService(ILogger logger, IFileInclusionFilter validator
     IOptions<RagnarConfig> options,
     [EnumeratorCancellation] CancellationToken cancellationToken)
     {
-        var filter = options.Value.FileLoadOptions;
+        cancellationToken.ThrowIfCancellationRequested();
 
+        var filter = options.Value.FileLoadOptions;
         Guard.Against.Null(filter);
         Guard.Against.NullOrEmpty(directory);
 
-        logger.LogInformation("Discovering files in {Directory} with {AllowedExtensions} allowed extensions", directory, string.Join(", ", filter.AllowedExtensions));
-
         if (!Directory.Exists(directory))
             throw new DirectoryNotFoundException(directory);
+
+        logger.LogInformation("Discovering files in {Directory} with {AllowedExtensions} allowed extensions", directory, string.Join(", ", filter.AllowedExtensions));
 
         var discoveredCount = 0;
         var skippedCount = 0;
@@ -41,11 +41,8 @@ public class FileDiscoveryService(ILogger logger, IFileInclusionFilter validator
             cancellationToken.ThrowIfCancellationRequested();
 
             var fi = new FileInfo(path);
-            if (!validator.ShouldInclude(fi, filter))
-            {
-                skippedCount++;
-                continue;
-            }
+            if (!filter.IsEligible(fi)) { skippedCount++; continue; }
+
             discoveredCount++;
             logger.LogDebug("Eligible file: {Path}", path);
 

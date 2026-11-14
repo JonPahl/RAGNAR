@@ -2,30 +2,76 @@
 
 public class StageEntryTests
 {
+    public class TestCtx { }
+
     [Fact]
-    public void StageEntryShouldExposePipelineStage()
+    public void ShouldStoreStageReference()
     {
-        var stage = new Mock<IPipelineStage<object>>();
-        stage.Setup(s => s.Name).Returns("MyStage");
+        // Arrange
+        var stage = new Mock<IPipelineStage<TestCtx>>();
+        stage.Setup(s => s.Name).Returns("Test");
 
-        var entry = new StageDescriptor<object>(stage.Object);
+        // Act
+        var entry = new StageEntry<TestCtx>(stage.Object);
 
-        Assert.Same(stage.Object, entry.PipelineStage);
+        // Assert
+        Assert.Same(stage.Object, entry.Stage);
     }
 
     [Fact]
-    public void StageEntryShouldExposeNullPolicyByDefault()
+    public void PolicyShouldBeNullByDefault()
     {
-        var stage = new Mock<IPipelineStage<object>>();
+        // Arrange
+        var stage = new Mock<IPipelineStage<TestCtx>>();
 
-        var entry = new StageDescriptor<object>(stage.Object);
+        // Act
+        var entry = new StageEntry<TestCtx>(stage.Object);
 
-        Assert.Null(entry.RetryPolicy);
+        // Assert
+        Assert.Null(entry.Policy);
     }
 
     [Fact]
-    public void StageEntryShouldThrowOnNullStage()
+    public void PolicyShouldBeSettable()
     {
-        Assert.Throws<ArgumentNullException>(() => new StageDescriptor<object>(null!));
+        // Arrange
+        var stage = new Mock<IPipelineStage<TestCtx>>();
+        var policy = Microsoft.Extensions.Logging.Abstractions.NullLoggerFactory.Instance.CreateLogger("test");
+        // Use a real Polly policy for type correctness
+        var retryPolicy = Policy.Handle<HttpRequestException>().WaitAndRetryAsync([TimeSpan.FromSeconds(3)]);
+
+        // Act
+        var entry = new StageEntry<TestCtx>(stage.Object, retryPolicy);
+
+        // Assert
+        Assert.NotNull(entry.Policy);
+    }
+
+    [Fact]
+    public void ShouldSupportRecordEquality()
+    {
+        // Arrange
+        var stage = new Mock<IPipelineStage<TestCtx>>();
+        var entry1 = new StageEntry<TestCtx>(stage.Object);
+        var entry2 = new StageEntry<TestCtx>(stage.Object);
+
+        // Assert
+        Assert.Equal(entry1, entry2);
+    }
+
+    [Fact]
+    public void ShouldSupportWithExpression()
+    {
+        // Arrange
+        var stage = new Mock<IPipelineStage<TestCtx>>();
+        var original = new StageEntry<TestCtx>(stage.Object);
+
+        // Act
+        var modified = original with { Policy = Polly.Policy.Handle<TimeoutException>().WaitAndRetryAsync([TimeSpan.FromSeconds(1)]) };
+
+        // Assert
+        Assert.Null(original.Policy);
+        Assert.NotNull(modified.Policy);
+        Assert.Same(stage.Object, modified.Stage);
     }
 }

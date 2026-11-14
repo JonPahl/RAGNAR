@@ -7,6 +7,9 @@ public class EmbeddingSetupExtensionTests
     {
         var services = new ServiceCollection();
         services.AddLogging();
+        services.AddSingleton<ILogger>(Mock.Of<ILogger>());
+        services.AddSingleton(Mock.Of<IVectorStoreBuilder>());
+        services.AddSingleton(Mock.Of<IOutputWriter>());
 
         services.EmbeddingSetup();
 
@@ -21,7 +24,9 @@ public class EmbeddingSetupExtensionTests
     {
         var services = new ServiceCollection();
         services.AddLogging();
-
+        services.AddSingleton(Mock.Of<ILogger>());
+        services.AddSingleton(Mock.Of<IVectorStoreBuilder>());
+        services.AddSingleton(Mock.Of<IOutputWriter>());
         services.EmbeddingSetup();
 
         var sp = services.BuildServiceProvider();
@@ -35,6 +40,9 @@ public class EmbeddingSetupExtensionTests
     {
         var services = new ServiceCollection();
         services.AddLogging();
+        services.AddSingleton(Mock.Of<ILogger>());
+        services.AddSingleton(Mock.Of<IVectorStoreBuilder>());
+        services.AddSingleton(Mock.Of<IOutputWriter>());
 
         services.EmbeddingSetup();
 
@@ -49,6 +57,9 @@ public class EmbeddingSetupExtensionTests
     {
         var services = new ServiceCollection();
         services.AddLogging();
+        services.AddSingleton(Mock.Of<ILogger>());
+        services.AddSingleton(Mock.Of<IVectorStoreBuilder>());
+        services.AddSingleton(Mock.Of<IOutputWriter>());
         services.EmbeddingSetup();
 
         var sp = services.BuildServiceProvider();
@@ -62,6 +73,9 @@ public class EmbeddingSetupExtensionTests
     {
         var services = new ServiceCollection();
         services.AddLogging();
+        services.AddSingleton(Mock.Of<ILogger>());
+        services.AddSingleton(Mock.Of<IVectorStoreBuilder>());
+        services.AddSingleton(Mock.Of<IOutputWriter>());
 
         var result = services.EmbeddingSetup();
 
@@ -173,6 +187,9 @@ public class EmbeddingSetupExtensionTests
     {
         // Arrange
         var services = new ServiceCollection();
+        services.AddSingleton<ILogger>(Mock.Of<ILogger>());
+        services.AddSingleton(Mock.Of<IVectorStoreBuilder>());
+        services.AddSingleton(Mock.Of<IOutputWriter>());
 
         // Act
         var result = services.EmbeddingSetup();
@@ -188,8 +205,11 @@ public class EmbeddingSetupExtensionTests
         var services = new ServiceCollection();
 
         // Act
-        services.EmbeddingSetup();
         services.AddLogging();
+        services.AddSingleton(Mock.Of<ILogger>());
+        services.AddSingleton(Mock.Of<IVectorStoreBuilder>());
+        services.AddSingleton(Mock.Of<IOutputWriter>());
+
         services.EmbeddingSetup();
 
         // Assert – no crash, descriptors still resolvable

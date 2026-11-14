@@ -34,6 +34,6 @@ public class VectorStoreInitStage(IVectorSetup vectorSetup, IOutputWriter writer
     {
         await vectorSetup.EnsureCollectionExistsAsync(cancellationToken).ConfigureAwait(false);
 
-        writer.MarkupLine("☑ Knowledge base populated.", new Style(ConsoleColor.Green));
+        writer.MarkupLine(" ☑  Knowledge base populated.", new Style(Color.Green));
     }
 }

@@ -19,14 +19,25 @@ public sealed class CsvQuestionSource(IRecordParser<QuestionRecord> csvParser)
     /// <returns>Collection of loaded Question objects from the CSV file.</returns>
     public async Task<IEnumerable<Question>> LoadQuestionsAsync(string fileName, CancellationToken cancellationToken)
     {
-        var records = await csvParser
-            .ParseAsync(fileName, cancellationToken)
-            .ConfigureAwait(false);
+        try
+        {
+            var records = await csvParser
+                .ParseAsync(fileName, cancellationToken)
+                .ConfigureAwait(false);
 
-        return records.Select(r => new Question(
-            IsEnabled: r.IsEnabled,
-            Text: r.Text,
-            Filename: r.FileName,
-            Category: r.Category));
+            return records.Select(r => new Question(
+                IsEnabled: r.IsEnabled,
+                Text: r.Text,
+                Filename: r.FileName,
+                Category: r.Category));
+        }
+        catch (FileNotFoundException)
+        {
+            throw;
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException($"Failed to load questions from CSV file '{fileName}'.", ex);
+        }
     }
 }

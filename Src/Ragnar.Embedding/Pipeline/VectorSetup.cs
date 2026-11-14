@@ -33,11 +33,11 @@ public class VectorSetup(
 
         if (!collectionExists)
         {
-            writer.MarkupLine("[green] ☑ Collection Created [/]");
+            writer.MarkupLine(" ☑  Collection Created ", new Style(Color.Green));
             logger.LogInformation("Collection Created.");
         }
 
-        writer.MarkupLine("[green] ☑ Collection Exists [/]");
+        writer.MarkupLine(" ☑  Collection Exists", new Style(Color.Green));
         logger.LogInformation("Collection Exists.");
     }
 }

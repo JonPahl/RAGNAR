@@ -8,7 +8,7 @@
 /// <param name="fingerprintStore">Fingerprint persistence backend.</param>
 /// <param name="writer">The existing Qdrant upsert writer.</param>
 /// <param name="options">Application configuration (vector store name, etc.).</param>
-/// <example><![CDATA[runner.AddStage(new DeltaEmbedStage(log, store, writer, opts));]]></example>
+/// <example><![CDATA[embeddingPipelineRunner.AddStage(new DeltaEmbedStage(log, store, writer, opts));]]></example>
 public sealed class DeltaEmbedStage(
     ILogger logger,
     IFileFingerprintStore fingerprintStore,

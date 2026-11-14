@@ -1,17 +1,19 @@
-namespace Ragnar.Abstractions.IO;
+﻿namespace Ragnar.Abstractions.IO;
 
-/// <summary>Interface for formatting output data into Markdown strings.</summary>
-/// <example><![CDATA[string md = formatter.FormatResponse(details);]]></example>
+/// <summary>Formats application output into a target document representation.</summary>
+/// <remarks>Decouples content rendering from file I/O for testability.</remarks>
+/// <example><![CDATA[string md = formatter.FormatResponse(record);]]></example>
 public interface IOutputFormatter
 {
-    /// <summary>Gets or sets the file extension used by this formatter.</summary>
-    /// <returns>The output file extension string (e.g., "md").</returns>
+    /// <summary>Gets the file extension (without dot) used for output files.</summary>
+    /// <returns>A lowercase extension string, e.g. "md" or "html".</returns>
     /// <example><![CDATA[string ext = formatter.FileExtension;]]></example>
     string FileExtension { get; }
 
-    /// <summary>Formats the provided save details into a Markdown string.</summary>
-    /// <param name="details">The ResponseRecord object containing metadata and content.</param>
-    /// <returns>A formatted Markdown string ready for persistence.</returns>
-    /// <example><![CDATA[string md = formatter.FormatResponse(details);]]></example>
+    /// <summary>Renders a complete output document from the supplied response record.</summary>
+    /// <param name="record">The response record containing question, answer, and timing data.</param>
+    /// <returns>A fully formatted document string ready for persistence.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="record"/> is null.</exception>
+    /// <example><![CDATA[string md = formatter.FormatResponse(record);]]></example>
     string FormatResponse(ResponseRecord details);
 }

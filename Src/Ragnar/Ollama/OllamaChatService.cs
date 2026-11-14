@@ -59,39 +59,15 @@ public class OllamaChatService(
 
                 client.OnThink += (sender, token) =>
                 {
+                    headerText = new PanelHeader("Thinking");
+                    var clean = Markup.Escape(token);
+                    thinkingText.Append(clean);
 
-                    AnsiConsole.Progress()
-                    .IncludeVerticalPadding()
-                    .Columns(
-                        new TaskDescriptionColumn(),
-                        new ProgressBarColumn()
-                        {
-                            CompletedStyle = new Style(Color.Green),
-                            FinishedStyle = new Style(Color.Lime),
-                            RemainingStyle = new Style(Color.Grey)
-                        },
-                        new PercentageColumn())
-                    .Start(ctx =>
-                    {
-                        var task = ctx.AddTask("Building project").IsIndeterminate();
+                    panelText = new Markup(thinkingText.ToString(), Styles.Red);
 
-                        while (!ctx.IsFinished)
-                        {
-                            task.Increment(1);
-                            Thread.Sleep(40);
-                        }
-                        ctx.RemoveTask(task);
-                    });
-
-                    //headerText = new PanelHeader("Thinking");
-                    //var clean = Markup.Escape(token);
-                    //thinkingText.Append(clean);
-
-                    //panelText = new Markup(thinkingText.ToString(), Styles.Red);
-
-                    //ctx.UpdateTarget(panel);
-                    //ctx.UpdateTarget(panelText);
-                    //ctx.Refresh();
+                    ctx.UpdateTarget(panel);
+                    ctx.UpdateTarget(panelText);
+                    ctx.Refresh();
                 };
             }
             catch (Exception ex) when (ex is not OperationCanceledException)

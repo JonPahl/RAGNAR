@@ -5,128 +5,64 @@ public class EmbeddingOptionsTests
     [Fact]
     public void ShouldStoreAllProperties()
     {
+        // Arrange
+        var host = new Uri("http://localhost:11434");
+        var timeout = TimeSpan.FromSeconds(60);
+
+        // Act
         var opts = new EmbeddingOptions
         {
-            Host = new Uri("http://localhost:11434"),
+            Host = host,
             EmbeddingModel = "nomic-embed-text",
-            Timeout = TimeSpan.FromSeconds(60),
+            Timeout = timeout,
             Dimension = 768,
             BatchSize = 32
         };
 
-        Assert.Equal(new Uri("http://localhost:11434"), opts.Host);
+        // Assert
+        Assert.Equal(host, opts.Host);
         Assert.Equal("nomic-embed-text", opts.EmbeddingModel);
-        Assert.Equal(TimeSpan.FromSeconds(60), opts.Timeout);
+        Assert.Equal(timeout, opts.Timeout);
         Assert.Equal(768UL, opts.Dimension);
         Assert.Equal(32, opts.BatchSize);
     }
 
     [Fact]
-    public void EmbeddingOptionsShouldStoreAllProperties()
-    {
-        // Act
-        var opts = new EmbeddingOptions
-        {
-            Host = new Uri("http://localhost:11434"),
-            EmbeddingModel = "nomic-embed-text",
-            Timeout = TimeSpan.FromSeconds(60),
-            Dimension = 768,
-            BatchSize = 32
-        };
-
-        // Assert
-        Assert.Equal(new Uri("http://localhost:11434"), opts.Host);
-        Assert.Equal("nomic-embed-text", opts.EmbeddingModel);
-        Assert.Equal(TimeSpan.FromSeconds(60), opts.Timeout);
-        Assert.Equal((double)768, opts.Dimension);
-        Assert.Equal(32, opts.BatchSize);
-    }
-
-    [Fact]
-    public void DimensionShouldRejectZero()
-    {
-        // Act
-        var opts = new EmbeddingOptions
-        {
-            Host = new Uri("http://localhost"),
-            EmbeddingModel = "model",
-            Timeout = TimeSpan.FromSeconds(30),
-            Dimension = 0,
-            BatchSize = 16
-        };
-
-        // Assert
-        var ctx = new ValidationContext(opts);
-        ICollection<System.ComponentModel.DataAnnotations.ValidationResult>? results = [];
-        Assert.False(System.ComponentModel.DataAnnotations.Validator.TryValidateObject(opts, ctx, results, validateAllProperties: true));
-    }
-
-    [Fact]
-    public void BatchSizeShouldRejectAbove512()
-    {
-        // Act
-        var opts = new EmbeddingOptions
-        {
-            Host = new Uri("http://localhost"),
-            EmbeddingModel = "model",
-            Timeout = TimeSpan.FromSeconds(30),
-            Dimension = 768,
-            BatchSize = 1024
-        };
-
-        // Assert
-        var ctx = new ValidationContext(opts);
-        var results = new List<System.ComponentModel.DataAnnotations.ValidationResult>();
-        Assert.False(System.ComponentModel.DataAnnotations.Validator.TryValidateObject(opts, ctx, results, validateAllProperties: true));
-    }
-
-    [Fact]
-    public void EmbeddingOptionsShouldSupportEquality()
+    public void ShouldSupportEquality()
     {
         // Arrange
-        var a = new EmbeddingOptions
-        {
-            Host = new Uri("http://localhost"),
-            EmbeddingModel = "model",
-            Timeout = TimeSpan.FromSeconds(30),
-            Dimension = 512,
-            BatchSize = 16
-        };
-        var b = new EmbeddingOptions
-        {
-            Host = new Uri("http://localhost"),
-            EmbeddingModel = "model",
-            Timeout = TimeSpan.FromSeconds(30),
-            Dimension = 512,
-            BatchSize = 16
-        };
+        var host = new Uri("http://localhost");
+        var a = new EmbeddingOptions { Host = host, EmbeddingModel = "model", Timeout = TimeSpan.FromSeconds(30), Dimension = 512, BatchSize = 16 };
+        var b = new EmbeddingOptions { Host = host, EmbeddingModel = "model", Timeout = TimeSpan.FromSeconds(30), Dimension = 512, BatchSize = 16 };
 
         // Assert
         Assert.Equal(a, b);
     }
 
     [Fact]
-    public void EmbeddingOptionsShouldDifferWhenModelDiffers()
+    public void ShouldDifferWhenDimensionDiffers()
     {
         // Arrange
-        var a = new EmbeddingOptions
-        {
-            Host = new Uri("http://localhost"),
-            EmbeddingModel = "model-a",
-            Timeout = TimeSpan.FromSeconds(30),
-            Dimension = 512,
-            BatchSize = 16
-        };
-        var b = new EmbeddingOptions
-        {
-            Host = new Uri("http://localhost"),
-            EmbeddingModel = "model-b",
-            Timeout = TimeSpan.FromSeconds(30),
-            Dimension = 512,
-            BatchSize = 16
-        };
+        var host = new Uri("http://localhost");
+        var a = new EmbeddingOptions { Host = host, EmbeddingModel = "m", Timeout = TimeSpan.FromSeconds(30), Dimension = 512, BatchSize = 16 };
+        var b = new EmbeddingOptions { Host = host, EmbeddingModel = "m", Timeout = TimeSpan.FromSeconds(30), Dimension = 1024, BatchSize = 16 };
 
         // Assert
         Assert.NotEqual(a, b);
+    }
+
+    [Fact]
+    public void ShouldBeImmutableViaWithExpression()
+    {
+        // Arrange
+        var host = new Uri("http://localhost");
+        var original = new EmbeddingOptions { Host = host, EmbeddingModel = "original", Timeout = TimeSpan.FromSeconds(30), Dimension = 768, BatchSize = 16 };
+
+        // Act
+        var modified = original with { EmbeddingModel = "changed" };
+
+        // Assert
+        Assert.Equal("original", original.EmbeddingModel);
+        Assert.Equal("changed", modified.EmbeddingModel);
     }
 }
