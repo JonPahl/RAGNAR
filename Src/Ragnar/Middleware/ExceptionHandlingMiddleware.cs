@@ -25,8 +25,7 @@ public sealed class ExceptionHandlingMiddleware(ILogger logger)
                 context.Stage.Name,
                 ex.Message);
 
-            // Overlay error into metric if timing middleware already set one,
-            // otherwise create a minimal record.
+            // Overlay error into metric if timing middleware already set one, otherwise create a minimal record.
             context.Metric = context.Metric is { } m
                 ? m with { Success = false, Error = ex.Message }
                 : new StageMetric { StageName = context.Stage.Name, Success = false, Error = ex.Message };

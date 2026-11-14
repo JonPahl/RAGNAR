@@ -7,7 +7,7 @@
 public abstract record PipelineContextBase
 {
     /// <summary>
-    /// The walled-clock start time of the pipeline execution, set once by the runner.
+    /// The walled-clock start time of the pipeline execution, set once by the embeddingPipelineRunner.
     /// </summary>
     public DateTimeOffset StartedAt { get; init; } = DateTimeOffset.UtcNow;
 

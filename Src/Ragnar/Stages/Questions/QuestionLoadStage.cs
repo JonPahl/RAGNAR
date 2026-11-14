@@ -6,7 +6,7 @@
 /// <param name="questionSource">Pluggable source that reads question files.</param>
 /// <param name="questionBuilder">Builder that applies category filters and sorts.</param>
 /// <param name="logger">Serilog logger.</param>
-/// <example><![CDATA[await runner.AddStage(new QuestionLoadStage(source, builder, log));]]></example>
+/// <example><![CDATA[await embeddingPipelineRunner.AddStage(new QuestionLoadStage(source, builder, log));]]></example>
 public sealed class QuestionLoadStage(
     IQuestionSource questionSource,
     IQuestionSourceBuilder questionBuilder,
@@ -40,7 +40,7 @@ public sealed class QuestionLoadStage(
         await questionBuilder.GetCsvFilesAsync(pluginDir, cancellationToken)
             .ConfigureAwait(false);
 
-        questionBuilder.WithCategoryFilter();
+        questionBuilder.FilteredByCategory();
         var sorted = questionBuilder.Build();
 
         #region do this better

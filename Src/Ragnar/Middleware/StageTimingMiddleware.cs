@@ -3,55 +3,66 @@
 /// <summary>
 /// Middleware that measures wall-clock duration of a stage and populates <see cref="StageMetric"/>.
 /// </summary>
-/// <example><![CDATA[runner.UseMiddleware(new StageTimingMiddleware(logger).Invoke);]]></example>
+/// <example><![CDATA[embeddingPipelineRunner.UseMiddleware(new StageTimingMiddleware(logger).Invoke);]]></example>
 public sealed class StageTimingMiddleware(ILogger logger)
 {
     /// <summary>
     /// Wraps the next link with a Stopwatch, writes a <see cref="StageMetric"/>,
     /// and logs the elapsed time at Information level.
     /// </summary>
-    /// <param name="context">The stage execution context to attach metrics to.</param>
+    /// <param name="ctx">The stage execution ctx to attach metrics to.</param>
     /// <param name="next">The next middleware link or core stage delegate.</param>
     /// <param name="cancellationToken">Token to abort timing measurement.</param>
     /// <returns>A task that completes when the wrapped stage finishes.</returns>
     /// <example><![CDATA[await mw.Invoke<TCtx>(ctx, () => Task.CompletedTask, ct);]]></example>
-    public async Task Invoke<TContext>(
-        StageExecutionContext<TContext> context,
+    public Task Invoke<TContext>(
+        StageExecutionContext<TContext> ctx,
         Func<Task> next,
-        CancellationToken cancellationToken) where TContext : class
+        CancellationToken cancellationToken)
+        where TContext : class
     {
         cancellationToken.ThrowIfCancellationRequested();
-        ArgumentNullException.ThrowIfNull(context);
+        ArgumentNullException.ThrowIfNull(ctx);
         ArgumentNullException.ThrowIfNull(next);
         var sw = Stopwatch.StartNew();
-        var succeeded = false;
-        string? error = null;
 
-        try
+        return Next();
+
+        async Task Next()
         {
-            await next().ConfigureAwait(false);
-            succeeded = true;
-        }
-        catch (Exception ex)
-        {
-            error = ex.Message;
-            throw;
-        }
-        finally
-        {
-            sw.Stop();
-            context.Metric = new StageMetric
+            try
             {
-                StageName = context.Stage.Name,
-                Duration = sw.Elapsed,
-                Success = succeeded,
-                RetryCount = 0, // populate via a separate retry middleware if needed
-                Error = error
-            };
-            logger.LogInformation(
-                "Stage [{Index}/{Total}] {Name} completed in {Elapsed} ({Success})",
-                context.StageIndex + 1, context.StageTotal,
-                context.Stage.Name, sw.Elapsed, succeeded);
+                await next().ConfigureAwait(false);
+
+                ctx.Metric = new StageMetric
+                {
+                    StageName = ctx.Stage.Name,
+                    Duration = sw.Elapsed,
+                    Success = true,
+                    RetryCount = 0,
+                    Error = null
+                };
+            }
+            catch (Exception ex)
+            {
+                ctx.Metric = new StageMetric
+                {
+                    StageName = ctx.Stage.Name,
+                    Duration = sw.Elapsed,
+                    Success = false,
+                    RetryCount = 0,
+                    Error = ex.Message
+                };
+                throw;
+            }
+            finally
+            {
+                sw.Stop();
+
+                logger.LogInformation("Stage [[{I}/{T}]] {N} → {D}",
+                    ctx.StageIndex + 1, ctx.StageTotal, ctx.Stage.Name, sw.Elapsed);
+            }
         }
     }
 }
+

@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="Moq" Version="4.21.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="4.0.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="xunit.v3" Version="4.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Src\Ragnar.Abstractions\Ragnar.Abstractions.csproj" />
+    <ProjectReference Include="..\..\Src\Ragnar.Core\Ragnar.Core.csproj" />
+    <ProjectReference Include="..\..\Src\Ragnar.Embedding\Ragnar.Embedding.csproj" />
+    <ProjectReference Include="..\..\Src\Ragnar.Questions\Ragnar.Questions.csproj" />
+    <ProjectReference Include="..\..\Src\Ragnar\Ragnar.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <Import Project="..\..\Ragnar.Plugins\Ragnar.Plugins.projitems" Label="Shared" />
+
+</Project>

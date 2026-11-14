@@ -1,5 +1,4 @@
-﻿C:\Users\jp325\source\Ragnar\Src\Ragnar\BasePipeline.cs
-C:\Users\jp325\source\Ragnar\Src\Ragnar\Branding\ApplicationHeader.cs
+﻿C:\Users\jp325\source\Ragnar\Src\Ragnar\Branding\ApplicationHeader.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Branding\AssemblyExtensions.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Builder\IOllamaChatClientBuilder.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Builder\IQuestionSourceBuilder.cs
@@ -12,7 +11,6 @@ C:\Users\jp325\source\Ragnar\Src\Ragnar\Builder\RagPromptBuilder.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\ContextRetriever.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Exceptions\PipelineStageException.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Extensions\EmbeddingSetupExtension.cs
-C:\Users\jp325\source\Ragnar\Src\Ragnar\Extensions\FileSystemEntryExtensions.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Extensions\OutputPathHelper.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Extensions\PluginExtension.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Extensions\RagPipelineExtensions.cs
@@ -25,9 +23,9 @@ C:\Users\jp325\source\Ragnar\Src\Ragnar\GlobalUsings.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\IPipeline.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Middleware\ExceptionHandlingMiddleware.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Middleware\MetricsSummaryMiddleware.cs
-C:\Users\jp325\source\Ragnar\Src\Ragnar\Middleware\PipelineMiddleware.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Middleware\ProgressMiddleware.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Middleware\RetryMiddleware.cs
+C:\Users\jp325\source\Ragnar\Src\Ragnar\Middleware\StageExecutionContext.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Middleware\StageTimingMiddleware.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Middleware\ValidationMiddleware.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Ollama\OllamaChatService.cs
@@ -43,9 +41,10 @@ C:\Users\jp325\source\Ragnar\Src\Ragnar\Output\PathResolver.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Output\ResponseMarkdownFormatter.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Output\ResponseWriter.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Output\SystemClock.cs
-C:\Users\jp325\source\Ragnar\Src\Ragnar\PipelineStageEntry.cs
+C:\Users\jp325\source\Ragnar\Src\Ragnar\Pipeline\Pipeline.cs
+C:\Users\jp325\source\Ragnar\Src\Ragnar\Pipeline\PipelineBuilder.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Pipeline\PipelineContextBase.cs
-C:\Users\jp325\source\Ragnar\Src\Ragnar\Pipeline\PipelineRunner.cs
+C:\Users\jp325\source\Ragnar\Src\Ragnar\Pipeline\StageDescriptor.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Pipeline\StageEntry.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Pipeline\StageMetric.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Pipeline\StageOptions.cs
@@ -67,7 +66,6 @@ C:\Users\jp325\source\Ragnar\Src\Ragnar\Stages\StoredFileListStage.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Stages\SummarizationStage.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Stages\UpsertStage.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Store\JsonFileFingerprintStore.cs
-C:\Users\jp325\source\Ragnar\Src\Ragnar\Utils\FileValidator.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Utils\PathExtensions.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Utils\Styles.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Validator\ApplicationOptionsValidator.cs
@@ -88,6 +86,7 @@ C:\Users\jp325\source\Ragnar\Src\Ragnar\appsettings.Development.json
 C:\Users\jp325\source\Ragnar\Src\Ragnar\appsettings.ImageDescriptionWin.json
 C:\Users\jp325\source\Ragnar\Src\Ragnar\appsettings.json
 C:\Users\jp325\source\Ragnar\Src\Ragnar\appsettings.ObitLoader.json
+C:\Users\jp325\source\Ragnar\Src\Ragnar\appsettings.Pipeline.json
 C:\Users\jp325\source\Ragnar\Src\Ragnar\appsettings.Ragnar.json
 C:\Users\jp325\source\Ragnar\Src\Ragnar\appsettings.Shepherd_Api.json
 C:\Users\jp325\source\Ragnar\Src\Ragnar\Dockerfile

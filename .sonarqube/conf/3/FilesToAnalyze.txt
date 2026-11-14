@@ -7,7 +7,6 @@ C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\GlobalUsings.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Parsers\BaseFileParser.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Parsers\CodeDocumentBuilder.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Parsers\FileDiscoveryService.cs
-C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Parsers\FileValidator.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Parsers\IFileDiscoveryService.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Parsers\IVectorStoreWriter.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Parsers\MarkdownFileParser.cs

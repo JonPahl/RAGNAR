@@ -23,10 +23,11 @@ public static partial class RagPipelineHostBuilder
             // TODO How do I make changing what appsettings file to use easier.
 
             //const string X = "Pipeline";
-            const string X = "Ragnar";
+            //const string X = "Ragnar";
             //const string X = "Bank";
             //const string X = "Shepherd_Api";
             //const string X = "ObitLoader";
+            const string X = "SolutionBuilder";
 
             cfg.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
            .AddJsonFile($"appsettings.{X}.json", optional: true, reloadOnChange: true);
@@ -72,8 +73,6 @@ public static partial class RagPipelineHostBuilder
         s.AddSingleton<IOutputFormatter, ResponseMarkdownFormatter>();
         s.AddSingleton<IFileDiscoveryService, FileDiscoveryService>();
         s.AddSingleton<IFileParseFactory, CodeParserFactory>();
-        s.AddSingleton<IFileInclusionFilter, FileValidator>();
-
         s.AddSingleton<ISyntaxTreeChunker, SyntaxTreeChunker>();
         s.AddSingleton<IVectorStoreBuilder, VectorStoreBuilder>();
     }
@@ -112,47 +111,6 @@ public static partial class RagPipelineHostBuilder
                 SourceDirectory = options.ApplicationOptions.SourceDirectory
             };
         });
-
-        s.AddSingleton<IPipeline<EmbeddingContext>>(sp =>
-        {
-            var logger = sp.GetRequiredService<Microsoft.Extensions.Logging.ILogger>();
-
-            var options = sp.GetRequiredService<IOptions<RagnarConfig>>();
-
-            var header = sp.GetRequiredService<IApplicationHeader>();
-
-            var qdrantClient = sp.GetRequiredService<IQdrantClient>();
-
-            var vectorSetup = sp.GetRequiredService<IVectorSetup>();
-
-            var fileLoader = sp.GetService<IFileDiscoveryService>();
-            var outputWriter = sp.GetService<IOutputWriter>();
-            var repository = sp.GetService<IVectorStoreWriter>();
-            var parseFactory = sp.GetService<IFileParseFactory>();
-
-            var fingerprintStore = sp.GetRequiredService<IFileFingerprintStore>();
-
-            var vectorWriter = sp.GetRequiredService<IVectorStoreWriter>();
-
-            var runner = new PipelineRunner<EmbeddingContext>(logger);
-
-            runner
-            .UseMiddleware(new ExceptionHandlingMiddleware(logger).Invoke)
-            .UseMiddleware(new StageTimingMiddleware(logger).Invoke)
-            .UseMiddleware(new RetryMiddleware(logger).Invoke)
-            .UseMiddleware(new ProgressMiddleware(outputWriter).Invoke);
-
-            runner.AddStage(new BrandingStage(logger, header))
-                .AddStage(new VectorStoreInitStage(vectorSetup, outputWriter))
-                .AddStage(new DiscoveryStage(options, fileLoader, logger, outputWriter))
-                .AddStage(new ParsingStage(parseFactory, logger))
-                .AddStage(new DeltaEmbedStage(logger, fingerprintStore, vectorWriter, options))
-                .AddStage(new UpsertStage(repository, logger, options, outputWriter))
-                .AddStage(new StoredFileListStage(options, qdrantClient, logger));
-
-            return runner;
-
-        });
     }
 
     private static void AddQuestionPipeline(this IServiceCollection s)
@@ -166,38 +124,5 @@ public static partial class RagPipelineHostBuilder
         s.AddSingleton<IQuestionBuilder, QuestionBuilder>();
         s.AddSingleton<IRagOrchestrator, RagOrchestrator>();
         s.AddSingleton(new QuestionPipelineContext());
-
-        //s.AddSingleton(s.AddSingleton<IPipeline<QuestionPipelineContext>, QuestionPipelineRunner>(sp =>
-
-        s.AddSingleton<IPipeline<QuestionPipelineContext>>(sp =>
-        {
-            var logger = sp.GetRequiredService<Microsoft.Extensions.Logging.ILogger>();
-            var writer = sp.GetRequiredService<IOutputWriter>();
-
-            var runner = new PipelineRunner<QuestionPipelineContext>(logger);
-
-            runner.UseMiddleware(new ExceptionHandlingMiddleware(logger).Invoke)
-            .UseMiddleware(new StageTimingMiddleware(logger).Invoke)
-            .UseMiddleware(new RetryMiddleware(logger).Invoke)
-            .UseMiddleware(new ProgressMiddleware(writer).Invoke);
-
-            runner.AddStage(new QuestionLoadStage(
-               sp.GetRequiredService<IQuestionSource>(),
-               sp.GetRequiredService<IQuestionSourceBuilder>(),
-               sp.GetRequiredService<ILogger>()))
-            .AddStage(new QuestionTableStage(sp.GetRequiredService<IOutputWriter>()))
-            .AddStage(new QuestionAnswerStage(
-                sp.GetRequiredService<IRagOrchestrator>(),
-                sp.GetRequiredService<IOptions<RagnarConfig>>(),
-                sp.GetRequiredService<IOutputWriter>(),
-                sp.GetRequiredService<IContextRetriever>(),
-                sp.GetRequiredService<ILogger>()))
-            .AddStage(new SummarizationStage(
-                sp.GetRequiredService<IResponseSummarizer>(),
-                sp.GetRequiredService<IOutputWriter>()
-                ));
-
-            return runner;
-        });
     }
 }

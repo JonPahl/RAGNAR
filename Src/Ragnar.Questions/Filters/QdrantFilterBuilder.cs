@@ -78,6 +78,10 @@ public sealed class QdrantFilterBuilder
     /// <example><![CDATA[builder.AddExceptKeywords("Category", "Test", "Tests");]]></example>
     public QdrantFilterBuilder AddExceptKeywords(string field, params string[] keywords)
     {
+        GuardField(field);
+        var list = keywords as IReadOnlyCollection<string> ?? [.. keywords];
+        if (list.Count == 0) return this;
+
         _must.Add(new Condition
         {
             Field = new FieldCondition
@@ -87,7 +91,7 @@ public sealed class QdrantFilterBuilder
                 {
                     ExceptKeywords = new RepeatedStrings
                     {
-                        Strings = { keywords }
+                        Strings = { list }
                     }
                 }
             }

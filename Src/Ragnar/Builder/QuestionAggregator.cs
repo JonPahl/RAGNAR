@@ -139,15 +139,15 @@ public sealed class QuestionAggregator(
 
     /// <summary>Filters the question list to a specific set of categories.</summary>
     /// <remarks>Clears prior entries and replaces with the filtered set.</remarks>
-    /// <example><![CDATA[builder.WithCategoryFilter(opts);]]></example>
+    /// <example><![CDATA[builder.FilteredByCategory(opts);]]></example>
     /// <returns>The builder instance for chaining.</returns>
-    /// <example><![CDATA[builder.WithCategoryFilter();]]></example>
-    public IQuestionSourceBuilder WithCategoryFilter()
+    /// <example><![CDATA[builder.FilteredByCategory();]]></example>
+    public IQuestionSourceBuilder FilteredByCategory()
     {
         var categories = options.Value.ApplicationOptions.CategoriesToProcess;
 
         // If the list is null or empty, keep everything (no filter).
-        if (categories.Length == 0)
+        if (categories.Count == 0)
             return this;
 
         var hash = categories.ToHashSet();

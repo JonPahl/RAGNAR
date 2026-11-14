@@ -33,7 +33,7 @@ public record ApplicationOptions
     /// <returns>The category names, or null to process every category.</returns>
     /// <example><![CDATA[opts.CategoriesToProcess = [QuestionCategory.Performance];]]></example>
     //[NotEmpty(ErrorMessage = "At least one category must be configured.")]
-    public QuestionCategory[]? CategoriesToProcess { get; init; } = [];
+    public Collection<QuestionCategory>? CategoriesToProcess { get; init; } = [];
 
     /// <summary>Gets or sets the output folder name for generated reports.</summary>
     /// <returns>The folder name; defaults to "Response."</returns>

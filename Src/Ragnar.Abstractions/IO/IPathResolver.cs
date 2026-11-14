@@ -1,18 +1,19 @@
 ﻿namespace Ragnar.Abstractions.IO;
 
-/// <summary>Resolves target directory paths based on source and question category.</summary>
+/// <summary>Resolves and manages output directory paths for categorized responses.</summary>
+/// <remarks>Encapsulates folder-structure logic so callers need no path math.</remarks>
 /// <example><![CDATA[var dir = resolver.ResolveResponseDirectory(cat);]]></example>
 public interface IPathResolver
 {
-    /// <summary>Constructs and returns the full response output directory path.</summary>
-    /// <param name="category">Question category determining the subfolder name.</param>
-    /// <returns>The resolved absolute target directory path string.</returns>
-    /// <example><![CDATA[string d = resolver.ResolveResponseDirectory(cat);]]></example>
+    /// <summary>Resolves the target directory for a given question category.</summary>
+    /// <param name="category">The question category; null yields the "Uncategorized" folder.</param>
+    /// <returns>A fully-qualified directory path string.</returns>
+    /// <example><![CDATA[string dir = resolver.ResolveResponseDirectory(QuestionCategory.XML);]]></example>
     string ResolveResponseDirectory(QuestionCategory? category);
 
-    /// <summary>Ensures the resolved directory exists, creating it if necessary.</summary>
-    /// <param name="path">The absolute or relative directory path to create.</param>
-    /// <returns>None; throws if the directory cannot be created.</returns>
-    /// <example><![CDATA[resolver.EnsureDirectoryExists(@"C:\Output\General");]]></example>
+    /// <summary>Creates the directory (and parents) if it does not already exist.</summary>
+    /// <param name="path">Absolute or relative directory path to ensure exists.</param>
+    /// <exception cref="UnauthorizedAccessException">The process lacks write permission.</exception>
+    /// <example><![CDATA[resolver.EnsureDirectoryExists(@"C:\out\XML");]]></example>
     void EnsureDirectoryExists(string path);
 }

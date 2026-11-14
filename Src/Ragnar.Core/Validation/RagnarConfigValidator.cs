@@ -12,8 +12,7 @@ public class RagnarConfigValidator : AbstractValidator<RagnarConfig>
     /// <example><![CDATA[var v = new RagnarConfigValidator(ev, ov, fv);]]></example>
     public RagnarConfigValidator(
         EmbeddingOptionsValidator embedValidator,
-        OllamaOptionsValidator ollamaValidator,
-        FileLoadOptionsValidator fileValidator)
+        OllamaOptionsValidator ollamaValidator)
     {
         RuleFor(x => x.ApplicationOptions).NotNull().WithMessage("ApplicationOptions is required.");
         RuleFor(x => x.EmbeddingOptions).NotNull().WithMessage("EmbeddingOptions is required.");
@@ -22,6 +21,5 @@ public class RagnarConfigValidator : AbstractValidator<RagnarConfig>
 
         RuleFor(x => x.EmbeddingOptions).SetValidator(embedValidator);
         RuleFor(x => x.OllamaOptions).SetValidator(ollamaValidator);
-        RuleFor(x => x.FileLoadOptions).SetValidator(fileValidator);
     }
 }

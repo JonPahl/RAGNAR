@@ -27,15 +27,11 @@ C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Options\RagnarConfig.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Rendering\ConsoleTableBuilder.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Rendering\ConsoleTableRenderer.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Rendering\Decorators\LiveProgressDecorator .cs
-C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Rendering\Decorators\NumberedRowDecorator.cs
-C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Rendering\Decorators\StyledBorderDecorator.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Rendering\ITableBuilder.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Rendering\ITableRenderer.cs
-C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Rendering\TableRendererFactory.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Utils\GeneratorExtensions.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Utils\Point.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Validation\EmbeddingOptionsValidator.cs
-C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Validation\FileLoadOptionsValidator.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Validation\FluentValidationExtensions.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Validation\OllamaOptionsValidator.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Core\Validation\QuestionValidator.cs

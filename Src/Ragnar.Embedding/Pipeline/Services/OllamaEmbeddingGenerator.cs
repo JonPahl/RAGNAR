@@ -85,4 +85,9 @@ public class OllamaEmbeddingGenerator(
             throw;
         }
     }
+
+    public void GenerateEmbeddings(IReadOnlyList<string> readOnlyList, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
 }
