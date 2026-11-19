@@ -1,4 +1,6 @@
-﻿namespace Ragnar.Core.Validation;
+﻿
+
+namespace Ragnar.Core.Validation;
 
 /// <summary>
 /// Validates configuration settings for Ollama API connections and timeouts.

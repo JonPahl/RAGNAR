@@ -33,9 +33,10 @@ public class OllamaClientFactoryTests
                 BatchSize = 16
             }
         };
+        var logger = new Mock<ILogger>();
         _sut = new OllamaClientFactory(
             _httpClientFactoryMock.Object,
-            Microsoft.Extensions.Options.Options.Create(_config));
+            Microsoft.Extensions.Options.Options.Create(_config), logger.Object);
     }
 
     [Theory]

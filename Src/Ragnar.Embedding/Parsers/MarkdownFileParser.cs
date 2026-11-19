@@ -5,9 +5,10 @@
 /// ParseAsync file processing.
 /// </summary>
 /// <param name="configWrapper">Wrapped configuration objects.</param>
+/// <param name="logger">Structured logger for diagnostic and error output during parsing.</param>
 public sealed class MarkdownFileParser(
     IOptions<RagnarConfig> configWrapper,
-    Microsoft.Extensions.Logging.ILogger logger) : BaseFileParser(logger, [".md", "*.*"])
+    ILogger logger) : BaseFileParser(logger, [".md", "*.*"])
 {
     /// <summary>Gets the resolved embedding configuration for batch and dimension settings.</summary>
     /// <example><![CDATA[// Read-only internal accessor for embedding options.]]></example>
@@ -46,21 +47,29 @@ public sealed class MarkdownFileParser(
     int maxTokens,
     int overlap)
     {
-        var lines = TextChunker.SplitMarkdownParagraphs(
-            lines: ToLines(content.ToString()),
+        var lines = new List<string>(content.Length / 40);
+        var start = 0;
+        for (var i = 0; i < content.Length; i++)
+        {
+            if (content.Span[i] == '\n')
+            {
+                lines.Add(new string(content.Span[start..i]));
+                start = i + 1;
+            }
+        }
+        if (start < content.Length)
+            lines.Add(new string(content.Span[start..]));
+
+        var chunks = TextChunker.SplitMarkdownParagraphs(
+            lines: lines,
             maxTokensPerParagraph: maxTokens,
             overlapTokens: overlap);
 
-        return [.. lines.Select(chunk => new CodeDocumentBuilder()
-        .FileName(filePath)
-        .Element("Summary", string.Empty)
-        .Code(chunk)
-        .Build())];
+        return chunks.ConvertAll(chunk =>
+            new CodeDocumentBuilder()
+                .FileName(filePath)
+                .Element("Summary", string.Empty)
+                .Code(chunk)
+                .Build());
     }
-
-    /// <summary>Splits a character memory into lines by newline.</summary>
-    /// <param name="content">Character memory to split.
-    /// </param>
-    /// <returns>List of line strings.</returns>
-    private static List<string> ToLines(in string content) => [.. content.Split('\n', StringSplitOptions.None)];
 }

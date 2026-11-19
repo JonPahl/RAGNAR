@@ -1,4 +1,6 @@
-﻿namespace Ragnar.Core.Validation;
+﻿
+
+namespace Ragnar.Core.Validation;
 
 /// <summary>Validates all RagnarConfig child option records in a single cascade.</summary>
 /// <example><![CDATA[var v = new RagnarConfigValidator(appV, embV, ollV, fileV);]]></example>

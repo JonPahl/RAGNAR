@@ -20,7 +20,7 @@ public static class EmbeddingSetupExtension
         {
             services.AddSingleton<IFileParser>(sp =>
             {
-                var logger = sp.GetRequiredService<Microsoft.Extensions.Logging.ILogger>();
+                var logger = sp.GetRequiredService<ILogger>();
                 var chunker = sp.GetRequiredService<ISyntaxTreeChunker>();
 
                 return new ParseCSharpFile(logger, chunker);

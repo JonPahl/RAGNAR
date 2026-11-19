@@ -1,4 +1,6 @@
-﻿namespace Ragnar.Tests.Embedding;
+﻿
+
+namespace Ragnar.Tests.Embedding;
 
 public sealed class PointTests
 {

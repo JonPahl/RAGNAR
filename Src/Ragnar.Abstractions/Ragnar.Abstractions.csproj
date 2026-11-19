@@ -23,12 +23,12 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Options" Version="11.0.0" />
     <PackageReference Include="Polly" Version="8.9.1" />
-    <PackageReference Include="Serilog.Extensions.Hosting" Version="10.0.0" />
-    <PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
+    <PackageReference Include="Qdrant.Client" Version="1.20.0" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="11.0.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="11.0.0" />
   </ItemGroup>
-
   <ItemGroup>
-    <ProjectReference Include="..\Ragnar.Core\Ragnar.Core.csproj" />
+    <ProjectReference Include="..\Ragnar.Domain\Ragnar.Domain.csproj" />
   </ItemGroup>
 
 </Project>

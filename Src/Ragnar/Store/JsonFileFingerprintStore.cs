@@ -1,6 +1,4 @@
-﻿using Ragnar.Core.Options;
-
-namespace Ragnar.Store;
+﻿namespace Ragnar.Store;
 
 /// <summary>
 /// A JSON-file-backed fingerprint store that survives across runs.

@@ -6,8 +6,8 @@ C:\Users\jp325\source\Ragnar\Src\Ragnar.Abstractions\Embedding\IVectorSearchServ
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Abstractions\GlobalUsings.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Abstractions\IContextRetriever.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Abstractions\IEmbeddingService.cs
-C:\Users\jp325\source\Ragnar\Src\Ragnar.Abstractions\IFileEligibilityValidator.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Abstractions\IFileFingerprintStore.cs
+C:\Users\jp325\source\Ragnar\Src\Ragnar.Abstractions\IFileInclusionFilter.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Abstractions\IOllamaGenerationService.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Abstractions\IO\IFileParser.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Abstractions\IO\IOutputFormatter.cs

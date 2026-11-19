@@ -1,5 +1,7 @@
 ﻿
 
+
+
 namespace Ragnar.Core;
 
 /// <summary>Builds and manages a Qdrant vector store collection with indices.</summary>
@@ -21,7 +23,7 @@ public sealed class VectorStoreBuilder(
     public ulong Dimension { get; init; } =
     options.Value.EmbeddingOptions.Dimension;
 
-    // ── All chainable methods return IVectorStoreBuilder ───────────────
+    // ── All chain-able methods return IVectorStoreBuilder.
 
     public async Task<IVectorStoreBuilder> EnsureExistsAsync(CancellationToken ct)
     {

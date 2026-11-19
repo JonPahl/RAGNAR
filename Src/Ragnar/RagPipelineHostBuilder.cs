@@ -1,7 +1,4 @@
-﻿using Ragnar.Core.Models;
-using Ragnar.Core.Options;
-
-namespace Ragnar;
+﻿namespace Ragnar;
 
 /// <summary>
 /// Builds the default .NET 10 generic host pre-configured for the Ragnar RAG pipeline.
@@ -90,7 +87,7 @@ public static partial class RagPipelineHostBuilder
             return new QdrantClient(opt.Host.Host, opt.Host.Port, https: false);
         });
 
-        s.AddSingleton<IOllamaChatClientBuilder, OllamaChatClientBuilder>();
+        s.AddSingleton<IOllamaBuilder, OllamaBuilder>();
 
         s.AddSingleton<IOllamaGenerationService, OllamaChatService>();
         s.AddSingleton<IOllamaClientFactory, OllamaClientFactory>();
@@ -190,16 +187,17 @@ public static partial class RagPipelineHostBuilder
                sp.GetRequiredService<IQuestionSource>(),
                sp.GetRequiredService<IQuestionSourceBuilder>(),
                sp.GetRequiredService<ILogger>()))
-            .AddStage(new QuestionTableStage(sp.GetRequiredService<IOutputWriter>()))
+            .AddStage(new QuestionTableStage(writer, logger))
             .AddStage(new QuestionAnswerStage(
                 sp.GetRequiredService<IRagOrchestrator>(),
                 sp.GetRequiredService<IOptions<RagnarConfig>>(),
-                sp.GetRequiredService<IOutputWriter>(),
+                writer,
                 sp.GetRequiredService<IContextRetriever>(),
-                sp.GetRequiredService<ILogger>()))
+                sp.GetRequiredService<IClock>(),
+                logger))
             .AddStage(new SummarizationStage(
                 sp.GetRequiredService<IResponseSummarizer>(),
-                sp.GetRequiredService<IOutputWriter>()
+                writer
                 ));
 
             return runner;

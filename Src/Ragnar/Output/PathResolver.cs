@@ -21,7 +21,9 @@ public sealed class PathResolver(
     {
         var baseDir = category is null ? nameof(QuestionCategory.Uncategorized) : category.ToString();
 
-        var dir = Path.Join(_applicationOptions.SourceDirectory, _applicationOptions.OutputFolder, baseDir);
+        string cleanBoth = baseDir.Trim('"', '\'');
+
+        var dir = Path.Combine(_applicationOptions.SourceDirectory, _applicationOptions.OutputFolder, cleanBoth);
 
         return dir;
     }

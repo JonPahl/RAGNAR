@@ -10,6 +10,7 @@
   <Folder Name="/Src/">
     <Project Path="Src/Ragnar.Abstractions/Ragnar.Abstractions.csproj" />
     <Project Path="Src/Ragnar.Core/Ragnar.Core.csproj" />
+    <Project Path="Src/Ragnar.Domain/Ragnar.Domain.csproj" Id="039c3a83-b07b-417f-98c8-0ba7e4574503" />
     <Project Path="Src/Ragnar.Embedding/Ragnar.Embedding.csproj" />
     <Project Path="Src/Ragnar.Questions/Ragnar.Questions.csproj" />
     <Project Path="Src/Ragnar/Ragnar.csproj" />

@@ -27,7 +27,7 @@ public sealed class DiscoveryStage(
     /// <summary>Indicates whether this stage should execute in the current pipeline run.</summary>
     /// <value>True to include this stage; false to skip it.</value>
     /// <example><![CDATA[bool run = stage.ShouldRun(ctx);]]></example>
-    public bool ShouldRun(EmbeddingContext context) => context.SourceDirectory is not null;
+    public bool ShouldRun(EmbeddingContext context) => context?.SourceDirectory is not null;
 
     /// <summary>Enumerates source discoveredFiles and stores them in the embedding context.</summary>
     /// <param name="context">Pipeline context to populate with discovered file entries.</param>
@@ -36,6 +36,7 @@ public sealed class DiscoveryStage(
     /// <example><![CDATA[await stage.ExecuteAsync(ctx, ct);]]></example>
     public async Task ExecuteAsync(EmbeddingContext context, CancellationToken cancellationToken)
     {
+        Guard.Against.Null(context);
         var sourceDir = context.SourceDirectory
             ?? options.Value.ApplicationOptions.SourceDirectory;
 

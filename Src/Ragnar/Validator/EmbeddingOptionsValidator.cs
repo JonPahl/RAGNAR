@@ -1,10 +1,10 @@
 ﻿namespace Ragnar.Validator;
 
-/// <summary>Validates embedding service configuration.</summary>
-/// <example><![CDATA[var v = new EmbeddingOptionsValidator();]]></example>
-public partial class EmbeddingOptionsValidator
-    : AbstractValidator<EmbeddingOptions>
+/// <summary>Validates configuration options for embedding services.</summary>
+/// <remarks>This validator enforces constraints on host connectivity, model specifications, timeout limits, and batch processing parameters to ensure valid service initialization.</remarks>
+public partial class EmbeddingOptionsValidator : AbstractValidator<EmbeddingOptions>
 {
+    /// <summary>Initializes validation rules for embedding options.</summary>
     public EmbeddingOptionsValidator()
     {
         RuleFor(x => x.Host)
@@ -27,6 +27,7 @@ public partial class EmbeddingOptionsValidator
             .InclusiveBetween(1, 512).WithMessage("BatchSize must be between 1 and 512.");
     }
 
+    /// <summary>Defines the regular expression pattern used to validate string identifiers (e.g., model names, hostnames).</summary>
     [GeneratedRegex("^[[a-zA-Z0-9._-]]+$")]
     private static partial Regex StringRegex();
 }

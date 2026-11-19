@@ -42,8 +42,8 @@ public sealed class QuestionAggregator(
         foreach (var config in fcl.LoadQuestions())
         {
             var item = questionBuilder
-                .WithText(config.Text)
-                .WithFileName(config.Filename)
+                .SetText(config.Text)
+                .SetFileName(config.Filename)
                 .SetCategory(config.Category)
                 .SetActive(config.IsEnabled);
 
@@ -74,8 +74,8 @@ public sealed class QuestionAggregator(
                 foreach (var csv in csvConfigs)
                 {
                     questionBuilder
-                        .WithText(csv.Text)
-                        .WithFileName(csv.Filename)
+                        .SetText(csv.Text)
+                        .SetFileName(csv.Filename)
                         .SetCategory(csv.Category)
                         .SetActive(csv.IsEnabled);
 
@@ -102,8 +102,8 @@ public sealed class QuestionAggregator(
             foreach (var csv in csvConfigs)
             {
                 questionBuilder
-                    .WithText(csv.Text)
-                    .WithFileName(csv.Filename)
+                    .SetText(csv.Text)
+                    .SetFileName(csv.Filename)
                     .SetCategory(csv.Category)
                     .SetActive(csv.IsEnabled);
 

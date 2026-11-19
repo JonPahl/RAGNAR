@@ -1,4 +1,6 @@
-﻿namespace Ragnar.Stages.Questions;
+﻿
+
+namespace Ragnar.Stages.Questions;
 
 /// <summary>
 /// Loads, filters, and sorts questions from CSV sources before any LLM work begins.
@@ -47,6 +49,7 @@ public sealed class QuestionLoadStage(
 
         var updated = new List<Question>();
 
+        //todo: Register all filters and then lookup.
         foreach (var sort in sorted)
         {
             if (sort.Category == QuestionCategory.XML)

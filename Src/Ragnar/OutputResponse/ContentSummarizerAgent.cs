@@ -5,7 +5,7 @@
 /// </summary>
 /// <example><![CDATA[[var sum = await agent.SummarizeContent(path, q, ct);]]></example>
 public class ContentSummarizerAgent(
-    IOllamaChatClientBuilder ollamaAIClientBuilder,
+    IOllamaBuilder ollamaAIClientBuilder,
     IOllamaGenerationService ollamaClientProvider,
     IOptions<RagnarConfig> options,
     IOllamaClientFactory factory,
@@ -35,7 +35,11 @@ public class ContentSummarizerAgent(
         var policy = Policy.Handle<HttpRequestException>()
             .WaitAndRetryAsync(3, retry => TimeSpan.FromSeconds(Math.Pow(2, retry)));
 
-        return await policy.ExecuteAsync(async () => await ollamaClientProvider.GenerateResponse(request, cancellationToken).ConfigureAwait(false)).ConfigureAwait(false);
+        return await policy
+            .ExecuteAsync(async () => await ollamaClientProvider
+        .GenerateResponse(request, cancellationToken)
+        .ConfigureAwait(false))
+            .ConfigureAwait(false);
     }
 
     /// <summary>Gets the configured AI agent with tools and instructions.</summary>
@@ -45,18 +49,18 @@ public class ContentSummarizerAgent(
     /// <param name="ollamaAIClientBuilder">The client builder for Ollama connections.</param>
     /// <returns>A ready-to-use AI agent with summarization tools.</returns>
     /// <example><![CDATA[var agent = SetupAgent(builder);]]></example>
-    private ChatClientAgent SetupAgent(IOllamaChatClientBuilder ollamaAIClientBuilder)
+    private ChatClientAgent SetupAgent(IOllamaBuilder ollamaAIClientBuilder)
     {
         var generation = options.Value.GenerationOptions;
         var ollama = options.Value.OllamaOptions;
 
         //var agent = new OllamaChatClientBuilder(factory)
         var agent = ollamaAIClientBuilder
-            .ForService(OllamaServiceType.Ollama)
+            //.ForService(OllamaServiceType.Ollama)
             .WithModel(ollama.LlmModel)
             .WithUrl(ollama.Host)
             .WithTimeout(ollama.Timeout)
-            .WithTemperature(generation.Temperature)
+            //.WithTemperature(generation.Temperature)
             .WithMaxTokens(generation.MaxTokens)
             .WithFunctionInvocation()
             .WithMiddleware()

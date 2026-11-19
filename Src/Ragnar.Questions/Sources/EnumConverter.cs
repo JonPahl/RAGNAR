@@ -11,6 +11,7 @@ public class EnumConverter : ICsvConverter<QuestionCategory>
     /// <example><![CDATA[QuestionCategory cat = conv.Read(reader, 0);]]></example>
     public QuestionCategory Read(CsvReader reader, int index)
     {
+        Guard.Against.Null(reader);
         var value = reader.GetString(index);
 
         return Enum.TryParse<QuestionCategory>(value, out var match) ? match : QuestionCategory.Uncategorized;

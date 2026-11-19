@@ -52,7 +52,9 @@ public sealed class ParsingStage(
                     },
                     async (filePath, token) =>
                     {
-                        var elements = await parseFactory.ParseAsync(filePath, token).ConfigureAwait(false);
+                        var elements = await parseFactory
+                        .ParseAsync(filePath, token)
+                        .ConfigureAwait(false);
                         foreach (var element in elements)
                         {
                             #region Test move me

@@ -1,4 +1,6 @@
-﻿namespace Ragnar.Abstractions.IO;
+﻿
+
+namespace Ragnar.Abstractions.IO;
 
 /// <summary>Resolves target directory paths based on source and question category.</summary>
 /// <example><![CDATA[var dir = resolver.ResolveResponseDirectory(cat);]]></example>

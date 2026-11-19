@@ -7,7 +7,8 @@ public class QuestionShowStageTests
     public QuestionShowStageTests()
     {
         var writer = new Mock<IOutputWriter>();
-        _sut = new QuestionTableStage(writer.Object);
+        Mock<ILogger> logger = new();
+        _sut = new QuestionTableStage(writer.Object, logger.Object);
     }
 
     [Fact]

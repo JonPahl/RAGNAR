@@ -23,11 +23,14 @@ public sealed class CsvRecordParser(ILogger logger)
         {
             MalformedData = CsvMalformedDataHandling.Recover,
             Encoding = System.Text.Encoding.UTF8,
-
+            TrimInsideQuotes = true
         };
 
-        var x = CsvReader.FromFile(filePath, options);
-        var records = await x.GetRecordsAsync<QuestionRecord>(cancellationToken).ToListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+        var reader = CsvReader.FromFile(filePath, options);
+        var records = await reader
+            .GetRecordsAsync<QuestionRecord>(cancellationToken)
+            .ToListAsync(cancellationToken: cancellationToken)
+            .ConfigureAwait(false);
 
         sw.Stop();
         logger.LogInformation("Parsed {Count} records from {FilePath} in {Elapsed}", records.Count, filePath, sw.Elapsed);

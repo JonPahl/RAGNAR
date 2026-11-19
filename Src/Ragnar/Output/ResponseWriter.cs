@@ -23,6 +23,8 @@ public sealed class ResponseWriter(
     /// <example><![CDATA[await writer.WriteResponseAsync(record, ct);]]></example>
     public async Task<string> WriteResponseAsync(ResponseRecord record, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+        Guard.Against.Null(record);
         var directory = pathResolver
             .ResolveResponseDirectory(record.Question.Category);
         pathResolver.EnsureDirectoryExists(directory);

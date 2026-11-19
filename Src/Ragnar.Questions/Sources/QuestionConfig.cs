@@ -6,4 +6,5 @@
 /// <param name="Source">The source of questions.</param>
 /// <param name="DataLoader">List of question loaders. </param>
 /// <returns>A function that loads questions from a config loader.</returns>
-public record QuestionConfig(string Source, Func<IConfigurationLoader, IEnumerable<Core.Models.Question>> DataLoader);
+/// <example><![CDATA[var cfg = new QuestionConfig("csv", loader => loader.Load());]]></example>
+public record QuestionConfig(string Source, Func<IConfigurationLoader, IEnumerable<Question>> DataLoader);

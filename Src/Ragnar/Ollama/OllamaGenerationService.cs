@@ -23,6 +23,8 @@ public class OllamaGenerationService(IOllamaClientFactory clientFactory)
         GenerateRequest request,
         CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+        Guard.Against.Null(request);
         var sb = new StringBuilder();
 
         try

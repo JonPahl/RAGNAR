@@ -22,8 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CsvHelper" Version="34.0.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="5.9.0">
+    <PackageReference Include="CsvHelper" Version="34.1.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="5.12.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -45,8 +45,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Serilog" Version="4.4.0" />
-    <PackageReference Include="Serilog.Extensions.Hosting" Version="10.0.0" />
-    <PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
+    <PackageReference Include="Serilog.Extensions.Hosting" Version="11.0.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="11.0.0" />
   </ItemGroup>
 
   <ItemGroup>

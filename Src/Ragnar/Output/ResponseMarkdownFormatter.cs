@@ -5,7 +5,6 @@
 public class ResponseMarkdownFormatter(IClock clock)
     : IOutputFormatter
 {
-
     /// <summary>Gets the file extension used for Markdown output.</summary>
     /// <returns>The string "md".</returns>
     /// <example><![CDATA[string ext = formatter.FileExtension; // "md"]]></example>
@@ -17,6 +16,8 @@ public class ResponseMarkdownFormatter(IClock clock)
     /// <example><![CDATA[[string md = formatter.FormatResponse(record);]]></example>
     public string FormatResponse(ResponseRecord details)
     {
+        Guard.Against.Null(details);
+
         var response = new StringBuilder();
         response.AppendLine(General.Culture, $"{details.Question.MarkdownHeader}");
         response.AppendLine(General.Culture, $"> **Date Generated**: {clock.Now.ToString("G")}");

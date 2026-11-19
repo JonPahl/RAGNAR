@@ -6,7 +6,7 @@
 /// <example><![CDATA[var parser = new ParseCSharpFile();]]>
 /// </example>
 public sealed class ParseCSharpFile(
-    Microsoft.Extensions.Logging.ILogger logger,
+    ILogger logger,
     ISyntaxTreeChunker codeChunker) : BaseFileParser(logger, [".cs"])
 {
     public override async Task<IEnumerable<CodeDocument>> ParseAsync(string filePath, CancellationToken cancellationToken)

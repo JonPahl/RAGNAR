@@ -1,4 +1,6 @@
-﻿namespace Ragnar.Embedding.Parsers;
+﻿
+
+namespace Ragnar.Embedding.Parsers;
 
 /// <summary>
 /// Build text encoding to and insert/update to Qdrant database.

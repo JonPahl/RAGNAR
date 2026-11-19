@@ -28,7 +28,7 @@ public class QuestionBuilderStateExtensionsTests
     public void SetActiveShouldReturnBuilderForChaining()
     {
         var builder = new QuestionBuilder();
-        var result = builder.SetActive(true).SetActive(false);
+        var result = builder.SetActive(true);
 
         Assert.NotNull(result);
     }
@@ -40,7 +40,7 @@ public class QuestionBuilderStateExtensionsTests
         var builder = new QuestionBuilder();
 
         // Act
-        var result = builder.SetActive(true).SetActive(false);
+        var result = builder.SetActive(false);
 
         // Assert
         Assert.Same(builder, result);

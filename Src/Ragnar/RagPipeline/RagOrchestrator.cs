@@ -32,6 +32,9 @@ public sealed class RagOrchestrator(
       string contextText,
       CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+        Guard.Against.Null(question);
+
         var sw = Stopwatch.StartNew();
 
         var finalPrompt = promptBuilder
@@ -80,7 +83,14 @@ public sealed class RagOrchestrator(
             logger.LogDebug("Original prompt appended to response (IncludeOriginalPrompt = true).");
         }
 
-        await SaveResponseAsync(new ResponseRecord(question, response, sw.FormatElapsedTime()), cancellationToken).ConfigureAwait(false);
+        await SaveResponseAsync(new ResponseRecord(question, response, sw.FormatElapsedTime()), cancellationToken)
+            .ConfigureAwait(false);
+
+        //return new StageOutcome()
+        //{
+        //    Duration = sw.Elapsed,
+        //    Response = response
+        //};
     }
 
     /// <summary>Saves generation response to disk and prints the output path.</summary>

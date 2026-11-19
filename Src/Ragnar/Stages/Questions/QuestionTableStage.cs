@@ -2,7 +2,7 @@
 
 /// <summary>Pipeline stage that loads questions and runs RAG queries against the vector store.</summary>
 /// <example><![CDATA[await stage.ExecuteAsync(context, ct);]]></example>
-public class QuestionTableStage(IOutputWriter writer)
+public class QuestionTableStage(IOutputWriter writer, ILogger logger)
     : IPipelineStage<QuestionPipelineContext>
 {
     /// <summary>Gets the human-readable stage name for progress display.</summary>
@@ -16,6 +16,8 @@ public class QuestionTableStage(IOutputWriter writer)
 
     /// <summary>Indicates this display stage should always execute in the pipeline.</summary>
     /// <example><![CDATA[bool run = stage.ShouldRun(ctx); // true]]></example>
+    /// <param name="context">The question pipeline context (unused for this display stage).</param>
+    /// <returns>True; this display stage always executes when included in the pipeline.</returns>
     public bool ShouldRun(QuestionPipelineContext context) => true;
 
     /// <summary>Loads questions, retrieves vector context, and runs RAG for each question.</summary>
@@ -26,6 +28,9 @@ public class QuestionTableStage(IOutputWriter writer)
     public async Task ExecuteAsync(QuestionPipelineContext context, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
+        Guard.Against.Null(context);
+
+        logger.LogDebug("QuestionTableStage.ExecuteAsync: rendering {Count} question(s) to table", context.Questions.Count);
 
         var table = new Table()
             .Expand()
@@ -41,5 +46,6 @@ public class QuestionTableStage(IOutputWriter writer)
 
         writer.Write(table);
         writer.WriteLine();
+        logger.LogInformation("QuestionTableStage.ExecuteAsync: table rendered successfully");
     }
 }

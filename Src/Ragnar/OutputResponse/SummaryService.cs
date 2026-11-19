@@ -6,7 +6,7 @@ public class SummaryService(
     ILogger logger,
     IPathResolver pathResolver,
     IOutputWriter writer,
-    IOllamaChatClientBuilder ollamaAIClientBuilder,
+    IOllamaBuilder ollamaAIClientBuilder,
     [FromKeyedServices("Summary")] IChatPromptProvider summaryPrompt,
     IOllamaGenerationService ollamaClientProvider,
     IOptions<RagnarConfig> configWrapper,
@@ -133,6 +133,8 @@ public class SummaryService(
         string fileName,
         CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+
         try
         {
             var details = ResponseRecord.FromSummary(summary, fileName, QuestionCategory.Summary);

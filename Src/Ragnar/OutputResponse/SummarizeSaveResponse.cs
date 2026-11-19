@@ -33,7 +33,7 @@ public class SummarizeSaveResponse : IResponseWriter
         var fileName = $"{Path.GetFileNameWithoutExtension(record?.Question?.Filename)}_summary.md";
         var summaryPath = Path.Join(_responseDir, fileName);
 
-        var content = string.Format(_template, record?.Answer, DateTime.UtcNow.ToString("O"));
+        var content = string.Format(General.Culture, _template, record?.Answer, DateTime.UtcNow.ToString("O"));
 
         await File.WriteAllTextAsync(summaryPath, content, cancellationToken).ConfigureAwait(false);
 

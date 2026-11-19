@@ -22,7 +22,7 @@ public class DefaultQuestionCatalogLoader(ILogger logger, IOutputWriter writer)
     /// <param name="categories">Optional categories to include.</param>
     /// <returns>Filtered question collection.</returns>
     /// <example><![CDATA[var questions = loader.LoadQuestions(true, categories);]]></example>
-    public IReadOnlyCollection<Core.Models.Question> LoadQuestions(
+    public IReadOnlyCollection<Question> LoadQuestions(
         bool isActive,
         HashSet<QuestionCategory>? categories)
     {
@@ -72,7 +72,7 @@ public class DefaultQuestionCatalogLoader(ILogger logger, IOutputWriter writer)
     {
         return
         [
-            new Core.Models.Question(false, "Generate concise XML comments (Summary, Param, Remarks, Example wrapped in <![CDATA[ ]]>, Return) only for undocumented class, interface or public methods. Keep under 120 characters each. Please provide an example for each class and method, When writing the summary focus on what the method does, including the filename and method name, before the new or updated XML comments.", "XML", QuestionCategory.XML),
+            new Question(false, "Generate concise XML comments (Summary, Param, Remarks, Example wrapped in <![CDATA[ ]]>, Return) only for undocumented class, interface or public methods. Keep under 120 characters each. Please provide an example for each class and method, When writing the summary focus on what the method does, including the filename and method name, before the new or updated XML comments.", "XML", QuestionCategory.XML),
             //Question.IsActive("Please recommend improved class, method, and variable names to make this application easier to understand.", "Rename", QuestionCategory.Refactor),
         ];
     }

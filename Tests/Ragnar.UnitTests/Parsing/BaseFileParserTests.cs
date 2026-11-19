@@ -2,7 +2,7 @@
 
 public class BaseFileParserTests : IDisposable
 {
-    private readonly Mock<Microsoft.Extensions.Logging.ILogger> _loggerMock = new();
+    private readonly Mock<ILogger> _loggerMock = new();
     private readonly TestFileParser _sut;
     private string _tempFile;
 
@@ -63,7 +63,7 @@ public class BaseFileParserTests : IDisposable
         GC.SuppressFinalize(this);
     }
 
-    private sealed class TestFileParser(Microsoft.Extensions.Logging.ILogger logger) : BaseFileParser(logger, [".test"])
+    private sealed class TestFileParser(ILogger logger) : BaseFileParser(logger, [".test"])
     {
         public override Task<IEnumerable<CodeDocument>> ParseAsync(string filePath, CancellationToken cancellationToken)
             => Task.FromResult<IEnumerable<CodeDocument>>([]);

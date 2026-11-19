@@ -14,7 +14,6 @@ public sealed class VectorStoreWriter(
     IQdrantPointFactory generatorService,
     IOptions<RagnarConfig> config) : IVectorStoreWriter
 {
-
     /// <summary>Cached application options for vector store configuration.</summary>
     private readonly ApplicationOptions _appOptions = config.Value.ApplicationOptions;
 
@@ -60,8 +59,7 @@ public sealed class VectorStoreWriter(
             catch (Exception ex)
             {
                 logger.LogError(ex, "Batch {Start}-{End} upsert failed.", i, i + batch.Length);
-                failed.AddRange(batch.Select((d, idx) => (i + idx, ex)));
-                // continue with next batch instead of aborting everything
+                failed.AddRange(batch.Select((_, idx) => (i + idx, ex)));
             }
         }
 

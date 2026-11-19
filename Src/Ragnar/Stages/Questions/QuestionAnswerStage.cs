@@ -12,6 +12,7 @@ public class QuestionAnswerStage(
     IOptions<RagnarConfig> ragnarConfig,
     IOutputWriter writer,
     IContextRetriever questionEmbedding,
+    IClock clock,
     ILogger logger)
     : IPipelineStage<QuestionPipelineContext>
 {
@@ -40,10 +41,12 @@ public class QuestionAnswerStage(
     /// <example><![CDATA[await stage.ExecuteAsync(ctx, ct);]]></example>
     public async Task ExecuteAsync(QuestionPipelineContext context, CancellationToken cancellationToken)
     {
+        Guard.Against.Null(context);
+        Guard.Against.NullOrEmpty(context.Questions);
         var questions = context.Questions;
 
         var processedCount = 0;
-        var total = questions.Count;
+        var total = questions?.Count;
 
         foreach (var question in questions)
         {
@@ -51,14 +54,20 @@ public class QuestionAnswerStage(
 
             writer.WriteRule();
             writer.WriteLine();
-            writer.MarkupLine($"[blue]Question: {Environment.NewLine}{Markup.Escape(question.Text)} [/]");
+            writer.MarkupLine($"[blue bold]Question: [/]");
+            writer.MarkupLine($"[blue]{Environment.NewLine}{Markup.Escape(question.Text)} [/]");
+            writer.MarkupLine($"[blue italic]{clock.Now:d} {clock.Now:t}[/]");
             writer.WriteLine();
             writer.Write(new Rule());
 
             logger.LogInformation("Processing question [{QuestionId}] from user [{UserId}] with {ContextLength} chars", question.Text, Environment.UserName, contextText.Length.ToString("N0", General.Culture));
 
-            await ragOrchestrator.ExecuteAsync(question, contextText, cancellationToken).ConfigureAwait(false);
+            await ragOrchestrator.ExecuteAsync(question, contextText, cancellationToken)
+                .ConfigureAwait(false);
             processedCount++;
+
+            //Question item = question;
+            //context.Responses.TryAdd(question, new StageOutcome() { });
 
             writer.MarkupLine($"{processedCount} of {total}", Styles.Cyan);
         }

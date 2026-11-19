@@ -1,4 +1,6 @@
-﻿namespace Ragnar.Core;
+﻿
+
+namespace Ragnar.Core;
 
 /// <summary>Defines the contract for supplying question data from a source.</summary>
 /// <example><![CDATA[var qs = await provider.LoadQuestionsAsync("f.csv", ct);]]></example>
@@ -14,5 +16,5 @@ public interface IQuestionSource
     /// <param name="cancellationToken">Token to cancel the async load.</param>
     /// <returns>Collection of loaded <see cref="Question"/> objects.</returns>
     /// <example><![CDATA[var q = await provider.LoadQuestionsAsync("q.csv", ct);]]></example>
-    Task<IEnumerable<Models.Question>> LoadQuestionsAsync(string fileName, CancellationToken cancellationToken);
+    Task<IEnumerable<Question>> LoadQuestionsAsync(string fileName, CancellationToken cancellationToken);
 }

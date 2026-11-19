@@ -8,10 +8,10 @@
 /// <remarks>Clients are cached per OllamaServiceType to avoid repeated construction.</remarks>
 /// <example><![CDATA[var client = factory.GetClient(OllamaServiceType.Ollama);]]></example>
 public class OllamaClientFactory(
-    IHttpClientFactory httpClientFactory, IOptions<RagnarConfig> ragnarConfig)
-    : IOllamaClientFactory
+    IHttpClientFactory httpClientFactory,
+    IOptions<RagnarConfig> ragnarConfig,
+    ILogger logger) : IOllamaClientFactory
 {
-
     /// <summary>Caches resolved OllamaApiClient instances keyed by service type.</summary>
     /// <value>A ConcurrentDictionary mapping OllamaServiceType to OllamaApiClient.</value>
     /// <example><![CDATA[// Internal; populated via GetClient.]]></example>
@@ -33,30 +33,38 @@ public class OllamaClientFactory(
     /// </example>
     public IOllamaApiClient GetClient(OllamaServiceType serviceType)
     {
-        return _cache.GetOrAdd(serviceType, (t, self) => t switch
+        logger.LogDebug("OllamaClientFactory.GetClient: resolving {Type} client", serviceType);
+        var client = _cache.GetOrAdd(serviceType, (t, self) => t switch
         {
             OllamaServiceType.Ollama => self.BuildLlmClient(),
             OllamaServiceType.Embedding => self.BuildEmbeddingClient(),
             _ => throw new ArgumentOutOfRangeException(nameof(serviceType), "Unsupported OllamaServiceType.")
         }, this);
+
+        logger.LogDebug("OllamaClientFactory.GetClient: returned {Type} client (model={Model})",
+            serviceType, client.SelectedModel);
+        return client;
     }
 
     /// <summary>Creates an Ollama API client configured for LLM generation.</summary>
     /// <returns>A new OllamaApiClient with the LLM model selected.</returns>
     /// <example><![CDATA[var client = factory.BuildLlmClient();]]></example>
-    private OllamaApiClient BuildLlmClient() => new(CreateHttpClient(OllamaServiceType.Ollama))
+    private OllamaApiClient BuildLlmClient()
     {
-        SelectedModel = _config.OllamaOptions.LlmModel
-    };
+        var model = _config.OllamaOptions.LlmModel;
+        logger.LogDebug("OllamaClientFactory.BuildLlmClient: creating LLM client with model {Model}", model);
+        return new OllamaApiClient(CreateHttpClient(OllamaServiceType.Ollama)) { SelectedModel = model };
+    }
 
     /// <summary>Creates an Ollama API client configured for embedding generation.</summary>
     /// <returns>A new OllamaApiClient with the embedding model selected.</returns>
     /// <example><![CDATA[var client = factory.BuildEmbeddingClient();]]></example>
-
-    private OllamaApiClient BuildEmbeddingClient() => new(CreateHttpClient(OllamaServiceType.Embedding))
+    private OllamaApiClient BuildEmbeddingClient()
     {
-        SelectedModel = _config.EmbeddingOptions.EmbeddingModel
-    };
+        var model = _config.EmbeddingOptions.EmbeddingModel;
+        logger.LogDebug("OllamaClientFactory.BuildEmbeddingClient: creating embedding client with model {Model}", model);
+        return new OllamaApiClient(CreateHttpClient(OllamaServiceType.Embedding)) { SelectedModel = model };
+    }
 
     /// <summary>Builds an HttpClient with the correct host, port, and timeout.</summary>
     /// <param name="type">Service type determining timeout (LLM or Embedding).</param>
@@ -64,14 +72,19 @@ public class OllamaClientFactory(
     /// <example><![CDATA[var http = factory.CreateHttpClient(OllamaServiceType.Ollama);]]></example>
     private HttpClient CreateHttpClient(OllamaServiceType type)
     {
-        var client = httpClientFactory.CreateClient(nameof(Ollama));
-        client.BaseAddress = _config.OllamaOptions.Host;
-        client.Timeout = type switch
+        var timeout = type switch
         {
             OllamaServiceType.Ollama => _config.OllamaOptions.Timeout,
             OllamaServiceType.Embedding => _config.EmbeddingOptions.Timeout,
             _ => TimeSpan.FromMinutes(30)
         };
+
+        logger.LogDebug("OllamaClientFactory.CreateHttpClient: host={Host}, timeout={Timeout}",
+            _config.OllamaOptions.Host, timeout);
+
+        var client = httpClientFactory.CreateClient(nameof(Ollama));
+        client.BaseAddress = _config.OllamaOptions.Host;
+        client.Timeout = timeout;
 
         return client;
     }

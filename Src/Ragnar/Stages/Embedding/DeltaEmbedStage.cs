@@ -87,6 +87,6 @@ public sealed class DeltaEmbedStage(
     private static string ComputeSha256(string content)
     {
         var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(content));
-        return Convert.ToHexString(bytes).ToLowerInvariant();
+        return Convert.ToHexString(bytes).ToUpperInvariant();
     }
 }

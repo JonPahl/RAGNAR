@@ -4,7 +4,7 @@
 /// <remarks>Excludes test-related categories and correct length comments below threshold.</remarks>
 /// <example><![CDATA[var f = strategy.CreateFilter(50);]]></example>
 
-public sealed class XmlCommentFilterStrategy(Microsoft.Extensions.Logging.ILogger logger)
+public sealed class XmlCommentFilterStrategy(ILogger logger)
     : IFilterStrategy
 {
     /// <summary>Gets the supported question category for this filtering strategy.</summary>
