@@ -1,4 +1,7 @@
-﻿namespace Ragnar;
+﻿using Ragnar.Core.Models;
+using Ragnar.Core.Options;
+
+namespace Ragnar;
 
 /// <summary>
 /// Builds the default .NET 10 generic host pre-configured for the Ragnar RAG pipeline.
@@ -27,6 +30,7 @@ public static partial class RagPipelineHostBuilder
             //const string X = "Bank";
             //const string X = "Shepherd_Api";
             //const string X = "ObitLoader";
+            //const string X = "SolutionBuilder";
 
             cfg.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
            .AddJsonFile($"appsettings.{X}.json", optional: true, reloadOnChange: true);
@@ -99,8 +103,9 @@ public static partial class RagPipelineHostBuilder
         s.AddSingleton(sp =>
         {
             var log = sp.GetRequiredService<ILogger>();
+            IOptions<RagnarConfig> options = sp.GetRequiredService<IOptions<RagnarConfig>>();
 
-            return new JsonFileFingerprintStore(log, sp.GetRequiredService<IOptions<RagnarConfig>>());
+            return new JsonFileFingerprintStore(log, options);
         });
 
         s.AddSingleton(sp =>
