@@ -19,7 +19,7 @@ public class QuestionBuilder : IQuestionBuilder
     /// <param name="text">The question or prompt text to assign.</param>
     /// <returns>This builder instance for further configuration.</returns>
     /// <example><![CDATA[builder.WithText("Explain this code");]]></example>
-    public QuestionBuilder WithText(string text)
+    public IQuestionBuilder WithText(string text)
     {
         _text = text;
         return this;
@@ -29,7 +29,7 @@ public class QuestionBuilder : IQuestionBuilder
     /// <param name="key">The filename or unique identifier for the question.</param>
     /// <returns>This builder instance for further configuration.</returns>
     /// <example><![CDATA[builder.WithFileName("Program.cs");]]></example>
-    public QuestionBuilder WithFileName(string key)
+    public IQuestionBuilder WithFileName(string key)
     {
         _key = key?.TrimStart().TrimEnd().Trim('"') ?? key;
         return this;
@@ -39,29 +39,20 @@ public class QuestionBuilder : IQuestionBuilder
     /// <param name="category">The target category, or null to leave unchanged.</param>
     /// <returns>This builder instance for further configuration.</returns>
     /// <example><![CDATA[builder.SetCategory(QuestionCategory.Performance);]]></example>
-    public QuestionBuilder SetCategory(QuestionCategory? category)
+    public IQuestionBuilder SetCategory(QuestionCategory category)
     {
-        if (category is not null)
-            _category = category.Value;
+        _category = category;
         return this;
     }
 
-    /// <summary>Sets the question as active.</summary>
-    /// <returns>This builder for further configuration.</returns>
-    /// <example><![CDATA[builder.AsActive();]]></example>
-    public QuestionBuilder AsActive()
-    {
-        _isEnabled = true;
-        return this;
-    }
 
     /// <summary>Sets the question as inactive.</summary>
     /// <returns>This builder for further configuration.</returns>
     /// <example><![CDATA[builder.AsInactive();]]>
     /// </example>
-    public QuestionBuilder AsInactive()
+    public IQuestionBuilder SetActive(bool active)
     {
-        _isEnabled = false;
+        _isEnabled = active;
         return this;
     }
 
@@ -78,6 +69,6 @@ public class QuestionBuilder : IQuestionBuilder
             _isEnabled,
             _text.Trim(),
             _key,
-            Category: _category);
+            category: _category);
     }
 }

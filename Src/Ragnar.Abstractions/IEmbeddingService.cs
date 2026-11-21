@@ -17,6 +17,4 @@ public interface IEmbeddingService
     /// <returns>A GeneratedEmbeddings containing all vectors.</returns>
     /// <example><![CDATA[var batch = await svc.GenerateBatchAsync(list, ct);]]></example>
     Task<GeneratedEmbeddings<Embedding<float>>> GenerateBatchAsync(IReadOnlyCollection<string> inputs, CancellationToken ct);
-    void GenerateEmbeddings(IReadOnlyList<string> readOnlyList, CancellationToken cancellationToken);
 }
-

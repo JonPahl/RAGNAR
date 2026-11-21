@@ -1,6 +1,7 @@
 ﻿namespace Ragnar.Abstractions.Embedding;
 
 /// <summary>Interface for generating Qdrant point structures from embeddings.</summary>
+/// <example><![CDATA[var pts = factory.BuildPointStructs(id, vec, doc);]></example>
 public interface IQdrantPointFactory
 {
     /// <summary>Builds Qdrant point structs based on ID, embedding vector, and document.</summary>

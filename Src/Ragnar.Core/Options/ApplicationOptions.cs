@@ -17,7 +17,7 @@ public record ApplicationOptions
 
     /// <summary>Gets or sets the directory containing source files to process.</summary>
     /// <returns>The expanded absolute path to the source directory.</returns>
-    /// <example><![CDATA[opts.SourceDirectory = @"C:\src\Ragnar";]]></example>
+    /// <example><![CDATA[string dir = ctx.SourceDirectory;]]></example>
     [Required(ErrorMessage = "SourceDirectory is required.")]
     [StringLength(4096, MinimumLength = 1,
         ErrorMessage = "SourceDirectory must be a non-empty path (≤ 4096 chars).")]
@@ -39,4 +39,6 @@ public record ApplicationOptions
     /// <returns>The folder name; defaults to "Response."</returns>
     /// <example><![CDATA[opts.OutputFolder = "Reports";]]></example>
     public string OutputFolder { get; init; } = "Response";
+
+    public Dictionary<string, bool> Stages { get; init; } = [];
 }

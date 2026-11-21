@@ -8,7 +8,6 @@ public class RagnarConfigValidator : AbstractValidator<RagnarConfig>
     /// <summary>Initializes validation rules and composes nested option validators.</summary>
     /// <param name = "embedValidator">Validator for embedding options.</param>
     /// <param name = "ollamaValidator">Validator for Ollama options.</param>
-    /// <param name = "fileValidator">Validator for file-loading options.</param>
     /// <example><![CDATA[var v = new RagnarConfigValidator(ev, ov, fv);]]></example>
     public RagnarConfigValidator(
         EmbeddingOptionsValidator embedValidator,

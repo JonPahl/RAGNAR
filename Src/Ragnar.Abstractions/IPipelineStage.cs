@@ -10,10 +10,10 @@ public interface IPipelineStage<in TContext>
     /// <example><![CDATA[string n = stage.Name;]]></example>
     string Name { get; }
 
-    /// <summary>
-    /// Evaluated at execution time. Return false to skip this stage
-    /// for the *current* context (e.g. "skip if no files discovered").
-    /// </summary>
+    /// <summary>Evaluated at execution time. Return false to skip this stage for the *current* context (e.g. "skip if no files discovered").</summary>
+    /// <param name="context">The pipeline context used to evaluate whether this stage applies.</param>
+    /// <returns>True to execute this stage; false to skip it for the current context.</returns>
+    /// <example><![CDATA[bool run = stage.ShouldRun(ctx);]]></example>
     bool ShouldRun(TContext context);
 
     /// <summary>Executes the stage logic against the supplied pipeline context.</summary>
@@ -24,5 +24,6 @@ public interface IPipelineStage<in TContext>
     Task ExecuteAsync(TContext context, CancellationToken cancellationToken);
 
     /// <summary>Optional retry policy; null means no retry.</summary>
+    /// <example><![CDATA[AsyncRetryPolicy? p = stage.RetryPolicy;]]></example>
     AsyncRetryPolicy? RetryPolicy { get; }
 }

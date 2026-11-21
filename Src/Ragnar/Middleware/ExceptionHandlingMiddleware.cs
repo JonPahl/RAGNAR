@@ -19,7 +19,7 @@ public sealed class ExceptionHandlingMiddleware(ILogger logger)
         catch (Exception ex)
         {
             logger.LogError(ex,
-                "Stage [[{Index}/{Total}]] {Name} failed: {Message}",
+                "Stage [{Index}/{Total}] {Name} failed: {Message}",
                 context.StageIndex + 1,
                 context.StageTotal,
                 context.Stage.Name,

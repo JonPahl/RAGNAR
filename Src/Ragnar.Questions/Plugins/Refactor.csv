@@ -31,4 +31,4 @@
 "0","Can you consolidate all configuration settings into a single appsettings.json file and update the code to read from it?", "OneConfig",Refactor
 "0","Can you update the DbContext to replace existing SQL queries with EF Core LINQ?", "DbContext",Refactor
 "1","Can you recommend any features that should be added to this application? Please provide a detailed example on how to implement them?","Features",General
-"1","How how do I build a maui blazor application to run on Windows, Mac, and Linux? Please provide a detailed example on how to implement them?","Maui",General
+"1","How how do I build a winform application to run on Windows? Include options to make updating questions. Please provide a detailed example on how to implement them?","Winform",General

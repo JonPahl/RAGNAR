@@ -3,12 +3,18 @@
 /// <summary>
 /// Fluent builder that aggregates questions from multiple sources into a final list.
 /// </summary>
+/// <param name="questionProviders">Registered question source providers.</param>
+/// <param name="questionLoader">Catalog loader for category-based questions.</param>
+/// <param name="questionBuilder">Builder for constructing Question instances.</param>
+/// <param name="options">Ragnar config supplying application options.</param>
+/// <param name="fcl">File-config loader for per-file question settings.</param>
 /// <example><![CDATA[var qs = builder.GetCategories().GetFileConfig().Build();]]></example>
 public sealed class QuestionAggregator(
-    IQuestionSource questionProvider,
+    IEnumerable<IQuestionSource> questionProviders,
     IQuestionCatalogLoader questionLoader,
     IQuestionBuilder questionBuilder,
-    IOptions<RagnarConfig> options)
+    IOptions<RagnarConfig> options,
+    IConfigurationLoader fcl)
     : IQuestionSourceBuilder
 {
     /// <summary>Internal mutable list of questions accumulated by builder methods.</summary>
@@ -37,8 +43,6 @@ public sealed class QuestionAggregator(
     /// </returns>
     public IQuestionSourceBuilder GetFileConfig()
     {
-        var fcl = new FileConfigLoader();
-
         foreach (var config in fcl.LoadQuestions())
         {
             var item = questionBuilder
@@ -47,7 +51,8 @@ public sealed class QuestionAggregator(
                 .SetCategory(config.Category)
                 .SetActive(config.IsEnabled);
 
-            Questions.Add(item.Build());
+            var question = item.Build();
+            Questions.Add(question);
         }
 
         return this;
@@ -61,6 +66,13 @@ public sealed class QuestionAggregator(
     /// <returns>The builder instance for chaining.</returns>
     public async Task<IQuestionSourceBuilder> GetCsvFilesAsync(string pluginDir, CancellationToken cancellationToken)
     {
+
+        // TODO: Build valid Factory to load provider.
+        // TODO: Rework to loop over provided lists and load from different sources.
+
+        var questionProvider = questionProviders.FirstOrDefault(x => x.SourceName == "CSV") ?? throw new InvalidOperationException(
+        "No IQuestionSource with SourceName 'CSV' is registered. Add a CsvQuestionSource to the DI container.");
+
         if (Directory.Exists(pluginDir))
         {
             foreach (var csvFile in Directory.EnumerateFiles(pluginDir, "*.csv", SearchOption.AllDirectories))
@@ -69,6 +81,7 @@ public sealed class QuestionAggregator(
                 {
                     continue; // Skip summary files
                 }
+
                 var csvConfigs = await questionProvider.LoadQuestionsAsync(csvFile, cancellationToken).ConfigureAwait(false);
 
                 foreach (var csv in csvConfigs)
@@ -83,6 +96,17 @@ public sealed class QuestionAggregator(
                 }
             }
         }
+
+        questionProvider = questionProviders.FirstOrDefault(x => x.SourceName == "SQLITE");
+
+        //if (questionProvider is not null)
+        //{
+        //    var y = await questionProvider
+        //        .LoadQuestionsAsync(string.Empty, cancellationToken)
+        //        .ConfigureAwait(false);
+        //    var z = "";
+        //}
+
         return this;
     }
 
@@ -95,6 +119,9 @@ public sealed class QuestionAggregator(
     {
         if (File.Exists(csvFile))
         {
+            var questionProvider = questionProviders
+              .FirstOrDefault(x => x.SourceName == "CSV");
+
             var csvConfigs = await questionProvider
                 .LoadQuestionsAsync(csvFile, cancellationToken)
                 .ConfigureAwait(false);
@@ -162,6 +189,7 @@ public sealed class QuestionAggregator(
 
     /// <summary>Removes all accumulated questions and reports whether any remain.</summary>
     /// <returns>True if the list is still non-empty after clearing; false if empty.</returns>
+    /// <example><![CDATA[bool had = builder.Clear();]]></example>
     public bool Clear()
     {
         var hadItems = Questions.Count > 0;

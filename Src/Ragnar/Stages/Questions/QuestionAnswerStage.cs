@@ -12,6 +12,7 @@ public class QuestionAnswerStage(
     IOptions<RagnarConfig> ragnarConfig,
     IOutputWriter writer,
     IContextRetriever questionEmbedding,
+    IClock clock,
     ILogger logger)
     : IPipelineStage<QuestionPipelineContext>
 {
@@ -38,7 +39,9 @@ public class QuestionAnswerStage(
     /// <param name="cancellationToken">Token to abort the question loop.</param>
     /// <returns>A task representing the async stage execution.</returns>
     /// <example><![CDATA[await stage.ExecuteAsync(ctx, ct);]]></example>
-    public async Task ExecuteAsync(QuestionPipelineContext context, CancellationToken cancellationToken)
+    public async Task ExecuteAsync(
+        QuestionPipelineContext context,
+        CancellationToken cancellationToken)
     {
         var questions = context.Questions;
 
@@ -47,17 +50,21 @@ public class QuestionAnswerStage(
 
         foreach (var question in questions)
         {
-            var contextText = await questionEmbedding.RetrieveContextAsync(_collectionName, cancellationToken, question.Filter).ConfigureAwait(false);
+            var contextText = await questionEmbedding.RetrieveContextAsync(_collectionName, cancellationToken, question.Filter)
+                .ConfigureAwait(false);
 
             writer.WriteRule();
             writer.WriteLine();
-            writer.MarkupLine($"[blue]Question: {Environment.NewLine}{Markup.Escape(question.Text)} [/]");
+            writer.MarkupLine("[blue bold]Question: [/]");
+            writer.MarkupLine($"[cyan]{Markup.Escape(question.Text)} [/]");
+            writer.MarkupLine($"[cyan]{clock.Now.ToString("MM/dd/yyyy hh:mm:ss tt", CultureInfo.InvariantCulture)}[/]");
             writer.WriteLine();
             writer.Write(new Rule());
 
             logger.LogInformation("Processing question [{QuestionId}] from user [{UserId}] with {ContextLength} chars", question.Text, Environment.UserName, contextText.Length.ToString("N0", General.Culture));
 
-            await ragOrchestrator.ExecuteAsync(question, contextText, cancellationToken).ConfigureAwait(false);
+            await ragOrchestrator.ExecuteAsync(question, contextText, cancellationToken)
+                .ConfigureAwait(false);
             processedCount++;
 
             writer.MarkupLine($"{processedCount} of {total}", Styles.Cyan);

@@ -1,6 +1,7 @@
 ﻿namespace Ragnar.Abstractions;
 
-/// <summary>Interface for embedding generator service functionality.</summary>
+/// <summary>Retrieves the most relevant vector-store context for a user question.</summary>
+/// <remarks>Performs a similarity search against Qdrant and returns concatenated document chunks suitable for LLM prompt grounding.</remarks>
 /// <example><![CDATA[var v = await svc.GenerateEmbeddingAsync("How…", ct);]]></example>
 public interface IContextRetriever
 {

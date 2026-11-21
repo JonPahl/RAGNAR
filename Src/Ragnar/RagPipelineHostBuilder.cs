@@ -5,6 +5,9 @@
 /// </summary>
 public static partial class RagPipelineHostBuilder
 {
+
+    private static RagnarConfig ragnarConfig;
+
     /// <summary>
     /// Builds the default .NET 10 generic host configured for the Ragnar RAG pipeline.
     /// </summary>
@@ -15,37 +18,56 @@ public static partial class RagPipelineHostBuilder
     /// </example>
     public static IHostBuilder CreateDefaultBuilder(string[] args)
     {
-        return Host.CreateDefaultBuilder(args)
+
+        //const string X = "Pipeline";
+        //const string X = "Ragnar";
+        //const string X = "Bank";
+        //const string X = "Shepherd_Api";
+        //const string X = "ObitLoader";
+        //const string X = "SolutionBuilder";
+
+        var hostBuilder = Host.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration(cfg =>
         {
             // TODO How do I add an interactive mode allowing the user to ask custom questions?
 
-            // TODO How do I make changing what appsettings file to use easier.
+            // TODO How do I make changing what appsettings file to load easier.
+            cfg.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
+        });
 
-            //const string X = "Pipeline";
-            //const string X = "Ragnar";
-            //const string X = "Bank";
-            //const string X = "Shepherd_Api";
-            //const string X = "ObitLoader";
-            const string X = "SolutionBuilder";
+        hostBuilder.Properties.Add("File", "Ragnar");
+        var X = hostBuilder.Properties["File"];
 
-            cfg.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
-           .AddJsonFile($"appsettings.{X}.json", optional: true, reloadOnChange: true);
-        })
+        hostBuilder.ConfigureAppConfiguration(x => x.AddJsonFile($"appsettings.{X}.json", optional: true, reloadOnChange: true));
+
+        hostBuilder
             .UseSerilog((ctx, cfg) => cfg.ReadFrom.Configuration(ctx.Configuration))
             .ConfigureServices((ctx, services) =>
             {
-                services.AddSingleton<Microsoft.Extensions.Logging.ILogger>(sp =>
+                ctx.Configuration.GetSection("RagnarConfig").Bind(ragnarConfig);
+
+                services.AddSingleton(sp =>
                 {
-                    var log = sp.GetRequiredService<Microsoft.Extensions.Logging.ILoggerFactory>()
+                    var log = sp.GetRequiredService<ILoggerFactory>()
                     .CreateLogger("Ragnar");
                     return log;
                 });
+
 
                 services.AddValidatorsFromAssembly(typeof(Program).Assembly);
                 services.RegisterOptions(ctx);
                 services.AddHttpClients();
                 services.LoadQuestionPlugins();
+
+                #region xxx
+                services.AddSingleton<IContextRetriever, ContextRetriever>();
+                services.AddSingleton<IRagOrchestrator, RagOrchestrator>();
+                services.AddSingleton<IRagSession, RagSession>();
+
+                services.AddSingleton<IReportExporter, ReportExporter>();
+
+                #endregion
+
                 services.CodeParser();
                 services.EmbeddingSetup();
 
@@ -55,6 +77,8 @@ public static partial class RagPipelineHostBuilder
                 services.AddQuestionPipeline();
                 services.AddHostedService<RagPipelineRunner>();
             });
+
+        return hostBuilder;
     }
 
     private static void AddCoreServices(this IServiceCollection s)
@@ -75,6 +99,14 @@ public static partial class RagPipelineHostBuilder
         s.AddSingleton<IFileParseFactory, CodeParserFactory>();
         s.AddSingleton<ISyntaxTreeChunker, SyntaxTreeChunker>();
         s.AddSingleton<IVectorStoreBuilder, VectorStoreBuilder>();
+
+        var connectionString = "Data Source=questions.db";
+
+        //builder.Configuration.GetConnectionString("DefaultConnection") ?? "Data Source=questions.db";
+
+        // 2. Register DbContext with the DI container
+        s.AddDbContext<QuestionDbContext>(options =>
+            options.UseSqlite(connectionString));
     }
 
     private static void AddInfrastructure(this IServiceCollection s)
@@ -116,11 +148,23 @@ public static partial class RagPipelineHostBuilder
     private static void AddQuestionPipeline(this IServiceCollection s)
     {
         s.AddSingleton<IContextRetriever, ContextRetriever>();
+        s.AddSingleton<ISqliteDbService, SqliteDbService>();
         s.AddSingleton<IQuestionSource, CsvQuestionSource>();
+        s.AddSingleton<IQuestionSource, SqLiteSource>();
+
         s.AddSingleton<IQuestionSourceBuilder, QuestionAggregator>();
         s.AddSingleton<IQuestionCatalogLoader, DefaultQuestionCatalogLoader>();
         s.AddSingleton<IConfigurationLoader, FileConfigLoader>();
         s.AddSingleton<IRecordParser<QuestionRecord>, CsvRecordParser>();
+
+        s.AddSingleton<ISqliteDbService, SqliteDbService>(sp =>
+        {
+            var options = new DbContextOptions<QuestionDbContext>();
+            var x = new QuestionDbContext(options);
+            var writer = sp.GetRequiredService<IOutputWriter>();
+            return new SqliteDbService(x, writer);
+        });
+
         s.AddSingleton<IQuestionBuilder, QuestionBuilder>();
         s.AddSingleton<IRagOrchestrator, RagOrchestrator>();
         s.AddSingleton(new QuestionPipelineContext());

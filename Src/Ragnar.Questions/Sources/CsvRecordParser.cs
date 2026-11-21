@@ -25,12 +25,15 @@ public sealed class CsvRecordParser(ILogger logger)
         {
             MalformedData = CsvMalformedDataHandling.Recover,
             Encoding = System.Text.Encoding.UTF8,
+            TrimInsideQuotes = true,
         };
 
         try
         {
             var csvPath = CsvReader.FromFile(filePath, options);
-            records = await csvPath.GetRecordsAsync<QuestionRecord>(cancellationToken).ToListAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
+            records = await csvPath.GetRecordsAsync<QuestionRecord>(cancellationToken)
+                .ToListAsync(cancellationToken: cancellationToken)
+                .ConfigureAwait(false);
 
             sw.Stop();
             logger.LogInformation("Parsed {Count} records from {FilePath} in {Elapsed}", records.Count, filePath, sw.Elapsed);

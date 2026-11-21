@@ -9,7 +9,8 @@ public sealed class CsvQuestionSource(IRecordParser<QuestionRecord> csvParser)
 {
     /// <summary>Gets the display name identifying this question provider.</summary>
     /// <example><![CDATA[string n = provider.SourceName;]]></example>
-    public string SourceName => "CSV File";
+    //public string SourceName => "CSV File";
+    public string SourceName => "CSV";
 
     /// <summary>Parses CSV and maps to Question objects.</summary>
     /// <param name="fileName">Path to the CSV file containing question records.</param>
@@ -26,10 +27,10 @@ public sealed class CsvQuestionSource(IRecordParser<QuestionRecord> csvParser)
                 .ConfigureAwait(false);
 
             return records.Select(r => new Question(
-                IsEnabled: r.IsEnabled,
-                Text: r.Text,
-                Filename: r.FileName,
-                Category: r.Category));
+                isEnabled: r.IsEnabled,
+                text: r.Text,
+                filename: r.FileName,
+                category: r.Category));
         }
         catch (FileNotFoundException)
         {

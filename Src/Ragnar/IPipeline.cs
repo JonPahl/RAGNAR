@@ -34,6 +34,11 @@ public interface IPipeline<T> where T : class
     /// </example>
     IPipeline<T> SetRetryPolicy(string stageName, int maxAttempts, Func<int, TimeSpan> backOff);
 
+
+    /// <summary>Adds a middleware delegate to the pipeline execution chain.</summary>
+    /// <param name="middleware">Middleware func wrapping stage execution.</param>
+    /// <returns>The pipeline instance for fluent chaining.</returns>
+    /// <example><![CDATA[builder.UseMiddleware(mw.Invoke);]></example>
     IPipeline<T> UseMiddleware(
         Func<StageExecutionContext<T>, Func<Task>, CancellationToken, Task> middleware);
 

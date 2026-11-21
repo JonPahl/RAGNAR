@@ -1,17 +1,14 @@
 ﻿namespace Ragnar.Factory;
 
 /// <summary>Interface for constructing Question model instances via chaining.</summary>
+/// <example><![CDATA[Question q = b.WithText("t").WithFileName("f").Build();]></example>
 public interface IQuestionBuilder
 {
     /// <summary>Sets the question status to active and returns the builder.</summary>
+    /// <param name="active">True to mark the question active; false to disable it.</param>
     /// <returns>The builder instance for further configuration.</returns>
     /// <example><![CDATA[builder.AsActive();]]></example>
-    QuestionBuilder AsActive();
-
-    /// <summary>Sets the question status to inactive and returns the builder.</summary>
-    /// <returns>The builder instance for further configuration.</returns>
-    /// <example><![CDATA[builder.AsInactive();]]></example>
-    QuestionBuilder AsInactive();
+    IQuestionBuilder SetActive(bool active);
 
     /// <summary>Assigns a filename key to the question being built.</summary>
     /// <param name="key">The source filename or identifier for the question.</param>
@@ -19,19 +16,19 @@ public interface IQuestionBuilder
     /// <example>
     /// <![CDATA[builder.WithFileName("app.cs");]]>
     /// </example>
-    QuestionBuilder WithFileName(string key);
+    IQuestionBuilder WithFileName(string key);
 
     /// <summary>Assigns the text content to the question being built.</summary>
     /// <param name="text">The main question or prompt text.</param>
     /// <returns>The builder instance for further configuration.</returns>
     /// <example><![CDATA[builder.WithText("Optimize this loop");]]></example>
-    QuestionBuilder WithText(string text);
+    IQuestionBuilder WithText(string text);
 
     /// <summary>Sets the categorization type for the question being built.</summary>
     /// <param name="category">The classification category for the question.</param>
     /// <returns>The builder instance for further configuration.</returns>
     /// <example><![CDATA[builder.SetCategory(QuestionCategory.Refactor);]]></example>
-    QuestionBuilder SetCategory(QuestionCategory? category);
+    IQuestionBuilder SetCategory(QuestionCategory category);
 
     /// <summary>Builds and returns the final configured Question model instance.</summary>
     /// <returns>A fully initialized Question object.

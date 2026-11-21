@@ -1,20 +1,23 @@
 ﻿namespace Ragnar.Stages.Questions;
 
 /// <summary>Pipeline stage that loads questions and runs RAG queries against the vector store.</summary>
+/// <param name="writer">Console output writer for the question table.</param>
 /// <example><![CDATA[await stage.ExecuteAsync(context, ct);]]></example>
 public class QuestionTableStage(IOutputWriter writer)
     : IPipelineStage<QuestionPipelineContext>
 {
     /// <summary>Gets the human-readable stage name for progress display.</summary>
     /// <returns>The string "Ask Questions Stage".</returns>
-    /// <example><![CDATA[string n = stage.Name;]]>
-    /// </example>
+    /// <example><![CDATA[string n = stage.Name;]]></example>
     public string Name => "Show Questions Stage";
 
     /// <summary>Always null; this display stage requires no retry logic.</summary>
+    /// <example><![CDATA[AsyncRetryPolicy? p = stage.RetryPolicy;]]></example>
     public AsyncRetryPolicy? RetryPolicy => null;
 
     /// <summary>Indicates this display stage should always execute in the pipeline.</summary>
+    /// /// <param name="context">The question pipeline context (unused; stage always runs).</param>
+    /// <returns>True indicating this display stage always executes in the pipeline.</returns>
     /// <example><![CDATA[bool run = stage.ShouldRun(ctx); // true]]></example>
     public bool ShouldRun(QuestionPipelineContext context) => true;
 

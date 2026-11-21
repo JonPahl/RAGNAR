@@ -10,7 +10,7 @@ public interface IConfigurationLoader
     /// </summary>
     /// <returns>Collection of Question objects.</returns>
     /// <exception cref="FileNotFoundException">Thrown when the configuration file is not found.</exception>
-    /// <example><![CDATA[loader.LoadQuestions();]]>
+    /// <example><![CDATA[loader.LoadQuestionsAsync();]]>
     /// </example>
     IEnumerable<Question> LoadQuestions();
 }

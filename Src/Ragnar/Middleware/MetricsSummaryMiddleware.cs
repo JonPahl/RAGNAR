@@ -1,7 +1,16 @@
 ﻿namespace Ragnar.Middleware;
 
-public sealed class MetricsSummaryMiddleware(ILogger<MetricsSummaryMiddleware> logger)
+/// <summary>Logs aggregate pipeline timing after the final stage completes.</summary>
+/// <param name="logger">Structured logger for the summary output.</param>
+/// <example><![CDATA[builder.UseMiddleware(new MetricsSummaryMiddleware(log).Invoke);]></example>
+public sealed class MetricsSummaryMiddleware(ILogger logger)
 {
+
+    /// <summary>Invokes next, then logs stage count and elapsed duration on last stage.</summary>
+    /// <param name="context">Current stage execution context with metrics.</param>
+    /// <param name="next">The downstream middleware or stage delegate.</param>
+    /// <param name="cancellationToken">Token to abort the invocation.</param>
+    /// <example><![CDATA[await mw.Invoke(ctx, next, ct);]></example>
     public async Task Invoke<TContext>(
         StageExecutionContext<TContext> context,
         Func<Task> next,
@@ -15,6 +24,6 @@ public sealed class MetricsSummaryMiddleware(ILogger<MetricsSummaryMiddleware> l
 
         logger.LogInformation(
             "Pipeline summary – {Stages} stage(s), {Failed} failed, total {Total}",
-            context.StageTotal, TimeSpan.Zero);
+            context.StageTotal, context.Metric.Duration);
     }
 }

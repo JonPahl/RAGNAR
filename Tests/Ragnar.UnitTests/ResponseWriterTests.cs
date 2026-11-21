@@ -93,7 +93,7 @@ public class ResponseWriterTests : IDisposable
     public async Task WriteResponseAsyncFileNameShouldIncludeSourceFilename()
     {
         // Arrange
-        var details = new ResponseRecord(new Question(IsEnabled: true, Text: "Q", Filename: "Main.cs", Category: QuestionCategory.General),
+        var details = new ResponseRecord(new Question(isEnabled: true, text: "Q", filename: "Main.cs", category: QuestionCategory.General),
             "A", "");
 
         // Act
@@ -132,6 +132,6 @@ public class ResponseWriterTests : IDisposable
     }
 
     private static ResponseRecord CreateTestResponseRecord() => new(
-        new Question(IsEnabled: true, Text: "What is C#?", Filename: "Program.cs", Category: QuestionCategory.General),
+        new Question(isEnabled: true, text: "What is C#?", filename: "Program.cs", category: QuestionCategory.General),
         "C# is a programming language.", "00:30");
 }

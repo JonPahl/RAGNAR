@@ -7,13 +7,9 @@ public static class StringExtensions
     /// <example><![CDATA[bool ok = "file.cs".IsExcluded(exclList);]]></example>
     extension(string value)
     {
-        /// <summary>
-        /// Counts non-tag, non-comment characters in an XML comment.
-        /// </summary>
+        /// <summary> Counts non-tag, non-comment characters in an XML comment. </summary>
         /// <returns>The count of non-tag, non-comment characters.</returns>
-        /// <example>
-        /// <![CDATA[var count="<c>code</c>".CharacterCount();]]>
-        /// </example>
+        /// <example><![CDATA[var count="<c>code</c>".CharacterCount();]]></example>
         public int CharacterCount()
         {
             var count = 0;

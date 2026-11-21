@@ -8,7 +8,7 @@
 /// <example>
 /// <code>
 /// var loader = new DefaultQuestionCatalogLoader(logger, Writer);
-/// var questions = loader.LoadQuestions(true, categories);
+/// var questions = loader.LoadQuestionsAsync(true, categories);
 /// </code>
 /// </example>
 public class DefaultQuestionCatalogLoader(ILogger logger, IOutputWriter writer)
@@ -21,7 +21,7 @@ public class DefaultQuestionCatalogLoader(ILogger logger, IOutputWriter writer)
     /// <param name="isActive">BuildFilter active questions.</param>
     /// <param name="categories">Optional categories to include.</param>
     /// <returns>Filtered question collection.</returns>
-    /// <example><![CDATA[var questions = loader.LoadQuestions(true, categories);]]></example>
+    /// <example><![CDATA[var questions = loader.LoadQuestionsAsync(true, categories);]]></example>
     public IReadOnlyCollection<Core.Models.Question> LoadQuestions(
         bool isActive,
         HashSet<QuestionCategory>? categories)

@@ -1,6 +1,10 @@
 ﻿namespace Ragnar.Pipeline;
 
 /// <summary>Immutable, executable pipeline assembled from stages and middleware.</summary>
+/// <param name="logger">Structured logger for stage progress output.</param>
+/// <param name="stages">Ordered list of stage entries to execute.</param>
+/// <param name="middlewares">Middleware delegates applied per stage.</param>
+/// <example><![CDATA[await pipeline.ExecuteAsync(ctx, ct);]></example>
 public sealed class Pipeline<TContext>(
     ILogger logger,
     IReadOnlyList<StageEntry<TContext>> stages,
@@ -11,6 +15,7 @@ public sealed class Pipeline<TContext>(
     /// <param name="context">The shared pipeline context passed through each stage.</param>
     /// <param name="ct">Cancellation token used to abort the whole pipeline.</param>
     /// <returns>The same context with any stage-produced mutations applied.</returns>
+    /// <example><![CDATA[EmbeddingContext r = await pipeline.ExecuteAsync(ctx, ct);]></example>
     public async Task<TContext> ExecuteAsync(TContext context, CancellationToken ct)
     {
         var totalSw = Stopwatch.StartNew();
@@ -66,6 +71,7 @@ public sealed class Pipeline<TContext>(
     /// <param name="ctx">The current stage execution context.</param>
     /// <param name="core">The innermost delegate that executes the stage logic.</param>
     /// <param name="ct">Cancellation token passed through the middleware chain.</param>
+    /// <example><![CDATA[await pipeline.ExecuteWithMiddleware(ctx, core, ct);]></example>
     private async Task ExecuteWithMiddleware(
         StageExecutionContext<TContext> ctx, Func<Task> core, CancellationToken ct)
     {

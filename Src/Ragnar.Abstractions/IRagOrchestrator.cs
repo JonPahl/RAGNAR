@@ -11,4 +11,6 @@ public interface IRagOrchestrator
     /// <returns>Async task.</returns>
     /// <example><![CDATA[await pipeline.ExecuteAsync(q, ctx, ct);]]></example>
     Task ExecuteAsync(Question question, string contextText, CancellationToken cancellationToken);
+
+    Task<string> GenerateAsync(string prompt, CancellationToken cancellationToken);
 }

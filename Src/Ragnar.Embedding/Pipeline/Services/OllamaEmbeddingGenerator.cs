@@ -6,7 +6,7 @@
 /// <param name="config">Ragnar config supplying embedding timeout values.</param>
 /// <remarks>Implements IEmbeddingService for single and batch text-to-vector ops.</remarks>
 /// <example><![CDATA[var v = await svc.GenerateAsync("hello", ct);]]></example>
-public class OllamaEmbeddingGenerator(
+public sealed class OllamaEmbeddingGenerator(
     ILogger logger,
     IOllamaClientFactory clientFactory,
     IOptions<RagnarConfig> config) : IEmbeddingService, IDisposable
@@ -20,6 +20,8 @@ public class OllamaEmbeddingGenerator(
     /// </summary>
     private readonly CancellationTokenSource _timeoutCts = new();
 
+    /// <summary>Releases Ollama generator and timeout CTS resources.</summary>
+    /// <example><![CDATA[using var gen = new OllamaEmbeddingGenerator(log, fac, cfg); gen.Dispose();]></example>
     public void Dispose()
     {
         _generator.Dispose();
@@ -39,9 +41,10 @@ public class OllamaEmbeddingGenerator(
 
             Guard.Against.NullOrWhiteSpace(input);
             using var timeoutCts = new CancellationTokenSource(_timeout);
-            using var linked = CancellationTokenSource.CreateLinkedTokenSource(ct, timeoutCts.Token);
+            using var cts = CancellationTokenSource.CreateLinkedTokenSource(ct, _timeoutCts.Token);
 
-            var result = await _generator.GenerateAsync(input, cancellationToken: linked.Token).ConfigureAwait(false);
+            var result = await _generator.GenerateAsync(input, cancellationToken: cts.Token)
+                .ConfigureAwait(false);
             var vector = result.Vector;
             _timeoutCts.Dispose();
             return vector;
@@ -71,9 +74,10 @@ public class OllamaEmbeddingGenerator(
 
             Guard.Against.Null(inputs);
             using var timeoutCts = new CancellationTokenSource(_timeout);
-            using var cts = CancellationTokenSource.CreateLinkedTokenSource(ct, _timeoutCts.Token);
+            using var linked = CancellationTokenSource.CreateLinkedTokenSource(ct, timeoutCts.Token);
 
-            return await _generator.GenerateAsync([.. inputs], cancellationToken: cts.Token).ConfigureAwait(false);
+            return await _generator.GenerateAsync([.. inputs], cancellationToken: linked.Token)
+                .ConfigureAwait(false);
         }
         catch (OperationCanceledException) when (ct.IsCancellationRequested)
         {
@@ -84,10 +88,5 @@ public class OllamaEmbeddingGenerator(
             logger.LogCritical(ex, ex.Message);
             throw;
         }
-    }
-
-    public void GenerateEmbeddings(IReadOnlyList<string> readOnlyList, CancellationToken cancellationToken)
-    {
-        throw new NotImplementedException();
     }
 }

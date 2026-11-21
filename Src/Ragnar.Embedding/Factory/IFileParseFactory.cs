@@ -1,13 +1,10 @@
 ﻿namespace Ragnar.Embedding.Factory;
 
-/// <summary>
-/// Defines the contract for parsing source files into code documents by extension.
-/// </summary>
+/// <summary>Defines the contract for parsing source files into code documents by extension.</summary>
+/// <example><![CDATA[var docs = await factory.ParseAsync("a.cs", ct);]></example>
 public interface IFileParseFactory
 {
-    /// <summary>
-    /// Parses file using correct parser based on extension.
-    /// </summary>
+    /// <summary>Parses file using correct parser based on extension.</summary>
     /// <param name="file">File path.</param>
     /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Parsed documents.</returns>

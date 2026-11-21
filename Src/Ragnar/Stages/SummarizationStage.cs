@@ -14,6 +14,7 @@ public class SummarizationStage(IResponseSummarizer summaryService, IOutputWrite
 
     /// <summary>Gets the retry policy for transient HTTP and timeout failures.</summary>
     /// <returns>A policy that retries up to three times with exponential delays, or <see langword="null"/> when no policy is configured.</returns>
+    /// <example><![CDATA[AsyncRetryPolicy? p = stage.RetryPolicy;]]></example>
     public AsyncRetryPolicy? RetryPolicy => Policy.Handle<HttpRequestException>()
              .Or<TimeoutException>()
              .WaitAndRetryAsync(3, a => TimeSpan.FromSeconds(Math.Pow(2, a)));
@@ -21,6 +22,7 @@ public class SummarizationStage(IResponseSummarizer summaryService, IOutputWrite
     /// <summary>Indicates this stage should always execute in the pipeline.</summary>
     /// <param name="context">The question pipeline context.</param>
     /// <returns><see langword="true"/> because summarization is not conditional on the context.</returns>
+    /// <example><![CDATA[bool run = stage.ShouldRun(ctx);]]></example>
     public bool ShouldRun(QuestionPipelineContext context) => true;
 
     /// <summary>Invokes the summary service and prints completion markers.</summary>

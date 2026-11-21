@@ -7,7 +7,7 @@
 /// <param name="configWrapper">Wrapped configuration objects.</param>
 public sealed class MarkdownFileParser(
     IOptions<RagnarConfig> configWrapper,
-    Microsoft.Extensions.Logging.ILogger logger) : BaseFileParser(logger, [".md", "*.*"])
+    ILogger logger) : BaseFileParser(logger, [".md", "*.*"])
 {
     /// <summary>Gets the resolved embedding configuration for batch and dimension settings.</summary>
     /// <example><![CDATA[// Read-only internal accessor for embedding options.]]></example>
@@ -59,8 +59,8 @@ public sealed class MarkdownFileParser(
     }
 
     /// <summary>Splits a character memory into lines by newline.</summary>
-    /// <param name="content">Character memory to split.
-    /// </param>
+    /// <param name="content">Character memory to split.</param>
     /// <returns>List of line strings.</returns>
+    /// <example><![CDATA[var lines = ToLines("a\nb");]></example>
     private static List<string> ToLines(in string content) => [.. content.Split('\n', StringSplitOptions.None)];
 }

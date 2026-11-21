@@ -29,6 +29,9 @@ csharp_space_before_open_square_brackets = false
 csharp_space_between_method_call_empty_parameter_list_parentheses = false
 csharp_space_between_method_call_name_and_opening_parenthesis = false
 
+# Enforce that the namespace matches the folder path
+dotnet_style_namespace_match_folder = true:error
+
 # Modern C# Code Style (C# 10/11/12+)
 csharp_prefer_braces = when_multiline:suggestion
 csharp_prefer_static_local_function = true:suggestion

@@ -108,8 +108,57 @@ public sealed class RagOrchestrator(
     {
         logger.LogDebug("Invoking Ollama generation with model {Model}", request.Model);
 
+
         var response = await ollamaProvider.GenerateResponse(request, cancellationToken).ConfigureAwait(false);
         logger.LogDebug("Ollama generation returned {Length} characters", response?.Length ?? 0);
         return response ?? "No response returned.";
+    }
+
+    public async Task<string> GenerateAsync(string prompt, CancellationToken cancellationToken)
+    {
+        var ollamaClient = ollamaClientFactory.GetClient(OllamaServiceType.Ollama);
+        logger.LogDebug("Resolved Ollama client: {ClientType}, Model: {Model}", ollamaClient.GetType().Name, ollamaClient.SelectedModel);
+
+        var generationOptions = configWrapper.Value.GenerationOptions;
+
+        var request = new GenerateRequest
+        {
+            Model = ollamaClient.SelectedModel,
+            Prompt = prompt,
+            System = promptTemplateProvider.System,
+            Options = new RequestOptions
+            {
+                Temperature = generationOptions.Temperature,
+                RepeatPenalty = generationOptions.RepeatPenalty,
+            },
+        };
+
+        var response = string.Empty;
+
+        var question = new Question(true, prompt, "adHoc", QuestionCategory.Other);
+        var sw = new Stopwatch();
+        try
+        {
+            sw.Start();
+            response = await GenerateAsync(request, cancellationToken).ConfigureAwait(false);
+        }
+        catch (Exception ex) when (ex is not OperationCanceledException)
+        {
+            logger.LogError(ex, "RAG generation failed for {Question}", question.Text);
+            response = "⚠️  Generation failed. Check the Ollama service and retry.";
+        }
+
+        sw.Stop();
+
+        logger.LogInformation("RAG generation completed in {Elapsed}", sw.Elapsed);
+
+        if (configWrapper.Value.ApplicationOptions.IncludeOriginalPrompt)
+        {
+            response += Environment.NewLine;
+            response += request.System;
+            logger.LogDebug("Original prompt appended to response (IncludeOriginalPrompt = true).");
+        }
+
+        return response;
     }
 }

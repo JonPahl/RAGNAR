@@ -5,15 +5,15 @@
 /// <param name="vectorSetup">The IVectorSetup service that manages collection life-cycle.</param>
 /// <param name="writer">Console output writer for status messages.</param>
 /// <example><![CDATA[vectorSetup.AddStage(new VectorStoreInitStage(setup, w));]]></example>
-public class VectorStoreInitStage(IVectorSetup vectorSetup, IOutputWriter writer)
-    : IPipelineStage<EmbeddingContext>
+public class VectorStoreInitStage(IVectorSetup vectorSetup, IOutputWriter writer) : IPipelineStage<EmbeddingContext>
 {
     /// <summary>Gets the human-readable display name for this vectorSetup stage.</summary>
     /// <value>The string "Setup Qdrant Vector Store".</value>
-    /// <example><![CDATA[string n = stage.Name;]]>
-    /// </example>
+    /// <example><![CDATA[string n = stage.Name;]]></example>
     public string Name => "Setup Qdrant Vector Store";
 
+    /// <summary>Retries on HTTP and timeout errors with exponential back off.</summary>
+    /// <example><![CDATA[AsyncRetryPolicy? p = stage.RetryPolicy;]></example>
     public AsyncRetryPolicy? RetryPolicy => Policy.Handle<HttpRequestException>()
              .Or<TimeoutException>()
              .WaitAndRetryAsync(3, a => TimeSpan.FromSeconds(Math.Pow(2, a)));

@@ -6,13 +6,10 @@ public sealed class FileConfigLoader : IConfigurationLoader
     /// <summary>Loads predefined question configurations for code analysis and modernization.</summary>
     /// <returns>A sequence of Question instances with embedded questions.</returns>
     /// <remarks>Currently returns hardcoded examples. </remarks>
-    /// <example>
-    /// <![CDATA[
+    /// <example> <![CDATA[
     /// var loader = new FileConfigLoader();
-    /// foreach (var config in loader.LoadQuestions())
-    ///     Console.WriteLine($"[{config.Category}] {config.Question}");
-    /// ]]>
-    /// </example>
+    /// foreach (var config in loader.LoadQuestionsAsync())
+    ///     Console.WriteLine($"[{config.Category}] {config.Question}"); ]]> </example>
     public IEnumerable<Question> LoadQuestions()
     {
         return

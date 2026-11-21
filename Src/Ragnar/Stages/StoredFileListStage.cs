@@ -27,7 +27,10 @@ public sealed class StoredFileListStage(
     /// <example><![CDATA[bool run = stage.ShouldRun(context);]]></example>
 
     // FIXME How do I add stage control options to set if a stage should be run inside of appsettings.json
-    public bool ShouldRun(EmbeddingContext context) => false;
+    public bool ShouldRun(EmbeddingContext context)
+    {
+        return options.Value.ApplicationOptions.Stages["StoredFileListStage"];
+    }
 
     /// <summary>Scrolls all stored file entries and renders them in a console table.</summary>
     /// <param name="context">The embedding pipeline context (unused directly).</param>

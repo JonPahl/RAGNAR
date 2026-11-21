@@ -31,6 +31,7 @@ public class RagPromptBuilder : IRagPromptBuilder
     /// </summary>
     /// <param name="context">Text containing relevant source material.</param>
     /// <returns>This instance for method chaining.</returns>
+    /// <example><![CDATA[builder.WithContext("retrieved text");]]></example>
     public IRagPromptBuilder WithContext(string context)
     {
         ContextText = context;
