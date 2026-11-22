@@ -22,7 +22,7 @@ public class DeltaEmbedStageTests
             ApplicationOptions = new ApplicationOptions { VectorStoreName = "test", SourceDirectory = "" },
             EmbeddingOptions = new EmbeddingOptions { Dimension = 768, EmbeddingModel = "e", Host = new Uri("http://localhost/11434"), Timeout = TimeSpan.FromSeconds(30), BatchSize = 16 }
         });
-        _sut = new DeltaEmbedStage(_loggerMock.Object, _fpMock.Object, _writerMock.Object, _optionsMock.Object);
+        _sut = new DeltaEmbedStage(_loggerMock.Object, _fpMock.Object, _writerMock.Object);
     }
 
     [Fact]

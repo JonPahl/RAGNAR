@@ -232,7 +232,7 @@ public class PipelineIntegrationTests
         mock.Setup(s => s.ShouldRun(It.IsAny<EmbeddingContext>())).Returns(shouldRun);
 
         mock.Setup(s => s.ExecuteAsync(It.IsAny<EmbeddingContext>(), It.IsAny<CancellationToken>()))
-            .Callback<EmbeddingContext, CancellationToken>((Context, Ct) => executionOrder.Add(name))
+            .Callback<EmbeddingContext, CancellationToken>((context, ct) => executionOrder.Add(name))
             .Returns(Task.CompletedTask);
         return mock;
     }
@@ -244,7 +244,7 @@ public class PipelineIntegrationTests
 
     private sealed class TestStage(string name, List<string> invocations) : IPipelineStage<EmbeddingContext>
     {
-        public string Name { get; }
+        public string Name { get; } = "";
         public AsyncRetryPolicy? RetryPolicy => null;
         public bool ShouldRun(EmbeddingContext context) => true;
 

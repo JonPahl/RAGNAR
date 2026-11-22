@@ -35,11 +35,10 @@ public static partial class RagPipelineHostBuilder
             .UseSerilog((ctx, cfg) => cfg.ReadFrom.Configuration(ctx.Configuration))
             .ConfigureServices((ctx, services) =>
             {
-                services.AddSingleton<Microsoft.Extensions.Logging.ILogger>(sp =>
+                services.AddSingleton<ILogger>(sp =>
                 {
-                    var log = sp.GetRequiredService<Microsoft.Extensions.Logging.ILoggerFactory>()
+                    return sp.GetRequiredService<ILoggerFactory>()
                     .CreateLogger("Ragnar");
-                    return log;
                 });
 
                 services.AddValidatorsFromAssembly(typeof(Program).Assembly);

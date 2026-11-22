@@ -22,6 +22,7 @@ public sealed class RagPipelineRunner(
         IQuestionSourceBuilder questionSourceBuilder,
         IRagOrchestrator ragOrchestrator,
         IContextRetriever contextRetriever,
+        IClock clock,
         IResponseSummarizer summarizer) : IHostedService
 {
     private readonly PipelineBuilder<EmbeddingContext> _embeddingPipelineRunner = new PipelineBuilder<EmbeddingContext>(log)
@@ -29,7 +30,7 @@ public sealed class RagPipelineRunner(
         .AddStage(new VectorStoreInitStage(vectorSetup, writer))
         .AddStage(new DiscoveryStage(options, fileService, log, writer))
         .AddStage(new ParsingStage(parseFactory, log))
-        .AddStage(new DeltaEmbedStage(log, fingerprintStore, vectorWriter, options))
+        .AddStage(new DeltaEmbedStage(log, fingerprintStore, vectorWriter))
         .AddStage(new UpsertStage(vectorWriter, log, options, writer))
         .AddStage(new StoredFileListStage(options, qdrantClient, log));
 
@@ -42,7 +43,7 @@ public sealed class RagPipelineRunner(
             questionSourceBuilder,
             log))
         .AddStage(new QuestionTableStage(writer))
-        .AddStage(new QuestionAnswerStage(ragOrchestrator, options, writer, contextRetriever, log))
+        .AddStage(new QuestionAnswerStage(ragOrchestrator, options, writer, contextRetriever, log, clock))
         .AddStage(new SummarizationStage(summarizer, writer));
 
     /// <summary>Starts the RAG pipeline: collection check, embedding, and query processing.

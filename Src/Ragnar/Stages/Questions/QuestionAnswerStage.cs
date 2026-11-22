@@ -12,7 +12,7 @@ public class QuestionAnswerStage(
     IOptions<RagnarConfig> ragnarConfig,
     IOutputWriter writer,
     IContextRetriever questionEmbedding,
-    ILogger logger)
+    ILogger logger, IClock clock)
     : IPipelineStage<QuestionPipelineContext>
 {
     /// <summary>Gets the human-readable stage name for progress display.</summary>
@@ -51,7 +51,11 @@ public class QuestionAnswerStage(
 
             writer.WriteRule();
             writer.WriteLine();
-            writer.MarkupLine($"[blue]Question: {Environment.NewLine}{Markup.Escape(question.Text)} [/]");
+            writer.MarkupLine($"[blue bold]Question: [/]"); writer.MarkupLine($"[BlueViolet]{Environment.NewLine}{Markup.Escape(question.Text)} [/]");
+            writer.MarkupLine($"[CornflowerBlue]{clock.Now:d} {clock.Now:t} [/]");
+
+            writer.MarkupLine($"{Ragnar.Embedding.StringExtensions.CharacterCount(contextText)}");
+
             writer.WriteLine();
             writer.Write(new Rule());
 

@@ -7,13 +7,11 @@
 /// <param name="logger">Serilog logger.</param>
 /// <param name="fingerprintStore">Fingerprint persistence backend.</param>
 /// <param name="writer">The existing Qdrant upsert writer.</param>
-/// <param name="options">Application configuration (vector store name, etc.).</param>
 /// <example><![CDATA[embeddingPipelineRunner.AddStage(new DeltaEmbedStage(log, store, writer, opts));]]></example>
 public sealed class DeltaEmbedStage(
     ILogger logger,
     IFileFingerprintStore fingerprintStore,
-    IVectorStoreWriter writer,
-    IOptions<RagnarConfig> options)
+    IVectorStoreWriter writer)
     : IPipelineStage<EmbeddingContext>
 {
     /// <inheritdoc />
@@ -76,7 +74,7 @@ public sealed class DeltaEmbedStage(
             await fingerprintStore.FlushAsync(cancellationToken)
                 .ConfigureAwait(false);
             var result = await writer.UpsertBatchAsync(eligible, cancellationToken).ConfigureAwait(false);
-            logger.LogInformation("Delta embed upsert: {Status}, {Upserted} vectors", result.Status, result.CalculateSize);
+            logger.LogInformation("Delta embed upsert: {Status}, {Upserted} vectors", result.Status, result.CalculateSize());
         }
     }
 
