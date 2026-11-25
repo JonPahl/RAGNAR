@@ -1,16 +1,10 @@
 ﻿namespace Ragnar.Ollama;
 
-/// <summary>
-/// Configures and caches OllamaOptions clients per model.
-/// </summary>
+/// <summary>Streams and collects full LLM responses for generated prompts.</summary>
+/// <param name="clientFactory">Factory responsible for creating Ollama API clients.</param>
 /// <example><![CDATA[var provider = new OllamaGenerationService(opts);]]></example>
-/// <remarks>
-/// Initializes a new instance of the <see cref="OllamaGenerationService"/> class.
-/// Template Ollama API call.
-/// </remarks>
-/// <param name="clientFactory">Ollama setup factory.</param>
-public class OllamaGenerationService(IOllamaClientFactory clientFactory)
-    : IOllamaGenerationService
+/// <remarks>Initializes a new instance of the <see cref="OllamaGenerationService"/> class. Template Ollama API call.</remarks>
+public class OllamaGenerationService(IOllamaClientFactory clientFactory) : IOllamaGenerationService
 {
     private readonly IOllamaApiClient _ollamaClient = clientFactory.GetClient(OllamaServiceType.Ollama);
 
@@ -23,6 +17,9 @@ public class OllamaGenerationService(IOllamaClientFactory clientFactory)
         GenerateRequest request,
         CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+        Guard.Against.Null(request);
+
         var sb = new StringBuilder();
 
         try

@@ -1,13 +1,11 @@
 ﻿namespace Ragnar.Plugins.Utils;
 
-/// <summary>
-/// A utility class providing general-purpose functionality.
-/// </summary>
+/// <summary>Contains common utility methods for path and string handling.</summary>
 public static class General
 {
-    /// <summary>
-    /// The culture used for formatting dates, numbers, and other string representations.
-    /// </summary>
+    /// <summary>Culture used for formatting dates, numbers, and strings.</summary>
+    /// <returns>A valid culture info instance for consistent localization.</returns>
+    /// <example><![CDATA[var c = General.Culture;]]></example>
     public static System.Globalization.CultureInfo Culture { get; } = new("en-US");
 
     /// <summary>

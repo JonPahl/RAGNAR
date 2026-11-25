@@ -1,4 +1,7 @@
-﻿namespace Ragnar.Embedding.Pipeline.Services;
+﻿using Ragnar.Domain.Enums;
+using Ragnar.Domain.Utils;
+
+namespace Ragnar.Embedding.Pipeline.Services;
 
 /// <summary>Generates text-to-vector embeddings via Ollama for Qdrant storage.</summary>
 /// <param name="logger">Serilog logger for tracking embedding generation errors.</param>

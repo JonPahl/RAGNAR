@@ -14,6 +14,10 @@ public sealed class ProgressMiddleware(IOutputWriter writer)
     public async Task Invoke<TContext>(StageExecutionContext<TContext> context, Func<Task> next,
          CancellationToken cancellationToken) where TContext : class
     {
+        cancellationToken.ThrowIfCancellationRequested();
+        Guard.Against.Null(context);
+        Guard.Against.Null(next);
+
         var label = $"[{context.StageIndex + 1}/{context.StageTotal}] {context.Stage.Name}";
         writer.WriteLine($"{label} … ");
         var sw = Stopwatch.StartNew();

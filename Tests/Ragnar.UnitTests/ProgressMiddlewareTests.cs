@@ -24,7 +24,7 @@ public class ProgressMiddlewareTests
 
         // Assert
         _writerMock.Verify(w => w.WriteLine(It.Is<string>(s => s.Contains("[1/3]"))), Times.Once);
-        _writerMock.Verify(w => w.WriteLine(It.Is<string>(s => s.Contains("✓"))), Times.Once);
+        _writerMock.Verify(w => w.WriteLine(It.Is<string>(s => s.Contains('✓'))), Times.Once);
     }
 
     [Fact]
@@ -39,7 +39,7 @@ public class ProgressMiddlewareTests
         await Assert.ThrowsAsync<InvalidOperationException>(
             () => _sut.Invoke<TestCtx>(context, () => throw new InvalidOperationException("boom"), CancellationToken.None));
 
-        _writerMock.Verify(w => w.WriteLine(It.Is<string>(s => s.Contains("✗"))), Times.Once);
+        _writerMock.Verify(w => w.WriteLine(It.Is<string>(s => s.Contains('✗'))), Times.Once);
         _writerMock.Verify(w => w.WriteLine(It.Is<string>(s => s.Contains("InvalidOperationException"))), Times.Once);
     }
 

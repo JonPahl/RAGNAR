@@ -27,7 +27,7 @@ public sealed class StoredFileListStage(
     /// <example><![CDATA[bool run = stage.ShouldRun(context);]]></example>
 
     // FIXME How do I add stage control options to set if a stage should be run inside of appsettings.json
-    public bool ShouldRun(EmbeddingContext context) => false;
+    public bool ShouldRun(EmbeddingContext context) => true;
 
     /// <summary>Scrolls all stored file entries and renders them in a console table.</summary>
     /// <param name="context">The embedding pipeline context (unused directly).</param>
@@ -44,18 +44,18 @@ public sealed class StoredFileListStage(
             .Expand()
             .ShowRowSeparators()
             .BorderStyle(Color.Green4)
-            .AddColumns("#", "Path");
+            .AddColumns("#", "FileName");
 
         var cnt = 1;
         foreach (var file in files)
         {
-            var myPath = new TextPath(file)
+            var fileName = new TextPath(file)
                 .RootColor(Color.Red)
                 .SeparatorColor(Color.Grey)
                 .StemColor(Color.Blue)
                 .LeafColor(Color.Green);
 
-            table.AddRow(new Text(cnt.ToString(General.Culture)), myPath);
+            table.AddRow(new Text(cnt.ToString(General.Culture)), fileName);
             cnt++;
         }
 
@@ -68,7 +68,7 @@ public sealed class StoredFileListStage(
     /// <param name="cancellationToken">Token to abort the scroll operation.</param>
     /// <returns>A list of file name strings found in the collection.</returns>
     /// <example><![CDATA[var files = await stage.EnumerateStoredFiles(client, pageSize, cancellationToken);]]></example>
-    private async Task<List<string>> EnumerateStoredFiles(
+    private async Task<IReadOnlyList<string>> EnumerateStoredFiles(
         IQdrantClient client,
         uint pageSize,
         CancellationToken cancellationToken)
@@ -90,9 +90,9 @@ public sealed class StoredFileListStage(
                 .ConfigureAwait(false);
 
             // 4. Process the returned points
-            foreach (var item in response.Result)
+            foreach (var item in response.Result.Select(item => item.Payload))
             {
-                var fileName = item.Payload["FileName"].StringValue;
+                var fileName = item["FileName"].StringValue;
                 items.Add(fileName);
             }
 

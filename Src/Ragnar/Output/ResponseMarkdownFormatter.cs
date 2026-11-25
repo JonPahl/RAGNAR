@@ -17,6 +17,8 @@ public class ResponseMarkdownFormatter(IClock clock)
     /// <example><![CDATA[[string md = formatter.FormatResponse(record);]]></example>
     public string FormatResponse(ResponseRecord details)
     {
+        Guard.Against.Null(details);
+
         var response = new StringBuilder();
         response.AppendLine(General.Culture, $"{details.Question.MarkdownHeader}");
         response.AppendLine(General.Culture, $"> **Date Generated**: {clock.Now.ToString("G")}");

@@ -1,13 +1,9 @@
 ﻿namespace Ragnar.Plugins;
 
-///<summary>
-///Domain defaults class.
-///</summary>
+/// <summary>Provides default values for domain-specific constants.</summary>
 public static class DomainDefaults
 {
-    /// <summary>
-    /// Constant for uncategorized items.
-    /// </summary>
+    /// <summary>Constant for uncategorized items.</summary>
     public const string Uncategorized = "Uncategorized";
 
     /// <summary>

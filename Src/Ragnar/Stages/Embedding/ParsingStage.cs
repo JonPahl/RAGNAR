@@ -17,7 +17,11 @@ public sealed class ParsingStage(
 
     /// <summary>Indicates this stage should always execute in the pipeline.</summary>
     /// <example><![CDATA[bool shouldRun = stage.ShouldRun(ctx);]]></example>
-    public bool ShouldRun(EmbeddingContext context) => context.DiscoveredFiles.Any();
+    public bool ShouldRun(EmbeddingContext context)
+    {
+        Guard.Against.Null(context);
+        return context?.DiscoveredFiles?.Any() ?? false;
+    }
 
     /// <summary>Parses all discovered files into CodeDocument segments in parallel.</summary>
     /// <param name="context">Shared embedding pipeline context with DiscoveredFiles.</param>

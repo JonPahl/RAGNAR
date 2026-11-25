@@ -50,6 +50,9 @@ public sealed class UpsertStage(
     /// <exception cref="OperationCanceledException">The token is cancelled before a batch is upserted.</exception>
     public async Task ExecuteAsync(EmbeddingContext context, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+        Guard.Against.Null(context);
+
         var documents = context.Documents;
         if (documents.Count == 0)
         {

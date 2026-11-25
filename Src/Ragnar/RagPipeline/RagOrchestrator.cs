@@ -32,7 +32,13 @@ public sealed class RagOrchestrator(
       string contextText,
       CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+        Guard.Against.Null(question);
+        Guard.Against.NullOrEmpty(contextText);
+
         var sw = Stopwatch.StartNew();
+
+        logger.LogInformation("RAGPipeline", [(nameof(question.Text), question.Text), (nameof(contextText.Length), contextText.Length)]);
 
         var finalPrompt = promptBuilder
             .WithQuestion(question)
@@ -65,7 +71,13 @@ public sealed class RagOrchestrator(
         catch (Exception ex) when (ex is not OperationCanceledException)
         {
             logger.LogError(ex, "RAG generation failed for {Question}", question.Text);
-            response = "⚠️  Generation failed. Check the Ollama service and retry.";
+
+            response = "⚠️  Generation failed. Check the Ollama service and retry. ";
+            response += Environment.NewLine;
+            response += ex.Message;
+            response += Environment.NewLine;
+            response += Environment.NewLine;
+            response += contextText;
         }
 
         sw.Stop();
@@ -80,7 +92,8 @@ public sealed class RagOrchestrator(
             logger.LogDebug("Original prompt appended to response (IncludeOriginalPrompt = true).");
         }
 
-        await SaveResponseAsync(new ResponseRecord(question, response, sw.FormatElapsedTime()), cancellationToken).ConfigureAwait(false);
+        await SaveResponseAsync(new ResponseRecord(question, response, DomainExtensions.FormatElapsedTime(sw)), cancellationToken)
+            .ConfigureAwait(false);
     }
 
     /// <summary>Saves generation response to disk and prints the output path.</summary>

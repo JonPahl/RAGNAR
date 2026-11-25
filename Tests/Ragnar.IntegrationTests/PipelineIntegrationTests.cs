@@ -237,10 +237,7 @@ public class PipelineIntegrationTests
         return mock;
     }
 
-    private static IPipelineStage<EmbeddingContext> CreateTrackingStage(List<string> invocations)
-    {
-        return new TestStage("Core", invocations);
-    }
+    private static IPipelineStage<EmbeddingContext> CreateTrackingStage(List<string> invocations) => new TestStage("Core", invocations);
 
     private sealed class TestStage(string name, List<string> invocations) : IPipelineStage<EmbeddingContext>
     {

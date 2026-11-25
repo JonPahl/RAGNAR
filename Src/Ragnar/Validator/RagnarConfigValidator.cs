@@ -8,9 +8,7 @@ public class RagnarConfigValidator
     /// <param name="appValidator">Validator for ApplicationOptions.</param>
     /// <param name="embedValidator">Validator for EmbeddingOptions.</param>
     /// <param name="ollamaValidator">Validator for OllamaOptions.</param>
-    /// <example>
-    /// <![CDATA[var v = new RagnarConfigValidator(appV, embV, ollV, fileV);]]>
-    /// </example>
+    /// <example><![CDATA[var v = new RagnarConfigValidator(appV, embV, ollV, fileV);]]></example>
     public RagnarConfigValidator(
         ApplicationOptionsValidator appValidator,
         EmbeddingOptionsValidator embedValidator,

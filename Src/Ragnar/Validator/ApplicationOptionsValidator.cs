@@ -1,6 +1,6 @@
 ﻿namespace Ragnar.Validator;
 
-/// <summary>Initializes validation rules for application-level options.</summary>
+/// <summary>Validates configuration settings for application-level options.</summary>
 /// <example><![CDATA[[var v = new ApplicationOptionsValidator();]]></example>
 public class ApplicationOptionsValidator
     : AbstractValidator<ApplicationOptions>

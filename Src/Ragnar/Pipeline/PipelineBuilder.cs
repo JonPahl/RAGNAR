@@ -73,7 +73,7 @@ public sealed class PipelineBuilder<TContext>(ILogger logger) where TContext : c
     /// <param name="mw">The middleware delegate to run around stage execution.</param>
     /// <returns>The current builder for fluent chaining.</returns>
     public PipelineBuilder<TContext> UseMiddleware(
-        Func<StageExecutionContext<TContext>, Func<Task>, CancellationToken, Task> mw)
+        in Func<StageExecutionContext<TContext>, Func<Task>, CancellationToken, Task> mw)
     {
         Guard.Against.Null(mw);
         lock (_gate) _middlewares.Add(mw);

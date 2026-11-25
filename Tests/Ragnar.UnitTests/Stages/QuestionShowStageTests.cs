@@ -17,8 +17,8 @@ public class QuestionShowStageTests
     }
 
     [Theory]
-    [InlineData(typeof(QuestionPipelineContext))] // valid testContext
-    [InlineData(typeof(object))]            // null (cast via null!)
+    [InlineData(typeof(QuestionPipelineContext))]
+    [InlineData(typeof(object))]
     public void ShouldRunShouldAlwaysReturnTrue(Type unused)
     {
         var ctx = unused == typeof(QuestionPipelineContext)

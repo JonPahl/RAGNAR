@@ -23,11 +23,11 @@ public static partial class RagPipelineHostBuilder
             // TODO How do I make changing what appsettings file to use easier.
 
             //const string X = "Pipeline";
-            //const string X = "Ragnar";
+            const string X = "Ragnar";
             //const string X = "Bank";
             //const string X = "Shepherd_Api";
             //const string X = "ObitLoader";
-            const string X = "SolutionBuilder";
+            //const string X = "SolutionBuilder";
 
             cfg.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
            .AddJsonFile($"appsettings.{X}.json", optional: true, reloadOnChange: true);
@@ -76,32 +76,40 @@ public static partial class RagPipelineHostBuilder
         s.AddSingleton<IVectorStoreBuilder, VectorStoreBuilder>();
     }
 
-    private static void AddInfrastructure(this IServiceCollection s)
+    /// <summary>Registers infrastructure services like clients and factories into DI.</summary>
+    /// <param name="services">The service collection to configure.</param>
+    /// <returns>The updated service collection for chaining.</returns>
+    /// <example><![CDATA[builder.Services.AddInfrastructure();]]></example>
+    private static void AddInfrastructure(this IServiceCollection services)
     {
-        s.AddSingleton<IQdrantClient>(sp =>
+        services.AddSingleton<IQdrantClient>(sp =>
         {
             var opt = sp.GetRequiredService<IOptions<RagnarConfig>>().Value.EmbeddingOptions;
             return new QdrantClient(opt.Host.Host, opt.Host.Port, https: false);
         });
 
-        s.AddSingleton<IOllamaChatClientBuilder, OllamaChatClientBuilder>();
+        services.AddSingleton<IOllamaChatClientBuilder, OllamaChatClientBuilder>();
 
-        s.AddSingleton<IOllamaGenerationService, OllamaChatService>();
-        s.AddSingleton<IOllamaClientFactory, OllamaClientFactory>();
-        s.AddHttpClients();
+        services.AddSingleton<IOllamaGenerationService, OllamaChatService>();
+        services.AddSingleton<IOllamaClientFactory, OllamaClientFactory>();
+        services.AddHttpClients();
     }
 
-    private static void AddEmbeddingPipeline(this IServiceCollection s)
+    /// <summary>Registers embedding pipeline services into the DI container.</summary>
+    /// <param name="services">The service collection to configure.</param>
+    /// <returns>The updated service collection for chaining.</returns>
+    /// <example><![CDATA[builder.Services.AddEmbeddingPipeline();]]></example>
+    private static void AddEmbeddingPipeline(this IServiceCollection services)
     {
-        s.AddSingleton<IFileFingerprintStore, JsonFileFingerprintStore>();
-        s.AddSingleton(sp =>
+        services.AddSingleton<IFileFingerprintStore, JsonFileFingerprintStore>();
+        services.AddSingleton(sp =>
         {
             var log = sp.GetRequiredService<ILogger>();
 
             return new JsonFileFingerprintStore(log, sp.GetRequiredService<IOptions<RagnarConfig>>());
         });
 
-        s.AddSingleton(sp =>
+        services.AddSingleton(sp =>
         {
             var options = sp.GetRequiredService<IOptions<RagnarConfig>>().Value;
 
@@ -112,6 +120,10 @@ public static partial class RagPipelineHostBuilder
         });
     }
 
+    /// <summary>Registers question pipeline services into the DI container.</summary>
+    /// <param name="services">The service collection to configure.</param>
+    /// <returns>The updated service collection for chaining.</returns>
+    /// <example><![CDATA[builder.Services.AddQuestionPipeline();]]></example>
     private static void AddQuestionPipeline(this IServiceCollection s)
     {
         s.AddSingleton<IContextRetriever, ContextRetriever>();

@@ -40,7 +40,7 @@ public class QuestionFilterSelectorTests
         var ex = Assert.Throws<NotSupportedException>(
             () => selector.FindFilter(QuestionCategory.Other));
 
-        Assert.Contains("Method", ex.Message);
+        Assert.Contains("Method", ex.Message, StringComparison.InvariantCultureIgnoreCase);
         Assert.Contains("registered", ex.Message, StringComparison.OrdinalIgnoreCase);
     }
 

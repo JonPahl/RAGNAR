@@ -40,6 +40,9 @@ public class QuestionAnswerStage(
     /// <example><![CDATA[await stage.ExecuteAsync(ctx, ct);]]></example>
     public async Task ExecuteAsync(QuestionPipelineContext context, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+        Guard.Against.Null(context);
+
         var questions = context.Questions;
 
         var processedCount = 0;
@@ -51,7 +54,7 @@ public class QuestionAnswerStage(
 
             writer.WriteRule();
             writer.WriteLine();
-            writer.MarkupLine($"[blue bold]Question: [/]"); writer.MarkupLine($"[BlueViolet]{Environment.NewLine}{Markup.Escape(question.Text)} [/]");
+            writer.MarkupLine("[blue bold]Question: [/]"); writer.MarkupLine($"[Chartreuse2_1]{Environment.NewLine}{Markup.Escape(question.Text)} [/]");
             writer.MarkupLine($"[CornflowerBlue]{clock.Now:d} {clock.Now:t} [/]");
 
             writer.MarkupLine($"{Ragnar.Embedding.StringExtensions.CharacterCount(contextText)}");

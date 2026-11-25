@@ -19,7 +19,7 @@ public sealed class CodeDocumentExtensionsTests
         };
 
         // Act
-        var dict = doc.Dictionary;
+        var dict = DomainExtensions.get_Dictionary(doc);
 
         // Assert
         Assert.Equal(8, dict.Count);

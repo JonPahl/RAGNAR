@@ -11,12 +11,12 @@ C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Parsers\IFileDiscoveryService.
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Parsers\IVectorStoreWriter.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Parsers\MarkdownFileParser.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Parsers\ParseCSharpFile.cs
-C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Parsers\VectorStoreWriter.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Pipeline\IEmbeddingPipelineOrchestrator.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Pipeline\QuestionPluginExtensions.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Pipeline\Services\OllamaEmbeddingGenerator.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Pipeline\Stages\VectorStoreInitStage.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\Pipeline\VectorSetup.cs
 C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\VectorStore\PointStructFactory.cs
+C:\Users\jp325\source\Ragnar\Src\Ragnar.Embedding\VectorStore\VectorStoreWriter.cs
 C:\Users\jp325\source\Ragnar\Src\.editorconfig
 C:\Users\jp325\source\Ragnar\Src\.roslynatorconfig

@@ -23,6 +23,8 @@ public sealed class ResponseWriter(
     /// <example><![CDATA[await writer.WriteResponseAsync(record, ct);]]></example>
     public async Task<string> WriteResponseAsync(ResponseRecord record, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+        Guard.Against.Null(record);
         var directory = pathResolver
             .ResolveResponseDirectory(record.Question.Category);
         pathResolver.EnsureDirectoryExists(directory);
@@ -56,7 +58,7 @@ public sealed class ResponseWriter(
         {
             // This will throw an exception if the path contains invalid characters, 
             // is too long, or has an invalid format.
-            var fullPath = Path.GetFullPath(path);
+            Path.GetFullPath(path);
 
             return true;
         }

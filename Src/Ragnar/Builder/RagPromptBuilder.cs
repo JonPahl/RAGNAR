@@ -15,20 +15,18 @@ public class RagPromptBuilder : IRagPromptBuilder
     /// </summary>
     private string ContextText { get; set; } = "";
 
-    /// <summary>
-    /// Adds a question to the prompt builder, updating the internal state with the provided question's text.
-    /// </summary>
+    /// <summary>Adds a question to the prompt builder, updating the internal state with the provided question's text.</summary>
     /// <param name="question">The question to add.</param>
     /// <returns>This instance for method chaining.</returns>
     public IRagPromptBuilder WithQuestion(Question question)
     {
+        Guard.Against.Null(question);
+        Guard.Against.NullOrEmpty(question.Text);
         QuestionText = question.Text;
         return this;
     }
 
-    /// <summary>
-    /// Sets the retrieved context used to ground the answer.
-    /// </summary>
+    /// <summary>Sets the retrieved context used to ground the answer.</summary>
     /// <param name="context">Text containing relevant source material.</param>
     /// <returns>This instance for method chaining.</returns>
     public IRagPromptBuilder WithContext(string context)
@@ -37,9 +35,7 @@ public class RagPromptBuilder : IRagPromptBuilder
         return this;
     }
 
-    /// <summary>
-    /// Builds the Rag prompt as a string, incorporating the context and question text.
-    /// </summary>
+    /// <summary>Builds the Rag prompt as a string, incorporating the context and question text.</summary>
     /// <returns>The constructed Rag prompt.</returns>
     public string Build()
     {

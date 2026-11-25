@@ -5,7 +5,7 @@
 /// </summary>
 public static class PluginExtension
 {
-    extension(List<Core.Models.Question> configs)
+    extension(List<Question> configs)
     {
         /// <summary>
         /// Loads questions from a plugin configuration file.

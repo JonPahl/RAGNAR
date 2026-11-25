@@ -1,8 +1,7 @@
 ﻿namespace Ragnar.Services;
 
 /// <summary>Initializes a new instance of the system prompt provider.</summary>
-public class PromptTemplateProvider
-    : IChatPromptProvider
+public class PromptTemplateProvider : IChatPromptProvider
 {
     /// <summary>Builds a prompt string by appending the question to the content.</summary>
     /// <param name="content">The document or context content.</param>
@@ -13,7 +12,8 @@ public class PromptTemplateProvider
 
     /// <summary>Gets the system prompt for .NET 10 code generation.</summary>
     /// <returns>The prompt template string for AI agent instructions.</returns>
-    /// <example><![CDATA[var t = provider.Template;]]></example>
+    /// <returns>The static system message text used as the AI prompt baseline.</returns>
+    /// <example><![CDATA[string sys = provider.System;]]></example>
     public string System => """
         Act as an expert senior .NET 10 developer and a highly optimized Qwen coding AI agent.
         I am building an application targeting .NET 10 and C# 14. My development environment is Visual Studio 2026. Generate clean, highly efficient C# 14 code following these requirements:

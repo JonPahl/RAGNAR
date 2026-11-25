@@ -3,9 +3,7 @@
 // TODO Rewrite save to use the following item.
 // var details = new ResponseRecord()
 
-/// <summary>
-/// Writes a summarized RAG response to disk as a Markdown file.
-/// </summary>
+/// <summary> Writes a summarized RAG response to disk as a Markdown file. </summary>
 /// <example><![CDATA[var path = await responseWriter.WriteResponseAsync(record, ct);]]>
 /// </example>
 public class SummarizeSaveResponse : IResponseWriter

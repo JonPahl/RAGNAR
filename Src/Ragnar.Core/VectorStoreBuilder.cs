@@ -1,4 +1,6 @@
-﻿namespace Ragnar.Core;
+﻿using Ragnar.Domain.Options;
+
+namespace Ragnar.Core;
 
 /// <summary>Builds and manages a Qdrant vector store collection with indices.</summary>
 /// <remarks>Ensures collection existence, creates it if absent, and generates payload indices.</remarks>

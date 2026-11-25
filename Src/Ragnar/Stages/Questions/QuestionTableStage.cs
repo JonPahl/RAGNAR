@@ -26,6 +26,7 @@ public class QuestionTableStage(IOutputWriter writer)
     public async Task ExecuteAsync(QuestionPipelineContext context, CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
+        Guard.Against.Null(context);
 
         var table = new Table()
             .Expand()

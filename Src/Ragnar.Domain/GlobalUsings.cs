@@ -1,0 +1,17 @@
+global using Qdrant.Client.Grpc;
+global using Ragnar.Domain.Enums;
+global using Ardalis.GuardClauses;
+global using System.Collections.ObjectModel;
+global using Microsoft.Extensions.AI;
+global using System.ComponentModel.DataAnnotations;
+global using Ragnar.Core.Options;
+global using FluentValidation;
+global using Ragnar.Domain.Options;
+global using OllamaSharp;
+global using System.Text;
+global using Ragnar.Plugins.Utils;
+global using Ragnar.Domain.Validation;
+global using Ragnar.Domain.Models;
+global using System.Diagnostics;
+global using Spectre.Console;
+global using ValidationException = FluentValidation.ValidationException;

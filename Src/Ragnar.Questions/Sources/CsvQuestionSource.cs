@@ -1,4 +1,6 @@
-﻿namespace Ragnar.Questions.Sources;
+﻿using Ragnar.Abstractions;
+
+namespace Ragnar.Questions.Sources;
 
 /// <summary>Initializes with CSV parser for question loading.</summary>
 /// <param name="csvParser">CSV record parser used to deserialize file data.</param>

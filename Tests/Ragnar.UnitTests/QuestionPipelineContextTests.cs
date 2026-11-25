@@ -24,8 +24,8 @@ public class QuestionPipelineContextTests
 
         // Assert
         Assert.NotNull(ctx.Questions);
-        Assert.Single(ctx.Questions);
-        Assert.Equal("What is this?", ctx.Questions[0].Text);
+        var item = Assert.Single(ctx.Questions);
+        Assert.Equal("What is this?", item.Text);
     }
 
     [Fact]

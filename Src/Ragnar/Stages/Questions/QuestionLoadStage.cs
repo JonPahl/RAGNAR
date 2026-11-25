@@ -27,6 +27,8 @@ public sealed class QuestionLoadStage(
     /// </summary>
     public async Task ExecuteAsync(QuestionPipelineContext context, CancellationToken cancellationToken)
     {
+        cancellationToken.ThrowIfCancellationRequested();
+        Guard.Against.Null(context);
         Guard.Against.Null(questionSource);
         Guard.Against.Null(questionBuilder);
 
@@ -52,7 +54,7 @@ public sealed class QuestionLoadStage(
             if (sort.Category == QuestionCategory.XML)
             {
                 var xmlFilter = new XmlCommentFilterStrategy(logger);
-                var y = sort.SetFilter(xmlFilter.CreateFilter(120));
+                var y = DomainExtensions.SetFilter(sort, xmlFilter.CreateFilter(120));
                 updated.Add(y);
             }
             else if (sort.Category == QuestionCategory.Testing)
@@ -64,7 +66,7 @@ public sealed class QuestionLoadStage(
             {
                 var noTestsFilter = new NoTestsFilterStrategy();
 
-                var x = sort.SetFilter(noTestsFilter.CreateFilter(120));
+                var x = DomainExtensions.SetFilter(sort, noTestsFilter.CreateFilter(120));
                 updated.Add(x);
             }
         }

@@ -53,8 +53,8 @@ public class CollectionInfoAndMetricIntegrationTests
 
         // Assert
         //Assert.Equal(TimeSpan.FromMilliseconds(50) + TimeSpan.FromMilliseconds(200) + TimeSpan.FromSeconds(3), totalDuration);
-        Assert.Single(failures);
-        Assert.Equal("timeout", failures[0].Error);
+        var item = Assert.Single(failures);
+        Assert.Equal("timeout", item.Error);
         Assert.Equal(4, totalRetries);
     }
 

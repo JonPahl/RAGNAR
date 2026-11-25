@@ -36,7 +36,11 @@ public sealed class DeltaEmbedStage(
     /// <param name="context">The shared embedding context to inspect.</param>
     /// <returns><c>true</c> when the context carries at least one document.</returns>
     /// <example><![CDATA[bool run = stage.ShouldRun(ctx);]]></example>
-    public bool ShouldRun(EmbeddingContext context) => context.Documents is { Count: > 0 };
+    public bool ShouldRun(EmbeddingContext context)
+    {
+        Guard.Against.Null(context);
+        return context.Documents is { Count: > 0 };
+    }
 
     /// <summary>Executes incremental upsert, skipping unchanged files.</summary>
     /// <param name="context">Shared embedding context carrying the parsed documents.</param>
@@ -85,6 +89,6 @@ public sealed class DeltaEmbedStage(
     private static string ComputeSha256(string content)
     {
         var bytes = SHA256.HashData(Encoding.UTF8.GetBytes(content));
-        return Convert.ToHexString(bytes).ToLowerInvariant();
+        return Convert.ToHexString(bytes).ToUpperInvariant();
     }
 }

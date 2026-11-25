@@ -1,8 +1,6 @@
 ﻿namespace Ragnar.IntegrationTests;
 
-/// <summary>
-/// Integration tests for the question execution pipeline: load → filter → show → answer.
-/// </summary>
+/// <summary>Integration tests for the question execution pipeline: load → filter → show → answer.</summary>
 public class QuestionPipelineIntegrationTests
 {
     private readonly Mock<ILogger> _loggerMock;
